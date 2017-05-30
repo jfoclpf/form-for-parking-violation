@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div style="width:100%">
+
+    <div style="width:90%; margin:0 auto">
+        <h1 style="text-align:center">
+        Formulário para submissão de queixa de estacionamento ilegal
+        junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada
+        </h1>
+        <div id="sub_title">A Polícia Municipal
+        <a href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a> que dá seguimento às queixas dos cidadãos por esta via,
+        de acordo com o estipulado pela Lei. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
+        foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade policial, 
+        as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, ou seja, o veículo o qual reporta.
+        </div>
+        <br><br>
+        <div style="text-align:left; padding-left:15%">
+            Concelho<span style="color:red">*</span>
+            <select class="mandatory" id="municipality" id="place_prefix">
+                <option>Lisboa</option>
+                <option>Porto</option>
+            </select><br>
+                
+            Matrícula<span style="color:red">*</span>
+            <input size="8" class="mandatory" id="plate" type="text" placeholder="XX-XX-XX"><br>
+            
+            Marca
+            <input size="8" id="carmake" type="text">
+            
+            Modelo
+            <input size="8" id="model" type="text"><br>
+            
+            Data<span style="color:red">*</span>
+            <input size="8" id="date" class="mandatory">
+            
+            Hora
+            <input id="time" type="time"><br>
+            
+            Local<span style="color:red">*</span>
+            <select id="place_prefix">
+                <option>Rua</option>
+                <option>Avenida</option>
+                <option>Praça</option>
+                <option>Rotunda</option>
+            </select>
+            <input size="35" class="mandatory" id="street" type="text"><br>
+            
+            junto ao número
+            <input size="4" id="door_number" type="text"></br>
+            
+            Nome<span style="color:red">*</span>
+            <input size="30" id="name" class="mandatory" type="text">             
+            <br><br>
+            <button id="button">Gerar texto</button>
+        </div>
+        <br>
+        <br>
+        <div id="preamble"></div>
+        <br>
+        <button style="display:none" id="button2">Enviar email</button>
+        <br><br>
+        <hr>
+        <br>
+        <div id="message"></div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="clipboard.min.js"></script>
+<script src="form.js"></script>
+
+</body>
+</html>
