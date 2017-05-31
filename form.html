@@ -1,74 +1,103 @@
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="main.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
 </head>
+<style>
+    h1 {
+        text-align: center
+    }
+</style>
 <body>
+<h1 class="header">
+    Formulário queixa de estacionamento
+</h1>
 
-<div style="width:100%">
+<p class="lead">
+    A Polícia Municipal <a
+        href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a>
+    que dá seguimento às queixas dos cidadãos por esta via,
+    de acordo com o estipulado pela Lei. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
+    foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade
+    policial,
+    as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, ou seja, o veículo o qual
+    reporta.
+</p>
+<div>
+    <div class="form-group">
+        <label for="name">Nome <span style="color:red">*</span></label>
+        <input size="30" id="name" class="form-control mandatory" type="text" required>
+    </div>
 
-    <div style="width:90%; margin:0 auto">
-        <h1 style="text-align:center">
-        Formulário para submissão de queixa de estacionamento ilegal
-        junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada
-        </h1>
-        <div id="sub_title">A Polícia Municipal
-        <a href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a> que dá seguimento às queixas dos cidadãos por esta via,
-        de acordo com o estipulado pela Lei. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
-        foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade policial, 
-        as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, ou seja, o veículo o qual reporta.
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="plate">Matrícula <span style="color:red">*</span></label>
+            <input class="form-control mandatory" id="plate" placeholder="XX-XX-XX" required>
         </div>
-        <br><br>
-        <div style="text-align:left; padding-left:15%">
-            Concelho<span style="color:red">*</span>
-            <select class="mandatory" id="municipality" id="place_prefix">
+
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="carmake">Marca</label>
+            <input class="form-control" id="carmake" type="text">
+        </div>
+
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="model">Modelo</label>
+            <input class="form-control" id="model" type="text">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 form-group">
+            <label for="date">Data <span style="color:red">*</span></label>
+
+            <input class="form-control mandatory" type="text" id="date" required>
+        </div>
+        <div class="col-xs-12 col-md-6 form-group">
+            <label for="time">Hora</label>
+            <input class="form-control" id="time" type="time">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="municipality">Concelho</label>
+            <select class="form-control" id="municipality" id="municipality">
                 <option>Lisboa</option>
                 <option>Porto</option>
-            </select><br>
-                
-            Matrícula<span style="color:red">*</span>
-            <input size="8" class="mandatory" id="plate" type="text" placeholder="XX-XX-XX"><br>
-            
-            Marca
-            <input size="8" id="carmake" type="text">
-            
-            Modelo
-            <input size="8" id="model" type="text"><br>
-            
-            Data<span style="color:red">*</span>
-            <input size="8" id="date" class="mandatory">
-            
-            Hora
-            <input id="time" type="time"><br>
-            
-            Local<span style="color:red">*</span>
-            <select id="place_prefix">
+            </select>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="place_prefix">Tipo de Rua</label>
+            <select class="form-control" id="place_prefix">
                 <option>Rua</option>
                 <option>Avenida</option>
                 <option>Praça</option>
                 <option>Rotunda</option>
             </select>
-            <input size="35" class="mandatory" id="street" type="text"><br>
-            
-            junto ao número
-            <input size="4" id="door_number" type="text"></br>
-            
-            Nome<span style="color:red">*</span>
-            <input size="30" id="name" class="mandatory" type="text">             
-            <br><br>
-            <button id="button">Gerar texto</button>
         </div>
-        <br>
-        <br>
-        <div id="preamble"></div>
-        <br>
-        <button style="display:none" id="button2">Enviar email</button>
-        <br><br>
-        <hr>
-        <br>
-        <div id="message"></div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="street">Morada<span style="color:red">*</span></label>
+            <input size="35" class="form-control mandatory" id="street" type="text" required>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="door_number">Junto ao Número</label>
+            <input size="4" class="form-control" id="door_number" type="text">
+        </div>
     </div>
+    <button class="btn btn-primary" id="button">Gerar texto</button>
 </div>
+
+<div id="preamble"></div>
+<button class="btn btn-default" style="display:none" id="button2">Enviar email</button>
+<hr>
+<div id="message"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -76,5 +105,8 @@
 <script src="clipboard.min.js"></script>
 <script src="form.js"></script>
 
+<!-- Bootstrap imports -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
