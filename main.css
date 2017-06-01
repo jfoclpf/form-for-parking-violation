@@ -17,6 +17,10 @@ input {
 
 }
 
+.lead{
+    text-align: justify;
+}
+
 /*hides spin buttons on form input number*/
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
