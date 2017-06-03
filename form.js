@@ -119,7 +119,7 @@ $("#button").click(function(){
 
       ( $("#door_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#door_number").val() + "</b>, " : "") + //optional
 
-      "a viatura com matrícula <b>" + $("#plate").val() + "</b> " +
+      "a viatura com matrícula <b>" + plate_str + "</b> " +
       carmake_model_txt +
       "encontrava-se estacionada sobre uma zona exclusivamente pedonal, em violação da alínea f) do n.º 1 do artigo 49º do Código da Estrada.";
 
