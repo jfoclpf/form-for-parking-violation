@@ -28,5 +28,10 @@ var municipalities = {
         name: "Braga",
         authority: "Polícia Municipal de Braga",
         email: "policia.municipal@cm-braga.pt"
-    }    
+    },
+    Cascais : {
+        name: "Cascais",
+        authority: "Polícia Municipal de Cascais",
+        email: "policia.municipal@cm-cascais.pt"
+    }      
 };
