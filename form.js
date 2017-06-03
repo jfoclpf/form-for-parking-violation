@@ -2,14 +2,32 @@ var message;
 var email_to;
 var email_subject;
 
+//date field
 $.datepicker.setDefaults({
   dateFormat: 'dd-mm-yy',
   dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb" ],
   monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
   monthNames: [ "janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro" ]
 });
-
 $("#date").datepicker();
+
+//when the pages loads
+$(window).on('load', function(){
+    
+    //populates HTML select according to the information on municipalities.js file
+    for (var key in municipalities){
+        if(!municipalities.hasOwnProperty(key)) continue;
+        
+        var obj = municipalities[key];                             
+        $("#municipality").append("<option>" + obj.name + "</option>");           
+    }
+    
+    //initializes date and time with current date and time
+    var date = new Date();
+    $("#date").datepicker('setDate', date);
+    var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
+    $("#time").val(currentTime);
+});
 
 $("#button").click(function(){
 
@@ -26,7 +44,7 @@ $("#button").click(function(){
     return;
   }
 
-  //detecta se a matrícula está bem preenchida
+  //deteta se a matrícula está bem preenchida
   var plate_str = $("#plate").val();
   plate_str = plate_str.toUpperCase(); // force place upcase
   var bool1 = (plate_str != "XX-XX-XX");
@@ -41,32 +59,27 @@ $("#button").click(function(){
 
   //PREAMBLE
   var preamble = "Para enviar email para ";
-  if ($("#municipality").val() == "Lisboa"){
-    preamble += '<a href="mailto:pm@cm-lisboa.pt">pm@cm-lisboa.pt</a>';
-    email_to = "pm@cm-lisboa.pt";
-  }
-  else if ($("#municipality").val() == "Porto"){
-    preamble += '<a href="mailto:policiamunicipal@cm-porto.pt">policiamunicipal@cm-porto.pt</a>';
-    email_to = "policiamunicipal@cm-porto.pt";
-  }
-  else{
-    alert("erro");
-    return;
-  }
+  for (var key in municipalities){
+    if(!municipalities.hasOwnProperty(key)) continue;
+    
+    var obj = municipalities[key];                             
+    if ($("#municipality").val() == obj.name){
+      preamble += '<a href="mailto:' + obj.email + '">' + obj.email + '</a>';
+      email_to = obj.email;        
+    }
+  } 
   preamble += " clique no seguinte botão:"
 
     /******************************************************/
   //PM de Lisboa ou Porto texto
   var PM;
-  if ($("#municipality").val() == "Lisboa"){
-    PM = "Polícia Municipal de Lisboa";
-  }
-  else if ($("#municipality").val() == "Porto"){
-    PM = "Polícia Municipal do Porto";
-  }
-  else{
-    alert("erro");
-    return;
+  for (var key in municipalities){
+    if(!municipalities.hasOwnProperty(key)) continue;
+    
+    var obj = municipalities[key];                             
+    if ($("#municipality").val() == obj.name){
+      PM = obj.authority;       
+    }
   }
 
   //texto para marca e modelo
@@ -86,6 +99,7 @@ $("#button").click(function(){
     carmake_model_txt = "";
   }
 
+  //Texto principal
   var msg = "Excelentíssimos senhores da" + " " + PM + ";"
   var msg1 = "Ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, venho por este meio fazer a seguinte denúncia de contra-ordenação para que a "+
       PM + " " +
@@ -114,6 +128,8 @@ $("#button").click(function(){
   $("#message").html(message).show();
 });
 
+//limpar a mensagem para o email, remove HTML tags, 
+//pois o mailto não aceita HTML tags, apenas texto simples 
 function clean_message() {
   var temp = message;
   temp = temp.replace(/<b\s*\/?>/mg,"");
@@ -122,6 +138,14 @@ function clean_message() {
   return temp;
 }
 
+//add zeros to numbers, ex: pad(7, 3)="007"
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+//botão de gerar email
 $("#button2").click(function(){
   clipboard.copy({
     "text/html": message

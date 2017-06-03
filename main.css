@@ -3,6 +3,10 @@ body {
     padding: 32px;
 }
 
+h1 {
+    text-align: center
+}
+
 #sub_title{
     width:90%;
     margin:0 auto;
