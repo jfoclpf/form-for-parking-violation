@@ -33,5 +33,12 @@ var municipalities = {
         name: "Cascais",
         authority: "Polícia Municipal de Cascais",
         email: "policia.municipal@cm-cascais.pt"
+    },
+    Sintra : {
+        name: "Sintra",
+        authority: "Polícia Municipal de Sintra",
+        email: "policiamunicipal@cm-sintra.pt"
     }      
 };
+
+

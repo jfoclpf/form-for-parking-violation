@@ -11,22 +11,28 @@ $.datepicker.setDefaults({
 });
 $("#date").datepicker();
 
-//when the pages loads
+//when the page loads
 $(window).on('load', function(){
     
-    //populates HTML select according to the information on municipalities.js file
-    for (var key in municipalities){
-        if(!municipalities.hasOwnProperty(key)) continue;
-        
-        var obj = municipalities[key];                             
-        $("#municipality").append("<option>" + obj.name + "</option>");           
+  //populates HTML select according to the information on municipalities.js file
+  //and sorts the municipalities alphabetically
+  var keys = [];
+  for (var key in municipalities) {
+    if (municipalities.hasOwnProperty(key)) {
+      keys.push(key);
     }
+  }
+  keys.sort();
+  for (var i = 0; i < keys.length; i++) {
+    key = keys[i];
+    $("#municipality").append("<option>" + municipalities[key].name + "</option>");
+  }
     
-    //initializes date and time with current date and time
-    var date = new Date();
-    $("#date").datepicker('setDate', date);
-    var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
-    $("#time").val(currentTime);
+  //initializes date and time with current date and time
+  var date = new Date();
+  $("#date").datepicker('setDate', date);
+  var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
+  $("#time").val(currentTime);
 });
 
 $("#button").click(function(){
