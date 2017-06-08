@@ -107,9 +107,12 @@ $("#button").click(function(){
 
   //Texto principal
   var msg = "Excelentíssimos senhores da" + " " + PM + ";"
-  var msg1 = "Ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, venho por este meio fazer a seguinte denúncia de contra-ordenação para que a "+
-      PM + " " +
-      "levante o auto respetivo e multe o infra-mencionado responsável.";
+  
+  var msg1 = "Eu, <b>" + $("#name").val() + "</b>, com o <b>" + $("#id_type").val() + "</b> com o número <b>" + $("#id_number").val() + "</b> " +
+             "e com residência em <b>" + $("#address").val() + "</b>, venho por este meio," + " " +
+             "ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, fazer a seguinte denúncia de contra-ordenação para que a "+
+             PM + " " +
+             "levante o auto respetivo e multe o infra-mencionado responsável.";
 
   var msg2 = "No passado dia <b>" + $.datepicker.formatDate("dd' de 'MM' de 'yy", $( "#date" ).datepicker('getDate') ) + "</b>" +
       ( $("#time").val() ? " pelas <b>" + $("#time").val() + "</b>" : "") + //optional
@@ -123,7 +126,7 @@ $("#button").click(function(){
       carmake_model_txt +
       "encontrava-se estacionada sobre uma zona exclusivamente pedonal, em violação da alínea f) do n.º 1 do artigo 49º do Código da Estrada.";
 
-  var msg3 = "Pode-se comprovar esta situação através das fotografias anexas ao presente email.";
+  var msg3 = "Pode-se comprovar esta situação através das fotografias anexas ao presente email. Juro pela minha honra que a informação que consta neste email é verídica.";
 
   var msg4 = "Com os melhores cumprimentos<br>" + $("#name").val();
 

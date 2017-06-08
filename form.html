@@ -23,11 +23,34 @@
     reporta.
 </p>
 <div>
-    <div class="form-group">
-        <label for="name">Nome <span style="color:red">*</span></label>
-        <input size="30" id="name" class="form-control mandatory" type="text" required>
+    <hr>
+    <h3>Os seus dados</h3>
+    <p>
+    Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
+    </p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 form-group">
+            <label for="name">Nome <span style="color:red">*</span></label>
+            <input size="30" id="name" class="form-control mandatory" type="text" required>
+        </div>
+        <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_type">A sua Identificação</label>
+            <select class="form-control" id="id_type">
+                <option>Cartão de Cidadão</option>
+                <option>Bilhete de Identidade</option>                
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_number">Número <span style="color:red">*</span></label>
+            <input size="30" id="id_number" class="form-control mandatory" placeholder="00000000" type="text" required>
+        </div>
+        <div class="col-xs-12 col-sm-5 form-group">
+            <label for="address">A sua Morada <span style="color:red">*</span></label>
+            <input size="30" id="address" class="form-control mandatory" type="text" required>
+        </div>        
     </div>
-
+    <hr>
+    <h3>Os dados da ocorrência</h3>
     <div class="row">
         <div class="col-xs-12 col-sm-4 form-group">
             <label for="plate">Matrícula <span style="color:red">*</span></label>
@@ -36,12 +59,12 @@
 
         <div class="col-xs-12 col-sm-4 form-group">
             <label for="carmake">Marca</label>
-            <input class="form-control" id="carmake" type="text">
+            <input class="form-control" id="carmake" placeholder="Opel" type="text">
         </div>
 
         <div class="col-xs-12 col-sm-4 form-group">
             <label for="model">Modelo</label>
-            <input class="form-control" id="model" type="text">
+            <input class="form-control" id="model" placeholder="Corsa" type="text">
         </div>
     </div>
 
@@ -81,8 +104,8 @@
         </div>
 
         <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-            <label for="street">Morada<span style="color:red">*</span></label>
-            <input size="35" class="form-control mandatory" id="street" type="text" required>
+            <label for="street">Morada da ocorrência<span style="color:red">*</span></label>
+            <input size="35" class="form-control mandatory" id="street" placeholder="do Ouro" type="text" required>
         </div>
 
         <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
@@ -90,6 +113,7 @@
             <input size="4" class="form-control" id="door_number" type="text">
         </div>
     </div>
+    <hr>
     <button class="btn btn-primary" id="button">Gerar texto</button>
 </div>
 
