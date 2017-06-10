@@ -35,6 +35,7 @@ $(window).on('load', function(){
   $("#time").val(currentTime);
 });
 
+//when user clicks "generate email"
 $("#button").click(function(){
 
   //campos vazios
@@ -50,6 +51,15 @@ $("#button").click(function(){
     return;
   }
 
+  //deteta se a matrícula está bem preenchida
+  var Name = $("#name").val();
+  number_of_names = Name.split(' ').length;
+  if (number_of_names == 1 || number_of_names == 2){
+      alert("Insira o nome completo");
+      return;
+  }
+  Name2 = Name.split(' ')[0] + " " +  Name.split(' ')[(Name.split(' ')).length-1];
+  
   //deteta se a matrícula está bem preenchida
   var plate_str = $("#plate").val();
   plate_str = plate_str.toUpperCase(); // force place upcase
@@ -128,7 +138,7 @@ $("#button").click(function(){
 
   var msg3 = "Pode-se comprovar esta situação através das fotografias anexas ao presente email. Juro pela minha honra que a informação que consta neste email é verídica.";
 
-  var msg4 = "Com os melhores cumprimentos<br>" + $("#name").val();
+  var msg4 = "Com os melhores cumprimentos<br>" + Name2;
 
   message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>";
 
