@@ -6,6 +6,24 @@
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           crossorigin="anonymous">
+<style>
+    /* Image Designing Propoerties */
+    .thumb {
+        height: 75px;
+        border: 1px solid #000;
+        margin: 10px 5px 0 0;
+    }
+	
+	.mailmessage {
+	  border-width: 2px;
+	  border-color: black;
+	  border-style: solid;
+	  background-color: white;
+	  color: black;
+	  font-family: monospace;
+	  padding: 20px;	  
+	}
+</style>
 </head>
 <body>
 <h1 class="header">
@@ -113,14 +131,48 @@
             <input size="4" class="form-control" id="door_number" type="text">
         </div>
     </div>
+	
+	<div class="image_selector" style="display:none">
+	<hr>
+	<h3>Imagens</h3>
+	<div class="row">
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="1"/></br><img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="2"/></br><img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="3"/></br><img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="4"/></br><img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	</div>
+	</div>
+	
     <hr>
     <button class="btn btn-primary" id="button">Gerar texto</button>
 </div>
 
-<div id="preamble"></div>
-<button class="btn btn-default" style="display:none" id="button2">Enviar email</button>
-<hr>
-<div id="message"></div>
+<div id="second_stage" style="display:none">
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+	    <h3>Mensagem</h3>
+		<div id="message" class="mailmessage"></div>
+	  </div>
+	</div>
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+		<div id="preamble"></div>
+		<p></p>
+		<button class="btn btn-default" id="button2">Enviar email</button>
+	  </div>
+	</div>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -128,7 +180,7 @@
 <script src="clipboard.min.js"></script>
 <script src="municipalities.js"></script>
 <script src="form.js"></script>
-
+<script src="imgupload.js"></script>
 <!-- Bootstrap imports -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
