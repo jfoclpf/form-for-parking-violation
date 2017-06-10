@@ -155,10 +155,24 @@
     <button class="btn btn-primary" id="button">Gerar texto</button>
 </div>
 
-<div id="preamble"></div>
-<button class="btn btn-default" style="display:none" id="button2">Enviar email</button>
-<hr>
-<div id="message"></div>
+<div id="second_stage" style="display:none">
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+	    <h3>Mensagem</h3>
+		<div id="message" class="mailmessage"></div>
+	  </div>
+	</div>
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+		<div id="preamble"></div>
+		<p></p>
+		<button class="btn btn-default" id="button2">Enviar email</button>
+	  </div>
+	</div>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
