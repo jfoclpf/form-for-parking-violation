@@ -2,6 +2,8 @@ var message;
 var email_to;
 var email_subject;
 
+var debug = /debug=(\d+)/.exec(window.location.href);
+
 //date field
 $.datepicker.setDefaults({
   dateFormat: 'dd-mm-yy',
@@ -37,17 +39,19 @@ $(window).on('load', function(){
 
 $("#button").click(function(){
 
-  //campos vazios
-  var to_break=false;
-  $(".mandatory").each(function(){
-    if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
-      alert("Preencha todos os campos obrigatórios assinalados com *");
-      to_break = true;
-      return false;
-    }
-  });
-  if(to_break){
-    return;
+  if (!debug) {
+	  //campos vazios
+	  var to_break=false;
+	  $(".mandatory").each(function(){
+		if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
+		  alert("Preencha todos os campos obrigatórios assinalados com *");
+		  to_break = true;
+		  return false;
+		}
+	  });
+	  if(to_break){
+		return;
+	  }
   }
 
   //deteta se a matrícula está bem preenchida
@@ -58,7 +62,7 @@ $("#button").click(function(){
   var bool4 = (plate_str.substring(5, 6) == "-");
   var bool5 = (plate_str.length == 8);
   var bool_isCorrect = (bool1 && bool3 && bool4 && bool5);
-  if (!bool_isCorrect) {
+  if ((!bool_isCorrect) && (!debug)) {
     alert("Preencha a matrícula em maiúsculas no formato XX-XX-XX");
     return;
   }
