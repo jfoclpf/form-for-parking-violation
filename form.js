@@ -3,6 +3,7 @@ var email_to;
 var email_subject;
 
 var debug = /debug=(\d+)/.exec(window.location.href);
+var images_support = /images_support=(\d+)/.exec(window.location.href);
 
 //date field
 $.datepicker.setDefaults({
@@ -35,6 +36,11 @@ $(window).on('load', function(){
   $("#date").datepicker('setDate', date);
   var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
   $("#time").val(currentTime);
+  
+  //if images support enabled show
+  if (images_support) {
+	  $("#image_selector").show();
+  }
 });
 
 $("#button").click(function(){
@@ -133,12 +139,14 @@ $("#button").click(function(){
   var msg3 = "Pode-se comprovar esta situação através das fotografias anexas ao presente email. Juro pela minha honra que a informação que consta neste email é verídica.";
 
   var msg4 = "Com os melhores cumprimentos<br>" + $("#name").val();
+  
+  var msg5 = getImagesToMessage();
 
-  message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>";
-
-  $("#button2").show();
-  $("#preamble").html(preamble).show();
-  $("#message").html(message).show();
+  message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>" + msg5 + "<br><br>";
+  
+  $("#preamble").html(preamble);
+  $("#message").html(message);
+  $("#second_stage").show();
 });
 
 //limpar a mensagem para o email, remove HTML tags, 
