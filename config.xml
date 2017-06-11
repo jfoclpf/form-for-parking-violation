@@ -31,7 +31,8 @@
   <allow-navigation href="https://ajax.googleapis.com" />
   <allow-intent href="https://maxcdn.bootstrapcdn.com" />
   <allow-navigation href="https://ajax.googleapis.com" />
-  <allow-intent href="https://maxcdn.bootstrapcdn.com" />  
+  <allow-intent href="https://maxcdn.bootstrapcdn.com" />
+  <allow-intent href="mailto:*" />  
   
   <plugin name="cordova-plugin-camera" spec="~2.4.1" />
   <plugin name="cordova-plugin-file" spec="~4.3.3" />
