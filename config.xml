@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "2660674"
+    version     = "1.0.0" >
+
+  <!-- versionCode is optional and Android only -->
+
+  <name>Formulário para queixa de estacionamento</name>
+
+  <description>
+    A Polícia Municipal confirma que dá seguimento às queixas dos cidadãos por esta via, de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa, entre janeiro e março de 2017, em apenas três meses, foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade policial, as fotos que enviar deverão conter apenas um veículo ilegalmente estacionado, ou seja, o veículo o qual reporta.
+  </description>
+
+  <author>
+    João Ferreira, Rui Ribeiro, Pedro Nóbrega
+  </author>
+  
+  <platform name="ios" />
+  <platform name="android" />
+  <platform name="winphone" />
+
+  <!--
+    This allows your app to load assets from all *.phongap.com domains
+  -->
+  <access origin="*" subdomains="true" />
+
+</widget>
