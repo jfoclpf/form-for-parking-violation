@@ -185,5 +185,5 @@ $("#button2").click(function(){
   alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois colar a mensagem!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Cole o texto no corpo da mensagem clicando CTRL-V,\n3)Envie para " + email_to);
 
   email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
-  window.open('mailto:'+email_to+'?subject='+email_subject+'&body='+"<<Cole aqui a sua mensagem clicando CTRL-V>>");
+  window.open('mailto:'+email_to+'?subject='+email_subject+'&body='+ clean_message());
 });
