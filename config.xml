@@ -24,6 +24,6 @@
   <!--
     This allows your app to load assets from all *.phongap.com domains
   -->
-  <access origin="*" subdomains="true" />
+  <access origin="*" />
 
 </widget>
