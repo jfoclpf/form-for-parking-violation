@@ -7,9 +7,10 @@ http://jfolpf.pt/passeio_livre/form/form.html
 
 ## Opções
 
- * debug=1, ativa o modo de debug do formulário
+ * debug=1, ativa o modo de debug do formulário; debug=false desativa
  * images_support=1, ativa a submissão de imagens no formulário
 
 Exemplo:
 
  * http://jfolpf.pt/passeio_livre/form/form.html?debug=1&images_support=1
+ * http://jfolpf.pt/passeio_livre/form/form.html?debug=false&images_support=1
