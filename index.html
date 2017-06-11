@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+</head>
+<body>
+<h1 class="header">
+    Formulário para<br>queixa de estacionamento
+</h1>
+
+<p class="lead">
+    A Polícia Municipal <a
+        href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a>
+    que dá seguimento às queixas dos cidadãos por esta via,
+    de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
+    foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade
+    policial,
+    as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, ou seja, o veículo o qual
+    reporta.
+</p>
+<div>
+    <hr>
+    <h3>Os seus dados</h3>
+    <p>
+    Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
+    </p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 form-group">
+            <label for="name">Nome <u>Completo</u><span style="color:red">*</span></label>
+            <input size="30" id="name" class="form-control mandatory" type="text" required>
+        </div>
+        <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_type">A sua Identificação</label>
+            <select class="form-control" id="id_type">
+                <option>Cartão de Cidadão</option>
+                <option>Bilhete de Identidade</option>                
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_number">Número <span style="color:red">*</span></label>
+            <input size="30" id="id_number" class="form-control mandatory" placeholder="00000000" type="text" required>
+        </div>
+        <div class="col-xs-12 col-sm-5 form-group">
+            <label for="address">A sua Morada <span style="color:red">*</span></label>
+            <input size="30" id="address" class="form-control mandatory" type="text" required>
+        </div>        
+    </div>
+    <hr>
+    <h3>Os dados da ocorrência</h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="plate">Matrícula <span style="color:red">*</span></label>
+            <input class="form-control mandatory" id="plate" placeholder="XX-XX-XX" required>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="carmake">Marca</label>
+            <input class="form-control" id="carmake" placeholder="Opel" type="text">
+        </div>
+
+        <div class="col-xs-12 col-sm-4 form-group">
+            <label for="model">Modelo</label>
+            <input class="form-control" id="model" placeholder="Corsa" type="text">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 form-group">
+            <label for="date">Data <span style="color:red">*</span></label>
+
+            <input class="form-control mandatory" type="text" id="date" required>
+        </div>
+        <div class="col-xs-12 col-md-6 form-group">
+            <label for="time">Hora</label>
+            <input class="form-control" id="time" type="time">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="municipality">Concelho</label>
+            <select class="form-control" id="municipality">
+            </select>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="place_prefix">Tipo de arruamento</label>
+            <select class="form-control" id="place_prefix">
+                <option>Rua</option>
+                <option>Avenida</option>
+                <option>Praça</option>
+                <option>Rotunda</option>
+                <option>Travessa</option>
+                <option>Largo</option>
+                <option>Estrada</option>   
+                <option>Calçada</option>
+                <option>Praceta</option>                
+                <option>Beco</option>                  
+            </select>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="street">Morada da ocorrência<span style="color:red">*</span></label>
+            <input size="35" class="form-control mandatory" id="street" placeholder="do Ouro" type="text" required>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+            <label for="door_number">Junto ao Número</label>
+            <input size="4" class="form-control" id="door_number" type="text">
+        </div>
+    </div>
+	
+	<div id="image_selector" style="display:none">
+	<hr>
+	<h3>Imagens</h3>
+	<div class="row">
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="1"/></br><img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="2"/></br><img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="3"/></br><img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
+	    <input type='file' data-id="4"/></br><img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
+	  </div>
+	</div>
+	</div>
+	
+    <hr>
+    <button class="btn btn-primary" id="button">Gerar texto</button>
+</div>
+
+<div id="second_stage" style="display:none">
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+	    <h3>Mensagem</h3>
+		<div id="message" class="mailmessage"></div>
+	  </div>
+	</div>
+	<hr>
+	<div class="row">
+	  <div class="col-xs-12">
+		<div id="preamble"></div>
+		<p></p>
+		<button class="btn btn-default" id="button2">Enviar email</button>
+	  </div>
+	</div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="clipboard.min.js"></script>
+<script src="municipalities.js"></script>
+<script src="form.js"></script>
+<script src="imgupload.js"></script>
+<!-- Bootstrap imports -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
