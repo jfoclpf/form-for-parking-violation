@@ -26,5 +26,7 @@
     This allows your app to load assets from all *.phongap.com domains
   -->
   <access origin="*" />
+  <allow-navigation href="*" />
+  <allow-intent href="*" />
 
 </widget>
