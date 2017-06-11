@@ -64,7 +64,7 @@ $("#button").click(function(){
   //deteta se a matrícula está bem preenchida
   var Name = $("#name").val();
   number_of_names = Name.split(' ').length;
-  if (number_of_names == 1 || number_of_names == 2){
+  if ((number_of_names == 1 || number_of_names == 2) && !debug){
       alert("Insira o nome completo");
       return;
   }
@@ -152,10 +152,11 @@ $("#button").click(function(){
 
   var msg5 = getImagesToMessage();
 
-  message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>" + msg5 + "<br><br>";
+  message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>";
+  messageImg = message + msg5 + "<br><br>";
   
   $("#preamble").html(preamble);
-  $("#message").html(message);
+  $("#message").html(messageImg);
   $("#second_stage").show();
 });
 
@@ -179,10 +180,10 @@ function pad(num, size) {
 //botão de gerar email
 $("#button2").click(function(){
   clipboard.copy({
-    "text/html": message
+    "text/html": messageImg
   });
-  alert("Abrir-se-á de seguida o seu cliente de mail com a referida mensagem!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Anexe as fotos,\n3)Cole o texto no corpo da mensagem clicando CTRL-V,\n4)Envie para " + email_to);
+  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois colar a mensagem!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Cole o texto no corpo da mensagem clicando CTRL-V,\n3)Envie para " + email_to);
 
   email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
-  window.open('mailto:'+email_to+'?subject='+email_subject+'&body='+clean_message());
+  window.open('mailto:'+email_to+'?subject='+email_subject+'&body='+"<<Cole aqui a sua mensagem clicando CTRL-V>>");
 });
