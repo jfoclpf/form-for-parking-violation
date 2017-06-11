@@ -19,8 +19,6 @@
   
   <platform name="android" />
   <platform name="winphone" />
-
-  <plugin name="com.indigoway.cordova.whitelist.whitelistplugin" spec="1.1.1" source="pgb" />
   
   <!--
     This allows your app to load assets from all *.phongap.com domains
