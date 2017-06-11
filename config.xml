@@ -19,6 +19,8 @@
   
   <platform name="android" />
   <platform name="winphone" />
+  
+  <preference name="fullscreen" value="true" />
 
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2" />
   
