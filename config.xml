@@ -24,12 +24,14 @@
 
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2" />
   
-  <!--
-    This allows your app to load assets from all *.phongap.com domains
-  -->
-  <access origin="*" />
-  <allow-navigation href="*" />
-  <allow-intent href="*" />
+
+  <access origin="https://ajax.googleapis.com" />
+  <access origin="https://maxcdn.bootstrapcdn.com" />
+  
+  <allow-navigation href="https://ajax.googleapis.com" />
+  <allow-intent href="https://maxcdn.bootstrapcdn.com" />
+  <allow-navigation href="https://ajax.googleapis.com" />
+  <allow-intent href="https://maxcdn.bootstrapcdn.com" />  
   
   <plugin name="cordova-plugin-camera" spec="~2.4.1" />
   <plugin name="cordova-plugin-file" spec="~4.3.3" />
