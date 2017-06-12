@@ -41,8 +41,9 @@ $(window).on('load', function(){
   $("#time").val(currentTime);
 
   // if user cookie
-  if (enable_user_cookie)
+  if (enable_user_cookie){
 	  getUserCookie();
+  }
   
   //if images support enabled show
   if (images_support) {
@@ -200,7 +201,7 @@ $("#button2").click(function(){
   clipboard.copy({
     "text/html": messageImg
   });
-  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois colar a mensagem!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Cole o texto no corpo da mensagem clicando CTRL-V,\n3)Envie para " + email_to);
+  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois anexar a foto!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Cole o texto no corpo da mensagem clicando CTRL-V,\n3)Envie para " + email_to);
 
   email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
     
@@ -305,3 +306,4 @@ function getUserCookie() {
 	$("#id_number").val(decodedCookie.id_number);
 	$("#address").val(decodedCookie.address);
 }
+
