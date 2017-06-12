@@ -299,6 +299,10 @@ function setUserCookie() {
 
 
 function getUserCookie() {
+	if (document.cookie == "") {
+		return
+	}
+	
     var decodedCookie = JSON.parse(decodeURIComponent(document.cookie));
 	$("#name").val(decodedCookie.name);
 	$("#id_type").val(decodedCookie.id_type);
