@@ -37,8 +37,7 @@
 </h1>
 
 <p class="lead">
-    A Polícia Municipal <a
-        href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a>
+    A Polícia Municipal <a href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a>
     que dá seguimento às queixas dos cidadãos por esta via,
     de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
     foram levantados 1332 autos com esta origem. Para assegurar o dever de imparcialidade por parte da autoridade
@@ -112,15 +111,18 @@
         </div>
 
         <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-            <label for="place_prefix">Tipo de arruamento</label>
+            <label for="place_prefix">Tipo de arruamento</label> <span style="color:red">*</span></label>
             <select class="form-control" id="place_prefix">
+			    <option></option> 
                 <option>Rua</option>
+				<option>Alameda</option>
                 <option>Avenida</option>
                 <option>Praça</option>
                 <option>Rotunda</option>
                 <option>Travessa</option>
                 <option>Largo</option>
                 <option>Estrada</option>   
+				<option>Circular</option>
                 <option>Calçada</option>
                 <option>Praceta</option>                
                 <option>Beco</option>                  
@@ -139,7 +141,7 @@
     </div>
 	
 	<div id="location_holder" style="display:none">
-	<h3>LocalizaÃ§Ã£o</h3>
+	<h3>Localização</h3>
 	  <div class="row">
 		  <div class="form-group col-xs-12 col-sm-6 col-md-3">
 			<label for="longitude">Longitude</label>
