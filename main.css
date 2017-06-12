@@ -1,6 +1,6 @@
 body {
     /*  font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;*/
-    padding: 32px;
+    padding: 15px;
 }
 
 h1 {
@@ -40,4 +40,21 @@ input[type="number"] {
     display:block;
     width:100%;
     font-size:16
+}
+
+/* Image Designing Propoerties */
+.thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+}
+
+.mailmessage {
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  background-color: white;
+  color: black;
+  font-family: monospace;
+  padding: 20px;	  
 }
