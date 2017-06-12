@@ -161,7 +161,8 @@ $("#button").click(function(){
   var msg5 = getImagesToMessage();
 
   message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br><br>";
-  messageImg = message + msg5 + "<br><br>";
+  
+  messageImg = message + msg5 + "<br><br>" + getMapImageToMessage();
   
   $("#preamble").html(preamble);
   $("#message").html(messageImg);
@@ -229,7 +230,7 @@ function fillFormAddress(position)
 function updateMapLocation(position) {
 
   var latlon = position.coords.latitude + "," + position.coords.longitude;	
-  var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=17&size=600x300&sensor=false&markers=color:red%7Clabel:!%7C"+latlon;	
+  img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=17&size=600x300&sensor=false&markers=color:red%7Clabel:!%7C"+latlon;	
 
   $("#longitude").val(position.coords.longitude);
   $("#latitude").val(position.coords.latitude);
@@ -260,4 +261,16 @@ function updateMapLocation(position) {
     );
 }
 
+function getMapImageToMessage()
+{
+	t = "";
+	
+	if (map_reverse_location) {
+	  t = "<div class='row'><div class='col-xs-12'>" +
+  	      "Mapa " + "<p><img class='col-xs-12' src='" + img_url + "'>" +
+	      "</div></div>";
+	}
+	
+	return t;
+}
 
