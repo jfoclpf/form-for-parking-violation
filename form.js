@@ -26,6 +26,7 @@ $(window).on('load', function(){
     }
   }
   keys.sort();
+  $("#municipality").append("<option></option>");
   for (var i = 0; i < keys.length; i++) {
     key = keys[i];
     $("#municipality").append("<option>" + municipalities[key].name + "</option>");
