@@ -9,10 +9,11 @@ O formulário pode ser visto aqui: http://jfolpf.pt/passeio_livre/form/form.html
  * debug=1, ativa o modo de debug do formulário; debug=false desativa
  * images_support=1, ativa a submissão de imagens no formulário
  * map_reverse_location=1, ativa a geolocalização, mapa e reverse location
+ * enable_user_cookie=1, ativa a memorização dos dados do utilizador numa cookie no browser
 
 Exemplo:
  
- * http://jfolpf.pt/passeio_livre/form/index.html?debug=1&images_support=1&map_reverse_location=1
+ * http://jfolpf.pt/passeio_livre/form/index.html?debug=1&images_support=1&map_reverse_location=1&enable_user_cookie=1 
  * http://jfolpf.pt/passeio_livre/form/index.html?debug=false&images_support=1
 
 APIs Utilizadas:

@@ -5,6 +5,7 @@ var email_subject;
 var debug = /debug=(\d+)/.exec(window.location.href);
 var images_support = /images_support=(\d+)/.exec(window.location.href);
 var map_reverse_location = /map_reverse_location=(\d+)/.exec(window.location.href);
+var enable_user_cookie = /user_cookie=(\d+)/.exec(window.location.href);
 
 //date field
 $.datepicker.setDefaults({
@@ -38,6 +39,10 @@ $(window).on('load', function(){
   $("#date").datepicker('setDate', date);
   var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
   $("#time").val(currentTime);
+
+  // if user cookie
+  if (enable_user_cookie)
+	  getUserCookie();
   
   //if images support enabled show
   if (images_support) {
@@ -69,6 +74,10 @@ $("#button").click(function(){
 	  }
   }
 
+  // Updates Cookie
+  if (enable_user_cookie)
+    setUserCookie();
+  
   //deteta se a matrícula está bem preenchida
   var Name = $("#name").val();
   number_of_names = Name.split(' ').length;
@@ -278,3 +287,21 @@ function getMapImageToMessage()
 	return t;
 }
 
+// User Information Cookie
+
+function setUserCookie() {
+    var d = new Date();
+    d.setTime(d.getTime() + (360*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+	document.cookie = "user=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = encodeURIComponent(JSON.stringify({ "name" : $("#name").val(), "id_type" : $("#id_type").val(), "id_number" : $("#id_number").val(), "address" : $("#address").val()})) + ";" + expires + ";path=/";
+}
+
+
+function getUserCookie() {
+    var decodedCookie = JSON.parse(decodeURIComponent(document.cookie));
+	$("#name").val(decodedCookie.name);
+	$("#id_type").val(decodedCookie.id_type);
+	$("#id_number").val(decodedCookie.id_number);
+	$("#address").val(decodedCookie.address);
+}
