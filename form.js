@@ -4,6 +4,7 @@ var email_subject;
 
 var debug = /debug=(\d+)/.exec(window.location.href);
 var images_support = /images_support=(\d+)/.exec(window.location.href);
+var map_reverse_location = /map_reverse_location=(\d+)/.exec(window.location.href);
 
 //date field
 $.datepicker.setDefaults({
@@ -42,6 +43,12 @@ $(window).on('load', function(){
   if (images_support) {
 	  $("#image_selector").show();
   }
+  
+  // Get Localization if available   
+  if (map_reverse_location) {
+	getLocation() // this may return that map_reverse_location isn't available with "false" value
+  }
+
 });
 
 //when user clicks "generate email"
@@ -187,3 +194,70 @@ $("#button2").click(function(){
   email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
   window.open('mailto:'+email_to+'?subject='+email_subject+'&body='+clean_message());
 });
+
+var geoL = { coords : { longitude : 0, latitude : 0 }};
+
+// Location
+function getLocation() {	
+    if (navigator.geolocation) {
+		
+        navigator.geolocation.getCurrentPosition(fillFormAddress);
+        $('#map_holder').click(function(e) {
+          var offset = $(this).offset();
+          newLong = geoL.coords.longitude + (e.pageX - offset.left - $(this).width() / 2) / 100000;
+          newLat = geoL.coords.latitude - (e.pageY - offset.top - $(this).height() / 2) / 100000;
+		  geoL = { coords : { latitude : newLat,longitude : newLong }};		  
+		  updateMapLocation(geoL);
+        });	
+    } else {
+		if (debug)
+          alert("Geolocation não é suportada por este browser.");
+        map_reverse_location = false;	    
+    }
+}
+
+function fillFormAddress(position)
+{	
+	geoL = { coords : { longitude : position.coords.longitude, latitude : position.coords.latitude }};
+	
+	updateMapLocation(position);
+	
+	$("#location_holder").show()	
+}
+
+function updateMapLocation(position) {
+
+  var latlon = position.coords.latitude + "," + position.coords.longitude;	
+  var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=17&size=600x300&sensor=false&markers=color:red%7Clabel:!%7C"+latlon;	
+
+  $("#longitude").val(position.coords.longitude);
+  $("#latitude").val(position.coords.latitude);
+  $("#map_holder").html("<img style='width: 100%' src='"+img_url+"'>");  
+
+  $.ajax({
+        type: "GET",
+        url: "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&zoom=18&addressdetails=1",
+        cache: false,
+        dataType: "json",
+        success: function(data) {
+            
+  			  // if ($("#municipality").val() == "") {
+				$("#municipality").val(data.address.city);
+			  // };			
+			  
+			  roadsplit = data.address.road.split(" ");
+			  //if ($("#place_prefix").val() == "") {
+				  $("#place_prefix").val(roadsplit[0]);
+			  //}
+			  
+			  //if ($("#street").val() == "") {
+				  $("#street").val(data.address.road.substr(roadsplit[0].length+1,data.address.road.length-roadsplit[0].length+1));
+			  //}
+
+		    }
+        }
+    );
+}
+
+
+

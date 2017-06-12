@@ -9,7 +9,14 @@ http://jfolpf.pt/passeio_livre/form/form.html
 
  * debug=1, ativa o modo de debug do formulário
  * images_support=1, ativa a submissão de imagens no formulário
+ * map_reverse_location=1, ativa a geolocalização, mapa e reverse location
 
 Exemplo:
 
- * http://jfolpf.pt/passeio_livre/form/form.html?debug=1&images_support=1
+ * http://jfolpf.pt/passeio_livre/form/form.html?debug=1&images_support=1&map_reverse_location=1
+
+APIs Utilizadas:
+
+ * Google Maps - https://maps.googleapis.com/maps/api
+ * OpenStreetMap - https://nominatim.openstreetmap.org/reverse
+ 
