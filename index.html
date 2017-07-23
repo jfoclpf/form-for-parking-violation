@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    
     <meta name="description" content="">
     <meta name="author" content="">
-	
-    <!-- Bootstrap css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          crossorigin="anonymous">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css" crossorigin="anonymous">
+    
 </head>
 <body>
 <h1 class="header">
@@ -96,16 +100,16 @@
         <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
             <label for="place_prefix">Tipo de arruamento</label> <span style="color:red">*</span></label>
             <select class="form-control" id="place_prefix">
-			    <option></option> 
+                <option></option> 
                 <option>Rua</option>
-				<option>Alameda</option>
+                <option>Alameda</option>
                 <option>Avenida</option>
                 <option>Praça</option>
                 <option>Rotunda</option>
                 <option>Travessa</option>
                 <option>Largo</option>
                 <option>Estrada</option>   
-				<option>Circular</option>
+                <option>Circular</option>
                 <option>Calçada</option>
                 <option>Praceta</option>                
                 <option>Beco</option>                  
@@ -122,76 +126,74 @@
             <input size="4" class="form-control" id="door_number" type="text">
         </div>
     </div>
-	
-	<div id="location_holder" style="display:none">
-	<h3>Localização</h3>
-	  <div class="row">
-		  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-			<label for="longitude">Longitude</label>
-			<input class="form-control" id="longitude" type="text">
-		  </div>
-		  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-			<label for="latitude">Latitude</label>
-			<input class="form-control" id="latitude" type="text">
-		  </div>
-		  <div class="form-group col-xs-12 col-sm-6 col-md-6">
-		    <label>Mapa</label>
-			<div id="map_holder"></div>
-		  </div>		  
-	  </div>
-	</div>
-	
-	<div id="image_selector" style="display:none">
-	<hr>
-	<h3>Imagens</h3>
-	<div class="row">
-	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-	    <input type='file' data-id="1"/></br><img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
-	  </div>
-	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-	    <input type='file' data-id="2"/></br><img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
-	  </div>
-	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-	    <input type='file' data-id="3"/></br><img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
-	  </div>
-	  <div class="form-group col-xs-12 col-sm-6 col-md-3">
-	    <input type='file' data-id="4"/></br><img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
-	  </div>
-	</div>
-	</div>
-	
+    
+    <div id="location_holder" style="display:none">
+    <h3>Localização</h3>
+      <div class="row">
+          <div class="form-group col-xs-12 col-sm-6 col-md-3">
+            <label for="longitude">Longitude</label>
+            <input class="form-control" id="longitude" type="text">
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-3">
+            <label for="latitude">Latitude</label>
+            <input class="form-control" id="latitude" type="text">
+          </div>
+          <div class="form-group col-xs-12 col-sm-6 col-md-6">
+            <label>Mapa</label>
+            <div id="map_holder"></div>
+          </div>          
+      </div>
+    </div>
+    
+    <div id="image_selector" style="display:none">
+    <hr>
+    <h3>Imagens</h3>
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <input type='file' data-id="1"/></br><img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <input type='file' data-id="2"/></br><img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <input type='file' data-id="3"/></br><img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <input type='file' data-id="4"/></br><img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
+      </div>
+    </div>
+    </div>
+    
     <hr>
     <button class="btn btn-primary" id="button">Gerar texto</button>
 </div>
 
 <div id="second_stage" style="display:none">
-	<hr>
-	<div class="row">
-	  <div class="col-xs-12">
-	    <h3>Mensagem</h3>
-		<div id="message" class="mailmessage"></div>
-	  </div>
-	</div>
-	<hr>
-	<div class="row">
-	  <div class="col-xs-12">
-		<div id="preamble"></div>
-		<p></p>
-		<button class="btn btn-default" id="button2">Enviar email</button>
-	  </div>
-	</div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Mensagem</h3>
+        <div id="message" class="mailmessage"></div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="preamble"></div>
+        <p></p>
+        <button class="btn btn-default" id="button2">Enviar email</button>
+      </div>
+    </div>
 </div>
 
+<script type="text/javascript" src="cordova.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/clipboard.min.js"></script>
+<script src="js/municipalities.js"></script>
+<script src="js/form.js"></script>
+<script src="js/imgupload.js"></script>
+<script src="js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="clipboard.min.js"></script>
-<script src="municipalities.js"></script>
-<script src="form.js"></script>
-<script src="imgupload.js"></script>
-<!-- Bootstrap imports -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
