@@ -24,3 +24,9 @@ APIs Utilizadas:
 
  * Google Maps - https://maps.googleapis.com/maps/api
  * OpenStreetMap - https://nominatim.openstreetmap.org/reverse
+
+## Licença
+
+GNU GPLv3<br>
+http://www.gnu.org/licenses/gpl-3.0.en.html <br>
+http://choosealicense.com/licenses/gpl-3.0/
