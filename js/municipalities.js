@@ -94,6 +94,11 @@ var municipalities = {
         authority: "Polícia Municipal de Trofa",
         email: "policia.municipal@mun-trofa.pt"
     },
+    Viana_do_Castelo : {
+        name: "Viana do Castelo",
+        authority: "PSP de Viana do Castelo",
+        email: "cpvcastelo@psp.pt"
+    },    
     Viseu : {
         name: "Viseu",
         authority: "Polícia Municipal de Viseu",
