@@ -89,7 +89,7 @@ $("#button").click(function(){
   if (enable_user_cookie)
     setUserCookie();
   
-  //deteta se a matrícula está bem preenchida
+  //deteta se o nome está bem preenchido
   var Name = $("#name").val();
   number_of_names = Name.split(' ').length;
   if ((number_of_names == 1 || number_of_names == 2) && !debug){
@@ -101,6 +101,7 @@ $("#button").click(function(){
   //deteta se a matrícula está bem preenchida
   var plate_str = $("#plate").val();
   plate_str = plate_str.toUpperCase(); // force place upcase
+  plate_str = plate_str.replace(/−/g,'-'); // replace minus character with hifen 
   var bool1 = (plate_str != "XX-XX-XX");
   var bool3 = (plate_str.substring(2, 3) == "-");
   var bool4 = (plate_str.substring(5, 6) == "-");
