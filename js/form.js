@@ -19,6 +19,16 @@ $("#date").datepicker();
 //when the page loads
 $(window).on('load', function(){
     
+  //populates personal information if available in storage
+  $('.personal_info').each(function(){    
+      var id = $(this).attr('id');
+      var value = window.localStorage.getItem(id);      
+      if(value){
+        $(this).val(value);
+      }
+  });  
+  
+  
   //populates HTML select according to the information on municipalities.js file
   //and sorts the municipalities alphabetically
   var keys = [];
@@ -61,18 +71,18 @@ $(window).on('load', function(){
 $("#button").click(function(){
 
   if (!debug) {
-	  //campos vazios
-	  var to_break=false;
-	  $(".mandatory").each(function(){
-		if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
-		  alert("Preencha todos os campos obrigatórios assinalados com *");
-		  to_break = true;
-		  return false;
-		}
-	  });
-	  if(to_break){
-		return;
-	  }
+    //campos vazios
+    var to_break=false;
+    $(".mandatory").each(function(){
+    if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
+      alert("Preencha todos os campos obrigatórios assinalados com *");
+      to_break = true;
+      return false;
+    }
+    });
+    if(to_break){
+    return;
+    }
   }
 
   // Updates Cookie
@@ -100,7 +110,15 @@ $("#button").click(function(){
     alert("Preencha a matrícula em maiúsculas no formato XX-XX-XX");
     return;
   }
-
+  //from here the inputs are correctly written
+  
+  //save to storage for later usage
+  $('.personal_info').each(function(){    
+      var id = $(this).attr('id');
+      var value = $(this).val();
+      window.localStorage.setItem(id, value);
+  });
+  
   //PREAMBLE
   var preamble = "Para enviar email para ";
   for (var key in municipalities){
