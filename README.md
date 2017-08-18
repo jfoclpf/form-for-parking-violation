@@ -5,10 +5,7 @@ Formulário para submissão de queixa de estacionamento ilegal junto de autorida
 * O formulário em HTML pode ser visto <a href="http://jfolpf.pt/passeio_livre/form/index.html">aqui</a>.
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 
-O código está desenhado em Javascript e tem dois modos:
-
- * pode ser corrido num navegador www convencional, bastando descarregar o conjunto de ficheiros e abrir o ficheiro `index.html`, colocando a variável global `APP_BOOL` a `false`.
- * desenhado para <a href="https://cordova.apache.org/">Cordova</a> Android, colocando a variável global `APP_BOOL` a `true`.
+O código está desenhado em Javascript para ser corrido num smartphone. Para tal faz uso da API <a href="https://cordova.apache.org/">Apache Cordova</a>.
 
 ## Opções
 
