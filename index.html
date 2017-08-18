@@ -56,12 +56,24 @@
         <div class="col-xs-12 col-sm-5 form-group">
             <label for="address">A sua Morada <span style="color:red">*</span></label>
             <input size="30" id="address" class="form-control mandatory personal_info" type="text" required>
-        </div>        
+        </div>
     </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-2 form-group">
+            <label for="postal_code">Código Postal<span style="color:red">*</span></label>
+            <input size="10" id="postal_code" class="form-control mandatory personal_info" placeholder="0000-000" type="text" required>                
+        </div>
+        <div class="col-xs-12 col-sm-2 form-group">                
+            <label for="address_city">Localidade<span style="color:red">*</span></label>
+            <input size="10" id="address_city" class="form-control mandatory personal_info" placeholder="Lisboa" type="text" required>
+        </div>            
+    </div>
+    
     <hr>
     <h3>Os dados da ocorrência</h3>
     <p class="lead">
-    Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar <b>falsamente</b> à autoridade pública,
+    Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar falsamente à autoridade pública,
     nomeadamente um agente da autoridade policial no exercício das suas funções,
     é punido com pena de prisão até um ano ou com pena de multa.
     </p>
@@ -176,7 +188,7 @@
     </div>
     
     <hr>
-    <button class="btn btn-primary" id="generate_email">Gerar texto</button>
+    <button class="btn btn-primary" id="generate_email_btn">Gerar texto</button>
 </div>
 
 <div id="second_stage" style="display:none">
@@ -192,12 +204,12 @@
       <div class="col-xs-12">
         <div id="preamble"></div>
         <p></p>
-        <button class="btn btn-default" id="button2">Enviar email</button>
+        <button class="btn btn-default" id="send_email_btn">Enviar email</button>
       </div>
     </div>
 </div>
 
-<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/Global.js"></script>
 <script src="js/res/jquery.min.js"></script>
 <script src="js/res/jquery-ui.min.js"></script>
 <script src="js/res/clipboard.min.js"></script>
@@ -206,7 +218,7 @@
 <script src="js/www_plugins.js"></script>
 <script src="js/functions.js"></script>
 <script src="js/text.js"></script>
-<script src="js/form.js"></script>
+<script src="js/main.js"></script>
 <script src="js/res/imgupload.js"></script>
 <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>
 

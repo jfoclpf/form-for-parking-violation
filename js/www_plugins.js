@@ -1,13 +1,26 @@
 //variables to be set by the URL in a browser in the www version
 //in the APP version these variables shall be set to FALSE
-var debug = /debug=(\d+)/.exec(window.location.href);
-console.log("debug: ", debug);
-var images_support = /images_support=(\d+)/.exec(window.location.href);
-console.log("images_support: ", images_support);
-var map_reverse_location = /map_reverse_location=(\d+)/.exec(window.location.href);
-console.log("map_reverse_location: ", map_reverse_location);
-var enable_user_cookie = /user_cookie=(\d+)/.exec(window.location.href);
-console.log("enable_user_cookie: ", enable_user_cookie);
+var www_debug, images_support, map_reverse_location, enable_user_cookie;
+
+if (!APP_BOOL) { //www version
+    www_debug = /debug=(\d+)/.exec(window.location.href);
+    DEBUG = DEBUG || www_debug;    
+    console.log("www_debug: ", debug);
+    
+    images_support = /images_support=(\d+)/.exec(window.location.href);
+    console.log("images_support: ", images_support);
+    
+    map_reverse_location = /map_reverse_location=(\d+)/.exec(window.location.href);
+    console.log("map_reverse_location: ", map_reverse_location);
+    
+    enable_user_cookie = /user_cookie=(\d+)/.exec(window.location.href);
+    console.log("enable_user_cookie: ", enable_user_cookie);
+}
+else{ //APP version
+    images_support = false;
+    map_reverse_location = false;
+    enable_user_cookie = false;
+}
 //####################
 
 // Location
@@ -25,7 +38,7 @@ function getLocation() {
       });  
   } 
   else {
-      if (debug){
+      if (DEBUG){
           alert("Geolocation não é suportada por este browser.");
       }
       map_reverse_location = false; 
@@ -40,6 +53,8 @@ function fillFormAddress(position)
   
   $("#location_holder").show()  
 }
+
+var geoL = { coords : { longitude : 0, latitude : 0 }};
 
 function updateMapLocation(position) {
 

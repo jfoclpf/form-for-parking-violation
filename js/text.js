@@ -1,5 +1,5 @@
 //main message
-function getMainMessage(plate_str, ShortName){
+function getMainMessage(ShortName){
     
     //Authority
     var authority;
@@ -23,7 +23,9 @@ function getMainMessage(plate_str, ShortName){
             penaltyDescription = obj.description;
             penaltyLawArticle = obj.law_article; 
         }
-    }    
+    }
+    
+    var CarPlateStr = getCarPlate();
     
     //texto para marca e modelo
     var is_carmake = ($("#carmake").val().replace(/^\s+|\s+$/g, "").length != 0);
@@ -45,17 +47,17 @@ function getMainMessage(plate_str, ShortName){
     var msg = "Excelentíssimos senhores da" + " " + authority + ";"
 
     var msg1 = "Eu, <b>" + $("#name").val() + "</b>, com o <b>" + $("#id_type").val() + "</b> com o número <b>" + $("#id_number").val() + "</b> " +
-        "e com residência em <b>" + $("#address").val() + "</b>, venho por este meio," + " " +
-        "ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, fazer a seguinte denúncia de contra-ordenação para que a "+
-        authority + " " +
-        "levante o auto respetivo e multe o infra-mencionado responsável.";
+        "e com residência em <b>" + $("#address").val() + ", " + $("#postal_code").val() + ", " + $("#address_city").val() + 
+        "</b>, venho por este meio," + " " +
+        "ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, fazer a seguinte denúncia de contra-ordenação para que a " +
+        authority + " " + "levante o auto respetivo e multe o infra-mencionado responsável.";
 
     var msg2 = "No passado dia <b>" + $.datepicker.formatDate("dd' de 'MM' de 'yy", $( "#date" ).datepicker('getDate') ) + "</b>" +
         ( $("#time").val() ? " pelas <b>" + $("#time").val() + "</b>" : "") + //optional
         ", " +
         "na <b>" + $("#place_prefix").val() + " " + $("#street").val() + ", " +  $("#municipality").val() + "</b>, " +
         ( $("#door_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#door_number").val() + "</b>, " : "") + //optional
-        "a viatura com matrícula <b>" + plate_str + "</b> " + carmake_model_txt +
+        "a viatura com matrícula <b>" + CarPlateStr + "</b> " + carmake_model_txt +
         "encontrava-se estacionada" + " " + penaltyDescription + ", em violação " + penaltyLawArticle +".";
 
     var msg3 = "Pode-se comprovar esta situação através das fotografias anexas ao presente email. Juro pela minha honra que a informação que consta neste email é verídica.";

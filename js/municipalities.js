@@ -11,7 +11,7 @@ var MUNICIPALITIES = {
     },
     Almada : {
         name: "Almada",
-        authority: "PSP Almada",
+        authority: "Polícia de Segurança Pública de Almada",
         email: "divalmada.setubal@psp.pt"
     },
     Amadora : {
@@ -26,7 +26,7 @@ var MUNICIPALITIES = {
     },
     Benavente : {
         name: "Benavente",
-        authority: "GNR Benavente",
+        authority: "Guarda Nacional Republicana de Benavente",
         email: "ct.str.dcch.pbnv@gnr.pt"
     },
     Braga : {
@@ -51,7 +51,7 @@ var MUNICIPALITIES = {
     },
     Faro : {
         name: "Faro",
-        authority: "PSP Faro",
+        authority: "Polícia de Segurança Pública de Faro",
         email: "cpfaro@psp.pt"
     },
     Gondomar : {
@@ -66,12 +66,12 @@ var MUNICIPALITIES = {
     },
     Lagos : {
         name: "Lagos",
-        authority: "PSP Lagos",
+        authority: "Polícia de Segurança Pública de Lagos",
         email: "lagos.faro@psp.pt"
     },
     Leiria : {
         name: "Leiria",
-        authority: "PSP Leiria",
+        authority: "Polícia de Segurança Pública de Leiria",
         email: "esquadrasede.leiria@psp.pt"
     },
     Loures : {
@@ -106,7 +106,7 @@ var MUNICIPALITIES = {
     },
     Portimao : {
         name: "Portimão",
-        authority: "PSP Portimão",
+        authority: "Polícia de Segurança Pública de Portimão",
         email: "divportimao.faro@psp.pt"
     },
     PovoaVarzim : {
@@ -121,7 +121,7 @@ var MUNICIPALITIES = {
     },
     Setubal : {
         name: "Setúbal",
-        authority: "PSP Setúbal",
+        authority: "Polícia de Segurança Pública de Setúbal",
         email: "stbesqtr@psp.pt"
     },
     Sintra : {
@@ -136,7 +136,7 @@ var MUNICIPALITIES = {
     },
     Viana_do_Castelo : {
         name: "Viana do Castelo",
-        authority: "PSP de Viana do Castelo",
+        authority: "Polícia de Segurança Pública de Viana do Castelo",
         email: "cpvcastelo@psp.pt"
     },    
     VilaNovaGaia : {
