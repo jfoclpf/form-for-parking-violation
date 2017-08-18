@@ -68,9 +68,5 @@ function getMainMessage(ShortName){
 
     message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br>";
 
-    if(map_reverse_location){
-        message = message + msg5 + "<br><br>" + getMapImageToMessage();
-    }
-
     return message;
 }

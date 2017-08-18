@@ -1,9 +1,36 @@
+var DEBUG = false;
+console.log("DEBUG: ", DEBUG);
+
+var WAS_INIT;
 var mainMessage;
 var email_to;
 var email_subject;
 
+
+$(document).ready(function() {
+    console.log("$(document).ready started");
+    WAS_INIT = false;
+    document.addEventListener("deviceready", onDeviceReady, false);
+});
+
+function onDeviceReady() {
+    console.log("onDeviceReady() started");
+    init();
+}
+
+//if by any strange reason onDeviceReady doesn't trigger, load init() anyway
+setTimeout(function () {
+    if (!WAS_INIT){
+        init();
+    }
+}, 3000);
+
+
 //when the page loads
-$(window).on('load', function(){
+function init() {
+    
+    console.log("init() started");
+    WAS_INIT = true;
 
     //information stored in variable window.localStorage
     loadsPersonalInfo();
@@ -19,22 +46,7 @@ $(window).on('load', function(){
     var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     $("#time").val(currentTime);
 
-    // if user cookie
-    if (enable_user_cookie){
-    getUserCookie();
-    }
-
-    //if images support enabled show
-    if (images_support) {
-        $("#image_selector").show();
-    }
-
-    // Get Localization if available   
-    if (map_reverse_location) {
-        getLocation() // this may return that map_reverse_location isn't available with "false" value
-    }
-
-});
+}
 
 //##############################################################################################################
 //##############################################################################################################
@@ -55,11 +67,6 @@ $("#generate_email_btn").click(function(){
         if(to_break){
             return;
         }
-    }
-
-    // Updates Cookie -- for web version
-    if (enable_user_cookie){ 
-        setUserCookie();
     }
   
     //detects inf the name is correctly filled in
@@ -110,12 +117,13 @@ $("#generate_email_btn").click(function(){
 
 //botão de gerar email
 $("#send_email_btn").click(function(){
-  
-  clipboard.copy({
-    "text/html": mainMessage
-  });
-  
-  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois anexar a foto!\n\n\nCaso o cliente de mail não se abra, a mensagem foi copiada para o seu ambiente de trabalho!\n1)Crie uma mensagem de email,\n2)Cole o texto no corpo da mensagem clicando CTRL-V,\n3)Envie para " + email_to);
+    
+  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois anexar a foto!\n\n\n" +
+        "Caso o cliente de mail não se abra:\n" + 
+        "1)Copie a mensagem gerada,\n" +
+        "2)Crie um novo email,\n" + 
+        "3)Cole a mensagem no corpo do email,\n" + 
+        "4)Envie para " + email_to);
 
   email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
     
