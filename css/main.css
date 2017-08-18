@@ -21,6 +21,10 @@ input {
 
 }
 
+.header {
+    font-size: 200%;
+}
+
 .lead{
     text-align: justify;
 }

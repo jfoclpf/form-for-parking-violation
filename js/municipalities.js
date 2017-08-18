@@ -1,4 +1,4 @@
-var municipalities = {
+var MUNICIPALITIES = {
     Lisboa : {
         name: "Lisboa",
         authority: "Polícia Municipal de Lisboa",
