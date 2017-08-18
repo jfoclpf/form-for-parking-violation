@@ -7,7 +7,6 @@ Formulário para submissão de queixa de estacionamento ilegal junto de autorida
 
 Neste momento o código está desenhado para <a href="https://cordova.apache.org/">Cordova</a> Android. Todavia pode ser perfeitamente adaptável para HTML, bastando descarregar o conjunto de ficheiros e abrir o ficheiro `index.html`.
 
-
 ## Opções
 
  * debug=1, ativa o modo de debug do formulário; debug=false desativa
@@ -24,6 +23,12 @@ APIs Utilizadas:
 
  * Google Maps - https://maps.googleapis.com/maps/api
  * OpenStreetMap - https://nominatim.openstreetmap.org/reverse
+
+## Contribuição são muito bem-vindas
+ 
+ * respeite a estrutura dos ficheiros
+ * comente sempre o código (preferencialmente em Inglês), tal ajuda os outros a compreender as suas contribuiçes
+ * para identações, use sempre 4 espaços (não use 2 espaços, nem tabulaçes, ou seja TAB)
 
 ## Licença
 
