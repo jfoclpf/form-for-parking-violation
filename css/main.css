@@ -46,6 +46,12 @@ input[type="number"] {
     font-size:16
 }
 
+img{
+    border: 2px solid black !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+}
+
 /* Image Designing Propoerties */
 .thumb {
     height: 75px;

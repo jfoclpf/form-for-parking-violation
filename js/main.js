@@ -1,11 +1,11 @@
-var DEBUG = false;
+var DEBUG = true;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;
 var mainMessage;
 var email_to;
 var email_subject;
-
+var ImageUriArray = [];
 
 $(document).ready(function() {
     console.log("$(document).ready started");
@@ -115,23 +115,59 @@ $("#generate_email_btn").click(function(){
   }, 1000);
 });
 
+//buttons "Add Image"
+$("#addImg_1, #addImg_2, #addImg_3, #addImg_4").click(function(){
+    
+    //get id, for example #remImg_2
+    var id = $(this).attr('id');
+    //gets the number of the element, by obtaining the last character of the id
+    var num = id[id.length-1];    
+    
+    openCamera(num);
+});
+
+//buttons "Remove Image"
+$("#remImg_1, #remImg_2, #remImg_3, #remImg_4").click(function(){
+    
+    //get id, for example #remImg_2
+    var id = $(this).attr('id');
+    //gets the number of the element, by obtaining the last character of the id
+    var num = id[id.length-1];
+    
+    removeImage("myImg_" + num);
+    $(this).hide();
+    
+    $("#addImg_" +  num).text("Adicionar imagem");    
+});
+
+
+
+
 //botão de gerar email
 $("#send_email_btn").click(function(){
     
-  alert("Abrir-se-á de seguida o seu cliente de mail, bastando depois anexar a foto!\n\n\n" +
+    alert("Abrir-se-á de seguida o seu cliente de mail com a mensagem pronta a enviar!\n\n\n" +
         "Caso o cliente de mail não se abra:\n" + 
         "1)Copie a mensagem gerada,\n" +
         "2)Crie um novo email,\n" + 
-        "3)Cole a mensagem no corpo do email,\n" + 
-        "4)Envie para " + email_to);
+        "3)Cole a mensagem gerada no corpo do email,\n" +
+        "4)Anexe a foto,\n" +
+        "5)Envie para " + email_to);
 
-  email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
+    email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
+
+    //this removes the HTML tags
+    //email_subject = encodeURIComponent(email_subject);  
+    //clean_msg = encodeURIComponent(clean_message(mainMessage));  
     
-  email_subject = encodeURIComponent(email_subject);  
-  clean_msg = encodeURIComponent(clean_message(mainMessage));  
-  
-  window.open('mailto:'+encodeURIComponent(email_to)+'?subject='+email_subject+'&body='+clean_msg);  
+    cordova.plugins.email.open({
+        to:          email_to, // email addresses for TO field
+        attachments: ImageUriArray, // file paths or base64 data streams
+        subject:    email_subject, // subject of the email
+        body:       mainMessage, // email body (for HTML, set isHtml to true)
+        isHtml:    true // indicats if the body is HTML or plain text
+    });    
+    
 });
-
 
 

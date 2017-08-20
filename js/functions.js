@@ -219,3 +219,58 @@ function pad(num, size) {
     while (s.length < size) s = "0" + s;
     return s;
 }
+
+//for the camera plugin
+function openCamera(imgNmbr) {
+
+    var srcType = Camera.PictureSourceType.CAMERA;
+    var options = setOptions(srcType);    
+
+    navigator.camera.getPicture(function cameraSuccess(imageUri) {
+
+        displayImage(imageUri, "myImg_" + imgNmbr);
+        console.log(imageUri);
+        
+        ImageUriArray.push(imageUri);
+        
+        //hides "Adds images" button
+        $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
+        $("#" + "remImg_" + imgNmbr).show();
+
+    }, function cameraError(error) {
+        console.debug("Não foi possível obter fotografia: " + error, "app");
+
+    }, options);
+}
+
+function setOptions(srcType) {
+    var options = {
+        // Some common settings are 20, 50, and 100
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        // In this app, dynamically set the picture source, Camera or photo gallery
+        sourceType: srcType,
+        encodingType: Camera.EncodingType.JPEG,
+        mediaType: Camera.MediaType.PICTURE,
+        allowEdit: false,
+        correctOrientation: true  //Corrects Android orientation quirks
+    }
+    return options;
+}
+
+function displayImage(imgUri, id) {
+
+    var elem = document.getElementById(id);
+    elem.src = imgUri;
+    elem.style.display = "block";
+}
+
+function removeImage(id){
+    
+    var elem = document.getElementById(id);
+    elem.src = "";
+    elem.style.display = "none";
+}
+
+
+
