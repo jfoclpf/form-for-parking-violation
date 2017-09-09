@@ -104,7 +104,7 @@ function isCarPlateOK(){
     var plate_str = $("#plate").val();
     plate_str = plate_str.toUpperCase(); // force place upcase
 
-    plate_str = plate_str.replace(/−/g,'-'); // replace minus character with hifen 
+    plate_str = plate_str.replace(/\u2013|\u2014/g, "-"); //it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
 
     var bool1 = (plate_str != "XX-XX-XX");
     var bool3 = (plate_str.substring(2, 3) == "-");
@@ -137,7 +137,7 @@ function isPostalCodeOK(){
         return false;
     }
     
-    plate_str = plate_str.replace(/−/g,'-'); // replace minus character with hifen     
+    plate_str = plate_str.replace(/\u2013|\u2014/g, "-"); //it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
     
     //regex format for 0000-000 or 0000 000 
     //http://stackoverflow.com/questions/2577236/regex-for-zip-code
@@ -155,7 +155,7 @@ function getCarPlate(){
   
     var plate_str = $("#plate").val();
     plate_str = plate_str.toUpperCase(); // force place upcase
-    plate_str = plate_str.replace(/−/g,'-'); // replace minus character with hifen 
+    plate_str = plate_str.replace(/\u2013|\u2014/g, "-"); //it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
 
     return plate_str;
 }
@@ -231,7 +231,7 @@ function openCamera(imgNmbr) {
         displayImage(imageUri, "myImg_" + imgNmbr);
         console.log(imageUri);
         
-        ImageUriArray.push(imageUri);
+        ImageUriArray[imgNmbr]=imageUri;
         
         //hides "Adds images" button
         $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
@@ -265,11 +265,23 @@ function displayImage(imgUri, id) {
     elem.style.display = "block";
 }
 
-function removeImage(id){
+function removeImage(id, num){
     
     var elem = document.getElementById(id);
     elem.src = "";
     elem.style.display = "none";
+    ImageUriArray[num] = null;
+}
+
+// Will remove all falsy values: undefined, null, 0, false, NaN and "" (empty string)
+function cleanArray(actual) {
+  var newArray = new Array();
+  for (var i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
+    }
+  }
+  return newArray;
 }
 
 

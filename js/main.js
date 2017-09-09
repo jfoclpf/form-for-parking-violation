@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;
@@ -134,7 +134,7 @@ $("#remImg_1, #remImg_2, #remImg_3, #remImg_4").click(function(){
     //gets the number of the element, by obtaining the last character of the id
     var num = id[id.length-1];
     
-    removeImage("myImg_" + num);
+    removeImage("myImg_" + num, num);
     $(this).hide();
     
     $("#addImg_" +  num).text("Adicionar imagem");    
@@ -162,7 +162,7 @@ $("#send_email_btn").click(function(){
     
     cordova.plugins.email.open({
         to:          email_to, // email addresses for TO field
-        attachments: ImageUriArray, // file paths or base64 data streams
+        attachments: cleanArray(ImageUriArray), // file paths or base64 data streams
         subject:    email_subject, // subject of the email
         body:       mainMessage, // email body (for HTML, set isHtml to true)
         isHtml:    true // indicats if the body is HTML or plain text

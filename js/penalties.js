@@ -1,5 +1,4 @@
-
-//campos description e law_article devem ser condicentes gramaticalmente com a mensagem que será gerada
+//campos "description" e "law_article" devem ser condicentes gramaticalmente com a mensagem que será gerada
 //exemplo: "a viatura encontrava-se estacionada" + description + ", em violação" + law_article
 
 
@@ -30,9 +29,14 @@ var PENALTIES = {
         law_article: "da alínea e) do n.º 1 do art.º 49.º do Código da Estrada"      
     },
     rotunda : {
-        select     : "Placa central de rortunda",
+        select     : "Placa central de rotunda",
         description: "sobre uma placa central de rortunda",
         law_article: "da alínea f) do n.º 1 do art.º 49.º do Código da Estrada"   
-    },    
+    },
+    deficiente : {
+        select     : "Lugar de pessoa com deficiência",
+        description: "num lugar reservado a pessoa com deficiência",
+        law_article: "da alínea q) do n.º 1 do art.º 145.º do Código da Estrada, sendo por conseguinte uma contraordenação grave"   
+    }    
 };
 

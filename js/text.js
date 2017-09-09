@@ -12,7 +12,7 @@ function getMainMessage(ShortName){
         }
     }
     
-    //Authority
+    //Penalties
     var penaltyDescription;
     var penaltyLawArticle;
     for (var key in PENALTIES){
