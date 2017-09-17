@@ -56,7 +56,7 @@ function getMainMessage(ShortName){
         ( $("#time").val() ? " pelas <b>" + $("#time").val() + "</b>" : "") + //optional
         ", " +
         "na <b>" + $("#place_prefix").val() + " " + $("#street").val() + ", " +  $("#municipality").val() + "</b>, " +
-        ( $("#door_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#door_number").val() + "</b>, " : "") + //optional
+        ( $("#street_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#street_number").val() + "</b>, " : "") + //optional
         "a viatura com matrícula <b>" + CarPlateStr + "</b> " + carmake_model_txt +
         "encontrava-se estacionada" + " " + penaltyDescription + ", em violação " + penaltyLawArticle +".";
 

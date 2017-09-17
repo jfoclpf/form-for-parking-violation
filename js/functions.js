@@ -284,5 +284,78 @@ function cleanArray(actual) {
   return newArray;
 }
 
+/*Geo location functions*/
+function GetGeolocation() {
+    $("#street").addClass("loading");
+    $("#street_number").addClass("loading");
+    
+    var options = { timeout: 30000, enableHighAccuracy: true };
+    navigator.geolocation.getCurrentPosition(GetPosition, PositionError, options);
+}
+ 
+function GetPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    ReverseGeocode(latitude, longitude);   // Pass the latitude and longitude to get address.
+}
+ 
+function PositionError() {
+    navigator.notification.alert('Não foi possível detetar a presente localização.');
+}
+
+
+/*Get address by coordinates*/
+function ReverseGeocode(latitude, longitude){
+    var reverseGeocoder = new google.maps.Geocoder();
+    var currentPosition = new google.maps.LatLng(latitude, longitude);
+    reverseGeocoder.geocode({'latLng': currentPosition}, function(results, status) {
+ 
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+                
+                var address_components = results[0].address_components;
+                
+                $("#street").val(getAddressComponents(address_components,"route"));
+                $("#street_number").val(getAddressComponents(address_components,"street_number"));
+                
+                $("#street").removeClass("loading");
+                $("#street_number").removeClass("loading");
+               
+            }
+            else {
+                $.jAlert({
+                    'title': "Erro!", 
+                    'content': "Não foi possível detetar o local. Introduza-o manualmente."
+                });
+            }
+        } 
+        else {
+            $.jAlert({
+                'title': "Erro!", 
+                'content': "Não foi possível detetar o local. Introduza-o manualmente."
+            });
+        }
+    });
+}
+
+
+
+//gets "street_number", "route", "locality", "country", "postal_code"
+function getAddressComponents(components, type) {    
+    
+    for (var key in components) {
+        if (components.hasOwnProperty(key)) {            
+            
+            if (type == components[key].types[0]) {
+                return components[key].long_name;
+            }  
+        }        
+    }
+}
+
+
+      
+   
+
 
 

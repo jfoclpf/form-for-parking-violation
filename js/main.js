@@ -31,7 +31,7 @@ function init() {
     
     console.log("init() started");
     WAS_INIT = true;
-
+    
     //information stored in variable window.localStorage
     loadsPersonalInfo();
 
@@ -45,6 +45,9 @@ function init() {
     $("#date").datepicker('setDate', date);
     var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     $("#time").val(currentTime);
+    
+    //get from GPS Address information
+    GetGeolocation()
 
 }
 
@@ -59,7 +62,10 @@ $("#generate_email_btn").click(function(){
         var to_break=false;
         $(".mandatory").each(function(){
             if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
-                alert("Preencha todos os campos obrigatórios assinalados com *");
+                $.jAlert({
+                            'title': "Erro!", 
+                            'content': "Preencha todos os campos obrigatórios assinalados com *"
+                         });
                 to_break = true;
                 return false;
             }
@@ -72,19 +78,30 @@ $("#generate_email_btn").click(function(){
     //detects inf the name is correctly filled in
     var Name = $("#name").val();
     if (!isFullNameOK(Name) && !DEBUG){
-        alert("Insira o nome completo");
+        
+        $.jAlert({
+            'title': "Erro no nome!", 
+            'content': "Insira o nome completo."
+        });
         return;
     }
     var ShortName = Name.split(' ')[0] + " " +  Name.split(' ')[(Name.split(' ')).length-1];
     
-    if (!isPostalCodeOK() && !DEBUG){
-        alert("Insira o Código Postal no formato XXXX-XXX");
+    if (!isPostalCodeOK() && !DEBUG){                
+        
+        $.jAlert({
+            'title': "Erro no Código Postal!", 
+            'content': "Insira o Código Postal no formato XXXX-XXX"
+        });        
         return;
     }
   
     //detects if the car plate is correctly filled in
     if ((!isCarPlateOK()) && (!DEBUG)) {
-        alert("Preencha a matrícula em maiúsculas no formato XX-XX-XX");
+        $.jAlert({
+            'title': "Erro na matrícula!", 
+            'content': "Preencha a matrícula em maiúsculas no formato XX-XX-XX"
+        });         
         return;
     }
   
@@ -140,19 +157,36 @@ $("#remImg_1, #remImg_2, #remImg_3, #remImg_4").click(function(){
     $("#addImg_" +  num).text("Adicionar imagem");    
 });
 
+//botão get address by GPS
 
+$("#getCurrentAddresBtn").click(function(){
 
+    GetGeolocation();
+    
+});
 
 //botão de gerar email
 $("#send_email_btn").click(function(){
     
-    alert("Abrir-se-á de seguida o seu cliente de mail com a mensagem pronta a enviar!\n\n\n" +
-        "Caso o cliente de mail não se abra:\n" + 
-        "1)Copie a mensagem gerada,\n" +
-        "2)Crie um novo email,\n" + 
-        "3)Cole a mensagem gerada no corpo do email,\n" +
-        "4)Anexe a foto,\n" +
-        "5)Envie para " + email_to);
+    
+    var alert_str = "Abrir-se-á de seguida o seu cliente de mail com a mensagem pronta a enviar!<br><br>" +
+                    "Caso o cliente de mail não se abra:<br>" + 
+                    "1) Copie a mensagem gerada,<br>" +
+                    "2) Crie um novo email,<br>" + 
+                    "3) Cole a mensagem gerada no corpo do email,<br>" +
+                    "4) Anexe a foto,<br>" +
+                    "5) Envie para " + email_to;
+
+    $.jAlert({
+        'title': "Aviso!", 
+        'content': alert_str,
+        'btns': {'text': 'OK'},
+        'onClose' : sendEmail
+    });   
+    
+});
+
+function sendEmail() {
 
     email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
 
@@ -166,8 +200,7 @@ $("#send_email_btn").click(function(){
         subject:    email_subject, // subject of the email
         body:       mainMessage, // email body (for HTML, set isHtml to true)
         isHtml:    true // indicats if the body is HTML or plain text
-    });    
-    
-});
+    }); 
 
+}
 

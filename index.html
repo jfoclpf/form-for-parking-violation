@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">    
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: https://csi.gstatic.com; script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     
     <meta name="description" content="">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/res/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/res/jquery-ui.css">
     <link rel="stylesheet" href="css/res/bootstrap-theme.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/res/jAlert.css">
     
 </head>
 <body>
@@ -24,16 +25,16 @@
     </h1>
 
     <p class="lead">
-        A Polícia Municipal <a href="http://www.dn.pt/sociedade/interior/seguranca-lisboa-tem-a-maior-policia-municipal-de-sempre-7949797.html">confirma</a>
-        que dá seguimento às queixas dos cidadãos por esta via,
-        de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa, entre janeiro e março de 2017, em apenas três meses,
-        foram levantados 1332 autos com esta origem.
+        A Polícia confirma que dá seguimento às queixas dos cidadãos por esta via,
+        de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa por exemplo, entre janeiro e março de 2017, 
+        em apenas três meses, foram levantados mais de mil autos com esta origem.
     </p>
     <div>
         <hr>
         <h3>Os seus dados</h3>
         <p class="lead">
         Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
+        Os dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
         </p>
         <div class="row">
             <div class="col-xs-12 col-sm-3 form-group">
@@ -117,54 +118,18 @@
                 <select class="form-control mandatory personal_info" id="penalties">
                 </select>
             </div>
-
+         
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="place_prefix">Junto ou sobre que tipo de arruamento</label> <span style="color:red">*</span>
-                <select class="form-control" id="place_prefix">
-                    <option></option> 
-                    <option>Rua</option>
-                    <option>Alameda</option>
-                    <option>Avenida</option>
-                    <option>Praça</option>
-                    <option>Rotunda</option>
-                    <option>Travessa</option>
-                    <option>Largo</option>
-                    <option>Estrada</option>   
-                    <option>Circular</option>
-                    <option>Calçada</option>
-                    <option>Praceta</option>                
-                    <option>Beco</option>                  
-                </select>
+                <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar local</button>
+                <br><br>
+                <label for="street">Local da ocorrência (rua, travessa, praça, etc.)<span style="color:red">*</span></label>
+                <input size="35" class="form-control mandatory" id="street" placeholder="Rua do Ouro" type="text" required>
             </div>
 
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="street">Morada da ocorrência<span style="color:red">*</span></label>
-                <input size="35" class="form-control mandatory" id="street" placeholder="do Ouro" type="text" required>
+                <label for="street_number">Junto ao Número</label>
+                <input size="4" class="form-control" id="street_number" type="text">
             </div>
-
-            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="door_number">Junto ao Número</label>
-                <input size="4" class="form-control" id="door_number" type="text">
-            </div>
-        </div>
-
-        <!--Maps-->
-        <div id="location_holder" style="display:none">
-        <h3>Localização</h3>
-          <div class="row">
-              <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <label for="longitude">Longitude</label>
-                <input class="form-control" id="longitude" type="text">
-              </div>
-              <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <label for="latitude">Latitude</label>
-                <input class="form-control" id="latitude" type="text">
-              </div>
-              <div class="form-group col-xs-12 col-sm-6 col-md-6">
-                <label>Mapa</label>
-                <div id="map_holder"></div>
-              </div>          
-          </div>
         </div>
 
         <!--Image-->       
@@ -229,7 +194,7 @@
           <div class="col-xs-12">
             <div id="preamble"></div>
             <p></p>
-            <button class="btn btn-default" id="send_email_btn">Enviar email</button>
+            <button class="btn btn-success" id="send_email_btn">Enviar email</button>
           </div>
         </div>
     </div>
@@ -238,6 +203,7 @@
 
     <script src="js/res/jquery.min.js"></script>
     <script src="js/res/jquery-ui.min.js"></script>
+    <script src="js/res/jAlert.js"></script>
     <script src="js/municipalities.js"></script>
     <script src="js/penalties.js"></script>
     <script src="js/functions.js"></script>
@@ -245,6 +211,7 @@
     <script src="js/main.js"></script>
     <script src="js/res/imgupload.js"></script>
     <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>    
 
 </body>
 </html>
