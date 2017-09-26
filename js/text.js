@@ -55,7 +55,7 @@ function getMainMessage(ShortName){
     var msg2 = "No passado dia <b>" + $.datepicker.formatDate("dd' de 'MM' de 'yy", $( "#date" ).datepicker('getDate') ) + "</b>" +
         ( $("#time").val() ? " pelas <b>" + $("#time").val() + "</b>" : "") + //optional
         ", " +
-        "na <b>" + $("#place_prefix").val() + " " + $("#street").val() + ", " +  $("#municipality").val() + "</b>, " +
+        "na <b>" + $("#street").val() + ", " +  $("#municipality").val() + "</b>, " +
         ( $("#street_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#street_number").val() + "</b>, " : "") + //optional
         "a viatura com matrícula <b>" + CarPlateStr + "</b> " + carmake_model_txt +
         "encontrava-se estacionada" + " " + penaltyDescription + ", em violação " + penaltyLawArticle +".";

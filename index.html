@@ -38,34 +38,34 @@
         </p>
         <div class="row">
             <div class="col-xs-12 col-sm-3 form-group">
-                <label for="name">Nome <u>Completo</u><span style="color:red">*</span></label>
-                <input size="30" id="name" class="form-control mandatory personal_info" type="text" required>
+                <label for="name">Nome <u>Completo</u></label>
+                <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
             </div>
             <div class="col-xs-12 col-sm-2 form-group">
                 <label for="id_type">A sua Identificação</label>
-                <select class="form-control personal_info" id="id_type">
+                <select class="form-control input-lg personal_info" id="id_type">
                     <option>Cartão de Cidadão</option>
                     <option>Bilhete de Identidade</option>                
                 </select>
             </div>
             <div class="col-xs-12 col-sm-2 form-group">
-                <label for="id_number">Número <span style="color:red">*</span></label>
-                <input size="30" id="id_number" class="form-control mandatory personal_info" placeholder="00000000" type="text" required>
+                <label for="id_number">Número </label>
+                <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
             </div>
             <div class="col-xs-12 col-sm-5 form-group">
-                <label for="address">A sua Morada <span style="color:red">*</span></label>
-                <input size="30" id="address" class="form-control mandatory personal_info" type="text" required>
+                <label for="address">A sua Morada </label>
+                <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-sm-2 form-group">
-                <label for="postal_code">Código Postal<span style="color:red">*</span></label>
-                <input size="10" id="postal_code" class="form-control mandatory personal_info" placeholder="0000-000" type="text" required>                
+                <label for="postal_code">Código Postal</label>
+                <input size="10" id="postal_code" name="O seu Código Postal" class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
             </div>
             <div class="col-xs-12 col-sm-2 form-group">                
-                <label for="address_city">Localidade<span style="color:red">*</span></label>
-                <input size="10" id="address_city" class="form-control mandatory personal_info" placeholder="Lisboa" type="text" required>
+                <label for="address_city">Localidade</label>
+                <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
             </div>            
         </div>
 
@@ -78,57 +78,56 @@
         </p>
         <div class="row">
             <div class="col-xs-12 col-sm-4 form-group">
-                <label for="plate">Matrícula <span style="color:red">*</span></label>
-                <input class="form-control mandatory" id="plate" placeholder="XX-XX-XX" required>
+                <label for="plate">Matrícula </label>
+                <input class="form-control input-lg mandatory" id="plate" name="Matrícula do veículo" placeholder="XX-XX-XX" required>
             </div>
 
             <div class="col-xs-12 col-sm-4 form-group">
                 <label for="carmake">Marca</label>
-                <input class="form-control" id="carmake" placeholder="Opel" type="text">
+                <input class="form-control input-lg mandatory" id="carmake" name="Marca do veículo" placeholder="Opel" type="text">
             </div>
 
             <div class="col-xs-12 col-sm-4 form-group">
                 <label for="model">Modelo</label>
-                <input class="form-control" id="model" placeholder="Corsa" type="text">
+                <input class="form-control input-lg mandatory" id="model" name="Modelo do veículo" placeholder="Corsa" type="text">
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-md-6 form-group">
-                <label for="date">Data <span style="color:red">*</span></label>
+                <label for="date">Data </label>
 
-                <input class="form-control mandatory" type="text" id="date" required>
+                <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
             </div>
             <div class="col-xs-12 col-md-6 form-group">
                 <label for="time">Hora</label>
-                <input class="form-control" id="time" type="time">
+                <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
             </div>
         </div>
 
         <div class="row">
-
+            
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="municipality">Concelho</label> <span style="color:red">*</span>
-                <select class="form-control mandatory personal_info" id="municipality">
+                <label for="penalties">Tipo de Ocorrência</label> 
+                <select class="form-control input-lg mandatory personal_info" id="penalties" name="Tipo de Ocorrência">
                 </select>
-            </div>
-
-            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="penalties">Tipo de Ocorrência</label> <span style="color:red">*</span>
-                <select class="form-control mandatory personal_info" id="penalties">
-                </select>
-            </div>
-         
+            </div>         
+            
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar local</button>
                 <br><br>
-                <label for="street">Local da ocorrência (rua, travessa, praça, etc.)<span style="color:red">*</span></label>
-                <input size="35" class="form-control mandatory" id="street" placeholder="Rua do Ouro" type="text" required>
+                <label for="locality">Localidade</label> 
+                <input size="35" class="form-control input-lg mandatory" id="locality" name="Localidade da ocorrência" placeholder="Massamá" type="text" required>                
             </div>
+            
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                <label for="street">Local da ocorrência</label>
+                <input size="35" class="form-control input-lg mandatory" id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
+            </div>              
 
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="street_number">Junto ao Número</label>
-                <input size="4" class="form-control" id="street_number" type="text">
+                <input size="4" class="form-control input-lg" id="street_number" name="Número postal do Local da Ocorrência" type="text">
             </div>
         </div>
 
@@ -178,7 +177,7 @@
         </div>
 
         <hr>
-        <button class="btn btn-primary" id="generate_email_btn">Gerar texto</button>
+        <button class="btn btn-success" id="generate_email_btn">Gerar texto</button>
     </div>
 
     <div id="second_stage" style="display:none">
@@ -191,8 +190,7 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col-xs-12">
-            <div id="preamble"></div>
+          <div class="col-xs-12">            
             <p></p>
             <button class="btn btn-success" id="send_email_btn">Enviar email</button>
           </div>
@@ -204,14 +202,13 @@
     <script src="js/res/jquery.min.js"></script>
     <script src="js/res/jquery-ui.min.js"></script>
     <script src="js/res/jAlert.js"></script>
-    <script src="js/municipalities.js"></script>
+    <script src="js/contacts.js"></script>
     <script src="js/penalties.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/text.js"></script>
     <script src="js/main.js"></script>
     <script src="js/res/imgupload.js"></script>
-    <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>    
+    <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>    
 
 </body>
 </html>

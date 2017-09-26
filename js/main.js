@@ -6,15 +6,21 @@ var mainMessage;
 var email_to;
 var email_subject;
 var ImageUriArray = [];
+var Platform;
 
 $(document).ready(function() {
     console.log("$(document).ready started");
     WAS_INIT = false;
     document.addEventListener("deviceready", onDeviceReady, false);
+
 });
 
 function onDeviceReady() {
     console.log("onDeviceReady() started");
+    
+    document.addEventListener("online", onOnline, false);
+    document.addEventListener("resume", onResume, false);    
+    
     init();
 }
 
@@ -35,8 +41,6 @@ function init() {
     //information stored in variable window.localStorage
     loadsPersonalInfo();
 
-    //populates HTML select according to the information on municipalities.js file
-    populatesMunicipalities();
     //populates HTML select according to the information on penalties.js file
     populatesPenalties();
 
@@ -46,13 +50,26 @@ function init() {
     var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     $("#time").val(currentTime);
     
-    //get from GPS Address information
-    GetGeolocation()
-
+    $("input").each(function (){
+        if (!DEBUG && $(this).val() == ""){
+            $(this).css("border-color","red");        
+        }
+    });
+    
+    loadMapsApi();
 }
 
 //##############################################################################################################
 //##############################################################################################################
+
+function onOnline () {
+    loadMapsApi();
+}
+
+function onResume () {
+    loadMapsApi();
+}
+
 
 //when user clicks "generate_email"
 $("#generate_email_btn").click(function(){
@@ -60,17 +77,30 @@ $("#generate_email_btn").click(function(){
     if (!DEBUG) {
         //campos vazios
         var to_break=false;
+        var error_string = "";
+        var count = 0;
         $(".mandatory").each(function(){
-            if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){
-                $.jAlert({
-                            'title': "Erro!", 
-                            'content': "Preencha todos os campos obrigatórios assinalados com *"
-                         });
+            if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){                
+                console.log('Error on #' + $(this).attr('id'));
+                error_string += $(this).attr('name') + "<br>";
+                count++;
                 to_break = true;
-                return false;
             }
         });
-        if(to_break){
+        
+        if(to_break){            
+            if(count==1){
+                $.jAlert({
+                            'title': "Erro!", 
+                            'content': "Preencha o seguinte campo obrigatório:<br>" + error_string
+                         });                                 
+            }
+            else{
+                $.jAlert({
+                            'title': "Erro!", 
+                            'content': "Preencha os seguintes campos obrigatórios:<br>" + error_string
+                         });            
+            }           
             return;
         }
     }
@@ -107,22 +137,6 @@ $("#generate_email_btn").click(function(){
   
     //from here the inputs are correctly written
     
-  //PREAMBLE
-  var preamble = "Para enviar email para ";
-  for (var key in MUNICIPALITIES){
-    if(!MUNICIPALITIES.hasOwnProperty(key)) continue;
-    
-    var obj = MUNICIPALITIES[key];                             
-    if ($("#municipality").val() == obj.name){
-      preamble += '<a href="mailto:' + obj.email + '">' + obj.email + '</a>';
-      email_to = obj.email;        
-    }
-  } 
-  preamble += " clique no seguinte botão:"
-
-  mainMessage = getMainMessage(ShortName);
-  
-  $("#preamble").html(preamble);
   $("#message").html(mainMessage);
   $("#second_stage").show();
   
@@ -157,50 +171,35 @@ $("#remImg_1, #remImg_2, #remImg_3, #remImg_4").click(function(){
     $("#addImg_" +  num).text("Adicionar imagem");    
 });
 
-//botão get address by GPS
 
-$("#getCurrentAddresBtn").click(function(){
-
-    GetGeolocation();
-    
-});
 
 //botão de gerar email
 $("#send_email_btn").click(function(){
-    
-    
-    var alert_str = "Abrir-se-á de seguida o seu cliente de mail com a mensagem pronta a enviar!<br><br>" +
-                    "Caso o cliente de mail não se abra:<br>" + 
-                    "1) Copie a mensagem gerada,<br>" +
-                    "2) Crie um novo email,<br>" + 
-                    "3) Cole a mensagem gerada no corpo do email,<br>" +
-                    "4) Anexe a foto,<br>" +
-                    "5) Envie para " + email_to;
-
-    $.jAlert({
-        'title': "Aviso!", 
-        'content': alert_str,
-        'btns': {'text': 'OK'},
-        'onClose' : sendEmail
-    });   
-    
-});
-
-function sendEmail() {
 
     email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
 
+    //if there are no photos
+    var photosArr = cleanArray(ImageUriArray);
+    
+    if(photosArr.length == 0){   
+        $.jAlert({
+            'title': "Erro nas fotos!", 
+            'content': "Adicione pelo menos uma foto do veículo em causa"
+        });
+        return;
+    }
+    
     //this removes the HTML tags
     //email_subject = encodeURIComponent(email_subject);  
     //clean_msg = encodeURIComponent(clean_message(mainMessage));  
     
     cordova.plugins.email.open({
         to:          email_to, // email addresses for TO field
-        attachments: cleanArray(ImageUriArray), // file paths or base64 data streams
+        attachments: photosArr, // file paths or base64 data streams
         subject:    email_subject, // subject of the email
         body:       mainMessage, // email body (for HTML, set isHtml to true)
         isHtml:    true // indicats if the body is HTML or plain text
-    }); 
-
-}
+    });  
+    
+});
 
