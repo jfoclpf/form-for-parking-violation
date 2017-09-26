@@ -2163,10 +2163,6 @@ const GNR_Contacts = [
    "contacto": "cari.die@gnr.pt"
  },
  {
-   "nome": "Direção de Investigação Criminal",
-   "contacto": "co.dic@gnr.pt"
- },
- {
    "nome": "Direção de Justiça e Disciplina",
    "contacto": "djd@gnr.pt"
  },
@@ -4445,10 +4441,6 @@ const PSP_Contacts = [
    "contacto": "divalmada.setubal@psp.pt"
  },
  {
-   "nome": "Almada - Esquadra de Investigação Criminal",
-   "contacto": "divalmada.setubal@psp.pt"
- },
- {
    "nome": "Almada - Esquadra de Trânsito",
    "contacto": "divalmada.setubal@psp.pt"
  },
@@ -4474,10 +4466,6 @@ const PSP_Contacts = [
  },
  {
    "nome": "Amadora - Esquadra de Intervenção e Fiscalização Policial",
-   "contacto": "eicamadora.lisboa@psp.pt"
- },
- {
-   "nome": "Amadora - Esquadra de Investigação Criminal",
    "contacto": "eicamadora.lisboa@psp.pt"
  },
  {
@@ -4517,10 +4505,6 @@ const PSP_Contacts = [
    "contacto": "stbeifpbarreiro@psp.pt"
  },
  {
-   "nome": "Barreiro - Esquadra de Investigação Criminal",
-   "contacto": "eicbarreiro.setubal@psp.pt"
- },
- {
    "nome": "Barreiro - Esquadra de Trânsito",
    "contacto": "stbesqtrabrr@psp.pt"
  },
@@ -4537,10 +4521,6 @@ const PSP_Contacts = [
    "contacto": "eifp.beja@psp.pt"
  },
  {
-   "nome": "Beja - Esquadra de Investigação Criminal",
-   "contacto": "eic.beja@psp.pt"
- },
- {
    "nome": "Beja - Esquadra de Trânsito",
    "contacto": "etr.beja@psp.pt"
  },
@@ -4551,10 +4531,6 @@ const PSP_Contacts = [
  {
    "nome": "Benfica - 3.ª Divisão Policial Lx",
    "contacto": "3div.lisboa@psp.pt"
- },
- {
-   "nome": "Benfica - 3.ª Esquadra de Investigação Criminal",
-   "contacto": "3eic.lisboa@psp.pt"
  },
  {
    "nome": "Braga - 1.ª Esquadra",
@@ -4577,10 +4553,6 @@ const PSP_Contacts = [
    "contacto": "eifp.braga@psp.pt"
  },
  {
-   "nome": "Braga - Esquadra de Investigação Criminal",
-   "contacto": "brgeic@psp.pt"
- },
- {
    "nome": "Braga - Esquadra de Trânsito (Souto Mayor)",
    "contacto": "brgesqtr@psp.pt"
  },
@@ -4597,10 +4569,6 @@ const PSP_Contacts = [
    "contacto": "eic.braganca@psp.pt"
  },
  {
-   "nome": "Bragança - Esquadra de Investigação Criminal",
-   "contacto": "eic.braganca@psp.pt"
- },
- {
    "nome": "Brigada de Proteção Ambiental - Porto",
    "contacto": "bripa.porto@psp.pt"
  },
@@ -4611,10 +4579,6 @@ const PSP_Contacts = [
  {
    "nome": "Calheta - Esquadra",
    "contacto": "madesqcalheta@psp.pt"
- },
- {
-   "nome": "Calvario - 4.ª Esquadra de Investigação Criminal",
-   "contacto": "4eic.lisboa@psp.pt"
  },
  {
    "nome": "Calvário - 4.ª Divisão Policial Lx",
@@ -4639,10 +4603,6 @@ const PSP_Contacts = [
  {
    "nome": "Cascais - Divisão Policial",
    "contacto": "divcascais.lisboa@psp.pt"
- },
- {
-   "nome": "Cascais - Esquadra de Investigação Criminal",
-   "contacto": "eiccascais.lisboa@psp.pt"
  },
  {
    "nome": "Cascais - Esquadra de Trânsito",
@@ -4670,10 +4630,6 @@ const PSP_Contacts = [
  },
  {
    "nome": "Chaves - Esquadra de Intervenção e Fiscalização Policial",
-   "contacto": "vrlsecchv@psp.pt"
- },
- {
-   "nome": "Chaves - Esquadra de Investigação Criminal",
    "contacto": "vrlsecchv@psp.pt"
  },
  {
@@ -4714,10 +4670,6 @@ const PSP_Contacts = [
  },
  {
    "nome": "Covilhã - Esquadra de Intervenção e Fiscalização",
-   "contacto": "covilha.castelobranco@psp.pt"
- },
- {
-   "nome": "Covilhã - Esquadra de Investigação Criminal",
    "contacto": "covilha.castelobranco@psp.pt"
  },
  {
@@ -4849,10 +4801,6 @@ const PSP_Contacts = [
    "contacto": "hrteir@psp.pt"
  },
  {
-   "nome": "Horta - Esquadra de Investigação Criminal",
-   "contacto": "hrteic@psp.pt"
- },
- {
    "nome": "Horta - Esquadra de Segurança Aeroportuaria",
    "contacto": "hrtsegaer@psp.pt"
  },
@@ -4893,36 +4841,8 @@ const PSP_Contacts = [
    "contacto": "esquadrasede.leiria@psp.pt"
  },
  {
-   "nome": "Lisboa - 6.ª Esquadra de Investigação Criminal",
-   "contacto": "6eic.lisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - 7.ª Esquadra de Investigação Criminal",
-   "contacto": "7eic.lisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - 8.ª Esquadra de Investigação Criminal",
-   "contacto": "8eic.lisboa@psp.pt"
- },
- {
    "nome": "Lisboa - Comando Metropolitano",
    "contacto": "cmlisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - Divisão de Investigação Criminal",
-   "contacto": "dic.lisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - Divisão de Investigação Criminal",
-   "contacto": "diceij.lisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - Divisão de Segurança A Instações",
-   "contacto": "dsi.lisboa@psp.pt"
- },
- {
-   "nome": "Lisboa - Divisão de Segurança Aeroportuaria",
-   "contacto": "dsa.lisboa@psp.pt"
  },
  {
    "nome": "Lisboa - Divisão de Seguraça A Transportes Publicos",
@@ -5001,16 +4921,8 @@ const PSP_Contacts = [
    "contacto": "divoeiras.lisboa@psp.pt"
  },
  {
-   "nome": "Oeiras - Esquadra de Investigação Criminal",
-   "contacto": "eicoeiras.lisboa@psp.pt"
- },
- {
    "nome": "Olhão - Esquadra",
    "contacto": "olhao.faro@psp.pt"
- },
- {
-   "nome": "Olivais - 2.ª Esquadra de Investigação Criminal",
-   "contacto": "2eic.lisboa@psp.pt"
  },
  {
    "nome": "Olivais Sul - 2.ª Divisão Policial Lx",
@@ -5039,10 +4951,6 @@ const PSP_Contacts = [
  {
    "nome": "Penha de França - 5.ª Divisão Policial Lx",
    "contacto": "5div.lisboa@psp.pt"
- },
- {
-   "nome": "Penha de França - 5.ª Esquadra de Investigação Criminal",
-   "contacto": "5eic.lisboa@psp.pt"
  },
  {
    "nome": "Peniche - Esquadra",
@@ -5093,10 +5001,6 @@ const PSP_Contacts = [
    "contacto": "divportimao.faro@psp.pt"
  },
  {
-   "nome": "Portimão - Esquadra de Investigação Criminal",
-   "contacto": "divportimao.faro@psp.pt"
- },
- {
    "nome": "Portimão - Esquadra de Trânsito",
    "contacto": "divportimao.faro@psp.pt"
  },
@@ -5107,10 +5011,6 @@ const PSP_Contacts = [
  {
    "nome": "Porto - Destacamento do Corpo de Intervenção",
    "contacto": "ci.porto@psp.pt"
- },
- {
-   "nome": "Porto - Divisão de Investigação Criminal",
-   "contacto": "dic.cmporto@psp.pt"
  },
  {
    "nome": "Porto - Divisão de Segurança Aeroportuaria",
@@ -5193,10 +5093,6 @@ const PSP_Contacts = [
    "contacto": "hrtscf@psp.pt"
  },
  {
-   "nome": "Santa Cruz das Flores - Esquadra de Investigação Criminal",
-   "contacto": "hrtscfsic@psp.pt"
- },
- {
    "nome": "Santa Maria da Feira - Esquadra",
    "contacto": "smfeira.aveiro@psp.pt"
  },
@@ -5233,10 +5129,6 @@ const PSP_Contacts = [
    "contacto": "divseixal.setubal@psp.pt"
  },
  {
-   "nome": "Seixal - Esquadra de Investigação Criminal",
-   "contacto": "divseixal.setubal@psp.pt"
- },
- {
    "nome": "Setúbal - 1.ª Esquadra",
    "contacto": "stb1esq@psp.pt"
  },
@@ -5251,10 +5143,6 @@ const PSP_Contacts = [
  {
    "nome": "Setúbal - Esquadra de Intervenção e Fiscalização Policial",
    "contacto": "stbeifp@psp.pt"
- },
- {
-   "nome": "Setúbal - Esquadra de Investigação Criminal",
-   "contacto": "stbao.setubal@psp.pt"
  },
  {
    "nome": "Setúbal - Esquadra de Trânsito",
@@ -5275,10 +5163,6 @@ const PSP_Contacts = [
  {
    "nome": "São Roque do Pico - Esquadra",
    "contacto": "hrtesqsrp@psp.pt"
- },
- {
-   "nome": "São Roque do Pico - Esquadra de Investigação Criminal",
-   "contacto": "hrtsrpsic@psp.pt"
  },
  {
    "nome": "São Vicente - Esquadra",
@@ -5330,10 +5214,6 @@ const PSP_Contacts = [
  },
  {
    "nome": "Vila Franca de Xira - Esq.ª de Intervenção e Fiscalização Policial",
-   "contacto": "vfxira.lisboa@psp.pt"
- },
- {
-   "nome": "Vila Franca de Xira - Esquadra de Investigação Criminal",
    "contacto": "vfxira.lisboa@psp.pt"
  },
  {

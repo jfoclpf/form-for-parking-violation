@@ -37,6 +37,11 @@ var PENALTIES = {
         select     : "Lugar de pessoa com deficiência",
         description: "num lugar reservado a pessoa com deficiência",
         law_article: "da alínea q) do n.º 1 do art.º 145.º do Código da Estrada, sendo por conseguinte uma contraordenação grave"   
-    }    
+    },
+    eletrico : {
+        select     : "Lugar de veículo elétrico",
+        description: "num lugar reservado a um veículo automóvel elétrico",
+        law_article: "da alínea g) do n.º 2 do artigo 164.º do Código da Estrada"   
+    }     
 };
 
