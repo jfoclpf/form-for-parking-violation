@@ -2,9 +2,9 @@ var DEBUG = false;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;
-var mainMessage;
-var email_to;
-var email_subject;
+var MAIN_MESSAGE;
+var EMAIL_TO;
+var EMAIL_SUBJECT;
 var ImageUriArray = [];
 var Platform;
 
@@ -72,15 +72,16 @@ function onResume () {
 
 
 //when user clicks "generate_email"
-$("#generate_email_btn").click(function(){
-
+$("#generate_message").click(function(){
+  
     if (!DEBUG) {
         //campos vazios
         var to_break=false;
         var error_string = "";
         var count = 0;
         $(".mandatory").each(function(){
-            if ($(this).val().replace(/^\s+|\s+$/g, "").length == 0){                
+            var val = $(this).val();
+            if (val==null || val == undefined || val == "" || (val).length == 0 ||  (val).replace(/^\s+|\s+$/g, "").length == 0){                
                 console.log('Error on #' + $(this).attr('id'));
                 error_string += $(this).attr('name') + "<br>";
                 count++;
@@ -88,6 +89,7 @@ $("#generate_email_btn").click(function(){
             }
         });
         
+        console.log("#generate_message goes", to_break);
         if(to_break){            
             if(count==1){
                 $.jAlert({
@@ -122,7 +124,7 @@ $("#generate_email_btn").click(function(){
         $.jAlert({
             'title': "Erro no Código Postal!", 
             'content': "Insira o Código Postal no formato XXXX-XXX"
-        });        
+        });
         return;
     }
   
@@ -135,9 +137,10 @@ $("#generate_email_btn").click(function(){
         return;
     }
   
-    //from here the inputs are correctly written
-    
-  $("#message").html(mainMessage);
+  //from here the inputs are correctly written
+  
+  MAIN_MESSAGE = getMainMessage(ShortName);
+  $("#message").html(MAIN_MESSAGE);
   $("#second_stage").show();
   
   //scrolls to the generated message
@@ -176,7 +179,7 @@ $("#remImg_1, #remImg_2, #remImg_3, #remImg_4").click(function(){
 //botão de gerar email
 $("#send_email_btn").click(function(){
 
-    email_subject = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
+    EMAIL_SUBJECT = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
 
     //if there are no photos
     var photosArr = cleanArray(ImageUriArray);
@@ -187,17 +190,13 @@ $("#send_email_btn").click(function(){
             'content': "Adicione pelo menos uma foto do veículo em causa"
         });
         return;
-    }
-    
-    //this removes the HTML tags
-    //email_subject = encodeURIComponent(email_subject);  
-    //clean_msg = encodeURIComponent(clean_message(mainMessage));  
+    } 
     
     cordova.plugins.email.open({
-        to:          email_to, // email addresses for TO field
+        to:          EMAIL_TO, // email addresses for TO field
         attachments: photosArr, // file paths or base64 data streams
-        subject:    email_subject, // subject of the email
-        body:       mainMessage, // email body (for HTML, set isHtml to true)
+        subject:    EMAIL_SUBJECT, // subject of the email
+        body:       MAIN_MESSAGE, // email body (for HTML, set isHtml to true)
         isHtml:    true // indicats if the body is HTML or plain text
     });  
     

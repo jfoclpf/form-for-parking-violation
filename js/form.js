@@ -125,8 +125,11 @@ $('#locality').on('input',  function() {
         $(this).css("border-color","red");        
     }
     else{
-        $(this).css("border-color","");
+        $(this).css("border-color","");        
     }  
+});
+$('#locality').focusout(function(){    
+    getAuthoritiesFromAddress();
 });
 $('#street').on('input',  function() {
     if ($(this).val() == "" && !DEBUG){

@@ -48,66 +48,18 @@ function PositionError() {
 
 
 /*Get address by coordinates*/
-function getAuthoritiesFromGMap(latitude, longitude){
-    
-    var authorities = []; //array of possible authorities applicable for that area
-    
+var AUTHORITIES = []; //array of possible authorities applicable for that area
+function getAuthoritiesFromGMap(latitude, longitude){        
+        
     var reverseGeocoder = new google.maps.Geocoder();
     var currentPosition = new google.maps.LatLng(latitude, longitude);
     reverseGeocoder.geocode({'latLng': currentPosition}, function(results, status) {
  
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[0]) {
-                
-                var geoNames = []; //array of possible names for the locale                
-                
+                                                               
                 var address_components = results[0].address_components;
-                
-                $("#locality").val(getAddressComponents( address_components, "locality"));                
-                $("#street").val(getAddressComponents( address_components, "route")); //nome da rua/avenida/etc.
-                $("#street_number").val(getAddressComponents( address_components, "street_number"));
-                                                
-                //get concelho/municipality according to Google Maps API
-                var municipalityFromGmaps = getAddressComponents(address_components, "administrative_area_level_2");
-                console.log("municipality from Goolge Maps is " + municipalityFromGmaps);
-                geoNames.push(municipalityFromGmaps);
-                
-                var localityFromGmaps = getAddressComponents(address_components, "locality");
-                console.log("locality from Goolge Maps is " + localityFromGmaps);
-                geoNames.push(localityFromGmaps);                
-                
-                var postalCodeFromGmaps = getAddressComponents(address_components,"postal_code");
-                console.log("postal_code from Goolge Maps is " + postalCodeFromGmaps);
-                
-                var dataFromDB = getDataFromPostalCode(postalCodeFromGmaps);
-                var localityFromDB = dataFromDB.locality;
-                console.log("locality from DB is " + localityFromDB);
-                geoNames.push(localityFromDB);
-                
-                var municipalityFromDB = dataFromDB.municipality;
-                console.log("municipality from DB is " + municipalityFromDB);
-                geoNames.push(municipalityFromDB);
-                
-                //if Google Maps has futher information of local name
-                var locality2 = getAddressComponents(address_components, "administrative_area_level_3");
-                if (locality2 && locality2!=""){
-                    geoNames.push(locality2);
-                }
-                                
-                geoNames = cleanArray(geoNames); //removes empty strings
-                console.log("geoNames :", geoNames);
-                authorities.push.apply(authorities, getPMcontacts(geoNames));
-                authorities.push.apply(authorities, getGNRcontacts(geoNames));
-                authorities.push.apply(authorities, getPSPcontacts(geoNames));
-                console.log("authorities :", authorities);
-                populateAuthoritySelect(authorities);
-                
-                $("#street").removeClass("loading");
-                $('#street').trigger('input');
-                $("#street_number").removeClass("loading");
-                $('#street_number').trigger('input');
-                $("#locality").removeClass("loading");
-                $('#locality').trigger('input');
+                getAuthoritiesFromAddress(address_components);
                 
             }
             else {
@@ -126,10 +78,84 @@ function getAuthoritiesFromGMap(latitude, longitude){
     });
 }
 
-function populateAuthoritySelect(arrayAuthorities){
+function getAuthoritiesFromAddress(address_components){
     
-    $('#authority').empty();
+    AUTHORITIES = [];
+    var geoNames = []; //array of possible names for the locale, for example ["Lisboa", "Odivelas"]     
     
+    if(address_components != undefined){
+    
+        $("#street").val(getAddressComponents( address_components, "route")); //nome da rua/avenida/etc.
+        $("#street_number").val(getAddressComponents( address_components, "street_number"));
+
+        //get concelho/municipality according to Google Maps API
+        var municipalityFromGmaps = getAddressComponents(address_components, "administrative_area_level_2");
+        console.log("municipality from Goolge Maps is " + municipalityFromGmaps);
+        geoNames.push(municipalityFromGmaps);
+
+        var localityFromGmaps = getAddressComponents(address_components, "locality");
+        console.log("locality from Goolge Maps is " + localityFromGmaps);
+        geoNames.push(localityFromGmaps);                
+
+        var postalCodeFromGmaps = getAddressComponents(address_components,"postal_code");
+        console.log("postal_code from Goolge Maps is " + postalCodeFromGmaps);
+
+        var dataFromDB = getDataFromPostalCode(postalCodeFromGmaps);
+        var localityFromDB = dataFromDB.locality;
+        console.log("locality from DB is " + localityFromDB);
+        geoNames.push(localityFromDB);
+
+        if (localityFromGmaps && localityFromGmaps != ""){
+            $("#locality").val(localityFromGmaps); 
+        }
+        else{
+            $("#locality").val(localityFromDB);
+        }
+
+        var municipalityFromDB = dataFromDB.municipality;
+        console.log("municipality from DB is " + municipalityFromDB);
+        geoNames.push(municipalityFromDB);
+
+        //if Google Maps has futher information of local name
+        var locality2 = getAddressComponents(address_components, "administrative_area_level_3");
+        if (locality2 && locality2!=""){
+            geoNames.push(locality2);
+        }
+    }
+    else{
+        geoNames.push($("#locality").val());
+    }
+
+    geoNames = cleanArray(geoNames); //removes empty strings
+    console.log("geoNames :", geoNames);
+    AUTHORITIES.push.apply(AUTHORITIES, getPMcontacts(geoNames));
+    AUTHORITIES.push.apply(AUTHORITIES, getGNRcontacts(geoNames));
+    AUTHORITIES.push.apply(AUTHORITIES, getPSPcontacts(geoNames));
+
+    var PSPGeral = {
+        authority: "Polícia",
+        authorityShort: "Polícia de Segurança Pública",
+        nome: "Geral",
+        contacto: "contacto@psp.pt"
+    };
+    AUTHORITIES.push(PSPGeral);
+
+    console.log("AUTHORITIES :", AUTHORITIES);
+    populateAuthoritySelect(AUTHORITIES);
+
+    $("#street").removeClass("loading");
+    $('#street').trigger('input');
+    $("#street_number").removeClass("loading");
+    $('#street_number').trigger('input');
+    $("#locality").removeClass("loading");
+    $('#locality').trigger('input');
+
+}
+
+
+function populateAuthoritySelect(arrayAuthorities){        
+    
+    $('#authority').empty(); //empty select options
     $.each(arrayAuthorities, function (index, value) {
         $('#authority').append($('<option>', { 
             value: index,
