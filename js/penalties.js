@@ -42,6 +42,11 @@ var PENALTIES = {
         select     : "Lugar de veículo elétrico",
         description: "num lugar reservado a um veículo automóvel elétrico",
         law_article: "da alínea g) do n.º 2 do artigo 164.º do Código da Estrada"   
-    }     
+    },
+    residentes_apenas:{
+        select      : "Estacionamento em Zona de Residentes",
+        decription  : "num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal",
+        law_article : "da alínea f) do n.º1 do artigo 50.º do Código da Estrada"
+    }
 };
 
