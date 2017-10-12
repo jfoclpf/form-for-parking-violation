@@ -29,6 +29,12 @@ input {
     text-align: justify;
 }
 
+.jButtonAlert{
+    height: 45px;
+    line-height: 40px;
+    text-align: center;
+}
+
 /*hides spin buttons on form input number*/
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

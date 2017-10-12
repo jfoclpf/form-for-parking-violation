@@ -83,7 +83,7 @@ $("#generate_message").click(function(){
             var val = $(this).val();
             if (val==null || val == undefined || val == "" || (val).length == 0 ||  (val).replace(/^\s+|\s+$/g, "").length == 0){                
                 console.log('Error on #' + $(this).attr('id'));
-                error_string += $(this).attr('name') + "<br>";
+                error_string += "- " + $(this).attr('name') + "<br>";
                 count++;
                 to_break = true;
             }
@@ -93,13 +93,15 @@ $("#generate_message").click(function(){
         if(to_break){            
             if(count==1){
                 $.jAlert({
-                            'title': "Erro!", 
+                            'title': "Erro!",
+                            'theme': 'red',
                             'content': "Preencha o seguinte campo obrigatório:<br>" + error_string
                          });                                 
             }
             else{
                 $.jAlert({
-                            'title': "Erro!", 
+                            'title': "Erro!",
+                            'theme': 'red',
                             'content': "Preencha os seguintes campos obrigatórios:<br>" + error_string
                          });            
             }           
@@ -112,7 +114,8 @@ $("#generate_message").click(function(){
     if (!isFullNameOK(Name) && !DEBUG){
         
         $.jAlert({
-            'title': "Erro no nome!", 
+            'title': "Erro no nome!",
+            'theme': 'red',
             'content': "Insira o nome completo."
         });
         return;
@@ -122,7 +125,8 @@ $("#generate_message").click(function(){
     if (!isPostalCodeOK() && !DEBUG){                
         
         $.jAlert({
-            'title': "Erro no Código Postal!", 
+            'title': "Erro no Código Postal!",
+            'theme': 'red',
             'content': "Insira o Código Postal no formato XXXX-XXX"
         });
         return;
@@ -131,7 +135,8 @@ $("#generate_message").click(function(){
     //detects if the car plate is correctly filled in
     if ((!isCarPlateOK()) && (!DEBUG)) {
         $.jAlert({
-            'title': "Erro na matrícula!", 
+            'title': "Erro na matrícula!",
+            'theme': 'red',
             'content': "Preencha a matrícula em maiúsculas no formato XX-XX-XX"
         });         
         return;
@@ -154,10 +159,29 @@ $("#addImg_1, #addImg_2, #addImg_3, #addImg_4").click(function(){
     
     //get id, for example #remImg_2
     var id = $(this).attr('id');
+    console.log('photo id: ' + id);
     //gets the number of the element, by obtaining the last character of the id
     var num = id[id.length-1];    
     
-    openCamera(num);
+    $.jAlert({
+        'title': "Método de obtenção da foto:",
+        'theme': 'dark_blue',
+        'btns': [ 
+                    {
+                        'text': 'Câmara',
+                        'theme': 'green',
+                        'class': 'jButtonAlert',
+                        'onClick': (function(){getPhoto(num, "camera")})
+                    }, 
+                    {
+                        'text': 'Biblioteca de fotos',
+                        'theme': 'green',
+                        'class': 'jButtonAlert',
+                        'onClick': (function(){getPhoto(num, "library")})
+                    } 
+                ]
+    });    
+
 });
 
 //buttons "Remove Image"
@@ -181,16 +205,17 @@ $("#send_email_btn").click(function(){
 
     EMAIL_SUBJECT = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
 
-    //if there are no photos
-    var photosArr = cleanArray(ImageUriArray);
+    //removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    var photosArr = cleanArray(ImageUriArray);   
     
     if(photosArr.length == 0){   
         $.jAlert({
-            'title': "Erro nas fotos!", 
+            'title': "Erro nas fotos!",
+            'theme': 'red',
             'content': "Adicione pelo menos uma foto do veículo em causa"
         });
         return;
-    } 
+    }
     
     cordova.plugins.email.open({
         to:          EMAIL_TO, // email addresses for TO field
