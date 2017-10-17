@@ -45,12 +45,12 @@ var PENALTIES = {
     },
     residentes_apenas:{
         select      : "Estacionamento indevido em zona de residentes",
-        decription  : "num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal",
+        description  : "num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal",
         law_article : "da alínea f) do n.º 1 do artigo 50.º do Código da Estrada"
     },
     abandonado:{
         select      : "Veículo estacionado na rua há mais de um mês",
-        decription  : "em local da via pública há pelo menos 30 dias ininterruptos",
+        description  : "em local da via pública há pelo menos 30 dias ininterruptos",
         law_article : "da alínea a) do n.º 1 do artigo 163.º do Código da Estrada"        
     }
 };
