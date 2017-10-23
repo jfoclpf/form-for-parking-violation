@@ -53,5 +53,11 @@ var PENALTIES = {
         description  : "em local da via pública há pelo menos 30 dias ininterruptos",
         law_article : "da alínea a) do n.º 1 do artigo 163.º do Código da Estrada"        
     }
+},
+    praça de táxis:{
+        select      : "Veículo estacionado na praça de táxis ",
+        description  : "em local devidamente sinalizado, reservado ao estacionamento de certos veículos",
+        law_article : "da alínea c) do n.º 1 e alínea h) do n.º 2 do artigo 164.º do Código da Estrada"        
+    }
 };
 
