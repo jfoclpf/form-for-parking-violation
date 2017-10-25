@@ -6,7 +6,7 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 
-## Contribuição são muito bem-vindas
+## Contribuições são muito bem-vindas
  
  * respeite a estrutura dos ficheiros
  * comente sempre o código (preferencialmente em Inglês), tal ajuda os outros a compreender as suas contribuiçes
