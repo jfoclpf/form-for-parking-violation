@@ -39,25 +39,59 @@ var PENALTIES = {
         law_article: "da alínea q) do n.º 1 do art.º 145.º do Código da Estrada, sendo por conseguinte uma contraordenação grave"   
     },
     eletrico : {
-        select     : "Lugar de veículo elétrico",
-        description: "num lugar reservado a um veículo automóvel elétrico",
-        law_article: "da alínea g) do n.º 2 do artigo 164.º do Código da Estrada"   
+        select      : "Lugar de veículo elétrico",
+        description : "num lugar reservado a um veículo automóvel elétrico",
+        law_article : "da alínea g) do n.º 2 do artigo 164.º do Código da Estrada"   
     },
-    residentes_apenas:{
+    residentes_apenas : {
         select      : "Estacionamento indevido em zona de residentes",
-        description  : "num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal",
+        description : "num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal",
         law_article : "da alínea f) do n.º 1 do artigo 50.º do Código da Estrada"
     },
-    abandonado:{
+    abandonado : {
         select      : "Veículo estacionado na rua há mais de um mês",
-        description  : "em local da via pública há pelo menos 30 dias ininterruptos",
+        description : "em local da via pública há pelo menos 30 dias ininterruptos",
         law_article : "da alínea a) do n.º 1 do artigo 163.º do Código da Estrada"        
-    }
-},
-    praça de táxis:{
-        select      : "Veículo estacionado na praça de táxis ",
-        description  : "em local devidamente sinalizado, reservado ao estacionamento de certos veículos",
-        law_article : "da alínea c) do n.º 1 e alínea h) do n.º 2 do artigo 164.º do Código da Estrada"        
-    }
+    },
+    praca_taxis : {
+        select      : "Veículo estacionado em praça de táxis",
+        description : "em local devidamente sinalizado e afeto à paragem de veículos para operações de tomada e largada de passageiros",
+        law_article : "da alínea f) do n.º 1 do artigo 50.º, e alínea h) do n.º 2 do artigo 164.º com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    cargas_descargas : {
+        select      : "Veículo estacionado em local de cargas e descargas",
+        description : "em local devidamente sinalizado e afeto à paragem de veículos para operações de carga e descarga",
+        law_article : "da alínea h) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    paragem_tp : {
+        select      : "Veículo estacionado em paragem de transportes públicos",
+        description : "em local de paragem de veículos de transporte coletivo de passageiros",
+        law_article : "da alínea b) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    segunda_fila : {
+        select      : "Veículo estacionado em segunda fila",
+        description : "na faixa de rodagem, em segunda fila",
+        law_article : "da alínea j) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    segunda_fila : {
+        select      : "Veículo estacionado em zona de acesso a garagem ou propriedade",
+        description : "em local destinado ao acesso de veículos ou peões a propriedades, garagens ou locais de estacionamento",
+        law_article : "da alínea f) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    faixa_bus : {
+        select      : 'Veículo estacionado em "faixa BUS"',
+        description : "em via ou corredor de circulação reservados a transportes públicos",
+        law_article : "da alínea a) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    meio_estrada : {
+        select      : 'Veículo estacionado no meio da estrada',
+        description : "na faixa de rodagem, sem ser junto da berma ou passeio",
+        law_article : "da alínea e) do n.º 2 do artigo 164.º, com referência à alínea c) do artigo 163.º do Código da Estrada"
+    },
+    visbilidade_insuficiente : {
+        select      : 'Pontes, túneis, passagens de nível, passagens inferiores ou superiores e em todos os lugares de visibilidade insuficiente',
+        description : "junto a pontes, túneis, passagens de nível, passagens inferiores ou superiores e em todos os lugares de visibilidade insuficiente",
+        law_article : "da alínea 1) do artigo 49.º do Código da Estrada"
+    }     
 };
 
