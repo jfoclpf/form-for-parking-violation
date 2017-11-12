@@ -136,8 +136,3 @@ function getPathFromUri(uri){
     return uri.split("?")[0];
 }
 
-      
-   
-
-
-

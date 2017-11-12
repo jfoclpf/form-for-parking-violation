@@ -27,7 +27,7 @@ function getPhoto(imgNmbr, type) {
         console.log(imageUri);
         console.log(getDateFromFileName(imageUri));
         
-        ImageUriArray[imgNmbr]=imageUri;
+        IMGS_URI_ARRAY[imgNmbr]=imageUri;
         
         //hides "Adds images" button
         $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
@@ -117,9 +117,9 @@ function removeImage(id, num){
     var elem = document.getElementById(id);
     elem.src = "";
     elem.style.display = "none";
-    ImageUriArray[num] = null;
+    IMGS_URI_ARRAY[num] = null;
 }
 
 function standardErrorHandler(){
-    console.log("Error geting the photo file info");
+    console.log("Erro geting the photo file info");
 }

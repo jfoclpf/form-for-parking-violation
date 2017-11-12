@@ -21,19 +21,25 @@ function onMapsApiLoaded () {
     GetGeolocation();
 };
 
-//botão get address by GPS
+//botão get address by GPS (Atualizar)
 $("#getCurrentAddresBtn").click(function(){
     GetGeolocation();
 });
 
 /*Geo location functions*/
 function GetGeolocation() {
-    $("#locality").addClass("loading");
-    $("#street").addClass("loading");
-    $("#street_number").addClass("loading");    
     
-    var options = { timeout: 30000, enableHighAccuracy: true };
-    navigator.geolocation.getCurrentPosition(GetPosition, PositionError, options);
+    //detect if has Internet AND if the GoogleMaps API is loaded
+    var networkState = navigator.connection.type;
+    if (networkState !== Connection.NONE && MAPS_API_Loaded) {
+    
+        GPSLoadingOnFields(true); //truns on loading icon on the fields 
+        var options = { timeout: 30000, enableHighAccuracy: true };
+        navigator.geolocation.getCurrentPosition(GetPosition, PositionError, options);
+    }
+    else{
+        PositionError();
+    }
 }
  
 function GetPosition(position) {
@@ -43,14 +49,18 @@ function GetPosition(position) {
 }
  
 function PositionError() {
-    navigator.notification.alert('Não foi possível detetar a presente localização.');
+    $.jAlert({
+        'title': "Erro na obtenção do local da ocorrência!",
+        'theme': 'red',
+        'content': "Confirme se tem o GPS ligado e autorizado, e se tem acesso à Internet. Caso contrário pode introduzir manualmente o Concelho, Local (rua, travessa, etc.) e número de porta da ocorrência."
+    });
+    GPSLoadingOnFields(false);
 }
-
 
 /*Get address by coordinates*/
 var AUTHORITIES = []; //array of possible authorities applicable for that area
 function getAuthoritiesFromGMap(latitude, longitude){        
-        
+    
     var reverseGeocoder = new google.maps.Geocoder();
     var currentPosition = new google.maps.LatLng(latitude, longitude);
     reverseGeocoder.geocode({'latLng': currentPosition}, function(results, status) {
@@ -63,17 +73,11 @@ function getAuthoritiesFromGMap(latitude, longitude){
                 
             }
             else {
-                $.jAlert({
-                    'title': "Erro!", 
-                    'content': "Não foi possível detetar o local. Introduza-o manualmente."
-                });
+                PositionError();
             }
         } 
         else {
-            $.jAlert({
-                'title': "Erro!", 
-                'content': "Não foi possível detetar o local. Introduza-o manualmente."
-            });
+            PositionError();
         }
     });
 }
@@ -90,32 +94,46 @@ function getAuthoritiesFromAddress(address_components){
 
         //get concelho/municipality according to Google Maps API
         var municipalityFromGmaps = getAddressComponents(address_components, "administrative_area_level_2");
-        console.log("municipality from Goolge Maps is " + municipalityFromGmaps);
-        geoNames.push(municipalityFromGmaps);
+        console.log("municipality from Goolge Maps is " + municipalityFromGmaps);        
+        if (municipalityFromGmaps){
+            geoNames.push(municipalityFromGmaps);
+        }
 
         var localityFromGmaps = getAddressComponents(address_components, "locality");
         console.log("locality from Goolge Maps is " + localityFromGmaps);
-        geoNames.push(localityFromGmaps);                
-
+        if (localityFromGmaps){
+            geoNames.push(localityFromGmaps);                
+        }
+            
         var postalCodeFromGmaps = getAddressComponents(address_components,"postal_code");
-        console.log("postal_code from Goolge Maps is " + postalCodeFromGmaps);
+        console.log("postal_code from Goolge Maps is " + postalCodeFromGmaps, typeof postalCodeFromGmaps);
 
+        //from the Postal Code got from GPS/Google
+        //tries to get locality using the offline Data Base (see file contacts.js)
         var dataFromDB = getDataFromPostalCode(postalCodeFromGmaps);
+        
         var localityFromDB = dataFromDB.locality;
         console.log("locality from DB is " + localityFromDB);
-        geoNames.push(localityFromDB);
-
-        if (localityFromGmaps && localityFromGmaps != ""){
-            $("#locality").val(localityFromGmaps); 
+        if(localityFromDB){
+            geoNames.push(localityFromDB);
         }
-        else{
-            $("#locality").val(localityFromDB);
-        }
-
+        
         var municipalityFromDB = dataFromDB.municipality;
         console.log("municipality from DB is " + municipalityFromDB);
-        geoNames.push(municipalityFromDB);
-
+        if(municipalityFromDB){
+            geoNames.push(municipalityFromDB);
+        }
+        
+        if (localityFromGmaps){
+            $("#locality").val(localityFromGmaps); 
+        }
+        else if (municipalityFromGmaps){
+            $("#locality").val(municipalityFromGmaps);
+        }        
+        else if (localityFromDB){
+            $("#locality").val(localityFromDB);
+        }        
+        
         //if Google Maps has futher information of local name
         var locality2 = getAddressComponents(address_components, "administrative_area_level_3");
         if (locality2 && locality2!=""){
@@ -138,17 +156,19 @@ function getAuthoritiesFromAddress(address_components){
         nome: "Geral",
         contacto: "contacto@psp.pt"
     };
+    var GNRGeral = {
+        authority: "Guarda Nacional Republicana",
+        authorityShort: "GNR",
+        nome: "Comando Geral",
+        contacto: "gnr@gnr.pt"
+    };    
     AUTHORITIES.push(PSPGeral);
+    AUTHORITIES.push(GNRGeral);
 
     console.log("AUTHORITIES :", AUTHORITIES);
     populateAuthoritySelect(AUTHORITIES);
 
-    $("#street").removeClass("loading");
-    $('#street').trigger('input');
-    $("#street_number").removeClass("loading");
-    $('#street_number').trigger('input');
-    $("#locality").removeClass("loading");
-    $('#locality').trigger('input');
+    GPSLoadingOnFields(false);
 
 }
 
@@ -182,7 +202,19 @@ function getAddressComponents(components, type) {
 //GPS/Google Postal Code -> Localities.postalCode -> Localities.municipality ->  Municipalities.code -> Municipalities.name -> PM_Contacts.nome
 function getDataFromPostalCode( postalCode ){   
 
-    console.log('getDataFromPostalCode: ' + postalCode);
+    var toReturn;
+    
+    //gets first 4 characters
+    postalCode = postalCode.substring(0, 4);
+    if (postalCode.length != 4){
+        toReturn = {
+            "locality": "", 
+            "municipality": ""
+        };
+        return toReturn;
+    }
+    
+    console.log('getDataFromPostalCode: ' + postalCode, typeof postalCode);
     
     var locality, municipality, municipality_code;
     
@@ -201,7 +233,7 @@ function getDataFromPostalCode( postalCode ){
         }    
     }
     
-    var toReturn = {
+    toReturn = {
         "locality": $.trim(locality), 
         "municipality": $.trim(municipality)
     };
@@ -317,5 +349,24 @@ function doStringsOverlap(string1, string2){
     }
     else{
         return false;
+    }
+}
+
+
+//removes the loading gif from input fields
+function GPSLoadingOnFields (bool){
+    
+    if (bool){
+        $("#locality").addClass("loading");
+        $("#street").addClass("loading");
+        $("#street_number").addClass("loading"); 
+    }
+    else{
+        $("#street").removeClass("loading");
+        $('#street').trigger('input');
+        $("#street_number").removeClass("loading");
+        $('#street_number').trigger('input');
+        $("#locality").removeClass("loading");
+        $('#locality').trigger('input');
     }
 }
