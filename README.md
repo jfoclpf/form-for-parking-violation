@@ -9,8 +9,11 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 ## Como instalar e testar
 
 * <a href="https://cordova.apache.org/docs/en/latest/guide/cli/">Inicie um projecto Cordova</a>
-* No recém criado projeto entre na pasta `www/` e apague o seu conteúdo com (unix) `rm -rf *`
-* Faça uma colonagem do projeto `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
+* No recém criado projeto entre na pasta `www/` e apague o seu conteúdo (unix):<br> 
+  `cd www/`<br>
+  `rm -rf *`<br>
+* De dentro da pasta `www/` faça uma colonagem do projeto `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
+* Corra `cordova build` para construir o projeto na sua máquina
 
 ## Plugins usados
 
