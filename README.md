@@ -6,6 +6,12 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 
+## Como instalar e testar
+
+* <a href="https://cordova.apache.org/docs/en/latest/guide/cli/">Inicie um projecto Cordova</a>
+* No recém criado projeto entre na pasta `www/` e apague o seu conteúdo com (unix) `rm -rf *`
+* Faça uma colonagem do projeto `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
+
 ## Plugins usados
 
 * cordova-plugin-camera "Camera"
