@@ -344,7 +344,8 @@ function doStringsOverlap(string1, string2){
     string2 = $.trim(string2);
     string2 = string2.toLowerCase();
     
-    if(string1.includes(string2) || string2.includes(string1)){
+    //indexOf returns -1 when one string doesn't contain the other
+    if(string1.indexOf(string2)!==-1 || string2.indexOf(string1) !==-1){
         return true;
     }
     else{
