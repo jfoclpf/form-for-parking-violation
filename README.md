@@ -12,7 +12,7 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
  2. No recém-criado projeto entre na pasta `www/` e apague o seu conteúdo:<br> 
   `cd www/`<br>
   `rm -rf *`<br>
- 3. De dentro da pasta `www/` faça uma colonagem do projeto `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
+ 3. De dentro da pasta `www/` faça uma colonagem do projeto<br>`git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
  4. Instale os <i>plugins</i> necessários
  5. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
 
