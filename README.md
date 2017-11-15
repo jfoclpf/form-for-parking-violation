@@ -14,9 +14,9 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
     `rm -rf *`<br>
  3. De dentro da pasta `www/` faça uma colonagem do projeto<br>
     `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
- 4. Instale os <i>plugins</i> necessários<br>
-    `cordova plugin add [nome_do_plugin]` por exemplo<br>
-    `cordova plugin add cordova-plugin-camera`
+ 4. Instale os componentes extra necessários<br>
+    `cordova plugin add [nome_do_plugin]`<br>
+    por exemplo `cordova plugin add cordova-plugin-camera`
  5. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
 
 ## Plugins necessários
