@@ -8,7 +8,12 @@ var PENALTIES = {
         description: "sobre uma zona exclusivamente pedonal",
         law_article: "da alínea f) do n.º 1 do art.º 49.º do Código da Estrada"
     },
-    passadeiras : {
+    na_passadeira : {
+        select     : "Na passadeira",
+        description: "numa passadeira, ou seja, numa zona legalmente sinalizada para travessia de peões",
+        law_article: "da alínea d) do n.º 1 do art.º 49.º do Código da Estrada"
+    },    
+    passadeiras5m : {
         select     : "Menos de 5 m. antes de passadeira",
         description: "a menos de 5 metros antes de uma zona legalmente sinalizada para travessia de peões",
         law_article: "da alínea d) do n.º 1 do art.º 49.º do Código da Estrada"
