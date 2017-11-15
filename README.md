@@ -10,10 +10,13 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
  1. <a href="https://cordova.apache.org/docs/en/latest/guide/cli/">Inicie um projecto Cordova</a>
  2. No recém-criado projeto entre na pasta `www/` e apague o seu conteúdo:<br> 
-  `cd www/`<br>
-  `rm -rf *`<br>
- 3. De dentro da pasta `www/` faça uma colonagem do projeto<br>`git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
- 4. Instale os <i>plugins</i> necessários
+    `cd www/`<br>
+    `rm -rf *`<br>
+ 3. De dentro da pasta `www/` faça uma colonagem do projeto<br>
+    `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
+ 4. Instale os <i>plugins</i> necessários<br>
+    `cordova plugin add [nome_do_plugin]` por exemplo<br>
+    `cordova plugin add cordova-plugin-camera`
  5. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
 
 ## Plugins necessários
