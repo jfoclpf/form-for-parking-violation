@@ -21,7 +21,7 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
 ## Plugins necessários
 
-* cordova-plugin-camera "Camera"
+* cordova-plugin-camera-with-exif "Camera" (with EXIF information)
 * cordova-plugin-compat "Compat"
 * cordova-plugin-email-composer "EmailComposer"
 * cordova-plugin-file "File"
