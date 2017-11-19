@@ -31,45 +31,104 @@
     </p>
     <div>
         <hr>
-        <h3>Os seus dados</h3>
-        <p class="lead">
-        Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
-        Os dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
-        </p>
+        
         <div class="row">
-            <div class="col-xs-12 col-sm-3 form-group">
-                <label for="name">Nome <u>Completo</u></label>
-                <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
+            <div class="col-xs-12">
+                <h3>Os seus dados</h3>
             </div>
-            <div class="col-xs-12 col-sm-2 form-group">
-                <label for="id_type">A sua Identificação</label>
-                <select class="form-control input-lg personal_info" id="id_type">
-                    <option>Cartão de Cidadão</option>
-                    <option>Bilhete de Identidade</option>                
-                </select>
-            </div>
-            <div class="col-xs-12 col-sm-2 form-group">
-                <label for="id_number">Número </label>
-                <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
-            </div>
-            <div class="col-xs-12 col-sm-5 form-group">
-                <label for="address">A sua Morada </label>
-                <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
+            <div class="col-xs-12">
+                <button type="button" id="personal_data_hideShowBtn" class="btn btn-primary">Mostrar/Esconder</button>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-2 form-group">
-                <label for="postal_code">Código Postal</label>
-                <input size="10" id="postal_code" name="O seu Código Postal" class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
+        
+        <div id="personal_data" class="collapse">
+            <br>
+            <p class="lead" class="collapse">
+            Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
+            Os dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
+            </p>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 form-group">
+                    <label for="name">Nome <u>Completo</u></label>
+                    <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
+                </div>
+                <div class="col-xs-12 col-sm-2 form-group">
+                    <label for="id_type">A sua Identificação</label>
+                    <select class="form-control input-lg personal_info" id="id_type">
+                        <option>Cartão de Cidadão</option>
+                        <option>Bilhete de Identidade</option>                
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-2 form-group">
+                    <label for="id_number">Número </label>
+                    <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
+                </div>
+                <div class="col-xs-12 col-sm-5 form-group">
+                    <label for="address">A sua Morada </label>
+                    <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
+                </div>
             </div>
-            <div class="col-xs-12 col-sm-2 form-group">                
-                <label for="address_city">Localidade (da sua residência)</label>
-                <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
-            </div>            
-        </div>
 
+            <div class="row">
+                <div class="col-xs-12 col-sm-2 form-group">
+                    <label for="postal_code">Código Postal</label>
+                    <input size="10" id="postal_code" name="O seu Código Postal" class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
+                </div>
+                <div class="col-xs-12 col-sm-2 form-group">                
+                    <label for="address_city">Localidade (da sua residência)</label>
+                    <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
+                </div>            
+            </div>
+        </div>
+        
         <hr>
+        
+        <!--Image-->       
+        <div id="image_selector">            
+            <h3>Imagens</h3>
+            <p class="lead">
+                Para assegurar o dever de imparcialidade por parte da autoridade policial, 
+                as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, 
+                ou seja, o veículo o qual reporta.
+            </p>            
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <button class="btn btn-primary" id="addImg_1">Adicionar imagem</button>
+                        <button class="btn btn-primary" style="display: none" id="remImg_1">Remover imagem</button>
+                    </div>
+                    <br><br>
+                    <img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <button class="btn btn-primary" id="addImg_2">Adicionar imagem</button>
+                        <button class="btn btn-primary" style="display: none" id="remImg_2">Remover imagem</button>
+                    </div>
+                    <br><br>
+                    <img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <button class="btn btn-primary" id="addImg_3">Adicionar imagem</button>
+                        <button class="btn btn-primary" style="display: none" id="remImg_3">Remover imagem</button>
+                    </div>
+                    <br><br>
+                    <img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
+                </div>
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                        <button class="btn btn-primary" id="addImg_4">Adicionar imagem</button>
+                        <button class="btn btn-primary" style="display: none" id="remImg_4">Remover imagem</button>
+                    </div>
+                    <br><br>
+                    <img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+        
         <h3>Os dados da ocorrência</h3>
         <p class="lead">
         Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar falsamente à autoridade pública,
@@ -137,51 +196,6 @@
                 <select class="form-control input-lg mandatory personal_info" id="authority" name="Autoridade">                
                 </select>
             </div>              
-        </div>
-
-        <!--Image-->       
-        <div id="image_selector">
-            <hr>
-            <h3>Imagens</h3>
-            <p class="lead">
-                Para assegurar o dever de imparcialidade por parte da autoridade policial, 
-                as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, 
-                ou seja, o veículo o qual reporta.
-            </p>            
-            <div class="row">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                        <button class="btn btn-primary" id="addImg_1">Adicionar imagem</button>
-                        <button class="btn btn-primary" style="display: none" id="remImg_1">Remover imagem</button>
-                    </div>
-                    <br><br>
-                    <img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
-                </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                        <button class="btn btn-primary" id="addImg_2">Adicionar imagem</button>
-                        <button class="btn btn-primary" style="display: none" id="remImg_2">Remover imagem</button>
-                    </div>
-                    <br><br>
-                    <img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
-                </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                        <button class="btn btn-primary" id="addImg_3">Adicionar imagem</button>
-                        <button class="btn btn-primary" style="display: none" id="remImg_3">Remover imagem</button>
-                    </div>
-                    <br><br>
-                    <img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
-                </div>
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                        <button class="btn btn-primary" id="addImg_4">Adicionar imagem</button>
-                        <button class="btn btn-primary" style="display: none" id="remImg_4">Remover imagem</button>
-                    </div>
-                    <br><br>
-                    <img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
-                </div>
-            </div>
         </div>
 
         <hr>

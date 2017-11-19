@@ -12,8 +12,10 @@ var Platform;
 $(document).ready(function() {
     console.log("$(document).ready started");
     WAS_INIT = false;
-    document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady, false);    
 
+    //hides Personal Data information section
+    $("#personal_data").collapse("hide");
 });
 
 function onDeviceReady() {
@@ -50,7 +52,7 @@ function init() {
     $("#date").datepicker('setDate', date);
     var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     $("#time").val(currentTime);
-    
+        
     $("input").each(function (){
         if (!DEBUG && $(this).val() == ""){
             $(this).css("border-color","red");        
@@ -58,6 +60,7 @@ function init() {
     });
     
     loadMapsApi();
+
 }
 
 //##############################################################################################################

@@ -19,6 +19,10 @@ function loadsPersonalInfo(){
   });
 }
 
+$("#personal_data_hideShowBtn").click(function() {
+    $("#personal_data").collapse("toggle");
+});
+
 //removes leading and trailing spaces on every text field "on focus out"
 $( ":text" ).each(function( index ) {
     $( this ).focusout(function() {

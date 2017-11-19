@@ -15,59 +15,84 @@ function getPhoto(imgNmbr, type) {
         return;
     }    
     
-    var options = setOptions(srcType);    
+    var options = setOptions(srcType);
+    
+    navigator.camera.getPicture(function cameraSuccess(result) {
 
-    navigator.camera.getPicture(function cameraSuccess(imageUri) {
+        // convert JSON string to JSON Object
+        var thisResult = JSON.parse(result);
 
-        displayImage(imageUri, "myImg_" + imgNmbr);
+        var imageUri = thisResult.filename;
         
+        console.log(imageUri);
+        
+        displayImage(imageUri, "myImg_" + imgNmbr);
+
         //removes queries from the URI, i.e., the text after "?"
         //for example 'file://photo.jpg?123' will be 'file://photo.jpg'
-        imageUri = getPathFromUri(imageUri);
-        console.log(imageUri);
-        console.log(getDateFromFileName(imageUri));
+        imageUri = getPathFromUri(imageUri);      
         
+        //if user selects a photo from the library
+        //it gets, when available on the photo the EXIF information
+        //the date, time and GPS information, to fill in the form
+        if (type == "library"){
+
+            // convert json_metadata JSON string to JSON Object 
+            var metadata = JSON.parse(thisResult.json_metadata);
+                        
+            if (thisResult.json_metadata != "{}") {
+                console.log(metadata);
+                
+                //gets date and time
+                if(metadata.datetime){
+                    setDateOnForm(metadata.datetime);
+                    //console.log(getDateFromFileName(imageUri));                    
+                }
+                
+                if(metadata.gpsLatitude && metadata.gpsLatitudeRef && metadata.gpsLongitude && metadata.gpsLongitudeRef){
+                    
+                    var degreesLat = metadata.gpsLatitude.split(",")[0];
+                    var minutesLat = metadata.gpsLatitude.split(",")[1];
+                    var secondsLat = metadata.gpsLatitude.split(",")[2];
+                    var directionLat = metadata.gpsLatitudeRef;
+                    var Lat = ConvertDMSToDD(degreesLat, minutesLat, secondsLat, directionLat);
+                    
+                    var degreesLong = metadata.gpsLongitude.split(",")[0];                    
+                    var minutesLong = metadata.gpsLongitude.split(",")[1];
+                    var secondsLong = metadata.gpsLongitude.split(",")[2];
+                    var directionLong = metadata.gpsLongitudeRef;
+                    var Long = ConvertDMSToDD(degreesLong, minutesLong, secondsLong, directionLong);
+                    
+                    var postion = {
+                        'coords' : {
+                            'latitude' : Lat,
+                            'longitude' : Long 
+                        }
+                    };
+                    console.log(postion);
+                    GetPosition(postion);                    
+                }                
+            }
+            
+        }
+            
         IMGS_URI_ARRAY[imgNmbr]=imageUri;
-        
+
         //hides "Adds images" button
         $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
         $("#" + "remImg_" + imgNmbr).show();
-                
-        //tries to get the date from the photo when such photo is got from library
-        //still not working properly this part/if
-        /*if (type == "library"){
-            
-            window.resolveLocalFileSystemURL(imageUri,
-                    function(entry) {
-                        entry.file(function(file) {
-                            console.log(file);
-                            //tries to get date from file name
-                            EXIF.getData(file, function() {
-                                var datetime = EXIF.getTag(this, "DateTimeOriginal");
-                                console.log(datetime);
-                            });                                              
-
-                            // do something useful....
-
-                        }, standardErrorHandler);
-                    },
-                    function(e) {
-                        console.log('Unexpected error obtaining image file.');
-                        standardErrorHandler();
-                    });           
-        
-        }*/
 
     }, function cameraError(error) {
         console.debug("Não foi possível obter fotografia: " + error, "app");
 
     }, options);
+  
 }
 
 function setOptions(srcType) {
     var options = {
         // Some common settings are 20, 50, and 100
-        quality: 50,        
+        quality: 100,        
         destinationType: Camera.DestinationType.FILE_URI,
         // In this app, dynamically set the picture source, Camera or photo gallery
         sourceType: srcType,
@@ -80,6 +105,7 @@ function setOptions(srcType) {
 }
 
 //tries to get date from file name
+//some smartphones set the name of the photo using the date and time
 function getDateFromFileName(fileURI){
 
     //date yearmonthday
@@ -104,6 +130,26 @@ function getDateFromFileName(fileURI){
     return objectDate;
 }
 
+function setDateOnForm(dateString){
+    
+    //the dateString comes in format "2017:11:12 12:53:55"
+    //and one needs to have: new Date('2017', '11' - 1, '12', '12', '53', '55')
+    
+    console.log(dateString);
+    
+    var dateStr = dateString.split(' ')[0];
+    var timeStr = dateString.split(' ')[1];
+    
+    var date = dateStr.split(':');
+    var time = timeStr.split(':');
+    
+    var dateForm = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2]);
+    console.log(dateForm);
+    
+    $("#date").datepicker('setDate', dateForm);
+    var currentTime = pad(dateForm.getHours(), 2) + ':' + pad(dateForm.getMinutes(), 2);
+    $("#time").val(currentTime);    
+}
 
 function displayImage(imgUri, id) {
 

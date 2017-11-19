@@ -371,3 +371,18 @@ function GPSLoadingOnFields (bool){
         $('#locality').trigger('input');
     }
 }
+
+
+function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+    
+    var deg = parseFloat(degrees);
+    var min = parseFloat(minutes); 
+    var sec = parseFloat(seconds); 
+
+    var dd = deg + min/60 + sec/(60*60);
+
+    if (direction == "S" || direction == "W") {
+        dd = dd * -1;
+    } // Don't do anything for N or E
+    return dd;
+}
