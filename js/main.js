@@ -143,7 +143,7 @@ $("#send_email_btn").click(function(){
         
         MAIN_MESSAGE = getMainMessage();
         EMAIL_SUBJECT = "Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada";
-        
+               
         cordova.plugins.email.open({
             to:          EMAIL_TO,             // email addresses for TO field
             attachments: IMGS_URI_CLEAN_ARRAY, // file paths or base64 data streams

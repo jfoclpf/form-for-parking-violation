@@ -22,8 +22,7 @@ function getPhoto(imgNmbr, type) {
         // convert JSON string to JSON Object
         var thisResult = JSON.parse(result);
 
-        var imageUri = thisResult.filename;
-        
+        var imageUri = thisResult.filename;        
         console.log(imageUri);
         
         displayImage(imageUri, "myImg_" + imgNmbr);
@@ -43,16 +42,28 @@ function getPhoto(imgNmbr, type) {
             if (thisResult.json_metadata != "{}") {
                 console.log(metadata);
                 
-                //gets date and time
+                //if the selected photo has EXIF date info, assigns photo date and time automatically to form
+                var dateToForm;
+                
+                //gets date and time from EXIF
                 if(metadata.datetime){
-                    setDateOnForm(metadata.datetime);
-                    //console.log(getDateFromFileName(imageUri));                    
+                    dateToForm = getDateFromString(metadata.datetime);                    
+                }
+                //when there is no EXIF information, tries to get date and time from file name
+                else{
+                    dateToForm = getDateFromFileName(imageUri);                  
                 }
                 
+                if(dateToForm){
+                    $("#date").datepicker('setDate', dateToForm);
+                    var currentTime = pad(dateToForm.getHours(), 2) + ':' + pad(dateToForm.getMinutes(), 2);
+                    $("#time").val(currentTime);                                
+                }
+                
+                //if the photo EXIF info has GPS information
                 if(metadata.gpsLatitude && metadata.gpsLatitudeRef && metadata.gpsLongitude && metadata.gpsLongitudeRef){                    
                     
-                    var Lat = ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef);
-                    
+                    var Lat = ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef);                    
                     var Long = ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef);
                     
                     var postion = {
@@ -84,7 +95,7 @@ function getPhoto(imgNmbr, type) {
 function setOptions(srcType) {
     var options = {
         // Some common settings are 20, 50, and 100
-        quality: 100,        
+        quality: 50, //do not increase, otherwise the email plugin cannot attach photo due to photo file size
         destinationType: Camera.DestinationType.FILE_URI,
         // In this app, dynamically set the picture source, Camera or photo gallery
         sourceType: srcType,
@@ -100,6 +111,8 @@ function setOptions(srcType) {
 //some smartphones set the name of the photo using the date and time
 function getDateFromFileName(fileURI){
 
+    console.log("getDateFromFileName", fileURI);
+    
     //date yearmonthday
     var n = fileURI.search(/[2][0][0-9][0-9](1[0-2]|0[1-9])([0][1-9]|[1,2][0-9]|3[0,1])/);
     var year = fileURI.substr(n, 4);
@@ -112,22 +125,35 @@ function getDateFromFileName(fileURI){
     var hour = newstring.substr(n, 2);
     var minute = newstring.substr(n+2, 2); 
     
-    var objectDate = {
-        year: year,
-        month: month,
-        day: day,
-        hour: hour,
-        minute: minute
-    };
-    return objectDate;
+    
+    //checks if photo date (except hour and minutes) is valid    
+    if(!isValidDate(year, month, day)){
+        return false
+    }
+    
+    //if valid create date object
+    var photoDate = new Date(year, month -1, day);        
+
+    //if hours and minutes are valid, get them also
+    if (hour>=0 && hour<=23 && minute>=0 && minute<=59){
+        photoDate = new Date(year, month -1, day, hour, minute);
+    }
+
+    var today = new Date();
+    //compare if photo date is earlier than today
+    if (photoDate.getTime() >= today.getTime()){
+        return false;
+    }
+    
+    return photoDate;
 }
 
-function setDateOnForm(dateString){
+function getDateFromString(dateString){
     
     //the dateString comes in format "2017:11:12 12:53:55"
     //and one needs to have: new Date('2017', '11' - 1, '12', '12', '53', '55')
     
-    console.log(dateString);
+    console.log("getDateFromString", dateString);
     
     var dateStr = dateString.split(' ')[0];
     var timeStr = dateString.split(' ')[1];
@@ -135,12 +161,22 @@ function setDateOnForm(dateString){
     var date = dateStr.split(':');
     var time = timeStr.split(':');
     
+    //checks if date (except hour and minutes) is valid    
+    if(!isValidDate(date[0], date[1], date[2])){
+        return false
+    }    
+    
     var dateForm = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2]);
     console.log(dateForm);
     
-    $("#date").datepicker('setDate', dateForm);
-    var currentTime = pad(dateForm.getHours(), 2) + ':' + pad(dateForm.getMinutes(), 2);
-    $("#time").val(currentTime);    
+    return dateForm;
+       
+}
+
+//checks if date is valid, ex: 30 of February is invalid
+function isValidDate(year, month, day){
+    var date = new Date(year, month -1, day);        
+    return date && (date.getMonth() + 1) == month;
 }
 
 function displayImage(imgUri, id) {
