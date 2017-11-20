@@ -49,19 +49,11 @@ function getPhoto(imgNmbr, type) {
                     //console.log(getDateFromFileName(imageUri));                    
                 }
                 
-                if(metadata.gpsLatitude && metadata.gpsLatitudeRef && metadata.gpsLongitude && metadata.gpsLongitudeRef){
+                if(metadata.gpsLatitude && metadata.gpsLatitudeRef && metadata.gpsLongitude && metadata.gpsLongitudeRef){                    
                     
-                    var degreesLat = metadata.gpsLatitude.split(",")[0];
-                    var minutesLat = metadata.gpsLatitude.split(",")[1];
-                    var secondsLat = metadata.gpsLatitude.split(",")[2];
-                    var directionLat = metadata.gpsLatitudeRef;
-                    var Lat = ConvertDMSToDD(degreesLat, minutesLat, secondsLat, directionLat);
+                    var Lat = ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef);
                     
-                    var degreesLong = metadata.gpsLongitude.split(",")[0];                    
-                    var minutesLong = metadata.gpsLongitude.split(",")[1];
-                    var secondsLong = metadata.gpsLongitude.split(",")[2];
-                    var directionLong = metadata.gpsLongitudeRef;
-                    var Long = ConvertDMSToDD(degreesLong, minutesLong, secondsLong, directionLong);
+                    var Long = ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef);
                     
                     var postion = {
                         'coords' : {

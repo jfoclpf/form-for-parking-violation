@@ -45,6 +45,7 @@ function GetGeolocation() {
 function GetPosition(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
+    console.log("latitude, longitude: ", latitude, longitude);
     getAuthoritiesFromGMap(latitude, longitude);   // Pass the latitude and longitude to get address.
 }
  
@@ -372,13 +373,30 @@ function GPSLoadingOnFields (bool){
     }
 }
 
-
-function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+//converts latitude, longitude coordinates from Degrees Minutes Second (DMS) to Decimal Degrees (DD)
+//the input string of the DMS is on the format "52/1,0/1,376693/10000"
+function ConvertDMSStringInfoToDD(gpsString, direction) {
     
-    var deg = parseFloat(degrees);
-    var min = parseFloat(minutes); 
-    var sec = parseFloat(seconds); 
-
+    var i, temp; 
+    var values = [];
+        
+    var gpsArray = gpsString.split(",");
+    
+    for (i=0; i < gpsArray.length; i++){
+        //if the value is presented in ratio, example "376693/10000"
+        temp = gpsArray[i].split("/");        
+        if (temp[1]){ 
+            values[i] = parseFloat(temp[0])/parseFloat(temp[1]);             
+        }
+        else{
+            values[i] = parseFloat(gpsArray[i]);
+        }
+    }
+    
+    var deg = values[0];
+    var min = values[1];
+    var sec = values[2];
+    
     var dd = deg + min/60 + sec/(60*60);
 
     if (direction == "S" || direction == "W") {
