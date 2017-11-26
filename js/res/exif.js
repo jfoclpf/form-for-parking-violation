@@ -1,1 +1,0 @@
-../../../node_modules/exif-js/exif.js
