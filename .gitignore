@@ -1,0 +1,8 @@
+autocosts.keystore
+buildReleaseAPP.sh
+emulateAPP.sh
+runOnDevice.sh
+node_modules/
+www/js/certificate.js
+platforms/
+plugins/

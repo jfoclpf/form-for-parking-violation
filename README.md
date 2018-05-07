@@ -9,27 +9,13 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 ## Como instalar e testar
 
  1. <a href="https://cordova.apache.org/docs/en/latest/guide/cli/">Inicie um projecto Cordova</a>
- 2. No recém-criado projeto entre na pasta `www/` e apague o seu conteúdo:<br> 
-    `cd www/`<br>
-    `rm -rf *`<br>
- 3. De dentro da pasta `www/` faça uma colonagem do projeto<br>
+ 2. De dentro da pasta do projeto faça uma colonagem<br>
     `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
- 4. Instale os componentes extra necessários<br>
-    `cordova plugin add [nome_do_plugin]`<br>
-    por exemplo `cordova plugin add cordova-plugin-camera`
- 5. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
+ 3. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
 
 ## Plugins necessários
 
-* cordova-plugin-camera-with-exif "Camera" (with EXIF information)
-* cordova-plugin-compat "Compat"
-* cordova-plugin-email-composer "EmailComposer"
-* cordova-plugin-file "File"
-* cordova-plugin-geolocation "Geolocation"
-* cordova-plugin-googlemaps "cordova-plugin-googlemaps"
-* cordova-plugin-network-information "Network Information"
-* cordova-plugin-statusbar "StatusBar"
-* cordova-plugin-whitelist "Whitelist"
+* ver ficheiro package.json
 
 ## Contribuições são muito bem-vindas
  

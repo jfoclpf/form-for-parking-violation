@@ -1,22 +1,22 @@
 //  LOCALIZATION/GPS/Contacts
-
 var MAPS_API_Loaded = false;
-function loadMapsApi () {
-
-    var API_KEY;
-    API_KEY = 'AIzaSyDF1EPBBAGNzmqof3zRLxhAXCZsBdYxrW4'; //KEY for Android
-
+function loadMapsApi() {    
+        
     if(navigator.connection.type === Connection.NONE || MAPS_API_Loaded){
         return;
-    }
-    $.getScript('https://maps.googleapis.com/maps/api/js?key='+API_KEY+'&sensor=true&callback=onMapsApiLoaded');
+    }    
+    //here GOOGLE_MAPS_API_KEY is got from credentials.js which is not tracked in github
+    //to get a Google maps Key visit https://console.cloud.google.com/apis/credentials
+    //console.log(GOOGLE_MAPS_API_KEY);
+    $.getScript('https://maps.googleapis.com/maps/api/js?key='+GOOGLE_MAPS_API_KEY+'&sensor=true&callback=onMapsApiLoaded');
     
     //this flag should be here otherwise the script might be loaded several times, and Google refuses it
     MAPS_API_Loaded = true; 
+    
 }
 
-function onMapsApiLoaded () {
-    
+function onMapsApiLoaded() {
+        
     //get from GPS Address information
     GetGeolocation();
 };
@@ -27,10 +27,10 @@ $("#getCurrentAddresBtn").click(function(){
 });
 
 /*Geo location functions*/
-function GetGeolocation() {
+function GetGeolocation() {    
     
     //detect if has Internet AND if the GoogleMaps API is loaded
-    var networkState = navigator.connection.type;
+    var networkState = VARS.networkState = navigator.connection.type;
     if (networkState !== Connection.NONE && MAPS_API_Loaded) {
     
         GPSLoadingOnFields(true); //truns on loading icon on the fields 

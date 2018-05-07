@@ -8,6 +8,7 @@ var EMAIL_SUBJECT;
 var IMGS_URI_ARRAY = [];
 var IMGS_URI_CLEAN_ARRAY = [];
 var Platform;
+var VARS = {}; //global object used for debug
 
 $(document).ready(function() {
     console.log("$(document).ready started");
