@@ -24,6 +24,7 @@ function onMapsApiLoaded() {
 //botão get address by GPS (Atualizar)
 $("#getCurrentAddresBtn").click(function(){
     GetGeolocation();
+    updateDateAndTime();
 });
 
 /*Geo location functions*/

@@ -132,6 +132,13 @@ function cleanArray(actual) {
   return newArray;
 }
 
+//initializes date and time with current date and time
+function updateDateAndTime(){    
+    var date = new Date();
+    $("#date").datepicker('setDate', date);
+    var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
+    $("#time").val(currentTime);
+}
 
 function getPathFromUri(uri){
     return uri.split("?")[0];

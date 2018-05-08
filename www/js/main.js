@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;
@@ -48,11 +48,7 @@ function init() {
     //populates HTML select according to the information on penalties.js file
     populatesPenalties();
 
-    //initializes date and time with current date and time
-    var date = new Date();
-    $("#date").datepicker('setDate', date);
-    var currentTime = pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
-    $("#time").val(currentTime);
+    updateDateAndTime();
         
     $("input").each(function (){
         if (!DEBUG && $(this).val() == ""){
