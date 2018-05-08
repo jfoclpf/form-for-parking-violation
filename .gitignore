@@ -6,3 +6,5 @@ node_modules/
 www/js/certificate.js
 platforms/
 plugins/
+temp/
+
