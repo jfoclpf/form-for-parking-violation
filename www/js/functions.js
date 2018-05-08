@@ -132,7 +132,79 @@ function cleanArray(actual) {
   return newArray;
 }
 
+
 function getPathFromUri(uri){
     return uri.split("?")[0];
 }
 
+
+//ex: from "file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/1525698243664.jpg"
+//output[0] == "file:///storage/emulated/0/Android/data/com.form.parking.violation/cache"
+//output[1] == "1525698243664.jpg"
+function getFilenameFromURL(url){ 
+    if (!url){
+        return false;
+    }
+    var output = [];    
+    output[1] = url.split('/').pop();
+    output[0] = url.substring(0, url.length-output[1].length-1);
+    return output;
+}
+
+/*use it like this, for example:
+copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg",        "myImg.jpg", LocalFileSystem.TEMPORARY); 
+see https://stackoverflow.com/a/50221986/1243247 */
+function copyFile(baseFileURI, destPathName, fileSystem){
+    console.log("Copying from: " + baseFileURI);
+    
+    if(!baseFileURI){
+        console.error("File to copy empty or null");
+        return;   
+    }
+              
+    return new Promise(function(resolve, reject) {
+        window.resolveLocalFileSystemURL(baseFileURI, 
+            function(file){
+                window.requestFileSystem(fileSystem, 0, 
+                    function (fileSystem) {
+                        var documentsPath = fileSystem.root;
+                        console.log(documentsPath);
+                        file.copyTo(documentsPath, destPathName,
+                        function(res){                        
+                            console.log('copying was successful to: ' + res.nativeURL);  
+                            resolve(res.nativeURL);
+                        }, 
+                        function(){
+                            console.log('unsuccessful copying');
+                        });
+                    });
+            }, 
+            function(){
+                console.log('failure! file was not found');
+                reject();
+            }
+        );
+    });
+} 
+
+
+function isThisAndroid(){
+    return device.platform.toLowerCase() === "android";
+}
+
+function adaptURItoAndroid(imgUR){
+    
+    if(!isThisAndroid() || !imgUR){
+        return imgUR;
+    }
+    
+    //the string is of the type "/path/to/dest"
+    if (!imgUR.includes("://")){
+        return "file://" + imgUR;
+    }
+    //it does include some protocol blabla://
+    //replace by file://
+    else{
+        return "file://" + imgUR.split("://")[1];
+    }
+}

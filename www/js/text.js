@@ -180,7 +180,8 @@ function isMessageReady(){
 
     //check photos
     //removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    IMGS_URI_CLEAN_ARRAY = cleanArray(IMGS_URI_ARRAY);       
+    IMGS_URI_CLEAN_ARRAY = cleanArray(IMGS_URI_ARRAY);   
+    
     if(IMGS_URI_CLEAN_ARRAY.length == 0){   
         $.jAlert({
             'title': "Erro nas fotos!",

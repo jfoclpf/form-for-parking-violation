@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;

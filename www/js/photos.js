@@ -23,63 +23,90 @@ function getPhoto(imgNmbr, type) {
         var thisResult = JSON.parse(result);
 
         var imageUri = thisResult.filename;        
-        console.log(imageUri);
+        console.log("imageUri:" + imageUri);
         
         displayImage(imageUri, "myImg_" + imgNmbr);
 
         //removes queries from the URI, i.e., the text after "?"
         //for example 'file://photo.jpg?123' will be 'file://photo.jpg'
-        imageUri = getPathFromUri(imageUri);      
+        imageUri = getPathFromUri(imageUri); 
+        
+        //adds "file://" at the begining if missing as requested by Android systems
+        //see: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/
+        if (isThisAndroid()){
+            imageUri = adaptURItoAndroid(imageUri);
+        }
         
         //if user selects a photo from the library
         //it gets, when available on the photo the EXIF information
         //the date, time and GPS information, to fill in the form
-        if (type == "library"){
+        if (type == "library" && thisResult.json_metadata && thisResult.json_metadata != "{}"){
 
             // convert json_metadata JSON string to JSON Object 
             var metadata = JSON.parse(thisResult.json_metadata);
                         
-            if (thisResult.json_metadata != "{}") {
-                console.log(metadata);
-                
-                //if the selected photo has EXIF date info, assigns photo date and time automatically to form
-                var dateToForm;
-                
-                //gets date and time from EXIF
-                if(metadata.datetime){
-                    dateToForm = getDateFromString(metadata.datetime);                    
-                }
-                //when there is no EXIF information, tries to get date and time from file name
-                else{
-                    dateToForm = getDateFromFileName(imageUri);                  
-                }
-                
-                if(dateToForm){
-                    $("#date").datepicker('setDate', dateToForm);
-                    var currentTime = pad(dateToForm.getHours(), 2) + ':' + pad(dateToForm.getMinutes(), 2);
-                    $("#time").val(currentTime);                                
-                }
-                
-                //if the photo EXIF info has GPS information
-                if(metadata.gpsLatitude && metadata.gpsLatitudeRef && metadata.gpsLongitude && metadata.gpsLongitudeRef){                    
-                    
-                    var Lat = ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef);                    
-                    var Long = ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef);
-                    
-                    var postion = {
-                        'coords' : {
-                            'latitude' : Lat,
-                            'longitude' : Long 
-                        }
-                    };
-                    console.log(postion);
-                    GetPosition(postion);                    
-                }                
+            console.log("Metadata from photo obtained");
+            console.log(metadata);
+
+            //if the selected photo has EXIF date info, assigns photo date and time automatically to form
+            var dateToForm;
+
+            //gets date and time from EXIF
+            if(metadata.datetime){
+                dateToForm = getDateFromString(metadata.datetime);                    
             }
+            //when there is no EXIF information, tries to get date and time from file name
+            else{
+                dateToForm = getDateFromFileName(imageUri);                  
+            }
+
+            if(dateToForm){
+                $("#date").datepicker('setDate', dateToForm);
+                var currentTime = pad(dateToForm.getHours(), 2) + ':' + pad(dateToForm.getMinutes(), 2);
+                $("#time").val(currentTime);                                
+            }
+
+            //if the photo EXIF info has GPS information
+            if(metadata.gpsLatitude && metadata.gpsLatitudeRef && 
+               metadata.gpsLongitude && metadata.gpsLongitudeRef){                    
+
+                var Lat = ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef);                    
+                var Long = ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef);
+
+                var postion = {
+                    'coords' : {
+                        'latitude' : Lat,
+                        'longitude' : Long 
+                    }
+                };
+                console.log(postion);
+                GetPosition(postion);                    
+            }                
             
+            
+            //in certain situations where it's hard to deliver the image
+            //copy image from original location to local APP directory             
+            if (imageUri.toLowerCase().includes("dcim") || 
+                imageUri.toLowerCase().includes("camera")){                 
+                copyFile(imageUri, getFilenameFromURL(imageUri)[1], LocalFileSystem.TEMPORARY).
+                    then(
+                        function(destFileUri){
+                            IMGS_URI_ARRAY[imgNmbr] = destFileUri;                    
+                        }
+                    ).catch(function() {
+                        IMGS_URI_ARRAY[imgNmbr]=imageUri;
+                        console.log("Couldn't copy the file");
+                    }
+                );
+            }
+            else{
+                IMGS_URI_ARRAY[imgNmbr]=imageUri;
+            }
         }
-            
-        IMGS_URI_ARRAY[imgNmbr]=imageUri;
+        else{
+            IMGS_URI_ARRAY[imgNmbr]=imageUri;
+        }
+        
 
         //hides "Adds images" button
         $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
@@ -92,6 +119,7 @@ function getPhoto(imgNmbr, type) {
   
 }
 
+//camera plugin options
 function setOptions(srcType) {
     var options = {
         // Some common settings are 20, 50, and 100
@@ -197,3 +225,5 @@ function removeImage(id, num){
 function standardErrorHandler(){
     console.log("Erro geting the photo file info");
 }
+
+
