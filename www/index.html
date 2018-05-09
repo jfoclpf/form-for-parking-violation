@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -72,7 +72,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2 form-group">
                     <label for="postal_code">Código Postal</label>
-                    <input size="10" id="postal_code" name="O seu Código Postal" class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
+                    <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
+                           class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
                 </div>
                 <div class="col-xs-12 col-sm-2 form-group">                
                     <label for="address_city">Localidade (da sua residência)</label>
@@ -138,7 +139,9 @@
         <div class="row">
             <div class="col-xs-12 col-sm-4 form-group">
                 <label for="plate">Matrícula </label>
-                <input class="form-control input-lg mandatory" id="plate" name="Matrícula do veículo" placeholder="XX-XX-XX" required>
+                <div>Formato Livre <input type="checkbox" id="free_plate"></div>
+                <input class="form-control input-lg mandatory" maxlength="8"
+                       id="plate" name="Matrícula do veículo" required>
             </div>
 
             <div class="col-xs-12 col-sm-4 form-group">

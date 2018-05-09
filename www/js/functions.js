@@ -17,16 +17,6 @@ function isCarPlateOK(){
     return bool_isCorrect;
 }
 
-//as the user writes Postal Code, detects if the name is ok
-$("#postal_code").on('input', function() {
-    if (!isPostalCodeOK() && !DEBUG){
-        $(this).css("border-color","red");        
-    }
-    else{
-        $(this).css("border-color","");
-    }
-});
-
 //detects if the postal code is correctly filled in
 function isPostalCodeOK(){
   

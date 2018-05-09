@@ -166,8 +166,8 @@ function isMessageReady(){
         return false;
     }
   
-    //detects if the car plate is correctly filled in
-    if ((!isCarPlateOK()) && (!DEBUG)) {
+    //detects if the Portuguese car plate (XX-XX-XX) is correctly filled
+    if (!$("#free_plate").is(':checked') && !isCarPlateOK() && !DEBUG) {
         $.jAlert({
             'title': "Erro na matrícula!",
             'theme': 'red',

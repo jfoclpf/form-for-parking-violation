@@ -73,16 +73,61 @@ function populatesPenalties(){
     }
 }
 
-
-//as the user writes the carplate, detects if the name is ok
-$("#plate").on('input', function() {
-    if (!isCarPlateOK($(this).val()) && !DEBUG){
+//as the user writes Postal Code, detects if the name is ok
+$("#postal_code").on('input', function() {
+    if (!isPostalCodeOK()){ 
         $(this).css("border-color","red");        
     }
     else{
         $(this).css("border-color","");
     }
+    
+    $(this).val(function (index, value) {        
+        if (value.length < 8){//length of 0000-000
+            return value.toUpperCase().replace(/[^0-9]/g, '').replace(/(.{4})/g, '$1\u2013');
+        }
+        else{
+            return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/[^0-9]/g, '');
+        }
+    });    
 });
+
+
+function setPortuguesePlateInput(){
+    $('#plate').attr('placeholder','XX-XX-XX');
+    $("#plate").addClass("mandatory");
+    $('#plate').attr('maxlength','8');
+    
+    $('#plate').on('input', function () {
+        $(this).val(function (index, value) {        
+            if (value.length < 8){//length of XX-XX-XX
+                return value.toUpperCase().replace(/\W/gi, '').replace(/(.{2})/g, '$1\u2013');
+            }
+            else{
+                return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '');
+            }
+        });
+    });
+}
+
+//matrícula estrangeira, matrículas da GNR, etc.
+function setAnyPlateFormat(){
+    $('#plate').off('input');
+    $('#plate').attr('placeholder','');
+    $("#plate").removeClass("mandatory");
+    $('#plate').attr('maxlength','');
+}
+
+$("#free_plate").change(function(){
+    if (this.checked){
+        setAnyPlateFormat();
+    }
+    else{
+        setPortuguesePlateInput();
+    }
+})
+    
+    
 
 $('#id_number').on('input', function() {
     if ($(this).val() == "" && !DEBUG){

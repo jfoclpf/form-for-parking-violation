@@ -56,6 +56,9 @@ function init() {
         }
     });
     
+    $("#plate").css("border-color","");
+    setPortuguesePlateInput();
+    
     loadMapsApi();
 
 }
