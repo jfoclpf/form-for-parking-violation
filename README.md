@@ -9,14 +9,16 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
 ## Como instalar e testar
 
- 1. <a href="https://cordova.apache.org/docs/en/latest/guide/cli/">Inicie um projecto Cordova</a>
- 2. De dentro da pasta do projeto faça uma colonagem<br>
-    `git clone https://github.com/jfoclpf/form-for-parking-violation .` (inclua o ponto no final)
- 3. Corra `cordova build` para construir o projeto na sua máquina (em Android criar o ficheiro APK)
+Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a> para converter código HTML5 e Javascript para uma aplicação de dispositivo móvel, como Android ou iOS. Precisa, portanto, de ter Apache Cordova instalado na sua máquina.
+
+ 1. Clone este projeto `git clone https://github.com/jfoclpf/form-for-parking-violation form-for-parking-violation`
+ 2. Entre na pasta recém criada `cd form-for-parking-violation`
+ 3. Adicione a plataforma. Para Android `cordova platform add android@6.2.0`. Neste momento funciona apenas na versão 6.2.0, devido à limitação de <i>plugins</i>.
+ 3. Corra `cordova build --release android` para construir o projeto na sua máquina. Em Android cria o ficheiro APK na pasta `platforms/android/build/outputs/apk`
 
 ## Plugins necessários
 
-* ver ficheiro package.json
+* ver ficheiro `package.json`.
 
 ## Contribuições são muito bem-vindas
  
