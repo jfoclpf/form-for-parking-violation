@@ -125,10 +125,101 @@ $("#free_plate").change(function(){
     else{
         setPortuguesePlateInput();
     }
-})
-    
-    
+});
 
+//Car Make and Car Model dealing with input
+//Car List and Models are got from www/js/res/car-list.js
+(function(){
+    var prevValueCarmake = "";
+    $('#carmake').on('input', function () {    
+
+        $(this).val(function (index, value) {                
+
+            if(!prevValueCarmake){
+                prevValueCarmake = value;
+            }
+            else if (value.length < prevValueCarmake.length){//backspace key
+                prevValueCarmake = value;
+                return value;
+            }        
+
+            var brand;
+            for(var found=false, i=0; i<CAR_LIST.length; i++){            
+                //if 'value' is on the begining of the 'brand'
+                if(CAR_LIST[i].brand.indexOf(value) == 0){
+                    if(found){
+                        prevValueCarmake = value;
+                        return value;
+                    }
+                    brand = CAR_LIST[i].brand;
+                    found = true;
+                }
+            }        
+            //just found one
+            var strToReturn = prevValueCarmake = brand ? brand : value;            
+            return strToReturn;
+        });
+    });
+    
+    var prevValueCarmodel = "";
+    $('#carmodel').on('input', function () {    
+
+        $(this).val(function (index, value) {                
+
+            if(!prevValueCarmodel){
+                prevValueCarmodel = value;
+            }
+            else if (value.length < prevValueCarmodel.length){//backspace key
+                prevValueCarmodel = value;
+                return value;
+            }        
+
+            var i, model, models=[];
+            var found=false;  
+            
+            //is the brand on #carmake valid?
+            for(i=0; i<CAR_LIST.length; i++){
+                if(CAR_LIST[i].brand.toLowerCase().trim() === $('#carmake').val().toLowerCase().trim()){
+                    models = CAR_LIST[i].models;
+                    found=true;
+                    break;
+                }
+            }
+
+            if(!found){
+                prevValueCarmodel = value;
+                return value;
+            }
+            
+            //finding carmodel
+            //user input may be "As" which matches "Astra", "Astra cabrio" or "Astra caravan"
+            //therefore gets common string, it should return "Astra"
+            var foundModels = [];
+            for(i=0; i<models.length; i++){            
+                //if 'value' is on the begining of the 'model'
+                if(models[i].indexOf(value) == 0){
+                    foundModels.push(models[i]);                    
+                }
+            }                   
+            if(foundModels.length === 0){
+                prevValueCarmodel = value;
+                return value;
+            }
+            else{
+                //longest common starting substring in the array models
+                //with ["Astra", "Astra cabrio", "Astra caravan"] returns "Astra"
+                var A = foundModels.concat().sort(), 
+                a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+                while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+                
+                var strToReturn = prevValueCarmodel = a1.substring(0, i);
+                return strToReturn;            
+            }
+        });
+    });    
+}());
+
+    
 $('#id_number').on('input', function() {
     if ($(this).val() == "" && !DEBUG){
         $(this).css("border-color","red");        
@@ -161,7 +252,7 @@ $('#carmake').on('input', function() {
         $(this).css("border-color","");
     }  
 });
-$('#model').on('input', function() {
+$('#carmodel').on('input', function() {
     if ($(this).val() == "" && !DEBUG){
         $(this).css("border-color","red");        
     }

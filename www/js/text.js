@@ -31,16 +31,17 @@ function getMainMessage(){
     
     //texto para marca e modelo
     var is_carmake = ($("#carmake").val().replace(/^\s+|\s+$/g, "").length != 0);
-    var is_model = ($("#model").val().replace(/^\s+|\s+$/g, "").length != 0);
+    var is_model = ($("#carmodel").val().replace(/^\s+|\s+$/g, "").length != 0);
     var carmake_model_txt;
     if (is_carmake && is_model){
-        carmake_model_txt = "de marca e modelo <b>" + $("#carmake").val() + " " + $("#model").val() + "</b>, ";
+        carmake_model_txt = "de marca e modelo <b>" + $("#carmake").val() + 
+            " " + $("#carmodel").val() + "</b>, ";
     }
     else if (is_carmake){
         carmake_model_txt = "de marca <b>" + $("#carmake").val() + "</b>, ";
     }
     else if (is_model){
-        carmake_model_txt = "de modelo <b>" + $("#model").val() + "</b>, ";
+        carmake_model_txt = "de modelo <b>" + $("#carmodel").val() + "</b>, ";
     }
     else{
         carmake_model_txt = "";
@@ -166,7 +167,7 @@ function isMessageReady(){
         return false;
     }
   
-    //detects if the Portuguese car plate (XX-XX-XX) is correctly filled
+    //detects if the Portuguese car plate is correctly filled
     if (!$("#free_plate").is(':checked') && !isCarPlateOK() && !DEBUG) {
         $.jAlert({
             'title': "Erro na matrícula!",
