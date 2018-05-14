@@ -156,49 +156,55 @@
                        name="Modelo do veículo" placeholder="Corsa" type="text">
             </div>
         </div>
-
+        
         <div class="row">
             <div class="col-xs-12 col-md-6 form-group">
+                <br>
+                <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
+                <br><br>                
                 <label for="date">Data </label>
-
                 <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
             </div>
             <div class="col-xs-12 col-md-6 form-group">
                 <label for="time">Hora</label>
                 <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
             </div>
-        </div>
-
-        <div class="row">
-            
+                               
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="penalties">Tipo de Ocorrência</label> 
-                <select class="form-control input-lg mandatory personal_info" id="penalties" name="Tipo de Ocorrência">
-                </select>
-            </div>         
-            
-            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar local</button>
-                <br><br>
                 <label for="locality">Concelho ou Localidade da ocorrência</label>
                 <p>Caso introduza manualmente, coloque sempre o Concelho</p>
-                <input size="35" class="form-control input-lg mandatory" id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>                
+                <input size="35" class="form-control input-lg mandatory" 
+                       id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
             </div>
             
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="street">Local da ocorrência</label>
-                <input size="35" class="form-control input-lg mandatory" id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
+                <input size="35" class="form-control input-lg mandatory" 
+                       id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
             </div>              
 
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="street_number">Junto ao Número</label>
-                <input size="4" class="form-control input-lg" id="street_number" name="Número postal do Local da Ocorrência" type="text">
-            </div>
+                <input size="4" class="form-control input-lg" 
+                       id="street_number" name="Número postal do Local da Ocorrência" type="text">
+            </div>            
+         </div>
+        
+         <br>
+        
+         <div class="row">
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">                
+                <label for="penalties">Tipo de Ocorrência</label> 
+                <select class="form-control input-lg mandatory personal_info" 
+                        id="penalties" name="Tipo de Ocorrência">
+                </select>
+            </div>  
             
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="authority">Autoridade</label>
                 <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
-                <select class="form-control input-lg mandatory personal_info" id="authority" name="Autoridade">                
+                <select class="form-control input-lg mandatory personal_info" 
+                        id="authority" name="Autoridade">                
                 </select>
             </div>              
         </div>
