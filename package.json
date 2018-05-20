@@ -12,6 +12,7 @@
     "dependencies": {
         "cordova": "^7.0.1",
         "cordova-android": "^6.2.0",
+        "cordova-pdf-generator": "^2.0.3",
         "cordova-plugin-camera-with-exif": "^1.2.2",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^2.0.2",
@@ -36,7 +37,8 @@
             "cordova-plugin-email-composer": {},
             "cordova-plugin-whitelist": {},
             "cordova-plugin-device": {},
-            "cordova-plugin-inappbrowser": {}
+            "cordova-plugin-inappbrowser": {},
+            "cordova-pdf-generator": {}
         },
         "platforms": [
             "android"

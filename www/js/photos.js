@@ -82,13 +82,12 @@ function getPhoto(imgNmbr, type) {
                 console.log(postion);
                 GetPosition(postion);                    
             }                
-            
-            
+                    
             //in certain situations where it's hard to deliver the image
             //copy image from original location to local APP directory             
             if (imageUri.toLowerCase().includes("dcim") || 
                 imageUri.toLowerCase().includes("camera")){                 
-                copyFile(imageUri, getFilenameFromURL(imageUri)[1], LocalFileSystem.TEMPORARY).
+                _copyFile(imageUri, getFilenameFromURL(imageUri)[1], LocalFileSystem.TEMPORARY).
                     then(
                         function(destFileUri){
                             IMGS_URI_ARRAY[imgNmbr] = destFileUri;                    
@@ -107,7 +106,6 @@ function getPhoto(imgNmbr, type) {
             IMGS_URI_ARRAY[imgNmbr]=imageUri;
         }
         
-
         //hides "Adds images" button
         $("#" + "addImg_" + imgNmbr).text("Substituir imagem");
         $("#" + "remImg_" + imgNmbr).show();

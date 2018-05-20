@@ -151,7 +151,7 @@ function getFilenameFromURL(url){
 /*use it like this, for example:
 copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg",        "myImg.jpg", LocalFileSystem.TEMPORARY); 
 see https://stackoverflow.com/a/50221986/1243247 */
-function copyFile(baseFileURI, destPathName, fileSystem){
+function _copyFile(baseFileURI, destPathName, fileSystem){
     console.log("Copying from: " + baseFileURI);
     
     if(!baseFileURI){
@@ -184,6 +184,110 @@ function copyFile(baseFileURI, destPathName, fileSystem){
     });
 } 
 
+
+function copyFile(baseFileURI, destPathDir){
+    console.log("Copying : " + baseFileURI);   
+    
+    function getFilenameFromURL(url){ 
+        if (!url){
+            return false;
+        }
+        var output = [];    
+        output[1] = url.split('/').pop();
+        output[0] = url.substring(0, url.length-output[1].length-1);
+        return output;
+    }    
+    
+    var destPathName = getFilenameFromURL(baseFileURI)[1];
+    
+    if(!baseFileURI || !destPathName){
+        console.error("File to copy empty or invalid");
+        return;   
+    }
+    
+    if(!destPathDir){
+        console.error("Directory to copy empty or null");
+        return;   
+    }         
+         
+    console.log("Copying to: " + destPathDir + destPathName); 
+    
+    return new Promise(function(resolve, reject) {
+        window.resolveLocalFileSystemURL(baseFileURI, 
+            function(file){
+                window.resolveLocalFileSystemURL(destPathDir, 
+                    function (destPathDirObj) {                        
+                        console.log(destPathDirObj);
+                    
+                        file.copyTo(destPathDirObj, destPathName,
+                        function(res){                        
+                            console.log('copying was successful to: ' + res.nativeURL);  
+                            resolve(res.nativeURL);
+                        }, 
+                        function(){
+                            console.log('unsuccessful copying');
+                        });
+                    });
+            }, 
+            function(){
+                console.log('failure! file was not found');
+                reject();
+            }
+        );
+    });
+} 
+
+function moveFile(baseFileURI, destPathDir){
+    console.log("Moving : " + baseFileURI);   
+    
+    function getFilenameFromURL(url){ 
+        if (!url){
+            return false;
+        }
+        var output = [];    
+        output[1] = url.split('/').pop();
+        output[0] = url.substring(0, url.length-output[1].length-1);
+        return output;
+    }    
+    
+    var destPathName = getFilenameFromURL(baseFileURI)[1];
+    
+    if(!baseFileURI || !destPathName){
+        console.error("File to move empty or invalid");
+        return;   
+    }
+    
+    if(!destPathDir){
+        console.error("Directory to move empty or null");
+        return;   
+    }         
+         
+    console.log("Moving to: " + destPathDir + destPathName); 
+    
+    return new Promise(function(resolve, reject) {
+        window.resolveLocalFileSystemURL(baseFileURI, 
+            function(file){
+                window.resolveLocalFileSystemURL(destPathDir, 
+                    function (destPathDirObj) {                        
+                        console.log(destPathDirObj);
+                    
+                        file.moveTo(destPathDirObj, destPathName,
+                        function(res){                        
+                            console.log('moving was successful to: ' + res.nativeURL);  
+                            resolve(res.nativeURL);
+                        }, 
+                        function(){
+                            console.log('unsuccessful moving');
+                        });
+                    });
+            }, 
+            function(){
+                console.log('failure! file was not found');
+                reject();
+            }
+        );
+    });
+} 
 
 function isThisAndroid(){
     return device.platform.toLowerCase() === "android";

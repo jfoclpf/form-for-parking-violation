@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">    
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content: https://csi.gstatic.com; script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com">
+    
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com 'unsafe-eval'; 
+        style-src 'self' 'unsafe-inline'; 
+        media-src *; 
+        img-src 'self' https://maps.googleapis.com data: content: https://csi.gstatic.com; 
+        script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com
+    ">
+    
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     
     <meta name="description" content="">
@@ -235,11 +243,14 @@
     <script src="js/res/jquery.min.js"></script>
     <script src="js/res/jquery-ui.min.js"></script>
     <script src="js/res/jAlert.js"></script>
+
+    <script src="js/res/car-list.js"></script>
     <script src="js/certificate.js"></script>
     <script src="js/contacts.js"></script>
     <script src="js/penalties.js"></script>
-    <script src="js/res/car-list.js"></script>
+
     <script src="js/functions.js"></script>
+    <script src="js/authentication.js"></script>
     <script src="js/photos.js"></script>
     <script src="js/form.js"></script>
     <script src="js/localization.js"></script>

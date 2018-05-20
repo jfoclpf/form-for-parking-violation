@@ -1,4 +1,4 @@
-var DEBUG = false;
+var DEBUG = true;
 console.log("DEBUG: ", DEBUG);
 
 var WAS_INIT;
@@ -59,19 +59,19 @@ function init() {
     $("#plate").css("border-color","");
     setPortuguesePlateInput();
     
-    loadMapsApi();
-
+    loadMapsApi();    
+    loadAuthentication();
 }
 
 //##############################################################################################################
 //##############################################################################################################
 
 function onOnline () {
-    loadMapsApi();
+    loadMapsApi();    
 }
 
 function onResume () {
-    loadMapsApi();
+    loadMapsApi();    
 }
 
 
@@ -137,7 +137,34 @@ $("#generate_message").click(function(){
 });
 
 //botão de gerar email
-$("#send_email_btn").click(function(){    
+$("#send_email_btn").click(function(){
+    
+    var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.';
+    
+    $.jAlert({
+        'title'  : "Deseja autenticar a sua mensagem com Chave Móvel Digital?",
+        'content': mensagem,
+        'theme'  : 'dark_blue',
+        'btns': [ 
+                    {
+                        'text': 'Sim',
+                        'theme': 'green',
+                        'class': 'jButtonAlert',
+                        'onClick': startAuthentication
+                    }, 
+                    {
+                        'text': 'Não',
+                        'theme': 'green',
+                        'class': 'jButtonAlert',
+                        'onClick': sendMailMessage
+                    } 
+                ]
+    });  
+
+});
+
+
+function sendMailMessage(){
 
     if(isMessageReady()){
         
@@ -152,6 +179,4 @@ $("#send_email_btn").click(function(){
             isHtml:      true                  // indicats if the body is HTML or plain text
         });
     }
-
-});
-
+}
