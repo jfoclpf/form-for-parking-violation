@@ -49,56 +49,47 @@ function getMainMessage(){
     
     //get initial random greeting
     var greetingsInitial = [
-                             "Excelentíssimos senhores",
-                             "Excelentíssimos agentes",
-                             "Prezados senhores",
-                             "Prezados agentes",
-                             "Caros senhores",
-                             "Ex.mos Senhores",
-                             "Ex.mos Senhores Agentes",                    
-                            ];    
+        "Excelentíssimos senhores",
+        "Excelentíssimos agentes",
+        "Prezados senhores",
+        "Prezados agentes",
+        "Caros senhores",
+        "Ex.mos Senhores",
+        "Ex.mos Senhores Agentes",                    
+    ];
+    
     var msg = greetingsInitial[Math.floor(Math.random()*greetingsInitial.length)] + 
               " " + "da" + " " + authority + ", " + authorityName + ";"
 
-    var msg1 = "Eu, <b>" + $("#name").val() + "</b>, com o <b>" + $("#id_type").val() + "</b> com o número <b>" + $("#id_number").val() + "</b> " +
-        "e com residência em <b>" + $("#address").val() + ", " + $("#postal_code").val() + ", " + $("#address_city").val() + 
+    var msg1 = "Eu, <b>" + $("#name").val() + "</b>," + 
+        " com o <b>" + $("#id_type").val() + "</b> com o número <b>" + $("#id_number").val() + "</b> " +
+        "e com residência em <b>" + $("#address").val() + 
+        ", " + $("#postal_code").val() + ", " + $("#address_city").val() + 
         "</b>, venho por este meio," + " " +
-        "ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, fazer a seguinte denúncia de contra-ordenação para que a " +
+        "ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, " + 
+        "fazer a seguinte denúncia de contra-ordenação para que a " +
         authority + " " + "levante o auto respetivo e multe o infra-mencionado responsável.";
 
-    var msg2 = "No passado dia <b>" + $.datepicker.formatDate("dd' de 'MM' de 'yy", $( "#date" ).datepicker('getDate') ) + "</b>" +
+    var msg2 = "No passado dia <b>" + 
+        $.datepicker.formatDate("dd' de 'MM' de 'yy", $( "#date").datepicker('getDate') ) + "</b>" +
         ( $("#time").val() ? " pelas <b>" + $("#time").val() + "</b>" : "") + //optional
-        ", " +
-        "na <b>" + $("#street").val() + ", " +  $("#locality").val() + "</b>, " +
-        ( $("#street_number").val() ? "aproximadamente junto à porta com o <b>número " + $("#street_number").val() + "</b>, " : "") + //optional
+        ", " + "na <b>" + $("#street").val() + ", " +  $("#locality").val() + "</b>, " +
+        ( $("#street_number").val() ? "aproximadamente junto à porta com o <b>número " +
+        $("#street_number").val() + "</b>, " : "") + //optional
         "a viatura com matrícula <b>" + CarPlateStr + "</b> " + carmake_model_txt +
-        "encontrava-se estacionada" + " " + penaltyDescription + ", em violação " + penaltyLawArticle +".";
+        "encontrava-se estacionada" + " " + penaltyDescription + 
+        ", em violação " + penaltyLawArticle + ".";
 
-    var msg3 = "Pode-se comprovar esta situação através" + " " + ((IMGS_URI_CLEAN_ARRAY.length == 1) ? "da fotografia anexa" : "das fotografias anexas") + 
-               " " + "à presente mensagem eletrónica. Juro pela minha honra que a informação supra citada é verídica." + " " +
-               "Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada," + " " + 
-               "a autoridade que tiver notícia por denúncia de contraordenação, levanta auto," + " " + 
-               "não carecendo de presenciar tal contraordenação rodoviária, situação a que se aplica o n.º 1 do mesmo artigo.";
-
-    //gets a random greeting
-    var greetingsEnd = [
-                         "Agradecendo antecipadamente a atenção de V. Ex.as, apresento os meus melhores cumprimentos",
-                         "Com os melhores cumprimentos",
-                         "Com os meus melhores cumprimentos",
-                         "Melhores cumprimentos",
-                         "Apresentando os meus melhores cumprimentos",
-                         "Atenciosamente",
-                         "Atentamente",
-                         "Respeitosamente"
-                       ];
-    var Name = $("#name").val();
-    //gets first and last name
-    var ShortName = Name.split(' ')[0] + " " +  Name.split(' ')[(Name.split(' ')).length-1];
-    var msg4 = greetingsEnd[Math.floor(Math.random()*greetingsEnd.length)] + ",<br>" + ShortName;
-
-    var msg5 = getImagesToMessage();
-
-    message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3 + "<br><br>" + msg4 + "<br>";
+    var msg3 = "Pode-se comprovar esta situação através" + 
+        " " + ((IMGS_URI_CLEAN_ARRAY.length == 1) ? "da fotografia anexa" : "das fotografias anexas") + 
+        " " + "à presente mensagem eletrónica. " + 
+        "Juro pela minha honra que a informação supra citada é verídica." +
+        " " + "Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada," + 
+        " " + "a autoridade que tiver notícia por denúncia de contraordenação, levanta auto," + 
+        " " + "não carecendo de presenciar tal contraordenação rodoviária, " + 
+        "situação a que se aplica o n.º 1 do mesmo artigo.";
+    
+    message = msg + "<br><br>" + msg1 + "<br><br>" + msg2 + "<br><br>" + msg3;
 
     return message;
 }
@@ -193,6 +184,35 @@ function isMessageReady(){
     }    
     
     return true;
+}
+
+//best regards
+//Andrey
+function getRegards(){
+    
+    //gets a random regard
+    var regards = [
+        "Agradecendo antecipadamente a atenção de V. Ex.as, apresento os meus melhores cumprimentos",
+        "Com os melhores cumprimentos",
+        "Com os meus melhores cumprimentos",
+        "Melhores cumprimentos",
+        "Apresentando os meus melhores cumprimentos",
+        "Atenciosamente",
+        "Atentamente",
+        "Respeitosamente"
+    ];
+
+    var regard = regards[Math.floor(Math.random()*regards.length)];
+    
+    //full name
+    var Name = $("#name").val();
+    //gets first and last name
+    var ShortName = Name.split(' ')[0] + " " +  Name.split(' ')[(Name.split(' ')).length-1];
+    
+    var msgEnd = regard + ",<br>" + ShortName;
+    
+    return msgEnd;
+    
 }
 
 function getExtraAuthenticationHTMLText(){

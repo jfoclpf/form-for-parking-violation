@@ -38,7 +38,8 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-device": {},
             "cordova-plugin-inappbrowser": {},
-            "cordova-pdf-generator": {}
+            "cordova-pdf-generator": {},
+            "info.protonet.imageresizer": {}
         },
         "platforms": [
             "android"

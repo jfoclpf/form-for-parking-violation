@@ -148,6 +148,12 @@ function getFilenameFromURL(url){
     return output;
 }
 
+//from "https://example.com/folder/file.jpg?param.eter#hash=12.345"
+//output ------> jpg
+function getExtensionFromURL(url) {
+    return url.split(/\#|\?/)[0].split('.').pop().trim();
+}
+
 /*use it like this, for example:
 copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg",        "myImg.jpg", LocalFileSystem.TEMPORARY); 
 see https://stackoverflow.com/a/50221986/1243247 */
@@ -288,6 +294,42 @@ function moveFile(baseFileURI, destPathDir){
         );
     });
 } 
+
+//example: list of www/audio/ folder in cordova/ionic app.
+//listDir(cordova.file.applicationDirectory + "www/audio/");
+function listDir(path){
+  window.resolveLocalFileSystemURL(path,
+    function (fileSystem) {
+      var reader = fileSystem.createReader();
+      reader.readEntries(
+        function (entries) {
+          console.log(entries);
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
+    }, function (err) {
+      console.log(err);
+    }
+  );
+}
+
+function getFileSize(fileUri) {
+    return new Promise(function(resolve, reject) {    
+        window.resolveLocalFileSystemURL(fileUri, function(fileEntry) {
+            fileEntry.file(function(fileObj) {
+                resolve(fileObj.size);
+            },
+            function(err){
+                reject(err);
+            });
+        }, 
+        function(err){
+            reject(err);
+        });
+    });
+}
 
 function isThisAndroid(){
     return device.platform.toLowerCase() === "android";

@@ -15,7 +15,7 @@ function getPhoto(imgNmbr, type) {
         return;
     }    
     
-    var options = setOptions(srcType);
+    var options = setCameraOptions(srcType);
     
     navigator.camera.getPicture(function cameraSuccess(result) {
 
@@ -23,19 +23,23 @@ function getPhoto(imgNmbr, type) {
         var thisResult = JSON.parse(result);
 
         var imageUri = thisResult.filename;        
-        console.log("imageUri:" + imageUri);
-        
-        displayImage(imageUri, "myImg_" + imgNmbr);
+        console.log("imageUri:" + imageUri);                
 
         //removes queries from the URI, i.e., the text after "?"
         //for example 'file://photo.jpg?123' will be 'file://photo.jpg'
-        imageUri = getPathFromUri(imageUri); 
+        imageUri = getPathFromUri(imageUri);         
         
         //adds "file://" at the begining if missing as requested by Android systems
         //see: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/
         if (isThisAndroid()){
             imageUri = adaptURItoAndroid(imageUri);
-        }
+        }              
+
+        resizeImageIfNeeded(imgNmbr, imageUri).
+            then(function(resizedImgUri){
+                displayImage(resizedImgUri, "myImg_" + imgNmbr);
+                IMGS_URI_ARRAY[imgNmbr]=resizedImgUri;
+        });        
         
         //if user selects a photo from the library
         //it gets, when available on the photo the EXIF information
@@ -81,29 +85,8 @@ function getPhoto(imgNmbr, type) {
                 };
                 console.log(postion);
                 GetPosition(postion);                    
-            }                
-                    
-            //in certain situations where it's hard to deliver the image
-            //copy image from original location to local APP directory             
-            if (imageUri.toLowerCase().includes("dcim") || 
-                imageUri.toLowerCase().includes("camera")){                 
-                _copyFile(imageUri, getFilenameFromURL(imageUri)[1], LocalFileSystem.TEMPORARY).
-                    then(
-                        function(destFileUri){
-                            IMGS_URI_ARRAY[imgNmbr] = destFileUri;                    
-                        }
-                    ).catch(function() {
-                        IMGS_URI_ARRAY[imgNmbr]=imageUri;
-                        console.log("Couldn't copy the file");
-                    }
-                );
-            }
-            else{
-                IMGS_URI_ARRAY[imgNmbr]=imageUri;
-            }
-        }
-        else{
-            IMGS_URI_ARRAY[imgNmbr]=imageUri;
+            }                                                
+
         }
         
         //hides "Adds images" button
@@ -118,7 +101,7 @@ function getPhoto(imgNmbr, type) {
 }
 
 //camera plugin options
-function setOptions(srcType) {
+function setCameraOptions(srcType) {
     var options = {
         // Some common settings are 20, 50, and 100
         quality: 50, //do not increase, otherwise the email plugin cannot attach photo due to photo file size
@@ -223,5 +206,53 @@ function removeImage(id, num){
 function standardErrorHandler(){
     console.log("Erro geting the photo file info");
 }
+
+function resizeImageIfNeeded(imgNmbr, imageUri){
+
+    //if image larger than this, resize
+    var MAX_IMG_FILE_SIZE = 307200; //300kb
+    
+    var fileName = "foto_" + imgNmbr + "." + getExtensionFromURL(imageUri); 
+    
+    var resizeOptions = {
+        uri: imageUri,
+        fileName: fileName,
+        quality: 90,
+        width: 1200,
+        height: 1200,
+        base64: false
+    };
+        
+    return new Promise(function(resolve, reject) { 
+        getFileSize(imageUri).
+            then(function(fileSize){
+                //no need to resize image, return image unchanged
+                if(fileSize<MAX_IMG_FILE_SIZE){
+                    console.log("Image Not resized (file already small): " + fileName);
+                    resolve(imageUri);
+                }
+                //resize image
+                else{
+                    window.ImageResizer.resize(resizeOptions,
+                        function(resizedImageUri) {
+                            // success on resizing
+                            console.log("Image resized: " + fileName);
+                            resolve(resizedImageUri);
+                        }, 
+                        // failed to resize, return image unchanged
+                        function() {
+                            console.log("Image Not resized (could not resize): " + fileName);
+                            resolve(imageUri);   
+                        });                
+                }
+            }).
+            //couldn't get file size, return image unchanged
+            catch(function(err){
+                console.log("Image Not resized (couldn't get file size): " + fileName);
+                resolve(imageUri);
+        });        
+    });
+}
+
 
 

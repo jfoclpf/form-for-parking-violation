@@ -1,6 +1,20 @@
 var inAppBrowserRef;
-var loadedAuthentication = false;
-var isAuthenticationWindowClosed = false;
+var isAuthenticationWindowClosed = true;
+
+//function called by main.js
+function startAuthentication(){        
+    
+    if(isAuthenticationWindowClosed){
+        loadAuthentication();
+    }
+    
+    if(inAppBrowserRef != undefined){        
+        runAuthentication();
+    }
+    else{
+        authenticationError();
+    }
+}
 
 function loadAuthentication() {
     
@@ -15,6 +29,8 @@ function loadAuthentication() {
                   "toolbarcolor=#3C5DBC";
 
     inAppBrowserRef = cordova.InAppBrowser.open(url, target, options);
+    
+    inAppBrowserRef.addEventListener('loadstart', loadStartCallbackFunction)
 
     inAppBrowserRef.addEventListener('loadstop', loadedCallbackFunction);
 
@@ -24,24 +40,51 @@ function loadAuthentication() {
     
 }
 
-//function called by main.js
-function startAuthentication(){
+function loadStartCallbackFunction(event){
+    console.log("Authentication Window start loading");
+    console.log("url: " + event.url);
     
-    if(isAuthenticationWindowClosed){
-        loadAuthentication();
-    }
-    
-    if(inAppBrowserRef != undefined){        
-        runAuthentication();
-    }
-    else{
-        authenticationError();
+    if(getExtensionFromURL(event.url).toLowerCase() == "pdf"){
+        alert("Encontrou ficheiro pdf assinado :)");
     }
 }
 
 function loadedCallbackFunction() {
     console.log("Authentication Window loaded");
-    loadedAuthentication = true;
+    
+    isAuthenticationWindowClosed = false;
+    
+    inAppBrowserRef.insertCSS({ code: ".header,.logo,language-container,.footer{display: none !important}" });
+        
+    $.ajax({
+        type: "GET",
+        url: cordova.file.applicationDirectory + "www/js/authBrowserJSCode.js",
+        dataType: "text",   
+        success: function (JScodeRes) {
+            
+            //altera o texto quando refere o Documento para assinar
+            var JScode = JScodeRes +
+                "(function(){" +
+                    "var textEl = document.getElementById('MainContent_lblTitleChooseDoc');" + 
+                    "if(textEl){" + 
+                        "textEl.innerHTML = 'Escolha o documento <u>" + 
+                            getPdfFileName() + "</u> na pasta <i>Downloads</i> para assinar digitalmente';" +
+                    "}" + 
+                "})();";         
+
+            inAppBrowserRef.executeScript(
+                { code:  JScode},
+            function(){
+                console.log("authBrowserJSCode.js Inserted Succesfully into inApp Browser Window");
+            });
+            
+        },
+        error: function () {
+           console.error("Ajax Error");
+
+       }
+    });
+    
 }
 
 function authenticationError() {
@@ -50,7 +93,6 @@ function authenticationError() {
         'theme': 'red',
         'content': "Confirme se tem acesso à Internet. Poderá sempre enviar a ocorrência às autoridades sem a autenticação da Chave Móvel Digital."
     });
-    loadedAuthentication = false;
 }
 
 function authenticationExit(){
@@ -58,20 +100,30 @@ function authenticationExit(){
     isAuthenticationWindowClosed = true;
 }
 
-function runAuthentication(){
+function getPdfFileName(){
     
-    inAppBrowserRef.show();
+    var carPlate = getCarPlate();
     
-    var rightNow = new Date();
-    var res = rightNow.toISOString().slice(0,10);
-    var fileName = "Queixa_Estacionamento_Ilegal_" + res + ".pdf";
+    var fileNameExtra;
+    if (carPlate){
+        fileNameExtra = carPlate;
+    }
+    else{
+        var rightNow = new Date();
+        fileNameExtra = rightNow.toISOString().slice(0,10);        
+    }
+
+    return "Denuncia_Estacionamento_" + fileNameExtra + ".pdf";
+}
+
+function runAuthentication(){        
     
     var options = {
-                documentSize: 'A4',
-                type: 'base64'                
-              };
+        documentSize: 'A4',
+        type: 'base64'                
+    };
 
-    var pdfhtml = '<html><body style="font-size:120%">' + MAIN_MESSAGE;    
+    var pdfhtml = '<html><body style="font-size:120%">' +  getMainMessage();
     
     for (var i=0; i<IMGS_URI_CLEAN_ARRAY.length; i++){
         pdfhtml += '<br><br>';
@@ -79,6 +131,8 @@ function runAuthentication(){
     }
     
     pdfhtml += '<br><br>' + getExtraAuthenticationHTMLText();
+    pdfhtml += '<br><br>' + getRegards() + '<br>';
+    
     pdfhtml += '</body></html>';
 
     pdf.fromData(pdfhtml , options)
@@ -89,7 +143,7 @@ function runAuthentication(){
             // if cordova.file is not available use instead :
             // var folderpath = "file:///storage/emulated/0/Download/";
             var folderpath = cordova.file.externalRootDirectory + "Download/";
-            savebase64AsPDF(folderpath, fileName, base64, contentType);          
+            savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType);          
         })  
         .catch((err)=>console.err(err));
     
@@ -150,39 +204,31 @@ function savebase64AsPDF(folderpath,filename,content,contentType){
             file.createWriter(function(fileWriter) {
                 console.log("Writing content to file");
                 fileWriter.write(DataBlob);
+                showPDFAuthInfo(folderpath, filename);
             }, function(){
-                alert('Unable to save file in path '+ folderpath);
+                alert('Não foi possível salvar o ficheiro em '+ folderpath);
             });
         });
     });
 }
 
+function showPDFAuthInfo(folderpath, filename){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    console.log("folderpath : " + folderpath);
+    console.log("fileName :" + filename);
+    
+    inAppBrowserRef.hide();
+    
+    var msg =  'Foi criado o ficheiro pdf <b>' + filename + '</b> na pasta <i>Downloads</i> com a sua denúncia. ';
+        msg += 'Terá agora, na janela seguinte, de carregar este ficheiro no autenticação.gov para assiná-lo digitalmente';
+    
+    $.jAlert({
+        'title'  : 'Criação de ficheiro PDF',
+        'content': msg,
+        'theme'  : 'dark_blue',
+        'onClose': function(){inAppBrowserRef.show();}
+    });
+}
 
 
 
