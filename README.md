@@ -7,9 +7,23 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 * A APP para iOS está <a href="https://itunes.apple.com/pt/app/aqui-n%C3%A3o/id1335652238?mt=8">aqui</a>.
 
-## Como instalar e testar
+## Requerimentos
+
+### [Apache Cordova](https://cordova.apache.org/)
 
 Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a> para converter código HTML5 e Javascript para uma aplicação de dispositivo móvel, como Android ou iOS. Precisa, portanto, de ter Apache Cordova instalado na sua máquina.
+
+### [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
+
+### Java 
+
+### [ADB](https://developer.android.com/studio/command-line/adb?hl=pt-br)
+
+É usado para testar a APP no seu telemóvel Android
+
+## Como instalar e testar
+
+
 
  1. Clone este projeto `git clone https://github.com/jfoclpf/form-for-parking-violation form-for-parking-violation`
  2. Entre na pasta recém criada `cd form-for-parking-violation`
@@ -28,6 +42,16 @@ Tal pode dar problemas porque diferentes versões de gradle dependem de diferent
 `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` ou<br>
 `export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br> 
 mesmo apagar com `export JAVA_HOME=`
+
+## Testar num smartphone
+
+Para testar num smartphone Android precisa de ativar nas configurações do smartphone o [Developer options](https://developer.android.com/studio/command-line/adb#Enabling) e dentro desse menu precisa de ativar a opção <b>USB debugging</b>.
+
+Faça 
+
+`adb devices`
+
+para listar os dispositivos Android detectados
 
 ## Plugins necessários
 
