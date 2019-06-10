@@ -15,11 +15,15 @@ Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a>
 
 ### [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
 
+O gradle é usado para fazer o `build` dos projetos Apache Cordova 
+
 ### Java 
+
+É uma exigência do Apache Cordova
 
 ### [ADB](https://developer.android.com/studio/command-line/adb?hl=pt-br)
 
-É usado para testar a APP no seu telemóvel Android
+O ADB é usado para testar a APP no seu telemóvel Android
 
 ## Como instalar e testar
 
