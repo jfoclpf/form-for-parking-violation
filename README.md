@@ -15,6 +15,19 @@ Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a>
  2. Entre na pasta recém criada `cd form-for-parking-violation`
  3. Adicione a plataforma. Para Android `cordova platform add android@6.2.0`. Neste momento funciona apenas na versão 6.2.0, devido à limitação de <i>plugins</i>.
  3. Corra `cordova build --release android` para construir o projeto na sua máquina. Em Android cria o ficheiro APK na pasta `platforms/android/build/outputs/apk`
+ 
+## Eventuais problemas com Gradle
+
+O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um executor de tarefas de compilação e é instalado aquando de `cordova build`. Pode dar problemas nesse comando (erro: `Could not determine java version from 'x.x.x'`). O gradle pode envolver diferentes versões:
+
+- a versão global: `gradle -v`
+- a versão local do project (wrapper): `./platforms/android/gradlew -v`
+
+Tal pode dar problemas porque diferentes versões de gradle dependem de diferentes versões de java. Verificar a variável `JAVA_HOME` com `echo $JAVA_HOME`. Para resolver o problema mudar esta variável e associá-la a outras versões de java, por exemplo: 
+
+`export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` ou<br>
+`export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br> 
+mesmo apagar com `export JAVA_HOME=`
 
 ## Plugins necessários
 
