@@ -2,13 +2,13 @@
     "name": "com.form.parking.violation",
     "displayName": "formParkingViolation",
     "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "description": "Submit a parking violation complain to authority",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Apache Cordova Team",
-    "license": "Apache-2.0",
+    "license": "GPL-3.0",
     "dependencies": {
         "cordova": "^7.0.1",
         "cordova-android": "^6.2.0",
