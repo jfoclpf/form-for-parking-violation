@@ -3,9 +3,8 @@ buildReleaseAPP.sh
 emulateAPP.sh
 runOnDevice.sh
 node_modules/
-www/js/certificate.js
+www/js/credentials.js
 platforms/
 plugins/
 temp/
 formParkingViolation.apk
-
