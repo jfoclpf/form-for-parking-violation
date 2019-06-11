@@ -44,6 +44,8 @@ para listar os dispositivos Android detectados. Caso o dispositivo seja detetado
 
 `cordova run android --device`
 
+Para fazer debug no Chrome aceda a `chrome://inspect/#devices`
+
 ## Eventuais problemas com Gradle
 
 O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um executor de tarefas de compilação e é instalado aquando de `cordova build`. Pode dar problemas nesse comando (erro: `Could not determine java version from 'x.x.x'`). O gradle pode envolver diferentes versões:
