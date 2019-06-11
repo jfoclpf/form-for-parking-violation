@@ -31,7 +31,19 @@ O ADB é usado para testar a APP no seu telemóvel Android
  2. Entre na pasta recém criada `cd form-for-parking-violation`
  3. Adicione a plataforma. Para Android `cordova platform add android`.
  3. Corra `cordova build --release android` para construir o projeto na sua máquina. Em Android cria o ficheiro APK na pasta `platforms/android/build/outputs/apk`
- 
+
+### Testar num smartphone
+
+Para testar num smartphone Android precisa de ativar nas configurações do smartphone o [Developer options](https://developer.android.com/studio/command-line/adb#Enabling) e dentro desse menu precisa de ativar a opção <b>USB debugging</b>.
+
+Depois corra numa linha de comandos
+
+`adb devices`
+
+para listar os dispositivos Android detectados. Caso o dispositivo seja detetado, corra
+
+`cordova run android --device`
+
 ## Eventuais problemas com Gradle
 
 O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um executor de tarefas de compilação e é instalado aquando de `cordova build`. Pode dar problemas nesse comando (erro: `Could not determine java version from 'x.x.x'`). O gradle pode envolver diferentes versões:
@@ -44,16 +56,6 @@ Tal pode dar problemas porque diferentes versões de gradle dependem de diferent
 `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` ou<br>
 `export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br> 
 mesmo apagar com `export JAVA_HOME=`
-
-## Testar num smartphone
-
-Para testar num smartphone Android precisa de ativar nas configurações do smartphone o [Developer options](https://developer.android.com/studio/command-line/adb#Enabling) e dentro desse menu precisa de ativar a opção <b>USB debugging</b>.
-
-Faça 
-
-`adb devices`
-
-para listar os dispositivos Android detectados
 
 ## Plugins necessários
 
