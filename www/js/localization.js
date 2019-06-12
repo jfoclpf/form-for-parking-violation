@@ -1,19 +1,25 @@
 //  LOCALIZATION/GPS/Contacts
 /* eslint camelcase: off */
 /* eslint no-unused-vars: off */
+/* eslint no-useless-escape: off */
+/* eslint prefer-promise-reject-errors: off */
+/* eslint no-undef: off */
+/* eslint eqeqeq: off */
 
 var MAPS_API_Loaded = false
-
-/* global $, google, updateDateAndTime, Localities, GNR_Contacts, PSP_Contacts, PM_Contacts, Municipalities, cleanArray, Connection, VARS, GOOGLE_MAPS_API_KEY */
 
 function loadMapsApi () {
   if (navigator.connection.type === Connection.NONE || MAPS_API_Loaded) {
     return
   }
-  // here GOOGLE_MAPS_API_KEY is got from credentials.js which is not tracked in github
+  // GOOGLE_MAPS_API_KEYS is an JS Array defined in www/js/credentials.js. Each Array element is a KEY
   // to get a Google maps Key visit https://console.cloud.google.com/apis/credentials
-  // console.log(GOOGLE_MAPS_API_KEY);
-  $.getScript('https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_MAPS_API_KEY + '&sensor=true&callback=onMapsApiLoaded')
+
+  // get randomly a KEY from the array
+  var googleMapsKey = GOOGLE_MAPS_API_KEYS[Math.floor(Math.random() * GOOGLE_MAPS_API_KEYS.length)]
+  console.log(googleMapsKey)
+
+  $.getScript('https://maps.googleapis.com/maps/api/js?key=' + googleMapsKey + '&sensor=true&callback=onMapsApiLoaded')
 
   // this flag should be here otherwise the script might be loaded several times, and Google refuses it
   MAPS_API_Loaded = true

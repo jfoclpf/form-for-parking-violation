@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">    
-    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com 'unsafe-eval'; 
-        style-src 'self' 'unsafe-inline'; 
-        media-src *; 
-        img-src 'self' https://maps.googleapis.com data: content: https://csi.gstatic.com; 
+        default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com 'unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        media-src *;
+        img-src 'self' https://maps.googleapis.com data: content: https://csi.gstatic.com;
         script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com
     ">
-    
+
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    
+
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    
+
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/res/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/res/jquery-ui.css">
     <link rel="stylesheet" href="css/res/bootstrap-theme.min.css" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/res/jAlert.css">
-    
+
 </head>
 <body>
     <h1 class="header">
@@ -34,12 +34,12 @@
 
     <p class="lead">
         A Polícia confirma que dá seguimento às queixas dos cidadãos por esta via,
-        de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa por exemplo, entre janeiro e março de 2017, 
+        de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa por exemplo, entre janeiro e março de 2017,
         em apenas três meses, foram levantados mais de mil autos com esta origem.
     </p>
     <div>
         <hr>
-        
+
         <div class="row">
             <div class="col-xs-12">
                 <h3>Os seus dados</h3>
@@ -48,7 +48,7 @@
                 <button type="button" id="personal_data_hideShowBtn" class="btn btn-primary">Mostrar/Esconder</button>
             </div>
         </div>
-        
+
         <div id="personal_data" class="collapse">
             <br>
             <p class="lead" class="collapse">
@@ -64,7 +64,7 @@
                     <label for="id_type">A sua Identificação</label>
                     <select class="form-control input-lg personal_info" id="id_type">
                         <option>Cartão de Cidadão</option>
-                        <option>Bilhete de Identidade</option>                
+                        <option>Bilhete de Identidade</option>
                     </select>
                 </div>
                 <div class="col-xs-12 col-sm-2 form-group">
@@ -81,25 +81,25 @@
                 <div class="col-xs-12 col-sm-2 form-group">
                     <label for="postal_code">Código Postal</label>
                     <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
-                           class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>                
+                           class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>
                 </div>
-                <div class="col-xs-12 col-sm-2 form-group">                
+                <div class="col-xs-12 col-sm-2 form-group">
                     <label for="address_city">Localidade (da sua residência)</label>
                     <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
-                </div>            
+                </div>
             </div>
         </div>
-        
+
         <hr>
-        
-        <!--Image-->       
-        <div id="image_selector">            
+
+        <!--Image-->
+        <div id="image_selector">
             <h3>Imagens</h3>
             <p class="lead">
-                Para assegurar o dever de imparcialidade por parte da autoridade policial, 
-                as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado, 
+                Para assegurar o dever de imparcialidade por parte da autoridade policial,
+                as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado,
                 ou seja, o veículo o qual reporta.
-            </p>            
+            </p>
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-6 col-md-3">
                     <div class="form-group col-xs-12 col-sm-6 col-md-3">
@@ -135,9 +135,9 @@
                 </div>
             </div>
         </div>
-        
+
         <hr>
-        
+
         <h3>Os dados da ocorrência</h3>
         <p class="lead">
         Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar falsamente à autoridade pública,
@@ -154,22 +154,22 @@
 
             <div class="col-xs-12 col-sm-4 form-group">
                 <label for="carmake">Marca</label>
-                <input class="form-control input-lg" id="carmake" 
+                <input class="form-control input-lg" id="carmake"
                        name="Marca do veículo" placeholder="Opel" type="text">
             </div>
 
             <div class="col-xs-12 col-sm-4 form-group">
                 <label for="carmodel">Modelo</label>
-                <input class="form-control input-lg" id="carmodel" 
+                <input class="form-control input-lg" id="carmodel"
                        name="Modelo do veículo" placeholder="Corsa" type="text">
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-xs-12 col-md-6 form-group">
                 <br>
                 <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
-                <br><br>                
+                <br><br>
                 <label for="date">Data </label>
                 <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
             </div>
@@ -177,44 +177,44 @@
                 <label for="time">Hora</label>
                 <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
             </div>
-                               
+
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="locality">Concelho ou Localidade da ocorrência</label>
                 <p>Caso introduza manualmente, coloque sempre o Concelho</p>
-                <input size="35" class="form-control input-lg mandatory" 
+                <input size="35" class="form-control input-lg mandatory"
                        id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
             </div>
-            
+
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="street">Local da ocorrência</label>
-                <input size="35" class="form-control input-lg mandatory" 
+                <input size="35" class="form-control input-lg mandatory"
                        id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
-            </div>              
+            </div>
 
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="street_number">Junto ao Número</label>
-                <input size="4" class="form-control input-lg" 
+                <input size="4" class="form-control input-lg"
                        id="street_number" name="Número postal do Local da Ocorrência" type="text">
-            </div>            
+            </div>
          </div>
-        
+
          <br>
-        
+
          <div class="row">
-            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">                
-                <label for="penalties">Tipo de Ocorrência</label> 
-                <select class="form-control input-lg mandatory personal_info" 
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                <label for="penalties">Tipo de Ocorrência</label>
+                <select class="form-control input-lg mandatory personal_info"
                         id="penalties" name="Tipo de Ocorrência">
                 </select>
-            </div>  
-            
+            </div>
+
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
                 <label for="authority">Autoridade</label>
                 <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
-                <select class="form-control input-lg mandatory personal_info" 
-                        id="authority" name="Autoridade">                
+                <select class="form-control input-lg mandatory personal_info"
+                        id="authority" name="Autoridade">
                 </select>
-            </div>              
+            </div>
         </div>
 
         <hr>
@@ -231,7 +231,7 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col-xs-12">            
+          <div class="col-xs-12">
             <p></p>
             <button class="btn btn-success" id="send_email_btn">Enviar email</button>
           </div>
@@ -245,7 +245,7 @@
     <script src="js/res/jAlert.js"></script>
 
     <script src="js/res/car-list.js"></script>
-    <script src="js/certificate.js"></script>
+    <script src="js/credentials.js"></script>
     <script src="js/contacts.js"></script>
     <script src="js/penalties.js"></script>
 
@@ -257,7 +257,7 @@
     <script src="js/text.js"></script>
     <script src="js/main.js"></script>
     <script src="js/res/imgupload.js"></script>
-    <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>    
+    <script src="js/res/bootstrap.min.js" crossorigin="anonymous"></script>
 
 </body>
 </html>
