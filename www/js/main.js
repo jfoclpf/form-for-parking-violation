@@ -19,6 +19,12 @@ var Platform
 var VARS = {} // global object used for debug
 
 $(document).ready(function () {
+  $('#sidebarCollapse').on('click', function () {
+    $('#sidebar').toggleClass('active')
+  })
+})
+
+$(document).ready(function () {
   console.log('$(document).ready started')
   WAS_INIT = false
   document.addEventListener('deviceready', onDeviceReady, false)
