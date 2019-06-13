@@ -5,8 +5,11 @@
 /* eslint no-undef: off */
 /* eslint eqeqeq: off */
 
-var DEBUG = true
+var DEBUG = false
+var AUTHENTICATION = false
+
 console.log('DEBUG: ', DEBUG)
+console.log('AUTHENTICATION: ', AUTHENTICATION)
 
 var WAS_INIT
 var EMAIL_TO
@@ -140,27 +143,31 @@ $('#send_email_btn').click(function () {
     return
   }
 
-  var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
+  if (AUTHENTICATION) {
+    var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
 
-  $.jAlert({
-    'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
-    'content': mensagem,
-    'theme': 'dark_blue',
-    'btns': [
-      {
-        'text': 'Sim',
-        'theme': 'green',
-        'class': 'jButtonAlert',
-        'onClick': startAuthentication
-      },
-      {
-        'text': 'Não',
-        'theme': 'green',
-        'class': 'jButtonAlert',
-        'onClick': sendMailMessage
-      }
-    ]
-  })
+    $.jAlert({
+      'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
+      'content': mensagem,
+      'theme': 'dark_blue',
+      'btns': [
+        {
+          'text': 'Sim',
+          'theme': 'green',
+          'class': 'jButtonAlert',
+          'onClick': startAuthentication
+        },
+        {
+          'text': 'Não',
+          'theme': 'green',
+          'class': 'jButtonAlert',
+          'onClick': sendMailMessage
+        }
+      ]
+    })
+  } else {
+    sendMailMessage()
+  }
 })
 
 function sendMailMessage () {
