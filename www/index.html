@@ -2,171 +2,330 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com 'unsafe-eval';
-        style-src 'self' https://fonts.googleapis.com https://stackpath.bootstrapcdn.com 'unsafe-inline';
-        media-src *;
-        img-src 'self' https://maps.googleapis.com data: content: https://csi.gstatic.com;
-        script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://code.jquery.com
-    ">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com 'unsafe-eval';
+    style-src 'self' https://fonts.googleapis.com https://stackpath.bootstrapcdn.com 'unsafe-inline';
+    media-src *;
+    img-src 'self' https://maps.googleapis.com data: content: https://csi.gstatic.com;
+    script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://code.jquery.com
+  ">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+  <link rel="stylesheet" href="css/res/bootstrap.min.css">
+  <link rel="stylesheet" href="css/res/jquery-ui.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="css/res/bootstrap.min.css">
-
-    <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
-
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/sidebar.css">
-
-    <!-- Font Awesome JS -->
-    <script defer src="js/res/solid.js"></script>
-    <script defer src="js/res/fontawesome.js"></script>
+  <!-- Font Awesome JS -->
+  <script defer src="js/res/solid.js"></script>
+  <script defer src="js/res/fontawesome.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
-            </div>
-
-            <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <div class="line"></div>
-
-            <h3>Lorem Ipsum Dolor</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Denúncia de Estacionamento</h3>
+        <div>
+          <button type="button" id="sidebarCollapse2" class="btn btn-info">
+            <i class="fas fa-align-justify"></i>
+          </button>
         </div>
+      </div>
+
+      <ul class="list-unstyled components">
+
+        <li id="form_show">
+          <a>Denunciar Estacionamento</a>
+        </li>
+
+        <li id="personal_data_show">
+          <a>Os meus dados</a>
+        </li>
+
+        <li id="legal_basis_show">
+          <a>Base legal</a>
+        </li>
+
+        <li>
+          <a href="#pageSubmenuCmd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Chave Móvel Digital</a>
+          <ul class="collapse list-unstyled" id="pageSubmenuCmd">
+            <li>
+              <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">Aderir</a>
+            </li>
+            <li>
+              <a href="https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx">Assinar PDF</a>
+            </li>
+            <li>
+              <a href="https://play.google.com/store/apps/details?id=pt.ama.autenticacaogov&hl=pt">App</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="#pageSubmenuAboutUs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sobre</a>
+          <ul class="collapse list-unstyled" id="pageSubmenuAboutUs">
+            <li>
+              <a href="https://passeiolivre.org">O nosso movimento</a>
+            </li>
+            <li>
+              <a href="https://github.com/jfoclpf/form-for-parking-violation/">O cóigo desta App</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+  </nav>
+
+  <!-- Page Content  -->
+  <div id="content">
+
+      <!-- dropdown option -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-dark d-inline-block d-lg-none ml-auto">
+            <i class="fas fa-align-justify"></i>
+          </button>
+
+        </div>
+      </nav>
+      <!-- end of dropdown option -->
+
+      <div id="main_form" class="section">
+
+        <!--Image-->
+        <div id="image_selector">
+          <h3>Imagens</h3>
+          <div class="row">
+              <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-primary" id="addImg_1">Adicionar imagem</button>
+                    <button class="btn btn-primary" style="display: none" id="remImg_1">Remover imagem</button>
+                </div>
+                <br><br>
+                <img id="myImg_1" src="#" style="display: none" class="col-xs-12 image_to_mail">
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-primary" id="addImg_2">Adicionar imagem</button>
+                    <button class="btn btn-primary" style="display: none" id="remImg_2">Remover imagem</button>
+                </div>
+                <br><br>
+                <img id="myImg_2" src="#" style="display: none" class="col-xs-12 image_to_mail">
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-primary" id="addImg_3">Adicionar imagem</button>
+                    <button class="btn btn-primary" style="display: none" id="remImg_3">Remover imagem</button>
+                </div>
+                <br><br>
+                <img id="myImg_3" src="#" style="display: none" class="col-xs-12 image_to_mail">
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                    <button class="btn btn-primary" id="addImg_4">Adicionar imagem</button>
+                    <button class="btn btn-primary" style="display: none" id="remImg_4">Remover imagem</button>
+                </div>
+                <br><br>
+                <img id="myImg_4" src="#" style="display: none" class="col-xs-12 image_to_mail">
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <h3>Os dados da ocorrência</h3>
+          <div class="row">
+              <div class="col-xs-12 col-sm-4 form-group">
+                  <label for="plate">Matrícula </label>
+                  <div>Formato Livre <input type="checkbox" id="free_plate"></div>
+                  <input class="form-control input-lg mandatory" maxlength="8"
+                         id="plate" name="Matrícula do veículo" required>
+              </div>
+
+              <div class="col-xs-12 col-sm-4 form-group">
+                  <label for="carmake">Marca</label>
+                  <input class="form-control input-lg" id="carmake"
+                         name="Marca do veículo" placeholder="Opel" type="text">
+              </div>
+
+              <div class="col-xs-12 col-sm-4 form-group">
+                  <label for="carmodel">Modelo</label>
+                  <input class="form-control input-lg" id="carmodel"
+                         name="Modelo do veículo" placeholder="Corsa" type="text">
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-xs-12 col-md-6 form-group">
+                  <br>
+                  <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
+                  <br><br>
+                  <label for="date">Data </label>
+                  <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
+              </div>
+              <div class="col-xs-12 col-md-6 form-group">
+                  <label for="time">Hora</label>
+                  <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                  <label for="locality">Concelho ou Localidade da ocorrência</label>
+                  <p>Caso introduza manualmente, coloque sempre o Concelho</p>
+                  <input size="35" class="form-control input-lg mandatory"
+                         id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                  <label for="street">Local da ocorrência</label>
+                  <input size="35" class="form-control input-lg mandatory"
+                         id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                  <label for="street_number">Junto ao Número</label>
+                  <input size="4" class="form-control input-lg"
+                         id="street_number" name="Número postal do Local da Ocorrência" type="text">
+              </div>
+           </div>
+
+           <br>
+
+           <div class="row">
+              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                  <label for="penalties">Tipo de Ocorrência</label>
+                  <select class="form-control input-lg mandatory personal_info"
+                          id="penalties" name="Tipo de Ocorrência">
+                  </select>
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                  <label for="authority">Autoridade</label>
+                  <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
+                  <select class="form-control input-lg mandatory personal_info"
+                          id="authority" name="Autoridade">
+                  </select>
+              </div>
+          </div>
+
+          <hr>
+          <button class="btn btn-success" id="generate_message">Gerar texto</button>
+      </div>
+
+      <div id="personal_data" class="section collapse">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 form-group">
+              <label for="name">Nome <u>Completo</u></label>
+              <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
+            </div>
+            <div class="col-xs-12 col-sm-2 form-group">
+              <label for="id_type">A sua Identificação</label>
+              <select class="form-control input-lg personal_info" id="id_type">
+                <option>Cartão de Cidadão</option>
+                <option>Bilhete de Identidade</option>
+              </select>
+            </div>
+            <div class="col-xs-12 col-sm-2 form-group">
+              <label for="id_number">Número </label>
+              <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
+            </div>
+            <div class="col-xs-12 col-sm-5 form-group">
+              <label for="address">A sua Morada </label>
+              <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-2 form-group">
+              <label for="postal_code">Código Postal</label>
+              <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
+                     class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>
+            </div>
+            <div class="col-xs-12 col-sm-2 form-group">
+              <label for="address_city">Localidade (da sua residência)</label>
+              <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
+            </div>
+          </div>
+      </div>
+
+      <div id="legal_basis" class="section">
+          <h3>Esta App funciona</h3>
+          <p class="lead">
+            A Polícia confirma que dá seguimento às queixas dos cidadãos por esta via,
+            de acordo com o estipulado no n.º 5 do artigo 170.º do Código da Estrada. Em Lisboa por exemplo, entre janeiro e março de 2017,
+            em apenas três meses, foram levantados mais de mil autos com esta origem.
+          </p>
+          <h3>Foto de apenas um carro</h3>
+          <p class="lead">
+            Para assegurar o dever de imparcialidade por parte da autoridade policial,
+            as fotos que enviar deverão conter apenas <b>um</b> veículo ilegalmente estacionado,
+            ou seja, o veículo o qual reporta.
+          </p>
+          <h3>Falso testemunho é crime</h3>
+          <p class="lead">
+            Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar falsamente à autoridade pública,
+            nomeadamente um agente da autoridade policial no exercício das suas funções,
+            é punido com pena de prisão até um ano ou com pena de multa.
+          </p>
+          <h3>Protegemos os dados do denunciante e do denunciado</h3>
+          <p class="lead" class="collapse">
+            Ao abrigo da lei de proteção de dados, as autoridades policiais nunca revelam os dados do denunciante.
+            Os dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
+          </p>
+      </div>
+
+      <div id="mail_message" class="section">
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Mensagem</h3>
+            <div id="message" class="mailmessage"></div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            <p></p>
+            <button class="btn btn-success" id="send_email_btn">Enviar email</button>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
-    <script src="js/res/jquery.min.js"></script>
-    <script src="js/res/jquery-ui.min.js"></script>
-    <script src="js/res/jAlert.js"></script>-->
-    <script src="js/res/popper.min.js"></script>
-    <script src="js/res/bootstrap.min.js"></script>
+  <script src="js/res/jquery.min.js"></script>
+  <script src="js/res/jquery-ui.min.js"></script>
+  <script src="js/res/jAlert.js"></script>
+  <script src="js/res/popper.min.js"></script>
+  <script src="js/res/bootstrap.min.js"></script>
 
-    <script src="js/res/car-list.js"></script>
-    <script src="js/credentials.js"></script>
-    <script src="js/contacts.js"></script>
-    <script src="js/penalties.js"></script>
+  <!-- main.js needs to be the first app module to be loaded -->
+  <script src="js/main.js"></script>
 
-    <script src="js/functions.js"></script>
-    <script src="js/authentication.js"></script>
-    <script src="js/photos.js"></script>
-    <script src="js/form.js"></script>
-    <script src="js/localization.js"></script>
-    <script src="js/text.js"></script>-->
-    <script src="js/main.js"></script>
-    <script src="js/res/imgupload.js"></script>
+  <script src="js/res/car-list.js"></script>
+  <script src="js/credentials.js"></script>
+  <script src="js/contacts.js"></script>
+  <script src="js/penalties.js"></script>
+
+  <script src="js/functions.js"></script>
+  <script src="js/authentication.js"></script>
+  <script src="js/photos.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/localization.js"></script>
+  <script src="js/text.js"></script>
+  <script src="js/res/imgupload.js"></script>
 
 </body>
 

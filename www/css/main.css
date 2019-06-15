@@ -1,8 +1,3 @@
-body {
-    /*  font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;*/
-    padding: 15px;
-}
-
 h1 {
     text-align: center
 }
@@ -12,13 +7,6 @@ h1 {
     margin:0 auto;
     text-align:justify;
     font-size:16
-}
-
-/* FORMS */
-select,
-textarea,
-input {
-
 }
 
 .header {
@@ -52,6 +40,10 @@ input[type="number"] {
     font-size:16
 }
 
+#mail_message{
+    display: none;
+}
+
 img{
     border: 2px solid black !important;
     border-radius: 10px !important;
@@ -72,14 +64,13 @@ img{
   background-color: white;
   color: black;
   font-family: monospace;
-  padding: 20px;	  
+  padding: 20px;
 }
 
-.loading {    
+.loading {
     background-color: #ffffff;
     background-image: url("res/loading.gif") !important;
     background-size: 25px 25px;
     background-position:right center;
     background-repeat: no-repeat;
 }
-

@@ -57,11 +57,15 @@ a:focus {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 100vw;
+    max-width: 300px;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
+}
+
+#sidebarCollapse {
+    margin: 0 !important;
 }
 
 #sidebar.active {
@@ -71,6 +75,7 @@ a:focus {
 #sidebar .sidebar-header {
     padding: 20px;
     background: #6d7fcc;
+    display: flex;
 }
 
 #sidebar ul.components {
@@ -158,7 +163,7 @@ a.article:hover {
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+        margin-left: -100vw;
     }
     #sidebar.active {
         margin-left: 0;
