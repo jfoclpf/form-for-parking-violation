@@ -1,11 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
 
-/* global $, device, DEBUG */
+/* global app, $, device, DEBUG */
 
 app.functions = (function (thisModule) {
   // detects if the car plate is correctly filled in
@@ -152,7 +147,7 @@ app.functions = (function (thisModule) {
   // from "https://example.com/folder/file.jpg?param.eter#hash=12.345"
   // output ------> jpg
   function getExtensionFromURL (url) {
-    return url.split(/\#|\?/)[0].split('.').pop().trim()
+    return url.split(/#|\?/)[0].split('.').pop().trim()
   }
 
   /* use it like this, for example:
@@ -185,7 +180,7 @@ app.functions = (function (thisModule) {
         },
         function () {
           console.log('failure! file was not found')
-          reject()
+          reject(Error('failure! file was not found'))
         }
       )
     })
@@ -237,7 +232,7 @@ app.functions = (function (thisModule) {
         },
         function () {
           console.log('failure! file was not found')
-          reject()
+          reject(Error('failure! file was not found'))
         }
       )
     })
@@ -289,7 +284,7 @@ app.functions = (function (thisModule) {
         },
         function () {
           console.log('failure! file was not found')
-          reject()
+          reject(Error('failure! file was not found'))
         }
       )
     })
@@ -357,10 +352,18 @@ app.functions = (function (thisModule) {
   thisModule.isFullNameOK = isFullNameOK
   thisModule.clean_message = clean_message
   thisModule.pad = pad
+  thisModule.listDir = listDir
+  thisModule.getFilenameFromURL = getFilenameFromURL
+  thisModule.copyFile = copyFile
+  thisModule._copyFile = _copyFile
+  thisModule.moveFile = moveFile
   thisModule.cleanArray = cleanArray
   thisModule.updateDateAndTime = updateDateAndTime
   thisModule.getPathFromUri = getPathFromUri
   thisModule.getExtensionFromURL = getExtensionFromURL
+  thisModule.getFileSize = getFileSize
+  thisModule.isThisAndroid = isThisAndroid
+  thisModule.adaptURItoAndroid = adaptURItoAndroid
 
   return thisModule
 })(app.functions || {})

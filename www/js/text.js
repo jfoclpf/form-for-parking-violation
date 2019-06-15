@@ -1,25 +1,21 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
-/* eslint handle-callback-err: off */
+
+/* global app, $, DEBUG */
 
 app.text = (function (thisModule) {
   // main message
   function getMainMessage () {
     // Authority
-    var authority, authorityShort, authorityName, key
+    var authority, authorityName, key
 
-    for (key in AUTHORITIES) {
-      if (!AUTHORITIES.hasOwnProperty(key)) continue
+    for (key in app.localization.AUTHORITIES) {
+      if (!app.localization.AUTHORITIES.hasOwnProperty(key)) continue
 
-      if ($('#authority').val() == key) {
-        authority = AUTHORITIES[key].authority
-        authorityShort = AUTHORITIES[key].authorityShort
-        authorityName = AUTHORITIES[key].nome
-        EMAIL_TO = AUTHORITIES[key].contacto
+      if ($('#authority').val() === key) {
+        authority = app.localization.AUTHORITIES[key].authority
+        /* authorityShort = app.localization.AUTHORITIES[key].authorityShort */
+        authorityName = app.localization.AUTHORITIES[key].nome
+        app.main.emailTo = app.localization.AUTHORITIES[key].contacto
       }
     }
 
@@ -31,7 +27,7 @@ app.text = (function (thisModule) {
       if (!penalties.hasOwnProperty(key)) continue
 
       var obj = penalties[key]
-      if ($('#penalties').val() == obj.select) {
+      if ($('#penalties').val() === obj.select) {
         penaltyDescription = obj.description
         penaltyLawArticle = obj.law_article
       }
@@ -40,8 +36,8 @@ app.text = (function (thisModule) {
     var CarPlateStr = app.functions.getCarPlate()
 
     // texto para marca e modelo
-    var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length != 0)
-    var is_model = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length != 0)
+    var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
+    var is_model = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length !== 0)
     var carmake_model_txt
     if (is_carmake && is_model) {
       carmake_model_txt = 'de marca e modelo <b>' + $('#carmake').val() +
@@ -88,7 +84,7 @@ app.text = (function (thisModule) {
           ', em violação ' + penaltyLawArticle + '.'
 
     var msg3 = 'Pode-se comprovar esta situação através' +
-          ' ' + ((IMGS_URI_CLEAN_ARRAY.length == 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
+          ' ' + ((app.main.imagesUriCleanArray.length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
           ' ' + 'à presente mensagem eletrónica. ' +
           'Juro pela minha honra que a informação supra citada é verídica.' +
           ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
@@ -96,7 +92,7 @@ app.text = (function (thisModule) {
           ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
           'situação a que se aplica o n.º 1 do mesmo artigo.'
 
-    message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3
+    var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3
 
     return message
   }
@@ -111,7 +107,7 @@ app.text = (function (thisModule) {
       // loops through mandatory fields
       $('.mandatory').each(function () {
         var val = $(this).val()
-        if (val == null || val == undefined || val == '' || (val).length == 0 || (val).replace(/^\s+|\s+$/g, '').length == 0) {
+        if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
           console.log('Error on #' + $(this).attr('id'))
           error_string += '- ' + $(this).attr('name') + '<br>'
           count++
@@ -121,7 +117,7 @@ app.text = (function (thisModule) {
 
       console.log('#generate_message goes', to_break)
       if (to_break) {
-        if (count == 1) {
+        if (count === 1) {
           $.jAlert({
             'title': 'Erro!',
             'theme': 'red',
@@ -172,9 +168,9 @@ app.text = (function (thisModule) {
 
     // check photos
     // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    IMGS_URI_CLEAN_ARRAY = app.functions.cleanArray(IMGS_URI_ARRAY)
+    app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
 
-    if (IMGS_URI_CLEAN_ARRAY.length == 0) {
+    if (app.main.imagesUriCleanArray.length === 0) {
       $.jAlert({
         'title': 'Erro nas fotos!',
         'theme': 'red',
@@ -225,7 +221,9 @@ app.text = (function (thisModule) {
 
   /* === Public methods to be returned === */
   thisModule.getMainMessage = getMainMessage
+  thisModule.isMessageReady = isMessageReady
   thisModule.getRegards = getRegards
+  thisModule.getExtraAuthenticationHTMLText = getExtraAuthenticationHTMLText
 
   return thisModule
 })(app.text || {})

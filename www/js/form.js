@@ -1,10 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
 
-/* global $, device, DEBUG, PENALTIES */
+/* global app, $, CAR_LIST, DEBUG */
 
 app.form = (function (thisModule) {
   // date field
@@ -167,7 +163,7 @@ app.form = (function (thisModule) {
           return value
         }
 
-        var i; var model; var models = []
+        var i; var models = []
         var found = false
 
         // is the brand on #carmake valid?
@@ -275,6 +271,7 @@ app.form = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.loadsPersonalInfo = loadsPersonalInfo
   thisModule.setPortuguesePlateInput = setPortuguesePlateInput
+  thisModule.showSection = showSection
 
   return thisModule
 })(app.form || {})

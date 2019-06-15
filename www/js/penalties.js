@@ -1,9 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
+
+/* global app, $ */
 
 app.penalties = (function (thisModule) {
   // campos "description" e "law_article" devem ser condicentes gramaticalmente com a mensagem que será gerada

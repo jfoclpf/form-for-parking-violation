@@ -1,10 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
-/* eslint handle-callback-err: off */
+
+/* global app, $, Camera */
 
 app.photos = (function (thisModule) {
   // get Photo function
@@ -12,9 +8,9 @@ app.photos = (function (thisModule) {
 
   function getPhoto (imgNmbr, type) {
     var srcType
-    if (type == 'camera') {
+    if (type === 'camera') {
       srcType = Camera.PictureSourceType.CAMERA
-    } else if (type == 'library') {
+    } else if (type === 'library') {
       srcType = Camera.PictureSourceType.PHOTOLIBRARY
     } else {
       console.log('getPhoto error')
@@ -36,20 +32,20 @@ app.photos = (function (thisModule) {
 
       // adds "file://" at the begining if missing as requested by Android systems
       // see: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/
-      if (isThisAndroid()) {
-        imageUri = adaptURItoAndroid(imageUri)
+      if (app.functions.isThisAndroid()) {
+        imageUri = app.functions.adaptURItoAndroid(imageUri)
       }
 
       resizeImageIfNeeded(imgNmbr, imageUri)
         .then(function (resizedImgUri) {
           displayImage(resizedImgUri, 'myImg_' + imgNmbr)
-          IMGS_URI_ARRAY[imgNmbr] = resizedImgUri
+          app.main.imagesUriArray[imgNmbr] = resizedImgUri
         })
 
       // if user selects a photo from the library
       // it gets, when available on the photo the EXIF information
       // the date, time and GPS information, to fill in the form
-      if (type == 'library' && thisResult.json_metadata && thisResult.json_metadata != '{}') {
+      if (type === 'library' && thisResult.json_metadata && thisResult.json_metadata !== '{}') {
         // convert json_metadata JSON string to JSON Object
         var metadata = JSON.parse(thisResult.json_metadata)
 
@@ -86,7 +82,7 @@ app.photos = (function (thisModule) {
             }
           }
           console.log(postion)
-          GetPosition(postion)
+          app.localization.GetPosition(postion)
         }
       }
 
@@ -179,7 +175,7 @@ app.photos = (function (thisModule) {
   // checks if date is valid, ex: 30 of February is invalid
   function isValidDate (year, month, day) {
     var date = new Date(year, month - 1, day)
-    return date && (date.getMonth() + 1) == month
+    return date && (date.getMonth() + 1) === month
   }
 
   function displayImage (imgUri, id) {
@@ -192,11 +188,7 @@ app.photos = (function (thisModule) {
     var elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
-    IMGS_URI_ARRAY[num] = null
-  }
-
-  function standardErrorHandler () {
-    console.log('Erro geting the photo file info')
+    app.main.imagesUriArray[num] = null
   }
 
   function resizeImageIfNeeded (imgNmbr, imageUri) {
@@ -214,8 +206,9 @@ app.photos = (function (thisModule) {
       base64: false
     }
 
+    /* eslint-disable handle-callback-err */
     return new Promise(function (resolve, reject) {
-      getFileSize(imageUri)
+      app.functions.getFileSize(imageUri)
         .then(function (fileSize) {
           // no need to resize image, return image unchanged
           if (fileSize < MAX_IMG_FILE_SIZE) {
@@ -240,10 +233,12 @@ app.photos = (function (thisModule) {
           resolve(imageUri)
         })
     })
+    /* eslint-enable handle-callback-err */
   }
 
   /* === Public methods to be returned === */
   thisModule.getPhoto = getPhoto
+  thisModule.removeImage = removeImage
 
   return thisModule
 })(app.photos || {})

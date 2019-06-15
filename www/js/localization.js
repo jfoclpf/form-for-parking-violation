@@ -1,16 +1,20 @@
 //  LOCALIZATION/GPS/Contacts
-/* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
+
+/* global app, $, google, Connection, GOOGLE_MAPS_API_KEYS */
+
+/* eslint-disable no-unused-vars */
+/* this function is global because of gmaps api */
+function onGoogleMapsApiLoaded () {
+  // get from GPS Address information
+  app.localization.getGeolocation()
+}
+/* eslint-enable no-unused-vars */
 
 app.localization = (function (thisModule) {
-  var MAPS_API_Loaded = false
+  var isGoogleMapsApiLoaded = false
 
   function loadMapsApi () {
-    if (navigator.connection.type === Connection.NONE || MAPS_API_Loaded) {
+    if (navigator.connection.type === Connection.NONE || isGoogleMapsApiLoaded) {
       return
     }
     // GOOGLE_MAPS_API_KEYS is an JS Array defined in www/js/credentials.js. Each Array element is a KEY
@@ -20,28 +24,23 @@ app.localization = (function (thisModule) {
     var googleMapsKey = GOOGLE_MAPS_API_KEYS[Math.floor(Math.random() * GOOGLE_MAPS_API_KEYS.length)]
     console.log(googleMapsKey)
 
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=' + googleMapsKey + '&sensor=true&callback=onMapsApiLoaded')
+    $.getScript('https://maps.googleapis.com/maps/api/js?key=' + googleMapsKey + '&sensor=true&callback=onGoogleMapsApiLoaded')
 
     // this flag should be here otherwise the script might be loaded several times, and Google refuses it
-    MAPS_API_Loaded = true
-  }
-
-  function onMapsApiLoaded () {
-    // get from GPS Address information
-    GetGeolocation()
+    isGoogleMapsApiLoaded = true
   }
 
   // botão get address by GPS (Atualizar)
   $('#getCurrentAddresBtn').click(function () {
-    GetGeolocation()
+    getGeolocation()
     app.functions.updateDateAndTime()
   })
 
   /* Geo location functions */
-  function GetGeolocation () {
+  function getGeolocation () {
     // detect if has Internet AND if the GoogleMaps API is loaded
-    var networkState = VARS.networkState = navigator.connection.type
-    if (networkState !== Connection.NONE && MAPS_API_Loaded) {
+    var networkState = app.main.variables.networkState = navigator.connection.type
+    if (networkState !== Connection.NONE && isGoogleMapsApiLoaded) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
       var options = { timeout: 30000, enableHighAccuracy: true }
       navigator.geolocation.getCurrentPosition(GetPosition, PositionError, options)
@@ -67,15 +66,16 @@ app.localization = (function (thisModule) {
   }
 
   /* Get address by coordinates */
-  var AUTHORITIES = [] // array of possible authorities applicable for that area
+  thisModule.AUTHORITIES = [] // array of possible authorities applicable for that area
+
   function getAuthoritiesFromGMap (latitude, longitude) {
     var reverseGeocoder = new google.maps.Geocoder()
     var currentPosition = new google.maps.LatLng(latitude, longitude)
     reverseGeocoder.geocode({ 'latLng': currentPosition }, function (results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results[0]) {
-          var address_components = results[0].address_components
-          getAuthoritiesFromAddress(address_components)
+          var addressComponents = results[0].address_components
+          getAuthoritiesFromAddress(addressComponents)
         } else {
           PositionError()
         }
@@ -85,28 +85,28 @@ app.localization = (function (thisModule) {
     })
   }
 
-  function getAuthoritiesFromAddress (address_components) {
-    AUTHORITIES = []
+  function getAuthoritiesFromAddress (addressComponents) {
+    thisModule.AUTHORITIES = []
     var geoNames = [] // array of possible names for the locale, for example ["Lisboa", "Odivelas"]
 
-    if (address_components !== undefined) {
-      $('#street').val(getAddressComponents(address_components, 'route')) // nome da rua/avenida/etc.
-      $('#street_number').val(getAddressComponents(address_components, 'street_number'))
+    if (addressComponents !== undefined) {
+      $('#street').val(getAddressComponents(addressComponents, 'route')) // nome da rua/avenida/etc.
+      $('#street_number').val(getAddressComponents(addressComponents, 'street_number'))
 
       // get concelho/municipality according to Google Maps API
-      var municipalityFromGmaps = getAddressComponents(address_components, 'administrative_area_level_2')
+      var municipalityFromGmaps = getAddressComponents(addressComponents, 'administrative_area_level_2')
       console.log('municipality from Goolge Maps is ' + municipalityFromGmaps)
       if (municipalityFromGmaps) {
         geoNames.push(municipalityFromGmaps)
       }
 
-      var localityFromGmaps = getAddressComponents(address_components, 'locality')
+      var localityFromGmaps = getAddressComponents(addressComponents, 'locality')
       console.log('locality from Goolge Maps is ' + localityFromGmaps)
       if (localityFromGmaps) {
         geoNames.push(localityFromGmaps)
       }
 
-      var postalCodeFromGmaps = getAddressComponents(address_components, 'postal_code')
+      var postalCodeFromGmaps = getAddressComponents(addressComponents, 'postal_code')
       console.log('postal_code from Goolge Maps is ' + postalCodeFromGmaps, typeof postalCodeFromGmaps)
 
       // from the Postal Code got from GPS/Google
@@ -134,7 +134,7 @@ app.localization = (function (thisModule) {
       }
 
       // if Google Maps has futher information of local name
-      var locality2 = getAddressComponents(address_components, 'administrative_area_level_3')
+      var locality2 = getAddressComponents(addressComponents, 'administrative_area_level_3')
       if (locality2 && locality2 !== '') {
         geoNames.push(locality2)
       }
@@ -144,9 +144,9 @@ app.localization = (function (thisModule) {
 
     geoNames = app.functions.cleanArray(geoNames) // removes empty strings
     console.log('geoNames :', geoNames)
-    AUTHORITIES.push.apply(AUTHORITIES, getPMcontacts(geoNames))
-    AUTHORITIES.push.apply(AUTHORITIES, getGNRcontacts(geoNames))
-    AUTHORITIES.push.apply(AUTHORITIES, getPSPcontacts(geoNames))
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getPMcontacts(geoNames))
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getGNRcontacts(geoNames))
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getPSPcontacts(geoNames))
 
     var PSPGeral = {
       authority: 'Polícia',
@@ -160,11 +160,11 @@ app.localization = (function (thisModule) {
       nome: 'Comando Geral',
       contacto: 'gnr@gnr.pt'
     }
-    AUTHORITIES.push(PSPGeral)
-    AUTHORITIES.push(GNRGeral)
+    thisModule.AUTHORITIES.push(PSPGeral)
+    thisModule.AUTHORITIES.push(GNRGeral)
 
-    console.log('AUTHORITIES :', AUTHORITIES)
-    populateAuthoritySelect(AUTHORITIES)
+    console.log('AUTHORITIES :', thisModule.AUTHORITIES)
+    populateAuthoritySelect(thisModule.AUTHORITIES)
 
     GPSLoadingOnFields(false)
   }
@@ -206,19 +206,19 @@ app.localization = (function (thisModule) {
 
     console.log('getDataFromPostalCode: ' + postalCode, typeof postalCode)
 
-    var key, locality, municipality, municipality_code
+    var key, locality, municipality, municipalityCode
 
-    for (key in Localities) {
-      if (Localities[key].postalCode === postalCode) {
-        locality = Localities[key].locality
-        municipality_code = Localities[key].municipality
+    for (key in app.contacts.Localities) {
+      if (app.contacts.Localities[key].postalCode === postalCode) {
+        locality = app.contacts.Localities[key].locality
+        municipalityCode = app.contacts.Localities[key].municipality
         break
       }
     }
 
-    for (key in Municipalities) {
-      if (Municipalities[key].code === municipality_code) {
-        municipality = Municipalities[key].name
+    for (key in app.contacts.Municipalities) {
+      if (app.contacts.Municipalities[key].code === municipalityCode) {
+        municipality = app.contacts.Municipalities[key].name
         break
       }
     }
@@ -237,8 +237,8 @@ app.localization = (function (thisModule) {
     var municipalityName
     var toAddBool
 
-    for (var key in PM_Contacts) {
-      municipalityName = PM_Contacts[key].nome
+    for (var key in app.contacts.PM_Contacts) {
+      municipalityName = app.contacts.PM_Contacts[key].nome
 
       toAddBool = false
       for (var key2 in geoNames) {
@@ -249,8 +249,8 @@ app.localization = (function (thisModule) {
         var PMrelevantContact = {
           authority: 'Polícia Municipal',
           authorityShort: 'Polícia Municipal',
-          nome: PM_Contacts[key].nome,
-          contacto: PM_Contacts[key].contacto
+          nome: app.contacts.PM_Contacts[key].nome,
+          contacto: app.contacts.PM_Contacts[key].contacto
         }
         PMrelevantContacts.push(PMrelevantContact)
       }
@@ -263,11 +263,11 @@ app.localization = (function (thisModule) {
   // geoNames is an array with possible names for the area
   function getGNRcontacts (geoNames) {
     var GNRrelevantContacts = []
-    var GNRauthority, municipalityName
+    var municipalityName
     var toAddBool
 
-    for (var key in GNR_Contacts) {
-      municipalityName = GNR_Contacts[key].nome
+    for (var key in app.contacts.GNR_Contacts) {
+      municipalityName = app.contacts.GNR_Contacts[key].nome
 
       toAddBool = false
       for (var key2 in geoNames) {
@@ -278,8 +278,8 @@ app.localization = (function (thisModule) {
         var GNRrelevantContact = {
           authority: 'Guarda Nacional Republicana',
           authorityShort: 'GNR',
-          nome: GNR_Contacts[key].nome,
-          contacto: GNR_Contacts[key].contacto
+          nome: app.contacts.GNR_Contacts[key].nome,
+          contacto: app.contacts.GNR_Contacts[key].contacto
         }
         GNRrelevantContacts.push(GNRrelevantContact)
       }
@@ -292,11 +292,11 @@ app.localization = (function (thisModule) {
   // geoNames is an array with possible names for the area
   function getPSPcontacts (geoNames) {
     var PSPrelevantContacts = []
-    var PSPauthority, municipalityName
+    var municipalityName
     var toAddBool
 
-    for (var key in PSP_Contacts) {
-      municipalityName = PSP_Contacts[key].nome
+    for (var key in app.contacts.PSP_Contacts) {
+      municipalityName = app.contacts.PSP_Contacts[key].nome
 
       toAddBool = false
       for (var key2 in geoNames) {
@@ -307,8 +307,8 @@ app.localization = (function (thisModule) {
         var PSPrelevantContact = {
           authority: 'Polícia de Segurança Pública',
           authorityShort: 'PSP',
-          nome: PSP_Contacts[key].nome,
-          contacto: PSP_Contacts[key].contacto
+          nome: app.contacts.PSP_Contacts[key].nome,
+          contacto: app.contacts.PSP_Contacts[key].contacto
         }
         PSPrelevantContacts.push(PSPrelevantContact)
       }
@@ -386,6 +386,8 @@ app.localization = (function (thisModule) {
 
   /* === Public methods to be returned === */
   thisModule.loadMapsApi = loadMapsApi
+  this.Module.getGeolocation = getGeolocation
+  thisModule.GetPosition = GetPosition
   thisModule.getAuthoritiesFromAddress = getAuthoritiesFromAddress
   thisModule.ConvertDMSStringInfoToDD = ConvertDMSStringInfoToDD
 

@@ -1,9 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
+
+/* global app, $, cordova, alert, pdf, Blob, atob */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
@@ -15,7 +12,7 @@ app.authentication = (function (thisModule) {
       loadAuthentication()
     }
 
-    if (inAppBrowserRef != undefined) {
+    if (!inAppBrowserRef) {
       runAuthentication()
     } else {
       authenticationError()
@@ -48,7 +45,7 @@ app.authentication = (function (thisModule) {
     console.log('Authentication Window start loading')
     console.log('url: ' + event.url)
 
-    if (app.functions.getExtensionFromURL(event.url).toLowerCase() == 'pdf') {
+    if (app.functions.getExtensionFromURL(event.url).toLowerCase() === 'pdf') {
       alert('Encontrou ficheiro pdf assinado :)')
     }
   }
@@ -122,13 +119,13 @@ app.authentication = (function (thisModule) {
 
     var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage()
 
-    for (var i = 0; i < IMGS_URI_CLEAN_ARRAY.length; i++) {
+    for (var i = 0; i < app.main.imagesUriCleanArray.length; i++) {
       pdfhtml += '<br><br>'
-      pdfhtml += '<img src="' + IMGS_URI_CLEAN_ARRAY[i] + '" width="320">'
+      pdfhtml += '<img src="' + app.main.imagesUriCleanArray[i] + '" width="320">'
     }
 
-    pdfhtml += '<br><br>' + getExtraAuthenticationHTMLText()
-    pdfhtml += '<br><br>' + getRegards() + '<br>'
+    pdfhtml += '<br><br>' + app.text.getExtraAuthenticationHTMLText()
+    pdfhtml += '<br><br>' + app.text.getRegards() + '<br>'
 
     pdfhtml += '</body></html>'
 

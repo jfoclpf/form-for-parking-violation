@@ -1,9 +1,6 @@
 /* eslint camelcase: off */
-/* eslint no-unused-vars: off */
-/* eslint no-useless-escape: off */
-/* eslint prefer-promise-reject-errors: off */
-/* eslint no-undef: off */
-/* eslint eqeqeq: off */
+
+/* global $, cordova */
 
 var DEBUG = false
 var AUTHENTICATION = false
@@ -15,25 +12,23 @@ var app = {}
 
 app.main = (function (thisModule) {
   var wasInit
-  var EMAIL_TO
-  var IMGS_URI_ARRAY = []
-  var IMGS_URI_CLEAN_ARRAY = []
-  var Platform
-  var VARS = {} // global object used for debug
 
-  $(document).ready(function () {
-    $('#sidebarCollapse, #sidebarCollapse2').on('click', function () {
-      $('#sidebar').toggleClass('active')
-    })
-  })
+  thisModule.emailTo = ''
+  thisModule.imagesUriArray = []
+  thisModule.imagesUriCleanArray = []
+  thisModule.variables = {} // global object used for debug
 
   $(document).ready(function () {
     console.log('$(document).ready started')
     wasInit = false
     document.addEventListener('deviceready', onDeviceReady, false)
 
+    $('#sidebarCollapse, #sidebarCollapse2').on('click', function () {
+      $('#sidebar').toggleClass('active')
+    })
+
     // hides Personal Data information section
-    $('#personal_data').collapse('hide')
+    app.form.showSection('main_form')
   })
 
   function onDeviceReady () {
@@ -66,7 +61,7 @@ app.main = (function (thisModule) {
     app.functions.updateDateAndTime()
 
     $('input').each(function () {
-      if (!DEBUG && $(this).val() == '') {
+      if (!DEBUG && $(this).val() === '') {
         $(this).css('border-color', 'red')
       }
     })
@@ -123,7 +118,7 @@ app.main = (function (thisModule) {
     // gets the number of the element, by obtaining the last character of the id
     var num = id[id.length - 1]
 
-    removeImage('myImg_' + num, num)
+    app.photos.removeImage('myImg_' + num, num)
     $(this).hide()
 
     $('#addImg_' + num).text('Adicionar imagem')
@@ -131,7 +126,7 @@ app.main = (function (thisModule) {
 
   // when user clicks "generate_email"
   $('#generate_message').click(function () {
-    if (!isMessageReady()) {
+    if (!app.text.isMessageReady()) {
       return
     }
 
@@ -148,12 +143,12 @@ app.main = (function (thisModule) {
   // botão de gerar email
   $('#send_email_btn').click(function () {
     // it popups the alerts according to needed fields
-    if (!isMessageReady()) {
+    if (!app.text.isMessageReady()) {
       return
     }
 
     if (AUTHENTICATION) {
-      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
+      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
 
       $.jAlert({
         'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
@@ -184,8 +179,8 @@ app.main = (function (thisModule) {
     var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
 
     cordova.plugins.email.open({
-      to: EMAIL_TO, // email addresses for TO field
-      attachments: IMGS_URI_CLEAN_ARRAY, // file paths or base64 data streams
+      to: thisModule.mailTo, // email addresses for TO field
+      attachments: thisModule.imagesUriCleanArray, // file paths or base64 data streams
       subject: emailSubject, // subject of the email
       body: mainMessage, // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
