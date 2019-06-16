@@ -121,7 +121,7 @@ app.main = (function (thisModule) {
     app.photos.removeImage('myImg_' + num, num)
     $(this).hide()
 
-    $('#addImg_' + num).text('Adicionar imagem')
+    $('#addImg_' + num).html('<i class="fas fa-plus"></i>')
   })
 
   // when user clicks "generate_email"
@@ -179,7 +179,7 @@ app.main = (function (thisModule) {
     var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
 
     cordova.plugins.email.open({
-      to: thisModule.mailTo, // email addresses for TO field
+      to: thisModule.emailTo, // email addresses for TO field
       attachments: thisModule.imagesUriCleanArray, // file paths or base64 data streams
       subject: emailSubject, // subject of the email
       body: mainMessage, // email body (for HTML, set isHtml to true)

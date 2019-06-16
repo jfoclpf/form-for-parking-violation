@@ -87,7 +87,7 @@ app.photos = (function (thisModule) {
       }
 
       // hides "Adds images" button
-      $('#' + 'addImg_' + imgNmbr).text('Substituir imagem')
+      $('#' + 'addImg_' + imgNmbr).html('<i class="fas fa-edit"></i>')
       $('#' + 'remImg_' + imgNmbr).show()
     }, function cameraError (error) {
       console.debug('Não foi possível obter fotografia: ' + error, 'app')

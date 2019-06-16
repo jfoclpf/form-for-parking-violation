@@ -44,11 +44,18 @@ input[type="number"] {
     display: none;
 }
 
+/* Images section */
 img{
     border: 2px solid black !important;
     border-radius: 10px !important;
     padding: 0 !important;
+    width: 100%;
+    display: none;
 }
+button.sign-minus{
+    display: none;
+}
+/* === */
 
 /* Image Designing Propoerties */
 .thumb {

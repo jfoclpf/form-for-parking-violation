@@ -386,7 +386,7 @@ app.localization = (function (thisModule) {
 
   /* === Public methods to be returned === */
   thisModule.loadMapsApi = loadMapsApi
-  this.Module.getGeolocation = getGeolocation
+  thisModule.getGeolocation = getGeolocation
   thisModule.GetPosition = GetPosition
   thisModule.getAuthoritiesFromAddress = getAuthoritiesFromAddress
   thisModule.ConvertDMSStringInfoToDD = ConvertDMSStringInfoToDD
