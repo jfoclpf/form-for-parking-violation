@@ -6,7 +6,9 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
-  function getPhoto (imgNmbr, type) {
+  function getPhoto (imgNmbr, type, callback) {
+    console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
+
     var srcType
     if (type === 'camera') {
       srcType = Camera.PictureSourceType.CAMERA
@@ -24,23 +26,26 @@ app.photos = (function (thisModule) {
       var thisResult = JSON.parse(result)
 
       var imageUri = thisResult.filename
-      console.log('imageUri:' + imageUri)
+      console.log('imageUri a) ' + imageUri)
 
       // removes queries from the URI, i.e., the text after "?"
       // for example 'file://photo.jpg?123' will be 'file://photo.jpg'
       imageUri = app.functions.getPathFromUri(imageUri)
+      console.log('imageUri b) ' + imageUri)
 
       // adds "file://" at the begining if missing as requested by Android systems
       // see: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/
       if (app.functions.isThisAndroid()) {
         imageUri = app.functions.adaptURItoAndroid(imageUri)
+        console.log('imageUri c) ' + imageUri)
       }
 
-      resizeImageIfNeeded(imgNmbr, imageUri)
-        .then(function (resizedImgUri) {
-          displayImage(resizedImgUri, 'myImg_' + imgNmbr)
-          app.main.imagesUriArray[imgNmbr] = resizedImgUri
-        })
+      resizeImageIfNeeded(imgNmbr, imageUri).then(function (resizedImgUri) {
+        displayImage(resizedImgUri, 'myImg_' + imgNmbr)
+        console.log('display image ' + imgNmbr + ' : ' + resizedImgUri)
+        app.main.imagesUriArray[imgNmbr] = resizedImgUri
+        callback(imgNmbr)
+      })
 
       // if user selects a photo from the library
       // it gets, when available on the photo the EXIF information
@@ -85,10 +90,6 @@ app.photos = (function (thisModule) {
           app.localization.GetPosition(postion)
         }
       }
-
-      // hides "Adds images" button
-      $('#' + 'addImg_' + imgNmbr).html('<i class="fas fa-edit"></i>')
-      $('#' + 'remImg_' + imgNmbr).show()
     }, function cameraError (error) {
       console.debug('Não foi possível obter fotografia: ' + error, 'app')
     }, options)
@@ -195,11 +196,12 @@ app.photos = (function (thisModule) {
     // if image larger than this, resize
     var MAX_IMG_FILE_SIZE = 307200 // 300kb
 
-    var fileName = 'foto_' + imgNmbr + '.' + app.functions.getExtensionFromURL(imageUri)
+    // get just fileName with suffix, that is, for example only "photo1_resized.jpg"
+    var fileNameResized = app.functions.addSuffixToFileName(app.functions.getFilenameFromURL(imageUri)[1], '_resized')
 
     var resizeOptions = {
       uri: imageUri,
-      fileName: fileName,
+      fileName: fileNameResized,
       quality: 90,
       width: 1200,
       height: 1200,
@@ -212,24 +214,24 @@ app.photos = (function (thisModule) {
         .then(function (fileSize) {
           // no need to resize image, return image unchanged
           if (fileSize < MAX_IMG_FILE_SIZE) {
-            console.log('Image Not resized (file already small): ' + fileName)
+            console.log('Image Not resized (file already small): ' + imageUri)
             resolve(imageUri)
           } else {
             // resize image
             window.ImageResizer.resize(resizeOptions,
               function (resizedImageUri) {
                 // success on resizing
-                console.log('Image resized: ' + fileName)
+                console.log('Image resized: ' + resizedImageUri)
                 resolve(resizedImageUri)
               },
               // failed to resize, return image unchanged
               function () {
-                console.log('Image Not resized (could not resize): ' + fileName)
+                console.log('Image Not resized (could not resize): ' + imageUri)
                 resolve(imageUri)
               })
           }
         }).catch(function (err) {
-          console.log("Image Not resized (couldn't get file size): " + fileName)
+          console.log("Image Not resized (couldn't get file size): " + imageUri)
           resolve(imageUri)
         })
     })

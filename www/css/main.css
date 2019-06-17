@@ -52,10 +52,19 @@ img{
     width: 100%;
     display: none;
 }
-button.sign-minus{
+/* remove buttons */
+#remImg_1, #remImg_2, #remImg_3, #remImg_4{
     display: none;
 }
+/* hides all image containers except the first */
+#image_selector .img-container:not(:first-of-type) {
+  display: none;
+}
 /* === */
+
+button#save_personal_data {
+  display: none;
+}
 
 /* Image Designing Propoerties */
 .thumb {

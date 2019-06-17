@@ -37,6 +37,8 @@ app.main = (function (thisModule) {
     document.addEventListener('online', onOnline, false)
     document.addEventListener('resume', onResume, false)
 
+    window.screen.orientation.lock('portrait')
+
     init()
   }
 
@@ -91,6 +93,13 @@ app.main = (function (thisModule) {
     // gets the number of the element, by obtaining the last character of the id
     var num = id[id.length - 1]
 
+    var callback = function (imgNmbr) {
+      // hides "Adds image" button
+      $('#' + 'addImg_' + imgNmbr).html('<i class="fas fa-edit"></i>')
+      $('#' + 'remImg_' + imgNmbr).show()
+      updateImgContainers()
+    }
+
     $.jAlert({
       'title': 'Método de obtenção da foto:',
       'theme': 'dark_blue',
@@ -99,13 +108,13 @@ app.main = (function (thisModule) {
           'text': 'Câmara',
           'theme': 'green',
           'class': 'jButtonAlert',
-          'onClick': function () { app.photos.getPhoto(num, 'camera') }
+          'onClick': function () { app.photos.getPhoto(num, 'camera', callback) }
         },
         {
           'text': 'Biblioteca de fotos',
           'theme': 'green',
           'class': 'jButtonAlert',
-          'onClick': function () { app.photos.getPhoto(num, 'library') }
+          'onClick': function () { app.photos.getPhoto(num, 'library', callback) }
         }
       ]
     })
@@ -122,7 +131,27 @@ app.main = (function (thisModule) {
     $(this).hide()
 
     $('#addImg_' + num).html('<i class="fas fa-plus"></i>')
+
+    updateImgContainers()
   })
+
+  function updateImgContainers () {
+    var numberOfContainers = $('#image_selector .img-container').length
+    var hasShownButton = false
+    for (var i = 0; i < numberOfContainers; i++) {
+      console.log(i)
+      var $this = $('#image_selector .img-container').eq(i)
+      if (!$this.find('img').attr('src')) {
+        if (!hasShownButton) {
+          console.log('show')
+          $this.show()
+          hasShownButton = true
+        } else {
+          $this.hide()
+        }
+      }
+    }
+  }
 
   // when user clicks "generate_email"
   $('#generate_message').click(function () {

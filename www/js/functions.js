@@ -150,6 +150,13 @@ app.functions = (function (thisModule) {
     return url.split(/#|\?/)[0].split('.').pop().trim()
   }
 
+  function addSuffixToFileName (uri, suffix) {
+    var fileNameRoot = getPathFromUri(uri)
+    var fileNameWithoutExtension = fileNameRoot.split('.').slice(0, -1).join('.')
+    var extension = getExtensionFromURL(uri)
+    return fileNameWithoutExtension + suffix + '.' + extension
+  }
+
   /* use it like this, for example:
   copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg",        "myImg.jpg", LocalFileSystem.TEMPORARY);
   see https://stackoverflow.com/a/50221986/1243247 */
@@ -360,6 +367,7 @@ app.functions = (function (thisModule) {
   thisModule.cleanArray = cleanArray
   thisModule.updateDateAndTime = updateDateAndTime
   thisModule.getPathFromUri = getPathFromUri
+  thisModule.addSuffixToFileName = addSuffixToFileName
   thisModule.getExtensionFromURL = getExtensionFromURL
   thisModule.getFileSize = getFileSize
   thisModule.isThisAndroid = isThisAndroid

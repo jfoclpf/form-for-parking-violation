@@ -99,155 +99,162 @@
 
       <div id="main_form" class="section">
 
-        <!--Image-->
+        <h3>Imagens</h3>
         <div id="image_selector">
-          <h3>Imagens</h3>
           <div class="row">
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <button class="btn btn-primary" id="addImg_1"><i class="fas fa-plus"></i></button>
-                    <button class="btn btn-primary sign-minus" id="remImg_1"><i class="fas fa-minus"></i></button>
-                </div>
-                <img id="myImg_1" src="#" class="col-xs-12 image_to_mail">
+                  <button class="btn btn-primary" id="addImg_1"><i class="fas fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_1"><i class="fas fa-minus"></i></button>
               </div>
+              <img id="myImg_1" src="" class="col-xs-12">
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <button class="btn btn-primary" id="addImg_2"><i class="fas fa-plus"></i></button>
-                    <button class="btn btn-primary sign-minus" id="remImg_2"><i class="fas fa-minus"></i></button>
-                </div>
-                <img id="myImg_2" src="#" class="col-xs-12 image_to_mail">
+                  <button class="btn btn-primary" id="addImg_2"><i class="fas fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_2"><i class="fas fa-minus"></i></button>
               </div>
+              <img id="myImg_2" src="" class="col-xs-12">
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <button class="btn btn-primary" id="addImg_3"><i class="fas fa-plus"></i></button>
-                    <button class="btn btn-primary sign-minus" id="remImg_3"><i class="fas fa-minus"></i></button>
-                </div>
-                <img id="myImg_3" src="#" class="col-xs-12 image_to_mail">
+                  <button class="btn btn-primary" id="addImg_3"><i class="fas fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_3"><i class="fas fa-minus"></i></button>
               </div>
+              <img id="myImg_3" src="" class="col-xs-12">
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                    <button class="btn btn-primary" id="addImg_4"><i class="fas fa-plus"></i></button>
-                    <button class="btn btn-primary sign-minus" id="remImg_4"><i class="fas fa-minus"></i></button>
-                </div>
-                <img id="myImg_4" src="#" class="col-xs-12 image_to_mail">
+                  <button class="btn btn-primary" id="addImg_4"><i class="fas fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_4"><i class="fas fa-minus"></i></button>
               </div>
+              <img id="myImg_4" src="" class="col-xs-12">
             </div>
           </div>
+        </div>
 
-          <hr>
+        <hr>
 
-          <h3>Os dados da ocorrência</h3>
-          <div class="row">
-              <div class="col-xs-12 col-sm-4 form-group">
-                  <label for="plate">Matrícula </label>
-                  <div>Formato Livre <input type="checkbox" id="free_plate"></div>
-                  <input class="form-control input-lg mandatory" maxlength="8"
-                         id="plate" name="Matrícula do veículo" required>
-              </div>
+        <h3>Os dados da ocorrência</h3>
+        <div class="row">
 
-              <div class="col-xs-12 col-sm-4 form-group">
-                  <label for="carmake">Marca</label>
-                  <input class="form-control input-lg" id="carmake"
-                         name="Marca do veículo" placeholder="Opel" type="text">
-              </div>
-
-              <div class="col-xs-12 col-sm-4 form-group">
-                  <label for="carmodel">Modelo</label>
-                  <input class="form-control input-lg" id="carmodel"
-                         name="Modelo do veículo" placeholder="Corsa" type="text">
-              </div>
+          <div class="col-xs-12 col-sm-4 form-group">
+            <label for="plate">Matrícula </label>
+            <div>Formato Livre <input type="checkbox" id="free_plate"></div>
+            <input class="form-control input-lg mandatory" maxlength="8"
+                   id="plate" name="Matrícula do veículo" required>
           </div>
 
-          <div class="row">
-              <div class="col-xs-12 col-md-6 form-group">
-                  <br>
-                  <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
-                  <br><br>
-                  <label for="date">Data </label>
-                  <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
-              </div>
-              <div class="col-xs-12 col-md-6 form-group">
-                  <label for="time">Hora</label>
-                  <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
-              </div>
-
-              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                  <label for="locality">Concelho ou Localidade da ocorrência</label>
-                  <p>Caso introduza manualmente, coloque sempre o Concelho</p>
-                  <input size="35" class="form-control input-lg mandatory"
-                         id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
-              </div>
-
-              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                  <label for="street">Local da ocorrência</label>
-                  <input size="35" class="form-control input-lg mandatory"
-                         id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
-              </div>
-
-              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                  <label for="street_number">Junto ao Número</label>
-                  <input size="4" class="form-control input-lg"
-                         id="street_number" name="Número postal do Local da Ocorrência" type="text">
-              </div>
-           </div>
-
-           <br>
-
-           <div class="row">
-              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                  <label for="penalties">Tipo de Ocorrência</label>
-                  <select class="form-control input-lg mandatory personal_info"
-                          id="penalties" name="Tipo de Ocorrência">
-                  </select>
-              </div>
-
-              <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                  <label for="authority">Autoridade</label>
-                  <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
-                  <select class="form-control input-lg mandatory personal_info"
-                          id="authority" name="Autoridade">
-                  </select>
-              </div>
+          <div class="col-xs-12 col-sm-4 form-group">
+            <label for="carmake">Marca</label>
+            <input class="form-control input-lg" id="carmake"
+                   name="Marca do veículo" placeholder="Opel" type="text">
           </div>
 
-          <hr>
-          <button class="btn btn-success" id="generate_message">Gerar texto</button>
+          <div class="col-xs-12 col-sm-4 form-group">
+            <label for="carmodel">Modelo</label>
+            <input class="form-control input-lg" id="carmodel"
+                   name="Modelo do veículo" placeholder="Corsa" type="text">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-md-6 form-group">
+              <br>
+              <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
+              <br><br>
+              <label for="date">Data </label>
+              <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
+          </div>
+          <div class="col-xs-12 col-md-6 form-group">
+              <label for="time">Hora</label>
+              <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+              <label for="locality">Concelho ou Localidade da ocorrência</label>
+              <p>Caso introduza manualmente, coloque sempre o Concelho</p>
+              <input size="35" class="form-control input-lg mandatory"
+                     id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+              <label for="street">Local da ocorrência</label>
+              <input size="35" class="form-control input-lg mandatory"
+                     id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+              <label for="street_number">Junto ao Número</label>
+              <input size="4" class="form-control input-lg"
+                     id="street_number" name="Número postal do Local da Ocorrência" type="text">
+          </div>
+         </div>
+
+         <br>
+
+         <div class="row">
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                <label for="penalties">Tipo de Ocorrência</label>
+                <select class="form-control input-lg mandatory personal_info"
+                        id="penalties" name="Tipo de Ocorrência">
+                </select>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+                <label for="authority">Autoridade</label>
+                <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
+                <select class="form-control input-lg mandatory personal_info"
+                        id="authority" name="Autoridade">
+                </select>
+            </div>
+        </div>
+
+        <hr>
+        <button class="btn btn-success" id="generate_message">Gerar texto</button>
       </div>
 
       <div id="personal_data" class="section collapse">
         <div class="row">
-            <div class="col-xs-12 col-sm-3 form-group">
-              <label for="name">Nome <u>Completo</u></label>
-              <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
-            </div>
-            <div class="col-xs-12 col-sm-2 form-group">
-              <label for="id_type">A sua Identificação</label>
-              <select class="form-control input-lg personal_info" id="id_type">
-                <option>Cartão de Cidadão</option>
-                <option>Bilhete de Identidade</option>
-              </select>
-            </div>
-            <div class="col-xs-12 col-sm-2 form-group">
-              <label for="id_number">Número </label>
-              <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
-            </div>
-            <div class="col-xs-12 col-sm-5 form-group">
-              <label for="address">A sua Morada </label>
-              <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
-            </div>
+          <div class="col-xs-12 col-sm-3 form-group">
+            <label for="name">Nome <u>Completo</u></label>
+            <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
           </div>
+          <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_type">A sua Identificação</label>
+            <select class="form-control input-lg personal_info" id="id_type">
+              <option>Cartão de Cidadão</option>
+              <option>Bilhete de Identidade</option>
+              <option>Passaporte</option>
+            </select>
+          </div>
+          <div class="col-xs-12 col-sm-2 form-group">
+            <label for="id_number">Número </label>
+            <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
+          </div>
+          <div class="col-xs-12 col-sm-5 form-group">
+            <label for="address">A sua Morada </label>
+            <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
+          </div>
+        </div>
 
-          <div class="row">
-            <div class="col-xs-12 col-sm-2 form-group">
-              <label for="postal_code">Código Postal</label>
-              <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
-                     class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>
-            </div>
-            <div class="col-xs-12 col-sm-2 form-group">
-              <label for="address_city">Localidade (da sua residência)</label>
-              <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
-            </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-2 form-group">
+            <label for="postal_code">Código Postal</label>
+            <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
+              class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>
           </div>
+          <div class="col-xs-12 col-sm-2 form-group">
+            <label for="address_city">Localidade (da sua residência)</label>
+            <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-2 form-group">
+            <button class="btn btn-success" id="save_personal_data"><i class="fas fa-save"></i></button>
+          </div>
+        </div>
       </div>
 
       <div id="legal_basis" class="section">
@@ -318,7 +325,6 @@
   <script src="js/form.js"></script>
   <script src="js/localization.js"></script>
   <script src="js/text.js"></script>
-  <script src="js/res/imgupload.js"></script>
 
 </body>
 

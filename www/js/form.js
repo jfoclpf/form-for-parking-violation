@@ -70,6 +70,8 @@ app.form = (function (thisModule) {
       value = $.trim(value)
       value = value.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
       window.localStorage.setItem(id, value)
+
+      $('button#save_personal_data').show(300).hide(900)
     })
   })
 
