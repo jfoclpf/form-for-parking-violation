@@ -23,8 +23,9 @@ app.main = (function (thisModule) {
     wasInit = false
     document.addEventListener('deviceready', onDeviceReady, false)
 
-    $('#sidebarCollapse, #sidebarCollapse2').on('click', function () {
+    $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active')
+      updateSidebarAndContentViews()
     })
 
     // hides Personal Data information section
@@ -153,6 +154,14 @@ app.main = (function (thisModule) {
     }
   }
 
+  function updateSidebarAndContentViews () {
+    if ($('#sidebar').hasClass('active')) {
+      $('#content').fadeTo(200, 0.3).prop('disabled', true)
+    } else {
+      $('#content').fadeTo(200, 1).prop('disabled', false)
+    }
+  }
+
   // when user clicks "generate_email"
   $('#generate_message').click(function () {
     if (!app.text.isMessageReady()) {
@@ -217,6 +226,7 @@ app.main = (function (thisModule) {
   }
 
   thisModule.sendMailMessage = sendMailMessage
+  thisModule.updateSidebarAndContentViews = updateSidebarAndContentViews
 
   return thisModule
 })({})
