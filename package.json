@@ -22,9 +22,11 @@
         "cordova-plugin-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
         "cordova-plugin-inappbrowser": "^3.0.0",
         "cordova-plugin-network-information": "^2.0.1",
+        "cordova-plugin-screen-orientation": "3.0.1",
         "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
         "cordova-plugin-statusbar": "^2.2.3",
         "cordova-plugin-whitelist": "^1.3.3",
+        "es6-promise-plugin": "4.2.2",
         "exif-js": "^2.3.0",
         "whitelist": "^1.0.2"
     },
@@ -43,7 +45,8 @@
             "info.protonet.imageresizer": {},
             "cordova-plugin-simple-image-resizer": {
                 "ANDROID_EXIFINTERFACES_VERSION": "27.+"
-            }
+            },
+            "cordova-plugin-screen-orientation": {}
         },
         "platforms": [
             "android"
