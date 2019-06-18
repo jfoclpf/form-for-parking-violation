@@ -32,8 +32,10 @@ app.sidebar = (function (thisModule) {
 
     if ($('#sidebar').hasClass('active')) {
       $('#content').fadeTo(200, 0.3).find('*').prop('disabled', true)
+      $('#sidebar').css('box-shadow', '10px 1px 0.5rem rgba(0,0,0,0.5)')
     } else {
       $('#content').fadeTo(200, 1).find('*').prop('disabled', false)
+      $('#sidebar').css('box-shadow', '')
     }
 
     // breaks the event chain
