@@ -31,17 +31,17 @@ app.form = (function (thisModule) {
 
   $('#personal_data_show').click(function () {
     showSection('personal_data')
-    app.main.updateSidebarAndContentViews()
+    app.sidebar.toggleSidebar(false)
   })
 
   $('#form_show').click(function () {
     showSection('main_form')
-    app.main.updateSidebarAndContentViews()
+    app.sidebar.toggleSidebar(false)
   })
 
   $('#legal_basis_show').click(function () {
     showSection('legal_basis')
-    app.main.updateSidebarAndContentViews()
+    app.sidebar.toggleSidebar(false)
   })
 
   // removes leading and trailing spaces on every text field "on focus out"
