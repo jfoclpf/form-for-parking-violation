@@ -40,9 +40,10 @@ app.photos = (function (thisModule) {
         console.log('imageUri c) ' + imageUri)
       }
 
-      resizeImageIfNeeded(imgNmbr, imageUri).then(function (resizedImgUri) {
-        displayImage(resizedImgUri, 'myImg_' + imgNmbr)
-        console.log('display image ' + imgNmbr + ' : ' + resizedImgUri)
+      resizeImageIfNeeded(imageUri, function (resizedImgUri, err) {
+        var imgToShowUri = !err ? resizedImgUri : imageUri
+        displayImage(imgToShowUri, 'myImg_' + imgNmbr)
+        console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
         app.main.imagesUriArray[imgNmbr] = resizedImgUri
         callback(imgNmbr)
       })
@@ -192,50 +193,27 @@ app.photos = (function (thisModule) {
     app.main.imagesUriArray[num] = null
   }
 
-  function resizeImageIfNeeded (imgNmbr, imageUri) {
+  function resizeImageIfNeeded (imageUri, callback) {
     // if image larger than this, resize
     var MAX_IMG_FILE_SIZE = 307200 // 300kb
 
-    // get just fileName with suffix, that is, for example only "photo1_resized.jpg"
-    var fileNameResized = app.functions.addSuffixToFileName(app.functions.getFilenameFromURL(imageUri)[1], '_resized')
-
-    var resizeOptions = {
-      uri: imageUri,
-      fileName: fileNameResized,
-      quality: 90,
-      width: 1200,
-      height: 1200,
-      base64: false
-    }
-
-    /* eslint-disable handle-callback-err */
-    return new Promise(function (resolve, reject) {
-      app.functions.getFileSize(imageUri)
-        .then(function (fileSize) {
-          // no need to resize image, return image unchanged
-          if (fileSize < MAX_IMG_FILE_SIZE) {
-            console.log('Image Not resized (file already small): ' + imageUri)
-            resolve(imageUri)
-          } else {
-            // resize image
-            window.ImageResizer.resize(resizeOptions,
-              function (resizedImageUri) {
-                // success on resizing
-                console.log('Image resized: ' + resizedImageUri)
-                resolve(resizedImageUri)
-              },
-              // failed to resize, return image unchanged
-              function () {
-                console.log('Image Not resized (could not resize): ' + imageUri)
-                resolve(imageUri)
-              })
+    app.functions.getFileSize(imageUri, function (fileSize, err) {
+      if (!err && fileSize && fileSize < MAX_IMG_FILE_SIZE) {
+        // no need to resize image, return image unchanged
+        console.log('Image Not resized (file already small): ' + imageUri)
+        callback(imageUri)
+      } else {
+        // resize image (try even if file size is not obtained)
+        app.functions.resizeImage(imageUri, function (resizedImageUri, err) {
+          if (err) {
+            // could not resize image
+            callback(imageUri, Error(err))
           }
-        }).catch(function (err) {
-          console.log("Image Not resized (couldn't get file size): " + imageUri)
-          resolve(imageUri)
+          // return resized image
+          callback(resizedImageUri)
         })
+      }
     })
-    /* eslint-enable handle-callback-err */
   }
 
   /* === Public methods to be returned === */

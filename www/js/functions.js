@@ -317,20 +317,51 @@ app.functions = (function (thisModule) {
     )
   }
 
-  function getFileSize (fileUri) {
-    return new Promise(function (resolve, reject) {
-      window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
-        fileEntry.file(function (fileObj) {
-          resolve(fileObj.size)
-        },
-        function (err) {
-          reject(err)
-        })
+  function getFileSize (fileUri, callback) {
+    var fileSize = null
+    window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
+      fileEntry.file(function (fileObj) {
+        fileSize = fileObj.size
+        callback(fileSize)
       },
       function (err) {
-        reject(err)
+        console.error('fileEntry error:\n', JSON.stringify(err))
+        callback(fileSize, Error(err))
       })
+    },
+    function (err) {
+      console.error('resolveLocalFileSystemURL error:\n', JSON.stringify(err))
+      callback(fileSize, Error(err))
     })
+  }
+
+  function resizeImage (imageUri, callback) {
+    // get just fileName with suffix, ex.: "photo1_resized.jpg"
+    var fileNameResized = addSuffixToFileName(
+      getFilenameFromURL(imageUri)[1],
+      '_resized'
+    )
+
+    var resizeOptions = {
+      uri: imageUri,
+      fileName: fileNameResized,
+      quality: 90,
+      width: 1200,
+      height: 1200,
+      base64: false
+    }
+
+    window.ImageResizer.resize(resizeOptions,
+      function (resizedImageUri) {
+        // success on resizing
+        console.log('%c Image resized: ', 'color: green; font-weight:bold', resizedImageUri)
+        callback(resizedImageUri)
+      },
+      // failed to resize
+      function (err) {
+        console.log('%c Failed to resize: ', 'color: red; font-weight:bold')
+        callback(imageUri, Error(err))
+      })
   }
 
   function isThisAndroid () {
@@ -370,6 +401,7 @@ app.functions = (function (thisModule) {
   thisModule.addSuffixToFileName = addSuffixToFileName
   thisModule.getExtensionFromURL = getExtensionFromURL
   thisModule.getFileSize = getFileSize
+  thisModule.resizeImage = resizeImage
   thisModule.isThisAndroid = isThisAndroid
   thisModule.adaptURItoAndroid = adaptURItoAndroid
 

@@ -44,6 +44,11 @@ app.form = (function (thisModule) {
     app.sidebar.toggleSidebar(false)
   })
 
+  $('#cmd_how_it_works_show').click(function () {
+    showSection('cmd_how_it_works')
+    app.sidebar.toggleSidebar(false)
+  })
+
   // removes leading and trailing spaces on every text field "on focus out"
   $(':text').each(function (index) {
     $(this).focusout(function () {

@@ -41,7 +41,7 @@ app.text = (function (thisModule) {
     var carmake_model_txt
     if (is_carmake && is_model) {
       carmake_model_txt = 'de marca e modelo <b>' + $('#carmake').val() +
-              ' ' + $('#carmodel').val() + '</b>, '
+        ' ' + $('#carmodel').val() + '</b>, '
     } else if (is_carmake) {
       carmake_model_txt = 'de marca <b>' + $('#carmake').val() + '</b>, '
     } else if (is_model) {
@@ -62,35 +62,35 @@ app.text = (function (thisModule) {
     ]
 
     var msg = greetingsInitial[Math.floor(Math.random() * greetingsInitial.length)] +
-                ' ' + 'da' + ' ' + authority + ', ' + authorityName + ';'
+      ' ' + 'da' + ' ' + authority + ', ' + authorityName + ';'
 
     var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
-          ' com o <b>' + $('#id_type').val() + '</b> com o número <b>' + $('#id_number').val() + '</b> ' +
-          'e com residência em <b>' + $('#address').val() +
-          ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
-          '</b>, venho por este meio,' + ' ' +
-          'ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
-          'fazer a seguinte denúncia de contra-ordenação para que a ' +
-          authority + ' ' + 'levante o auto respetivo e multe o infra-mencionado responsável.'
+      ' com o <b>' + $('#id_type').val() + '</b> com o número <b>' + $('#id_number').val() + '</b> ' +
+      'e com residência em <b>' + $('#address').val() +
+      ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
+      '</b>, venho por este meio,' + ' ' +
+      'ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
+      'fazer a seguinte denúncia de contra-ordenação para que a ' +
+      authority + ' ' + 'levante o auto respetivo e multe o infra-mencionado responsável.'
 
     var msg2 = 'No passado dia <b>' +
-          $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
-          ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
-          ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
-          ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
-          $('#street_number').val() + '</b>, ' : '') + // optional
-          'a viatura com matrícula <b>' + CarPlateStr + '</b> ' + carmake_model_txt +
-          'encontrava-se estacionada' + ' ' + penaltyDescription +
-          ', em violação ' + penaltyLawArticle + '.'
+      $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
+      ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
+      ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
+      ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
+      $('#street_number').val() + '</b>, ' : '') + // optional
+      'a viatura com matrícula <b>' + CarPlateStr + '</b> ' + carmake_model_txt +
+      'encontrava-se estacionada' + ' ' + penaltyDescription +
+      ', em violação ' + penaltyLawArticle + '.'
 
     var msg3 = 'Pode-se comprovar esta situação através' +
-          ' ' + ((app.main.imagesUriCleanArray.length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
-          ' ' + 'à presente mensagem eletrónica. ' +
-          'Juro pela minha honra que a informação supra citada é verídica.' +
-          ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
-          ' ' + 'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto,' +
-          ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
-          'situação a que se aplica o n.º 1 do mesmo artigo.'
+      ' ' + ((app.main.imagesUriCleanArray.length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
+      ' ' + 'à presente mensagem eletrónica. ' +
+      'Juro pela minha honra que a informação supra citada é verídica.' +
+      ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
+      ' ' + 'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto,' +
+      ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
+      'situação a que se aplica o n.º 1 do mesmo artigo.'
 
     var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3
 

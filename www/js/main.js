@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 var AUTHENTICATION = false
 
 console.log('DEBUG: ', DEBUG)
@@ -203,6 +203,8 @@ app.main = (function (thisModule) {
   function sendMailMessage () {
     var mainMessage = app.text.getMainMessage() + '<br><br>' + app.text.getRegards() + '<br>'
     var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
+
+    console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
     cordova.plugins.email.open({
       to: thisModule.emailTo, // email addresses for TO field
