@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, cordova, alert, pdf, Blob, atob */
+/* global app, $, cordova, alert, pdf, Blob, atob, AUTHENTICATION */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
@@ -8,27 +8,37 @@ app.authentication = (function (thisModule) {
 
   // function called by main.js
   function startAuthentication () {
+    if (!AUTHENTICATION) {
+      return
+    }
+
     if (isAuthenticationWindowClosed) {
       loadAuthentication()
     }
 
     if (!inAppBrowserRef) {
-      runAuthentication()
+      savePDF()
     } else {
       authenticationError()
     }
   }
 
   function loadAuthentication () {
+    if (!AUTHENTICATION) {
+      return
+    }
+
+    console.log('loadAuthentication()')
+
     var url = 'https://cmd.autenticacao.gov.pt' +
                 '/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx'
 
     var target = '_blank'
     var options = 'location=no,' +
-                    'hidden=yes,' +
-                    'footer=yes,' +
-                    'zoom=no,' +
-                    'toolbarcolor=#3C5DBC'
+      'hidden=yes,' +
+      'footer=yes,' +
+      'zoom=no,' +
+      'toolbarcolor=#3C5DBC'
 
     inAppBrowserRef = cordova.InAppBrowser.open(url, target, options)
 
@@ -111,7 +121,7 @@ app.authentication = (function (thisModule) {
     return 'Denuncia_Estacionamento_' + fileNameExtra + '.pdf'
   }
 
-  function runAuthentication () {
+  function savePDF () {
     var options = {
       documentSize: 'A4',
       type: 'base64'
@@ -208,21 +218,33 @@ app.authentication = (function (thisModule) {
     console.log('folderpath : ' + folderpath)
     console.log('fileName :' + filename)
 
-    inAppBrowserRef.hide()
+    if (AUTHENTICATION) {
+      inAppBrowserRef.hide()
+    }
 
     var msg = 'Foi criado o ficheiro pdf <b>' + filename + '</b> na pasta <i>Downloads</i> com a sua denúncia. '
-    msg += 'Terá agora, na janela seguinte, de carregar este ficheiro no autenticação.gov para assiná-lo digitalmente'
+    if (AUTHENTICATION) {
+      msg += 'Terá agora, na janela seguinte, de carregar este ficheiro no autenticação.gov para assiná-lo digitalmente'
+    } else {
+      msg += 'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital, clicando ' +
+      '<a href="https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx">AQUI</a>'
+    }
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',
       'content': msg,
       'theme': 'dark_blue',
-      'onClose': function () { inAppBrowserRef.show() }
+      'onClose': function () {
+        if (AUTHENTICATION) {
+          inAppBrowserRef.show()
+        }
+      }
     })
   }
 
   /* === Public methods to be returned === */
   thisModule.startAuthentication = startAuthentication
+  thisModule.savePDF = savePDF
 
   return thisModule
 })(app.authentication || {})

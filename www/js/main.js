@@ -4,6 +4,7 @@
 
 var DEBUG = true
 var AUTHENTICATION = false
+var SAVE_PDF = true
 
 console.log('DEBUG: ', DEBUG)
 console.log('AUTHENTICATION: ', AUTHENTICATION)
@@ -173,7 +174,7 @@ app.main = (function (thisModule) {
       return
     }
 
-    if (AUTHENTICATION) {
+    if (AUTHENTICATION || SAVE_PDF) {
       var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
 
       $.jAlert({
@@ -185,7 +186,7 @@ app.main = (function (thisModule) {
             'text': 'Sim',
             'theme': 'green',
             'class': 'jButtonAlert',
-            'onClick': app.authentication.startAuthentication
+            'onClick': app.authentication.savePDF
           },
           {
             'text': 'Não',
