@@ -73,13 +73,12 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: #6c757d;
+    padding: 20px 20px 0 20px;
     display: flex;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 0 0 20px 0;
 }
 
 #sidebar ul p {
@@ -139,11 +138,8 @@ a[data-toggle="collapse"] {
 }
 
 .dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: -10px;
-    transform: translateY(-50%);
+  margin-left: 6px;
+  margin-bottom: -1px;
 }
 
 ul ul a {
