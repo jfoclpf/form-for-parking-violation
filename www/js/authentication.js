@@ -107,20 +107,6 @@ app.authentication = (function (thisModule) {
     isAuthenticationWindowClosed = true
   }
 
-  function getPdfFileName () {
-    var carPlate = app.functions.getCarPlate()
-
-    var fileNameExtra
-    if (carPlate) {
-      fileNameExtra = carPlate
-    } else {
-      var rightNow = new Date()
-      fileNameExtra = rightNow.toISOString().slice(0, 10)
-    }
-
-    return 'Denuncia_Estacionamento_' + fileNameExtra + '.pdf'
-  }
-
   function savePDF () {
     var options = {
       documentSize: 'A4',
@@ -150,6 +136,20 @@ app.authentication = (function (thisModule) {
         savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
       })
       .catch((err) => console.err(err))
+  }
+
+  function getPdfFileName () {
+    var carPlate = app.functions.getCarPlate()
+
+    var fileNameExtra
+    if (carPlate) {
+      fileNameExtra = carPlate
+    } else {
+      var rightNow = new Date()
+      fileNameExtra = rightNow.toISOString().slice(0, 10)
+    }
+
+    return 'Denuncia_Estacionamento_' + fileNameExtra + '.pdf'
   }
 
   // these two function got from here: https://ourcodeworld.com/articles/read/230/how-to-save-a-pdf-from-a-base64-string-on-the-device-with-cordova
@@ -222,23 +222,34 @@ app.authentication = (function (thisModule) {
       inAppBrowserRef.hide()
     }
 
-    var msg = 'Foi criado o ficheiro pdf <b>' + filename + '</b> na pasta <i>Downloads</i> com a sua denúncia. '
+    var msg = 'Foi criado o ficheiro pdf <span style="color:orange"><b>' + filename + '</b></span> na pasta <i>Downloads</i> com a sua denúncia. '
     if (AUTHENTICATION) {
       msg += 'Terá agora, na janela seguinte, de carregar este ficheiro no autenticação.gov para assiná-lo digitalmente'
     } else {
-      msg += 'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital, clicando ' +
-      '<a href="https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx">AQUI</a>'
+      msg += 'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital'
     }
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',
       'content': msg,
       'theme': 'dark_blue',
-      'onClose': function () {
-        if (AUTHENTICATION) {
-          inAppBrowserRef.show()
+      'btns': [
+        {
+          'text': 'Assinar PDF com Chave Móvel Digital',
+          'theme': 'green',
+          'class': 'jButtonAlert',
+          'onClick': function () {
+            if (AUTHENTICATION) {
+              // tries to use internal browser plugin to sign the pdf document
+              inAppBrowserRef.show()
+            } else {
+              // forward to oficial website for signing pdf
+              var url = 'https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx'
+              window.location.replace(url)
+            }
+          }
         }
-      }
+      ]
     })
   }
 

@@ -60,15 +60,16 @@ a:focus {
     min-width: 70vw;
     background: #343a40;
     color: #fff;
-    transition: all 0.3s;
-}
-
-#sidebarCollapse {
-    margin: 0 !important;
+    transition: all 0.25s;
 }
 
 #sidebar.active {
     margin-left: -70vw;
+    box-shadow: 10px 1px 0.5rem rgba(0,0,0,0.5);
+}
+
+#sidebarCollapse {
+    margin: 0 !important;
 }
 
 #sidebar .sidebar-header {
@@ -92,15 +93,45 @@ a:focus {
     display: block;
 }
 
-#sidebar ul li a:hover {
+/* #sidebar ul li:hover {
     color: #7386D5;
     background: #fff;
-}
+} */
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
     background: #343a40;
+}
+
+#sidebar .list-unstyled li div {
+  display: inline-block;
+}
+
+#sidebar li>div.list {
+  position: relative;
+}
+
+#sidebar li>div.list>div:first-child {
+  position: absolute;
+  margin-top: 11px;
+}
+
+#sidebar li>div.list>div:nth-child(2) {
+  margin-left: 20px;
+}
+
+/* for tests
+#sidebar li div {
+  border: 2px white solid;
+}
+#sidebar li {
+  border: 2px blue solid;
+}
+-- */
+
+#sidebar .list-unstyled li>div:first-child {
+  margin-left: 2vh;
 }
 
 a[data-toggle="collapse"] {
@@ -111,7 +142,7 @@ a[data-toggle="collapse"] {
     display: block;
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: -10px;
     transform: translateY(-50%);
 }
 

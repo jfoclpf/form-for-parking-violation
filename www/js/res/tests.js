@@ -2,6 +2,12 @@
 /* eslint quotes: off */
 /* eslint no-undef: off */
 /* eslint no-unused-vars: off */
+/* eslint func-call-spacing: off */
+/* eslint space-before-blocks: off */
+/* eslint no-unexpected-multiline: off */
+/* eslint space-before-function-paren: off */
+/* eslint semi: off */
+/* eslint all: off */
 
 justTheNameOfTheFile = 'file:///storage/9C33-6BBD/DCIM/Camera/20190616_183142.jpg'
 window.requestFileSystem(window.LocalFileSystem.PERSISTENT, 0,
@@ -58,9 +64,8 @@ function resizeImage (imageUri) {
 }
 resizeImage(filename)
 
-
 filename = "file:///storage/9C33-6BBD/DCIM/Camera/20190616_183142.jpg"
-function getFileSize (filePath, callback) {
+/* function getFileSize (filePath, callback) {
   window.resolveLocalFileSystemURL(filePath,
     function (fileSystem) {
       fileSystem.getFile(fileName, {create: false},
@@ -84,8 +89,26 @@ function getFileSize (filePath, callback) {
       callback(filePath, err)
     }
   )
-}
+} */
 
-getFileSize(filename, function(filePath, err){
+getFileSize(filename, function (filePath, err) {
   console.log(filePath, JSON.stringify(err))
+})
+
+$.jAlert({
+  'title': 'Criação de ficheiro PDF',
+  'content': 'msg',
+  'theme': 'dark_blue',
+  'btns': [
+    {
+      'text': 'Assinar PDF com Chave Móvel Digital',
+      'theme': 'green',
+      'class': 'jButtonAlert',
+      'onClick': function () {
+        if (AUTHENTICATION) {
+          inAppBrowserRef.show()
+        }
+      }
+    }
+  ]
 })
