@@ -22,10 +22,21 @@ app.photos = (function (thisModule) {
     var options = setCameraOptions(srcType)
 
     navigator.camera.getPicture(function cameraSuccess (result) {
-      // convert JSON string to JSON Object
-      var thisResult = JSON.parse(result)
+      // checks if plugin cordova-plugin-camera-with-exif is available
+      // some times this plugin has bugs, but it allows to check GPS coordinates of photo
+      var isCameraWithExifInfoAvailable, thisResult, imageUri
+      try {
+        // convert JSON string to JSON Object
+        thisResult = JSON.parse(result)
+        imageUri = thisResult.filename
+        isCameraWithExifInfoAvailable = true
+        console.log('using plugin: cordova-plugin-camera-with-exif')
+      } catch (e) {
+        imageUri = result
+        isCameraWithExifInfoAvailable = false
+        console.log('using plugin: cordova-plugin-camera')
+      }
 
-      var imageUri = thisResult.filename
       console.log('imageUri a) ' + imageUri)
 
       // removes queries from the URI, i.e., the text after "?"
@@ -51,7 +62,8 @@ app.photos = (function (thisModule) {
       // if user selects a photo from the library
       // it gets, when available on the photo the EXIF information
       // the date, time and GPS information, to fill in the form
-      if (type === 'library' && thisResult.json_metadata && thisResult.json_metadata !== '{}') {
+      if (isCameraWithExifInfoAvailable && type === 'library' &&
+        thisResult.json_metadata && thisResult.json_metadata !== '{}') {
         // convert json_metadata JSON string to JSON Object
         var metadata = JSON.parse(thisResult.json_metadata)
 

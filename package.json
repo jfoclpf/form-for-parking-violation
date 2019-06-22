@@ -13,7 +13,7 @@
         "cordova": "^7.0.1",
         "cordova-android": "6.4.0",
         "cordova-pdf-generator": "2.0.8",
-        "cordova-plugin-camera-with-exif": "1.2.7",
+        "cordova-plugin-camera": "4.0.3",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-email-composer": "^0.8.15",
@@ -45,8 +45,8 @@
             },
             "cordova-plugin-screen-orientation": {},
             "cordova-pdf-generator": {},
-            "cordova-plugin-camera-with-exif": {},
-            "cordova-plugin-statusbar": {}
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-camera": {}
         },
         "platforms": [
             "android"
