@@ -12,8 +12,8 @@
     "dependencies": {
         "cordova": "^7.0.1",
         "cordova-android": "6.4.0",
-        "cordova-pdf-generator": "^2.0.3",
-        "cordova-plugin-camera-with-exif": "^1.2.2",
+        "cordova-pdf-generator": "2.0.8",
+        "cordova-plugin-camera-with-exif": "1.2.7",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-email-composer": "^0.8.15",
@@ -24,7 +24,7 @@
         "cordova-plugin-network-information": "^2.0.1",
         "cordova-plugin-screen-orientation": "3.0.1",
         "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
-        "cordova-plugin-statusbar": "^2.2.3",
+        "cordova-plugin-statusbar": "2.4.2",
         "cordova-plugin-whitelist": "^1.3.3",
         "es6-promise-plugin": "4.2.2",
         "exif-js": "^2.3.0",
@@ -32,8 +32,6 @@
     },
     "cordova": {
         "plugins": {
-            "cordova-plugin-statusbar": {},
-            "cordova-plugin-camera-with-exif": {},
             "cordova-plugin-file": {},
             "cordova-plugin-network-information": {},
             "cordova-plugin-geolocation": {},
@@ -41,12 +39,14 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-device": {},
             "cordova-plugin-inappbrowser": {},
-            "cordova-pdf-generator": {},
             "info.protonet.imageresizer": {},
             "cordova-plugin-simple-image-resizer": {
                 "ANDROID_EXIFINTERFACES_VERSION": "27.+"
             },
-            "cordova-plugin-screen-orientation": {}
+            "cordova-plugin-screen-orientation": {},
+            "cordova-pdf-generator": {},
+            "cordova-plugin-camera-with-exif": {},
+            "cordova-plugin-statusbar": {}
         },
         "platforms": [
             "android"
