@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = true
+var DEBUG = false
 var AUTHENTICATION = false
 var SAVE_PDF = true
 
