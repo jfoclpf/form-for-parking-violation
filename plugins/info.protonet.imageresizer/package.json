@@ -1,0 +1,60 @@
+{
+  "_from": "info.protonet.imageresizer",
+  "_id": "info.protonet.imageresizer@0.1.1",
+  "_inBundle": false,
+  "_integrity": "sha1-pDvmmYQ6veXwuFmdyCXmYuP8RyA=",
+  "_location": "/info.protonet.imageresizer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "info.protonet.imageresizer",
+    "name": "info.protonet.imageresizer",
+    "escapedName": "info.protonet.imageresizer",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/info.protonet.imageresizer/-/info.protonet.imageresizer-0.1.1.tgz",
+  "_shasum": "a43be699843abde5f0b8599dc825e662e3fc4720",
+  "_spec": "info.protonet.imageresizer",
+  "_where": "/home/jfolpf/form-for-parking-violation",
+  "author": {
+    "name": "RTeran"
+  },
+  "bugs": {
+    "url": "https://github.com/RTeran/cordova-plugin-image-resizer/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "info.protonet.imageresizer",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "Plugin for resizing images only with the uri of the image.",
+  "homepage": "https://github.com/RTeran/cordova-plugin-image-resizer#readme",
+  "keywords": [
+    "cordova",
+    "device",
+    "resize",
+    "image",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "name": "info.protonet.imageresizer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://RTeran@github.com/RTeran/cordova-plugin-image-resizer.git"
+  },
+  "version": "0.1.1"
+}

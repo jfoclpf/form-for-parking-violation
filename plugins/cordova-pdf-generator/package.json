@@ -1,0 +1,61 @@
+{
+  "_from": "cordova-pdf-generator@^2.0.3",
+  "_id": "cordova-pdf-generator@2.0.8",
+  "_inBundle": false,
+  "_integrity": "sha512-HIEWtypWERg8s5lpwOyhz71eq94e0XvbnTpaBUTneY1Tol3RHpsCvxniv5uN/MfrF9hi2e4FeTsGWzrZAeblTw==",
+  "_location": "/cordova-pdf-generator",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-pdf-generator@^2.0.3",
+    "name": "cordova-pdf-generator",
+    "escapedName": "cordova-pdf-generator",
+    "rawSpec": "^2.0.3",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.3"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-pdf-generator/-/cordova-pdf-generator-2.0.8.tgz",
+  "_shasum": "2bc222d2f8958082e35ebfa6216567421d63edb4",
+  "_spec": "cordova-pdf-generator@^2.0.3",
+  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
+  "author": {
+    "name": "cesar"
+  },
+  "bugs": {
+    "url": "https://github.com/cesarvr/pdf-generator/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-pdf-generator",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "is a HTML to PDF (offline) Generator.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "homepage": "https://github.com/cesarvr/pdf-generator#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-pdf-generator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cesarvr/pdf-generator.git"
+  },
+  "version": "2.0.8"
+}

@@ -1,8 +1,41 @@
-autocosts.keystore
-buildReleaseAPP.sh
+# intermediate files
 node_modules/
-www/js/credentials.js
-platforms/
-plugins/
 temp/
+build/
+bin/
+
+# Cordova - platforms
+platforms/
+
+
+# Cordova - plugins - remove all except json & xml
+plugins/**/.DS_Store
+plugins/**/*.cs
+plugins/**/*.h
+plugins/**/*.java
+plugins/**/*.js
+plugins/**/*.m
+plugins/**/*.map
+plugins/**/*.md
+plugins/**/*.modulemap
+plugins/**/*.ts
+plugins/**/LICENSE
+plugins/**/NOTICE
+plugins/**/*.gradle
+plugins/**/tests/
+
+# res
+**/resources/signing
+
+# project specific
+**/dist/
+**/all.min.js
+buildReleaseAPP.sh
+
+# where the build script stores the apk
 formParkingViolation.apk
+
+# keys and credentials
+www/js/credentials.js
+autocosts.keystore
+

@@ -1,0 +1,53 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-email-composer": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-simple-image-resizer": {
+      "ANDROID_EXIFINTERFACES_VERSION": "27.+",
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    }
+  }
+}

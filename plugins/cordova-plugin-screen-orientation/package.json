@@ -1,0 +1,74 @@
+{
+  "_from": "cordova-plugin-screen-orientation",
+  "_id": "cordova-plugin-screen-orientation@3.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-daNXzik4CB6PYdRgU5S213Rjwfg=",
+  "_location": "/cordova-plugin-screen-orientation",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-screen-orientation",
+    "name": "cordova-plugin-screen-orientation",
+    "escapedName": "cordova-plugin-screen-orientation",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-screen-orientation/-/cordova-plugin-screen-orientation-3.0.1.tgz",
+  "_shasum": "75a357ce2938081e8f61d4605394b6d77463c1f8",
+  "_spec": "cordova-plugin-screen-orientation",
+  "_where": "/home/jfolpf/form-for-parking-violation",
+  "author": {
+    "name": "gbenvenuti"
+  },
+  "bugs": {
+    "url": "https://issues.apache.org/jira/browse/CB"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-screen-orientation",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "Adds Screen Orientation API lock and unlock functions to the global screen object in android, iOS and windows-uwp.",
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "4.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "homepage": "https://github.com/apache/cordova-plugin-screen-orientation#readme",
+  "keywords": [
+    "cordova",
+    "device",
+    "ecosystem:cordova",
+    "screen",
+    "orientation",
+    "portrait",
+    "landscape"
+  ],
+  "license": "Apache-2.0",
+  "name": "cordova-plugin-screen-orientation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apache/cordova-plugin-screen-orientation.git"
+  },
+  "scripts": {
+    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint demo/www",
+    "test": "npm run jshint"
+  },
+  "version": "3.0.1"
+}

@@ -1,0 +1,56 @@
+{
+  "_from": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
+  "_id": "cordova-plugin-simple-image-resizer@0.2.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-simple-image-resizer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/protonet/cordova-plugin-image-resizer.git",
+    "rawSpec": "https://github.com/protonet/cordova-plugin-image-resizer.git",
+    "saveSpec": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
+    "fetchSpec": "https://github.com/protonet/cordova-plugin-image-resizer.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/protonet/cordova-plugin-image-resizer.git#89dfa8f0c97ba022b6598d80ce54f15178df1d2f",
+  "_spec": "https://github.com/protonet/cordova-plugin-image-resizer.git",
+  "_where": "/home/jfolpf/form-for-parking-violation",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/JoschkaSchulz/cordova-plugin-image-resizer/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-simple-image-resizer",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Plugin for resizing images only with the uri of the image.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.5.0"
+    }
+  ],
+  "homepage": "https://github.com/JoschkaSchulz/cordova-plugin-image-resizer#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-simple-image-resizer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoschkaSchulz/cordova-plugin-image-resizer.git"
+  },
+  "version": "0.2.0"
+}
