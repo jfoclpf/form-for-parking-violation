@@ -1,14 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.form.parking.violation" version="2.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.form.parking.violation" version="2.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Denúncia Estacionamento</name>
     <description>
         Formulário para queixa de estacionamento ilegal
     </description>
     <author email="peao.exaltado@gmail.com" href="http://passeiolivre.org">
-        Caminhante       
+        Caminhante
     </author>
     <content src="index.html" />
-    <icon src="res/icon.png" />
+    <icon src="res/icon/universal/icon4_512x512_playstore.png" width="512" height="512" />
+    <icon src="res/icon/universal/icon4_XHDPI_196x196_320dpi.png" width="196" height="196" density="xhdpi" />
+    <icon src="res/icon/universal/icon4_XXXHDPI_192x192_640dpi.png" width="192" height="192" density="xxxhdpi" />
+    <icon src="res/icon/universal/icon4_XXHDPI_144x144_480dpi.png" width="144" height="144" density="xxhdpi" />
+    <icon src="res/icon/universal/icon4_HDPI_72x72_240dpi.png" width="72" height="72" density="hdpi" />
+    <icon src="res/icon/universal/icon4_MDPI_48x48_160dpi.png" width="48" height="48" density="mdpi" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
