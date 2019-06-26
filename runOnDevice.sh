@@ -10,8 +10,12 @@ export ANDROID_HOME=/usr/local/android-sdk/
 
 cd "${0%/*}"
 
+rm ../.android/adbkey
+
 adb kill-server
 adb start-server
+
+adb usb
 
 adb uninstall com.form.parking.violation
 
