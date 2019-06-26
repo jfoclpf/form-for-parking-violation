@@ -3,7 +3,12 @@
 /* global $, cordova */
 
 var DEBUG = false
+
+/* uses built-in browser plugin to authentication;
+when false uses OS default brower with a simple url link */
 var AUTHENTICATION = false
+
+/* for any type of authentication this must be true */
 var SAVE_PDF = true
 
 console.log('DEBUG: ', DEBUG)
@@ -183,8 +188,8 @@ app.main = (function (thisModule) {
     }
 
     if (AUTHENTICATION || SAVE_PDF) {
-      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <u><a href="' +
-      thisModule.urls.Chave_Movel_Digital.pedido + '">aqui</a></u> como pedi-la.'
+      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja ' +
+      '<u><a href="' + app.main.urls.Chave_Movel_Digital.aderir + '">aqui</a></u> como pedi-la.'
 
       $.jAlert({
         'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
@@ -192,13 +197,13 @@ app.main = (function (thisModule) {
         'theme': 'dark_blue',
         'btns': [
           {
-            'text': 'Sim',
+            'text': '<b>Usar</b> Chave Móvel Digital',
             'theme': 'green',
             'class': 'jButtonAlert',
             'onClick': app.authentication.savePDF
           },
           {
-            'text': 'Não',
+            'text': '<b>Não usar</b> Chave Móvel Digital',
             'theme': 'green',
             'class': 'jButtonAlert',
             'onClick': sendMailMessage

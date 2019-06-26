@@ -222,9 +222,11 @@ app.authentication = (function (thisModule) {
       inAppBrowserRef.hide()
     }
 
-    var msg = 'Foi criado o ficheiro pdf <span style="color:orange"><b>' + filename + '</b></span>' + ' ' +
-    'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + ' ' +
-    'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital.'
+    var msg = 'Foi criado o ficheiro PDF <span style="color:orange"><b>' + filename + '</b></span>' + ' ' +
+    'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + '<br><br>'
+    msg += ' 1) Salve o rascunho de email que vai ser gerado. Saia depois da APP de email.<br>'
+    msg += ' 2) Abrir-se-á depois uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br>'
+    msg += ' 3) Volte à sua APP de email ao rascunho que guardou e anexe o PDF assinado. Garanta que o PDF anexo está digitalmente assinado.'
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',
@@ -232,7 +234,7 @@ app.authentication = (function (thisModule) {
       'theme': 'dark_blue',
       'btns': [
         {
-          'text': 'Assinar PDF com Chave Móvel Digital',
+          'text': 'Avançar',
           'theme': 'green',
           'class': 'jButtonAlert',
           'onClick': function () {
@@ -240,14 +242,41 @@ app.authentication = (function (thisModule) {
               // tries to use internal browser plugin to sign the pdf document
               inAppBrowserRef.show()
             } else {
-              // forward to oficial website for signing pdf
-              var url = 'https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx'
-              window.location.replace(url)
+              sendMailMessage()
             }
           }
         }
       ]
     })
+  }
+
+  function sendMailMessage () {
+    var mainMessage = 'Exmos. Srs.,<br><br>'
+    mainMessage += 'Envio em anexo ficheiro PDF com uma denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada.<br><br>'
+
+    mainMessage += 'Realço que de acordo com o n.º 1 do artigo 4.º da Lei n.º 37/2014, ' +
+      'os atos praticados por um cidadão junto da Administração Pública presumem-se ser da sua autoria, ' +
+      'dispensando-se a sua assinatura ou presença, ' +
+      'sempre que sejam utilizados meios de autenticação segura para o efeito, ' +
+      'meios esses, que de acordo com o número 2 do mesmo artigo, ' +
+      'incluem o uso de certificado digital constante do cartão de cidadão. ' +
+      'Por conseguinte, no seguimento das instruções emanadas pela ANSR, terão V. Exas. ' +
+      'que emitir a respetiva coima sem que eu tenha que me apresentar junto das instalações de V. Exas.'
+
+    mainMessage += '<br><br>' + app.text.getRegards() + '<br>'
+
+    var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
+
+    cordova.plugins.email.open({
+      to: app.main.emailTo, // email addresses for TO field
+      subject: emailSubject, // subject of the email
+      body: mainMessage, // email body (for HTML, set isHtml to true)
+      isHtml: true // indicats if the body is HTML or plain text
+    }, function () {
+      // callback: forward to oficial website for signing pdf
+      console.log('email view dismissed')
+      window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
+    }, this)
   }
 
   /* === Public methods to be returned === */
