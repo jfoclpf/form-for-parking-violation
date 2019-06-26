@@ -222,12 +222,9 @@ app.authentication = (function (thisModule) {
       inAppBrowserRef.hide()
     }
 
-    var msg = 'Foi criado o ficheiro pdf <span style="color:orange"><b>' + filename + '</b></span> na pasta <i>Downloads</i> com a sua denúncia. '
-    if (AUTHENTICATION) {
-      msg += 'Terá agora, na janela seguinte, de carregar este ficheiro no autenticação.gov para assiná-lo digitalmente'
-    } else {
-      msg += 'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital'
-    }
+    var msg = 'Foi criado o ficheiro pdf <span style="color:orange"><b>' + filename + '</b></span>' + ' ' +
+    'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + ' ' +
+    'Terá agora de o assinar fazendo uso da sua Chave Móvel Digital.'
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',

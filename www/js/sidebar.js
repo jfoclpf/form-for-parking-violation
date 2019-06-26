@@ -16,6 +16,12 @@ app.sidebar = (function (thisModule) {
         return false
       }
     })
+
+    // populates urls
+    $('a.aderir_url').attr('href', app.main.urls.Chave_Movel_Digital.aderir)
+    $('a.a_minha_area_url').attr('href', app.main.urls.Chave_Movel_Digital.a_minha_area)
+    $('a.assinar_pdf_url').attr('href', app.main.urls.Chave_Movel_Digital.assinar_pdf)
+    $('a.app_url').attr('href', app.main.urls.Chave_Movel_Digital.app)
   }
 
   // staus undefined - togle sidebar

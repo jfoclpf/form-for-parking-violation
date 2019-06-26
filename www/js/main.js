@@ -18,6 +18,14 @@ app.main = (function (thisModule) {
   thisModule.imagesUriArray = []
   thisModule.imagesUriCleanArray = []
   thisModule.variables = {} // global object used for debug
+  thisModule.urls = {
+    Chave_Movel_Digital: {
+      aderir: 'https://www.autenticacao.gov.pt/cmd-pedido-chave',
+      a_minha_area: 'https://www.autenticacao.gov.pt/a-chave-movel-digital',
+      assinar_pdf: 'https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx',
+      app: 'https://play.google.com/store/apps/details?id=pt.ama.autenticacaogov&hl=pt'
+    }
+  }
 
   $(document).ready(function () {
     console.log('$(document).ready started')
@@ -47,7 +55,7 @@ app.main = (function (thisModule) {
     }
   }, 3000)
 
-  // when the page loads
+  // when the page loads (only on smartphone)
   function init () {
     console.log('init() started')
     wasInit = true
@@ -175,7 +183,8 @@ app.main = (function (thisModule) {
     }
 
     if (AUTHENTICATION || SAVE_PDF) {
-      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <a href="https://www.autenticacao.gov.pt/cmd-pedido-chave">aqui</a> como pedi-la.'
+      var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja <u><a href="' +
+      thisModule.urls.Chave_Movel_Digital.pedido + '">aqui</a></u> como pedi-la.'
 
       $.jAlert({
         'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
