@@ -200,7 +200,13 @@ app.main = (function (thisModule) {
             'text': '<b>Usar</b> Chave Móvel Digital',
             'theme': 'green',
             'class': 'jButtonAlert',
-            'onClick': app.authentication.savePDF
+            'onClick': function () {
+              if (AUTHENTICATION) {
+                app.authentication.startAuthentication()
+              } else {
+                app.authentication.savePDF()
+              }
+            }
           },
           {
             'text': '<b>Não usar</b> Chave Móvel Digital',

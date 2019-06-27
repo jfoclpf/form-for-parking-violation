@@ -16,7 +16,8 @@ app.authentication = (function (thisModule) {
       loadAuthentication()
     }
 
-    if (!inAppBrowserRef) {
+    console.log('inAppBrowserRef: ', inAppBrowserRef)
+    if (inAppBrowserRef) {
       savePDF()
     } else {
       authenticationError()
@@ -30,8 +31,7 @@ app.authentication = (function (thisModule) {
 
     console.log('loadAuthentication()')
 
-    var url = 'https://cmd.autenticacao.gov.pt' +
-                '/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx'
+    var url = app.main.urls.Chave_Movel_Digital.assinar_pdf
 
     var target = '_blank'
     var options = 'location=no,' +
@@ -149,7 +149,7 @@ app.authentication = (function (thisModule) {
       fileNameExtra = rightNow.toISOString().slice(0, 10)
     }
 
-    return 'Denuncia_Estacionamento_' + fileNameExtra + '.pdf'
+    return fileNameExtra + '_Denuncia_Estacionamento' + '.pdf'
   }
 
   // these two function got from here: https://ourcodeworld.com/articles/read/230/how-to-save-a-pdf-from-a-base64-string-on-the-device-with-cordova
