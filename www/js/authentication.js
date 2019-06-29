@@ -52,12 +52,11 @@ app.authentication = (function (thisModule) {
   }
 
   function loadStartCallbackFunction (event) {
-    console.log('Authentication Window start loading')
-    console.log('url: ' + event.url)
-
-    if (app.functions.getExtensionFromURL(event.url).toLowerCase() === 'pdf') {
-      alert('Encontrou ficheiro pdf assinado :)')
-    }
+    console.log('%c ========== loadstart ========== ', 'background: yellow; color: blue')
+    console.log(event.url)
+    $.get(event.url, function (data) {
+      console.log(data)
+    })
   }
 
   function loadedCallbackFunction () {
@@ -73,17 +72,17 @@ app.authentication = (function (thisModule) {
       dataType: 'text',
       success: function (JScodeRes) {
         // altera o texto quando refere o Documento para assinar
-        var JScode = JScodeRes +
+        /* var JScode = JScodeRes +
                   '(function(){' +
                       "var textEl = document.getElementById('MainContent_lblTitleChooseDoc');" +
                       'if(textEl){' +
                           "textEl.innerHTML = 'Escolha o documento <u>" +
                               getPdfFileName() + "</u> na pasta <i>Downloads</i> para assinar digitalmente';" +
                       '}' +
-                  '})();'
+                  '})();' */
 
         inAppBrowserRef.executeScript(
-          { code: JScode },
+          { code: JScodeRes },
           function () {
             console.log('authBrowserJSCode.js Inserted Succesfully into inApp Browser Window')
           })

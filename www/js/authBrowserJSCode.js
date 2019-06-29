@@ -4,7 +4,7 @@ https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSig
 (function () {
   // primeiro passo, há o botão "Avançar" e não há o botão "Cancelar"
   // Clica no botão "Avançar"
-  var buttonNext = document.getElementById('MainContent_btnNext')
+  /* var buttonNext = document.getElementById('MainContent_btnNext')
   var buttonCancel = document.getElementById('MainContent_btnCancel')
 
   if (buttonNext && !buttonCancel) {
@@ -35,5 +35,5 @@ https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSig
   var submitButton = document.getElementById('MainContent_btnSignDetails')
   if (textEl && textEl.innerText.indexOf('assinatura do documento') !== -1 && submitButton) {
     submitButton.click()
-  }
+  } */
 })()

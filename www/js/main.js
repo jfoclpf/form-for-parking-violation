@@ -6,7 +6,7 @@ var DEBUG = false
 
 /* uses built-in browser plugin to authentication;
 when false uses OS default brower with a simple url link */
-var AUTHENTICATION = false
+var AUTHENTICATION = true
 
 /* for any type of authentication this must be true */
 var SAVE_PDF = true
