@@ -105,7 +105,7 @@ $.jAlert({
       'theme': 'green',
       'class': 'jButtonAlert',
       'onClick': function () {
-        if (AUTHENTICATION) {
+        if (IN_APP_BROWSER_AUTH) {
           inAppBrowserRef.show()
         }
       }

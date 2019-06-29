@@ -1,14 +1,15 @@
 /* eslint camelcase: off */
 
-/* global app, $, cordova, alert, pdf, Blob, atob, AUTHENTICATION */
+/* global app, $, cordova, alert, pdf, Blob, atob, IN_APP_BROWSER_AUTH */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
   var isAuthenticationWindowClosed = true
+  var pdfFileCreated = false
 
   // function called by main.js
   function startAuthentication () {
-    if (!AUTHENTICATION) {
+    if (!IN_APP_BROWSER_AUTH) {
       return
     }
 
@@ -25,13 +26,14 @@ app.authentication = (function (thisModule) {
   }
 
   function loadAuthentication () {
-    if (!AUTHENTICATION) {
+    if (!IN_APP_BROWSER_AUTH) {
       return
     }
 
     console.log('loadAuthentication()')
 
-    var url = app.main.urls.Chave_Movel_Digital.assinar_pdf
+    /* var url = app.main.urls.Chave_Movel_Digital.assinar_pdf */
+    var url = 'https://www.thinkbroadband.com/download'
 
     var target = '_blank'
     var options = 'location=no,' +
@@ -72,17 +74,17 @@ app.authentication = (function (thisModule) {
       dataType: 'text',
       success: function (JScodeRes) {
         // altera o texto quando refere o Documento para assinar
-        /* var JScode = JScodeRes +
+        var JScode = JScodeRes +
                   '(function(){' +
                       "var textEl = document.getElementById('MainContent_lblTitleChooseDoc');" +
                       'if(textEl){' +
                           "textEl.innerHTML = 'Escolha o documento <u>" +
                               getPdfFileName() + "</u> na pasta <i>Downloads</i> para assinar digitalmente';" +
                       '}' +
-                  '})();' */
+                  '})();'
 
         inAppBrowserRef.executeScript(
-          { code: JScodeRes },
+          { code: JScode },
           function () {
             console.log('authBrowserJSCode.js Inserted Succesfully into inApp Browser Window')
           })
@@ -205,8 +207,11 @@ app.authentication = (function (thisModule) {
         file.createWriter(function (fileWriter) {
           console.log('Writing content to file')
           fileWriter.write(DataBlob)
+
+          pdfFileCreated = true
           showPDFAuthInfo(folderpath, filename)
         }, function () {
+          pdfFileCreated = false
           alert('Não foi possível salvar o ficheiro em ' + folderpath)
         })
       })
@@ -217,15 +222,14 @@ app.authentication = (function (thisModule) {
     console.log('folderpath : ' + folderpath)
     console.log('fileName :' + filename)
 
-    if (AUTHENTICATION) {
+    if (IN_APP_BROWSER_AUTH) {
       inAppBrowserRef.hide()
     }
 
     var msg = 'Foi criado o ficheiro PDF <span style="color:orange"><b>' + filename + '</b></span>' + ' ' +
     'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + '<br><br>'
-    msg += ' 1) Salve o rascunho de email que vai ser gerado. Saia depois da APP de email.<br>'
-    msg += ' 2) Abrir-se-á depois uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br>'
-    msg += ' 3) Volte à sua APP de email ao rascunho que guardou e anexe o PDF assinado. Garanta que o PDF anexo está digitalmente assinado.'
+    msg += ' Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital. Guarde o PDF gerado com a sua assinatura digital<br><br>'
+    msg += ' Abrir-se-á depois a sua APP de email onde poderá anexar o PDF assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.'
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',
@@ -237,16 +241,26 @@ app.authentication = (function (thisModule) {
           'theme': 'green',
           'class': 'jButtonAlert',
           'onClick': function () {
-            if (AUTHENTICATION) {
+            if (IN_APP_BROWSER_AUTH) {
               // tries to use internal browser plugin to sign the pdf document
               inAppBrowserRef.show()
             } else {
-              sendMailMessage()
+              window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
             }
           }
         }
       ]
     })
+  }
+
+  function onAppResume () {
+    if (IN_APP_BROWSER_AUTH) {
+      return
+    }
+
+    if (pdfFileCreated) {
+      sendMailMessage()
+    }
   }
 
   function sendMailMessage () {
@@ -272,15 +286,15 @@ app.authentication = (function (thisModule) {
       body: mainMessage, // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
     }, function () {
-      // callback: forward to oficial website for signing pdf
       console.log('email view dismissed')
-      window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
+      pdfFileCreated = false
     }, this)
   }
 
   /* === Public methods to be returned === */
   thisModule.startAuthentication = startAuthentication
   thisModule.savePDF = savePDF
+  thisModule.onAppResume = onAppResume
 
   return thisModule
 })(app.authentication || {})

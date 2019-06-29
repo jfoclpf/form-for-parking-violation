@@ -4,15 +4,17 @@
 
 var DEBUG = false
 
-/* uses built-in browser plugin to authentication;
-when false uses OS default brower with a simple url link */
-var AUTHENTICATION = true
+/* tries to use built-in browser plugin to authentication;
+when false uses OS default browser with a simple url link;
+option `true` is not working, check:
+https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
+var IN_APP_BROWSER_AUTH = false
 
 /* for any type of authentication this must be true */
 var SAVE_PDF = true
 
 console.log('DEBUG: ', DEBUG)
-console.log('AUTHENTICATION: ', AUTHENTICATION)
+console.log('IN_APP_BROWSER_AUTH: ', IN_APP_BROWSER_AUTH)
 
 var app = {}
 
@@ -93,6 +95,8 @@ app.main = (function (thisModule) {
   }
 
   function onResume () {
+    console.log('onResume')
+    app.authentication.onAppResume()
     app.localization.loadMapsApi()
   }
 
@@ -187,7 +191,7 @@ app.main = (function (thisModule) {
       return
     }
 
-    if (AUTHENTICATION || SAVE_PDF) {
+    if (IN_APP_BROWSER_AUTH || SAVE_PDF) {
       var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. Caso não tenha uma, veja ' +
       '<u><a href="' + app.main.urls.Chave_Movel_Digital.aderir + '">aqui</a></u> como pedi-la.'
 
@@ -201,7 +205,7 @@ app.main = (function (thisModule) {
             'theme': 'green',
             'class': 'jButtonAlert',
             'onClick': function () {
-              if (AUTHENTICATION) {
+              if (IN_APP_BROWSER_AUTH) {
                 app.authentication.startAuthentication()
               } else {
                 app.authentication.savePDF()
