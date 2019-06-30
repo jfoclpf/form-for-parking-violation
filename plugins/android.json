@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
@@ -42,6 +39,12 @@
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-file": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },

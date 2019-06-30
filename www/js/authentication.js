@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, cordova, alert, pdf, Blob, atob, IN_APP_BROWSER_AUTH */
+/* global app, $, cordova, alert, pdf, Blob, atob, FileTransfer, IN_APP_BROWSER_AUTH */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
@@ -32,8 +32,7 @@ app.authentication = (function (thisModule) {
 
     console.log('loadAuthentication()')
 
-    /* var url = app.main.urls.Chave_Movel_Digital.assinar_pdf */
-    var url = 'https://www.thinkbroadband.com/download'
+    var url = app.main.urls.Chave_Movel_Digital.assinar_pdf
 
     var target = '_blank'
     var options = 'location=no,' +
@@ -56,13 +55,32 @@ app.authentication = (function (thisModule) {
   function loadStartCallbackFunction (event) {
     console.log('%c ========== loadstart ========== ', 'background: yellow; color: blue')
     console.log(event.url)
-    $.get(event.url, function (data) {
-      console.log(data)
-    })
+
+    if (event.url.split('/').pop() === 'DocumentSigning.aspx') {
+      console.log('got DocumentSigning.aspx')
+
+      var pdfFile = 'https://frtend.reg.cmd.autenticacao.gov.pt/Ama.Registry.Frontend/GetDocument.ashx'
+      var targetPath = cordova.file.documentsDirectory + 'doc.pdf'
+      var options = {}
+      var args = {
+        url: pdfFile,
+        targetPath: targetPath,
+        options: options
+      }
+
+      // inAppBrowserRef.close() // close window or you get exception
+
+      document.addEventListener('deviceready', function () {
+        setTimeout(function () {
+          downloadPdfFile(args) // call the function which will download the file 1s after the window is closed, just in case..
+        }, 1000)
+      })
+    }
   }
 
-  function loadedCallbackFunction () {
-    console.log('Authentication Window loaded')
+  function loadedCallbackFunction (event) {
+    console.log('%c ========== loadstop ========== ', 'background: yellow; color: blue')
+    // console.log(event.url)
 
     isAuthenticationWindowClosed = false
 
@@ -93,6 +111,29 @@ app.authentication = (function (thisModule) {
         console.error('Ajax Error')
       }
     })
+  }
+
+  function downloadPdfFile (args) {
+    console.log('downloadPdfFile')
+
+    var fileTransfer = new FileTransfer()
+    var uri = encodeURI(args.url)
+
+    fileTransfer.download(
+      uri, // file's uri
+      args.targetPath, // where will be saved
+      function (entry) {
+        console.log('download complete: ' + entry.toURL())
+        window.open(entry.toURL(), '_blank', 'location=no,closebuttoncaption=Cerrar,toolbar=yes,enableViewportScale=yes')
+      },
+      function (error) {
+        console.log('download error source ' + error.source)
+        console.log('download error target ' + error.target)
+        console.log('upload error code' + error.code)
+      },
+      true,
+      args.options
+    )
   }
 
   function authenticationError () {
