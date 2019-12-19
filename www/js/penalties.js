@@ -57,6 +57,11 @@ app.penalties = (function (thisModule) {
       description: 'num lugar reservado exclusivamente para motociclos',
       law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
     },
+    bicicletas: {
+      select: 'Lugar para bicicletas',
+      description: 'num lugar reservado exclusivamente para velocípedes',
+      law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
+    },
     carro_partilhado: {
       select: 'Lugar para carros partilhados',
       description: 'num lugar reservado exclusivamente para carros partilhados',
