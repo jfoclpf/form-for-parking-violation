@@ -113,7 +113,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Oeiras',
-    'contacto': 'spm@cm-oeiras.pt'
+    'contacto': 'policia.municipal@cm-oeiras.pt'
   },
   {
     'nome': 'Paços de Ferreira',
