@@ -1,38 +1,35 @@
 {
-  "_args": [
-    [
-      "cordova-plugin-inappbrowser@3.0.0",
-      "/home/jfolpf/form-for-parking-violation"
-    ]
-  ],
-  "_from": "cordova-plugin-inappbrowser@3.0.0",
-  "_id": "cordova-plugin-inappbrowser@3.0.0",
+  "_from": "cordova-plugin-inappbrowser@^3.0.0",
+  "_id": "cordova-plugin-inappbrowser@3.1.0",
   "_inBundle": false,
-  "_integrity": "sha1-1K4A02Z2IQdRBXrSWK5K1KkWGto=",
+  "_integrity": "sha512-YqrZfYgbGTS20SFID0mrRxud312VH072QVlFonCAkPgtGg1Svy7lELOCNFd+KU7t4mVtZeTEjZPEeefvjaetwQ==",
   "_location": "/cordova-plugin-inappbrowser",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-inappbrowser@3.0.0",
+    "raw": "cordova-plugin-inappbrowser@^3.0.0",
     "name": "cordova-plugin-inappbrowser",
     "escapedName": "cordova-plugin-inappbrowser",
-    "rawSpec": "3.0.0",
+    "rawSpec": "^3.0.0",
     "saveSpec": null,
-    "fetchSpec": "3.0.0"
+    "fetchSpec": "^3.0.0"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.0.0.tgz",
-  "_spec": "3.0.0",
-  "_where": "/home/jfolpf/form-for-parking-violation",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.1.0.tgz",
+  "_shasum": "61520b8de3eb75b37842d2340f5d90a84a073747",
+  "_spec": "cordova-plugin-inappbrowser@^3.0.0",
+  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
-    "url": "https://issues.apache.org/jira/browse/CB"
+    "url": "https://github.com/apache/cordova-plugin-inappbrowser/issues"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-inappbrowser",
     "platforms": [
@@ -43,6 +40,7 @@
       "windows"
     ]
   },
+  "deprecated": false,
   "description": "Cordova InAppBrowser Plugin",
   "devDependencies": {
     "eslint": "^4.0.0",
@@ -88,5 +86,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "3.0.0"
+  "version": "3.1.0"
 }

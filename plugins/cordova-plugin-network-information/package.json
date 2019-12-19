@@ -1,38 +1,35 @@
 {
-  "_args": [
-    [
-      "cordova-plugin-network-information@2.0.1",
-      "/home/jfolpf/form-for-parking-violation"
-    ]
-  ],
-  "_from": "cordova-plugin-network-information@2.0.1",
-  "_id": "cordova-plugin-network-information@2.0.1",
+  "_from": "cordova-plugin-network-information@^2.0.1",
+  "_id": "cordova-plugin-network-information@2.0.2",
   "_inBundle": false,
-  "_integrity": "sha1-6QQh9DDGq3bUCSI/Jfzvu7zhdpA=",
+  "_integrity": "sha512-NwO3qDBNL/vJxUxBTPNOA1HvkDf9eTeGH8JSZiwy1jq2W2mJKQEDBwqWkaEQS19Yd/MQTiw0cykxg5D7u4J6cQ==",
   "_location": "/cordova-plugin-network-information",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-network-information@2.0.1",
+    "raw": "cordova-plugin-network-information@^2.0.1",
     "name": "cordova-plugin-network-information",
     "escapedName": "cordova-plugin-network-information",
-    "rawSpec": "2.0.1",
+    "rawSpec": "^2.0.1",
     "saveSpec": null,
-    "fetchSpec": "2.0.1"
+    "fetchSpec": "^2.0.1"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-network-information/-/cordova-plugin-network-information-2.0.1.tgz",
-  "_spec": "2.0.1",
-  "_where": "/home/jfolpf/form-for-parking-violation",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-network-information/-/cordova-plugin-network-information-2.0.2.tgz",
+  "_shasum": "f48a92cbd7cccb63cb0a5e5a00030001b8ac4fea",
+  "_spec": "cordova-plugin-network-information@^2.0.1",
+  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
-    "url": "https://issues.apache.org/jira/browse/CB"
+    "url": "https://github.com/apache/cordova-plugin-network-information/issues"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-network-information",
     "platforms": [
@@ -42,6 +39,7 @@
       "browser"
     ]
   },
+  "deprecated": false,
   "description": "Cordova Network Information Plugin",
   "devDependencies": {
     "eslint": "^4.0.0",
@@ -81,5 +79,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "2.0.1"
+  "version": "2.0.2"
 }

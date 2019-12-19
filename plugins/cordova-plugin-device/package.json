@@ -1,38 +1,35 @@
 {
-  "_args": [
-    [
-      "cordova-plugin-device@2.0.2",
-      "/home/jfolpf/form-for-parking-violation"
-    ]
-  ],
-  "_from": "cordova-plugin-device@2.0.2",
-  "_id": "cordova-plugin-device@2.0.2",
+  "_from": "cordova-plugin-device@^2.0.2",
+  "_id": "cordova-plugin-device@2.0.3",
   "_inBundle": false,
-  "_integrity": "sha1-/Ajzci5n7ve2xnv8mag99q3Quro=",
+  "_integrity": "sha512-Jb3V72btxf3XHpkPQsGdyc8N6tVBYn1vsxSFj43fIz9vonJDUThYPCJJHqk6PX6N4dJw6I4FjxkpfCR4LDYMlw==",
   "_location": "/cordova-plugin-device",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-device@2.0.2",
+    "raw": "cordova-plugin-device@^2.0.2",
     "name": "cordova-plugin-device",
     "escapedName": "cordova-plugin-device",
-    "rawSpec": "2.0.2",
+    "rawSpec": "^2.0.2",
     "saveSpec": null,
-    "fetchSpec": "2.0.2"
+    "fetchSpec": "^2.0.2"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-device/-/cordova-plugin-device-2.0.2.tgz",
-  "_spec": "2.0.2",
-  "_where": "/home/jfolpf/form-for-parking-violation",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-device/-/cordova-plugin-device-2.0.3.tgz",
+  "_shasum": "c2b41b7efd0455dd097f89356d85bfdd5dadeb0f",
+  "_spec": "cordova-plugin-device@^2.0.2",
+  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
     "url": "https://issues.apache.org/jira/browse/CB"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-device",
     "platforms": [
@@ -43,6 +40,7 @@
       "osx"
     ]
   },
+  "deprecated": false,
   "description": "Cordova Device Plugin",
   "devDependencies": {
     "eslint": "^3.19.0",
@@ -82,5 +80,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "2.0.2"
+  "version": "2.0.3"
 }

@@ -1,8 +1,8 @@
 {
   "_from": "cordova-plugin-screen-orientation",
-  "_id": "cordova-plugin-screen-orientation@3.0.1",
+  "_id": "cordova-plugin-screen-orientation@3.0.2",
   "_inBundle": false,
-  "_integrity": "sha1-daNXzik4CB6PYdRgU5S213Rjwfg=",
+  "_integrity": "sha512-2w6CMC+HGvbhogJetalwGurL2Fx8DQCCPy3wlSZHN1/W7WoQ5n9ujVozcoKrY4VaagK6bxrPFih+ElkO8Uqfzg==",
   "_location": "/cordova-plugin-screen-orientation",
   "_phantomChildren": {},
   "_requested": {
@@ -19,15 +19,15 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-screen-orientation/-/cordova-plugin-screen-orientation-3.0.1.tgz",
-  "_shasum": "75a357ce2938081e8f61d4605394b6d77463c1f8",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-screen-orientation/-/cordova-plugin-screen-orientation-3.0.2.tgz",
+  "_shasum": "81290a933cfe84d35482cfcb251c931cc7b71931",
   "_spec": "cordova-plugin-screen-orientation",
-  "_where": "/home/jfolpf/form-for-parking-violation",
+  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
   "author": {
-    "name": "gbenvenuti"
+    "name": "Apache Software Foundation"
   },
   "bugs": {
-    "url": "https://issues.apache.org/jira/browse/CB"
+    "url": "https://github.com/apache/cordova-plugin-screen-orientation/issues"
   },
   "bundleDependencies": false,
   "cordova": {
@@ -39,7 +39,7 @@
     ]
   },
   "deprecated": false,
-  "description": "Adds Screen Orientation API lock and unlock functions to the global screen object in android, iOS and windows-uwp.",
+  "description": "Cordova Screen Orientation plugin",
   "devDependencies": {
     "jshint": "^2.9.4"
   },
@@ -53,6 +53,9 @@
   "homepage": "https://github.com/apache/cordova-plugin-screen-orientation#readme",
   "keywords": [
     "cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows",
     "device",
     "ecosystem:cordova",
     "screen",
@@ -70,5 +73,5 @@
     "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint demo/www",
     "test": "npm run jshint"
   },
-  "version": "3.0.1"
+  "version": "3.0.2"
 }
