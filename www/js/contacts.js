@@ -42,10 +42,15 @@
 /* global app */
 app.contacts = {}
 
+// Polícias Municipais
 app.contacts.PM_Contacts = [
   {
     'nome': 'Albufeira',
     'contacto': 'geral@cm-albufeira.pt'
+  },
+  {
+    'nome': 'Almada',
+    'contacto': 'cidadao@ecalma.pt'
   },
   {
     'nome': 'Amadora',
