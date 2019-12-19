@@ -57,6 +57,16 @@ app.penalties = (function (thisModule) {
       description: 'num lugar reservado exclusivamente para motociclos',
       law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
     },
+    carro_partilhado: {
+      select: 'Lugar para carros partilhados',
+      description: 'num lugar reservado exclusivamente para carros partilhados',
+      law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
+    },
+    carro_especifico: {
+      select: 'Lugar reservado a veículos específicos (ex: EDP, PT, Pároco, serviço de hotel, etc.)',
+      description: 'num lugar reservado ao estacionamento exclusivo de determinados veículos',
+      law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
+    },
     residentes_apenas: {
       select: 'Estacionamento indevido em zona de residentes',
       description: 'num lugar em zona de residentes sem que tenha o correspondente título que a habilita a tal',
