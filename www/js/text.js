@@ -90,7 +90,9 @@ app.text = (function (thisModule) {
       ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
       ' ' + 'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto,' +
       ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
-      'situação a que se aplica o n.º 1 do mesmo artigo.'
+      'situação a que se aplica o n.º 1 do mesmo artigo.' + '</b></b>' +
+      ' ' + 'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha' +
+      ' ' + 'no processo que vier a ser instaurado com referência à presente missiva.'
 
     var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3
 
