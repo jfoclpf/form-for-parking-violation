@@ -10,8 +10,8 @@
     "author": "Apache Cordova Team",
     "license": "GPL-3.0",
     "dependencies": {
-        "cordova": "^7.0.1",
-        "cordova-android": "6.4.0",
+        "cordova": "9.0.0",
+        "cordova-android": "8.1.0",
         "cordova-browser": "6.0.0",
         "cordova-pdf-generator": "2.0.8",
         "cordova-plugin-camera": "4.0.3",
