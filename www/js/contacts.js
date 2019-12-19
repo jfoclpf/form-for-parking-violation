@@ -4426,6 +4426,10 @@ app.contacts.PSP_Contacts = [
     'contacto': 'stresqabt@psp.pt'
   },
   {
+    'nome': 'Comando Regional dos Açores',
+    'contacto': 'cracores@psp.pt'
+  },
+  {
     'nome': 'Afurada - Vila Nova de Gaia - Esquadra',
     'contacto': 'afurada.porto@psp.pt'
   },
