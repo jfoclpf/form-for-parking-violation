@@ -17,6 +17,10 @@ h1 {
   text-align: justify;
 }
 
+.lh80 {
+  line-height: 80%;
+}
+
 .jButtonAlert{
   height: 45px;
   line-height: 40px;
