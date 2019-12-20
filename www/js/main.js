@@ -216,16 +216,17 @@ app.main = (function (thisModule) {
             'text': '<b>Não usar</b> Chave Móvel Digital',
             'theme': 'green',
             'class': 'jButtonAlert',
-            'onClick': sendMailMessage
+            'onClick': sendMailMessageWithoutCMD
           }
         ]
       })
     } else {
-      sendMailMessage()
+      sendMailMessageWithoutCMD()
     }
   })
 
-  function sendMailMessage () {
+  // CMD -> Chave Móvel Digital
+  function sendMailMessageWithoutCMD () {
     var mainMessage = app.text.getMainMessage() + '<br><br>' + app.text.getRegards() + '<br>'
     var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
 
@@ -240,7 +241,7 @@ app.main = (function (thisModule) {
     })
   }
 
-  thisModule.sendMailMessage = sendMailMessage
+  thisModule.sendMailMessageWithoutCMD = sendMailMessageWithoutCMD
 
   return thisModule
 })({})

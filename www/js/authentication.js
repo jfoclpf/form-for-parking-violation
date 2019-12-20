@@ -5,7 +5,7 @@
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
   var isAuthenticationWindowClosed = true
-  var pdfFileCreated = false
+  var pdfFileJustCreated = false
 
   // function called by main.js
   function startAuthentication () {
@@ -249,10 +249,10 @@ app.authentication = (function (thisModule) {
           console.log('Writing content to file')
           fileWriter.write(DataBlob)
 
-          pdfFileCreated = true
+          pdfFileJustCreated = true
           showPDFAuthInfo(folderpath, filename)
         }, function () {
-          pdfFileCreated = false
+          pdfFileJustCreated = false
           alert('Não foi possível salvar o ficheiro em ' + folderpath)
         })
       })
@@ -269,8 +269,8 @@ app.authentication = (function (thisModule) {
 
     var msg = 'Foi criado o ficheiro PDF <span style="color:orange"><b>' + filename + '</b></span>' + ' ' +
     'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + '<br><br>'
-    msg += ' Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital. Guarde o PDF gerado com a sua assinatura digital<br><br>'
-    msg += ' Abrir-se-á depois a sua APP de email onde poderá anexar o PDF assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.'
+    msg += 'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.' + '<br><br>'
+    msg += 'Guarde o PDF gerado com a sua assinatura digital.'
 
     $.jAlert({
       'title': 'Criação de ficheiro PDF',
@@ -294,17 +294,67 @@ app.authentication = (function (thisModule) {
     })
   }
 
+  // depois de sair da APP para assinar o PDF na página do Estado, regressa novamente à APP e corre esta função
   function onAppResume () {
     if (IN_APP_BROWSER_AUTH) {
       return
     }
 
-    if (pdfFileCreated) {
-      sendMailMessage()
+    console.log('pdfFileJustCreated', pdfFileJustCreated)
+    if (pdfFileJustCreated) {
+      $.jAlert({
+        'title': 'PDF digitalmente assinado?',
+        'content': 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
+        'theme': 'dark_blue',
+        'onClose': function () {
+          pdfFileJustCreated = false
+        },
+        'btns': [
+          {
+            'text': 'Sim',
+            'theme': 'green',
+            'class': 'jButtonAlert',
+            'onClick': function () {
+              $.jAlert({
+                'title': 'Envio do PDF digitalmente assinado',
+                'content': 'Abrir-se-á de seguida a sua APP de email onde terá apenas que anexar o PDF digitalmente assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.',
+                'theme': 'dark_blue',
+                'btns': [
+                  {
+                    'text': 'Avançar',
+                    'theme': 'green',
+                    'class': 'jButtonAlert',
+                    'onClick': sendMailMessageWithCMD // CMD -> Chave Móvel Digital
+                  }
+                ]
+              })
+            }
+          },
+          {
+            'text': 'Não, mas quero tentar novamente',
+            'theme': 'green',
+            'closeAlert': false,
+            'class': 'jButtonAlert',
+            'onClick': function () {
+              pdfFileJustCreated = false
+              window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
+            }
+          },
+          {
+            'text': 'Não, mas quero enviar sem Chave Móvel Digital',
+            'theme': 'green',
+            'class': 'jButtonAlert',
+            'onClick': function () {
+              app.main.sendMailMessageWithoutCMD() // CMD -> Chave Móvel Digital
+              pdfFileJustCreated = false
+            }
+          }
+        ]
+      })
     }
   }
 
-  function sendMailMessage () {
+  function sendMailMessageWithCMD () {
     var mainMessage = 'Exmos. Srs.,<br><br>'
     mainMessage += 'Envio em anexo ficheiro PDF com uma denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada.<br><br>'
 
@@ -328,7 +378,7 @@ app.authentication = (function (thisModule) {
       isHtml: true // indicats if the body is HTML or plain text
     }, function () {
       console.log('email view dismissed')
-      pdfFileCreated = false
+      pdfFileJustCreated = false
     }, this)
   }
 
