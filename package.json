@@ -22,7 +22,7 @@
         "cordova-plugin-file-transfer": "1.7.1",
         "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
-        "cordova-plugin-inappbrowser": "3.1.0",
+        "cordova-plugin-inappbrowser": "3.2.0",
         "cordova-plugin-network-information": "2.0.2",
         "cordova-plugin-screen-orientation": "3.0.2",
         "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
@@ -46,10 +46,10 @@
             "cordova-plugin-file": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-screen-orientation": {},
-            "cordova-plugin-inappbrowser": {},
             "cordova-plugin-device": {},
             "cordova-plugin-whitelist": {},
-            "cordova-plugin-network-information": {}
+            "cordova-plugin-network-information": {},
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
             "android",

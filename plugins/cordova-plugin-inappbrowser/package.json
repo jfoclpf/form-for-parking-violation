@@ -1,8 +1,8 @@
 {
   "_from": "cordova-plugin-inappbrowser@^3.0.0",
-  "_id": "cordova-plugin-inappbrowser@3.1.0",
+  "_id": "cordova-plugin-inappbrowser@3.2.0",
   "_inBundle": false,
-  "_integrity": "sha512-YqrZfYgbGTS20SFID0mrRxud312VH072QVlFonCAkPgtGg1Svy7lELOCNFd+KU7t4mVtZeTEjZPEeefvjaetwQ==",
+  "_integrity": "sha512-tYsK0H9M8POmJTVnfyIsiRgoOxnypa9IQIbf/Hsgi7vbgUYRHtBUfvXwq4RhMqLIVrCeJLXF2hTXTDNY0a/eTA==",
   "_location": "/cordova-plugin-inappbrowser",
   "_phantomChildren": {},
   "_requested": {
@@ -19,10 +19,10 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.1.0.tgz",
-  "_shasum": "61520b8de3eb75b37842d2340f5d90a84a073747",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.2.0.tgz",
+  "_shasum": "8615e1510dcf796875b420416331b768fee28d86",
   "_spec": "cordova-plugin-inappbrowser@^3.0.0",
-  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
+  "_where": "/home/jfolpf/form-for-parking-violation",
   "author": {
     "name": "Apache Software Foundation"
   },
@@ -86,5 +86,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "3.1.0"
+  "version": "3.2.0"
 }
