@@ -110,7 +110,7 @@ app.main = (function (thisModule) {
 
     var callback = function (imgNmbr) {
       // hides "Adds image" button
-      $('#' + 'addImg_' + imgNmbr).html('<i class="fas fa-edit"></i>')
+      $('#' + 'addImg_' + imgNmbr).html('<i class="fa fa-edit"></i>')
       $('#' + 'remImg_' + imgNmbr).show()
       updateImgContainers()
     }
@@ -145,7 +145,7 @@ app.main = (function (thisModule) {
     app.photos.removeImage('myImg_' + num, num)
     $(this).hide()
 
-    $('#addImg_' + num).html('<i class="fas fa-plus"></i>')
+    $('#addImg_' + num).html('<i class="fa fa-plus"></i>')
 
     updateImgContainers()
   })

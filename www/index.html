@@ -20,13 +20,11 @@
 
   <link rel="stylesheet" href="css/res/bootstrap.min.css">
   <link rel="stylesheet" href="css/res/jquery-ui.css">
+  <link rel="stylesheet" href="css/res/font-awesome.min.css">
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/res/jAlert.css">
 
-  <!-- Font Awesome JS -->
-  <script defer src="js/res/solid.js"></script>
-  <script defer src="js/res/fontawesome.js"></script>
 </head>
 
 <body>
@@ -37,23 +35,23 @@
       <ul class="list-unstyled components">
 
         <li id="form_show" class="mt-3">
-          <div><i class="fas fa-paper-plane"></i></div>
+          <div><i class="fa fa-paper-plane"></i></div>
           <div><a>Enviar</a></div>
         </li>
 
         <li id="personal_data_show">
-          <div><i class="fas fa-address-card"></i></div>
+          <div><i class="fa fa-address-card"></i></div>
           <div><a>Os meus dados</a></div>
         </li>
 
         <li id="legal_basis_show">
-          <div><i class="fas fa-gavel"></i></div>
+          <div><i class="fa fa-gavel"></i></div>
           <div><a>Base legal</a></div>
         </li>
 
         <li>
           <div class="list">
-            <div><i class="fas fa-key"></i></div>
+            <div><i class="fa fa-key"></i></div>
             <div>
               <a href="#pageSubmenuCmd" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Chave Móvel Digital</a>
               <ul class="collapse list-unstyled" id="pageSubmenuCmd">
@@ -79,7 +77,7 @@
 
         <li>
           <div class="list">
-            <div><i class="fas fa-info-circle"></i></div>
+            <div><i class="fa fa-info-circle"></i></div>
             <div>
               <a href="#pageSubmenuAboutUs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sobre</a>
               <ul class="collapse list-unstyled" id="pageSubmenuAboutUs">
@@ -103,7 +101,7 @@
       <div class="container-fluid section-head d-flex flex-row">
         <div class="p-1">
           <button type="button" id="sidebarCollapse" class="btn btn-dark d-inline-block d-lg-none ml-auto">
-            <i class="fas fa-align-justify"></i>
+            <i class="fa fa-bars"></i>
           </button>
         </div>
         <div class="pl-4 pt-0">
@@ -115,35 +113,34 @@
       <hr>
 
       <div id="main_form" class="section">
-
         <h3>Imagens</h3>
         <div id="image_selector">
           <div class="row">
             <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                  <button class="btn btn-primary" id="addImg_1"><i class="fas fa-plus"></i></button>
-                  <button class="btn btn-primary" id="remImg_1"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary" id="addImg_1"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_1"><i class="fa fa-minus"></i></button>
               </div>
               <img id="myImg_1" src="" class="col-xs-12">
             </div>
             <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                  <button class="btn btn-primary" id="addImg_2"><i class="fas fa-plus"></i></button>
-                  <button class="btn btn-primary" id="remImg_2"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary" id="addImg_2"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_2"><i class="fa fa-minus"></i></button>
               </div>
               <img id="myImg_2" src="" class="col-xs-12">
             </div>
             <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                  <button class="btn btn-primary" id="addImg_3"><i class="fas fa-plus"></i></button>
-                  <button class="btn btn-primary" id="remImg_3"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary" id="addImg_3"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_3"><i class="fa fa-minus"></i></button>
               </div>
               <img id="myImg_3" src="" class="col-xs-12">
             </div>
             <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
               <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                  <button class="btn btn-primary" id="addImg_4"><i class="fas fa-plus"></i></button>
-                  <button class="btn btn-primary" id="remImg_4"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary" id="addImg_4"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-primary" id="remImg_4"><i class="fa fa-minus"></i></button>
               </div>
               <img id="myImg_4" src="" class="col-xs-12">
             </div>
@@ -152,7 +149,7 @@
 
         <hr>
 
-        <h3>Os dados da ocorrência</h3>
+        <h3>Dados do veículo</h3>
         <div class="row">
 
           <div class="col-xs-12 col-sm-4 form-group">
@@ -175,10 +172,13 @@
           </div>
         </div>
 
+        <hr>
+
+        <h3>Data e local</h3>
+
         <div class="row">
           <div class="col-xs-12 col-md-6 form-group">
-              <br>
-              <button class="btn btn-primary" id="getCurrentAddresBtn">Atualizar data e local</button>
+              <button class="btn btn-primary ml-2" id="getCurrentAddresBtn"><i class="fa fa-refresh"></i></button>
               <br><br>
               <label for="date">Data </label>
               <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
@@ -208,7 +208,9 @@
           </div>
          </div>
 
-         <br>
+         <hr>
+
+         <h3>Base legal</h3>
 
          <div class="row">
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
@@ -217,9 +219,14 @@
                         id="penalties" name="Tipo de Ocorrência">
                 </select>
             </div>
+          </div>
 
+          <hr>
+
+          <h3>Autoridade</h3>
+
+          <div class="row">
             <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
-                <label for="authority">Autoridade</label>
                 <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
                 <select class="form-control input-lg mandatory personal_info"
                         id="authority" name="Autoridade">
@@ -269,7 +276,7 @@
 
         <div class="row">
           <div class="col-xs-12 col-sm-2 form-group">
-            <button class="btn btn-success" id="save_personal_data"><i class="fas fa-save"></i></button>
+            <button class="btn btn-success" id="save_personal_data"><i class="fa fa-save"></i></button>
           </div>
         </div>
       </div>

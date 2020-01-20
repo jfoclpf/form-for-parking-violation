@@ -138,6 +138,10 @@ app.photos = (function (thisModule) {
     textocr.recText(0, imageUri,
       function (recognizedTextObj) {
         console.debug(recognizedTextObj)
+        if (!recognizedTextObj.foundText) {
+          error('plate not detected')
+          return
+        }
         // see https://www.npmjs.com/package/cordova-plugin-mobile-ocr#plugin-usage
         var blockTextArray = recognizedTextObj.blocks.blocktext
         var linesArray = recognizedTextObj.lines.linetext
