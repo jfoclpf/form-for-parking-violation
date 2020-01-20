@@ -101,27 +101,25 @@ app.form = (function (thisModule) {
   })
 
   function setPortuguesePlateInput () {
-    $('#plate').attr('placeholder', 'XX-XX-XX')
+    $('#plate').bind('input', plateOnInput)
+    $('#plate').attr('placeholder', 'XX\u2013XX\u2013XX')
     $('#plate').addClass('mandatory')
     $('#plate').attr('maxlength', '8')
 
-    $('#plate').on('input', function () {
-      $(this).val(function (index, value) {
-        if (value.length < 8) { // length of XX-XX-XX
-          return value.toUpperCase().replace(/\W/gi, '').replace(/(.{2})/g, '$1\u2013')
-        } else {
-          return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '')
-        }
-      })
-    })
+    if (!app.functions.isCarPlateOK() && !DEBUG) {
+      $('#plate').css('border-color', 'red')
+    } else {
+      $('#plate').css('border-color', '')
+    }
   }
 
   // matrícula estrangeira, matrículas da GNR, etc.
   function setAnyPlateFormat () {
-    $('#plate').off('input')
+    $('#plate').unbind('input', plateOnInput)
     $('#plate').attr('placeholder', '')
     $('#plate').removeClass('mandatory')
     $('#plate').attr('maxlength', '')
+    $('#plate').css('border-color', '')
   }
 
   $('#free_plate').change(function () {
@@ -239,6 +237,21 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+  $('#plate').bind('input', plateOnInput)
+  function plateOnInput () {
+    $(this).val(function (index, value) {
+      if (value.length < 8) { // length of XX-XX-XX
+        return value.toUpperCase().replace(/\W/gi, '').replace(/(.{2})/g, '$1\u2013')
+      } else {
+        return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '')
+      }
+    })
+    if (!app.functions.isCarPlateOK() && !DEBUG) {
+      $(this).css('border-color', 'red')
+    } else {
+      $(this).css('border-color', '')
+    }
+  }
   $('#carmake').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')

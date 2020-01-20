@@ -1,0 +1,70 @@
+{
+  "_from": "cordova-plugin-mobile-ocr",
+  "_id": "cordova-plugin-mobile-ocr@3.1.1",
+  "_inBundle": false,
+  "_integrity": "sha512-j/WpFDIbfZcCSMYd52fTywuUonX7aqjP935cCo4SR/AqI5553Ml60wMbxw6/bbdktW/+4mE778SsZidA/LwUVQ==",
+  "_location": "/cordova-plugin-mobile-ocr",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-mobile-ocr",
+    "name": "cordova-plugin-mobile-ocr",
+    "escapedName": "cordova-plugin-mobile-ocr",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-mobile-ocr/-/cordova-plugin-mobile-ocr-3.1.1.tgz",
+  "_shasum": "25d0e3d902672168c85178429748675fad71640b",
+  "_spec": "cordova-plugin-mobile-ocr",
+  "_where": "/home/jfolpf/form-for-parking-violation",
+  "author": {
+    "name": "jatahworx"
+  },
+  "bugs": {
+    "url": "https://github.com/NeutrinosPlatform/cordova-plugin-mobile-ocr/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-mobile-ocr",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "cordova plugin for mobile ocr text recognition",
+  "engines": {
+    "cordovaDependencies": {
+      "cordova-android": ">=6.3.0",
+      "cordova-ios": ">=4.3.0"
+    }
+  },
+  "homepage": "https://github.com/NeutrinosPlatform/cordova-plugin-mobile-ocr#readme",
+  "keywords": [
+    "cordova",
+    "text",
+    "ocr",
+    "text recognition",
+    "optical",
+    "character",
+    "recognition",
+    "optical character recognition",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "mobile ocr"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-mobile-ocr",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeutrinosPlatform/cordova-plugin-mobile-ocr.git"
+  },
+  "version": "3.1.1"
+}

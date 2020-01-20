@@ -161,7 +161,7 @@ app.text = (function (thisModule) {
       $.jAlert({
         'title': 'Erro na matrícula!',
         'theme': 'red',
-        'content': 'Preencha a matrícula em maiúsculas no formato XX-XX-XX'
+        'content': 'A matrícula que introduziu não é válida'
       })
       return false
     }

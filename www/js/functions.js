@@ -5,19 +5,18 @@
 app.functions = (function (thisModule) {
   // detects if the car plate is correctly filled in
   function isCarPlateOK () {
-    var plate_str = $('#plate').val()
-    plate_str = plate_str.toUpperCase() // force place upcase
+    var plateArray = $('#plate').val().split(/[-–—]/)
+    return isArrayAValidPlate(plateArray)
+  }
 
-    plate_str = plate_str.replace(/\u2013|\u2014/g, '-') // it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
+  // check if array is valid, p.e. ['AA','99','DD']
+  function isArrayAValidPlate (arrayPlate) {
+    var plateString = arrayPlate.join('-')
+    // four valid plate types: AA-00-00, 00-00-AA, 00-AA-00, AA-00-AA
+    // see: https://pt.stackoverflow.com/a/431398/101186
+    var expr = RegExp(/(([A-Z]{2}-[0-9]{2}-[0-9]{2})|([0-9]{2}-[0-9]{2}-[A-Z]{2})|([0-9]{2}-[A-Z]{2}-[0-9]{2})|([A-Z]{2}-[0-9]{2}-[A-Z]{2}))$/)
 
-    var bool1 = (plate_str !== 'XX-XX-XX')
-    var bool3 = (plate_str.substring(2, 3) === '-')
-    var bool4 = (plate_str.substring(5, 6) === '-')
-    var bool5 = (plate_str.length === 8)
-
-    var bool_isCorrect = (bool1 && bool3 && bool4 && bool5)
-
-    return bool_isCorrect
+    return expr.test(plateString)
   }
 
   // detects if the postal code is correctly filled in
@@ -127,8 +126,19 @@ app.functions = (function (thisModule) {
     $('#time').val(currentTime)
   }
 
-  function getPathFromUri (uri) {
-    return uri.split('?')[0]
+  // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
+  // this function is very important cause the getpicture plugin returns a unique tag after ?
+  // on the file uri, such that files don't get messed with each other, since the plugin uses the cache
+  function adaptFilenameFromUri (uri) {
+    if (uri.includes('?')) {
+      var code = uri.split('?').slice(-1) // 123
+      var fileNoCode = uri.split('?').slice(0, -1).join('?') // file://photo.jpg
+      var extenstion = fileNoCode.split('.').slice(-1) // 'jpg'
+      var fileNoCodeNoExtension = fileNoCode.split('.').slice(0, -1).join('.') // file://photo
+      return fileNoCodeNoExtension + code + '.' + extenstion
+    } else {
+      return uri
+    }
   }
 
   // ex: from "file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/1525698243664.jpg"
@@ -148,13 +158,6 @@ app.functions = (function (thisModule) {
   // output ------> jpg
   function getExtensionFromURL (url) {
     return url.split(/#|\?/)[0].split('.').pop().trim()
-  }
-
-  function addSuffixToFileName (uri, suffix) {
-    var fileNameRoot = getPathFromUri(uri)
-    var fileNameWithoutExtension = fileNameRoot.split('.').slice(0, -1).join('.')
-    var extension = getExtensionFromURL(uri)
-    return fileNameWithoutExtension + suffix + '.' + extension
   }
 
   /* use it like this, for example:
@@ -336,11 +339,13 @@ app.functions = (function (thisModule) {
   }
 
   function resizeImage (imageUri, callback) {
-    // get just fileName with suffix, ex.: "photo1_resized.jpg"
-    var fileNameResized = addSuffixToFileName(
-      getFilenameFromURL(imageUri)[1],
-      '_resized'
-    )
+    // generate filename for resized image
+    var uriAdapted = adaptFilenameFromUri(imageUri) // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
+    var fileName = getFilenameFromURL(uriAdapted)[1] // 'file://path/to/photo123.jpg' => 'photo123.jpg'
+    var fileNameWithoutExtension = fileName.split('.').slice(0, -1).join('.') // 'photo123'
+    var extension = getExtensionFromURL(fileName) // 'jpg'
+    var fileNameResized = fileNameWithoutExtension + '_resized' + '.' + extension // 'photo123_resized.jpg'
+    console.log('fileNameResized:', fileNameResized)
 
     var resizeOptions = {
       uri: imageUri,
@@ -364,6 +369,16 @@ app.functions = (function (thisModule) {
       })
   }
 
+  function clearCache () {
+    // clear cache, important, ex: otherwise the images get messed if loaded again
+    window.CacheClear(function (result) {
+      console.debug('cache cleared:' + result)
+    },
+    function (err) {
+      console.debug('cache cleared error:' + err)
+    })
+  }
+
   function isThisAndroid () {
     return device.platform.toLowerCase() === 'android'
   }
@@ -385,6 +400,7 @@ app.functions = (function (thisModule) {
 
   /* === Public methods to be returned === */
   thisModule.isCarPlateOK = isCarPlateOK
+  thisModule.isArrayAValidPlate = isArrayAValidPlate
   thisModule.isPostalCodeOK = isPostalCodeOK
   thisModule.getCarPlate = getCarPlate
   thisModule.isFullNameOK = isFullNameOK
@@ -397,11 +413,11 @@ app.functions = (function (thisModule) {
   thisModule.moveFile = moveFile
   thisModule.cleanArray = cleanArray
   thisModule.updateDateAndTime = updateDateAndTime
-  thisModule.getPathFromUri = getPathFromUri
-  thisModule.addSuffixToFileName = addSuffixToFileName
+  thisModule.adaptFilenameFromUri = adaptFilenameFromUri
   thisModule.getExtensionFromURL = getExtensionFromURL
   thisModule.getFileSize = getFileSize
   thisModule.resizeImage = resizeImage
+  thisModule.clearCache = clearCache
   thisModule.isThisAndroid = isThisAndroid
   thisModule.adaptURItoAndroid = adaptURItoAndroid
 

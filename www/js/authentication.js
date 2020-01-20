@@ -300,7 +300,7 @@ app.authentication = (function (thisModule) {
       return
     }
 
-    console.log('pdfFileJustCreated', pdfFileJustCreated)
+    console.log('pdfFileJustCreated:', pdfFileJustCreated)
     if (pdfFileJustCreated) {
       $.jAlert({
         'title': 'PDF digitalmente assinado?',
