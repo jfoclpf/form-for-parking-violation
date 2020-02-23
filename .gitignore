@@ -37,5 +37,9 @@ formParkingViolation.apk
 
 # keys and credentials
 www/js/credentials.js
+server/DBcredentials.js
 autocosts.keystore
+
+#upload script to server
+uploadToServer.sh
 
