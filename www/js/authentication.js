@@ -138,9 +138,9 @@ app.authentication = (function (thisModule) {
 
   function authenticationError () {
     $.jAlert({
-      'title': 'Erro na obtenção da autenticação!',
-      'theme': 'red',
-      'content': 'Confirme se tem acesso à Internet. Poderá sempre enviar a ocorrência às autoridades sem a autenticação da Chave Móvel Digital.'
+      title: 'Erro na obtenção da autenticação!',
+      theme: 'red',
+      content: 'Confirme se tem acesso à Internet. Poderá sempre enviar a ocorrência às autoridades sem a autenticação da Chave Móvel Digital.'
     })
   }
 
@@ -273,15 +273,15 @@ app.authentication = (function (thisModule) {
     msg += 'Guarde o PDF gerado com a sua assinatura digital.'
 
     $.jAlert({
-      'title': 'Criação de ficheiro PDF',
-      'content': msg,
-      'theme': 'dark_blue',
-      'btns': [
+      title: 'Criação de ficheiro PDF',
+      content: msg,
+      theme: 'dark_blue',
+      btns: [
         {
-          'text': 'Avançar',
-          'theme': 'green',
-          'class': 'jButtonAlert',
-          'onClick': function () {
+          text: 'Avançar',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () {
             if (IN_APP_BROWSER_AUTH) {
               // tries to use internal browser plugin to sign the pdf document
               inAppBrowserRef.show()
@@ -303,48 +303,48 @@ app.authentication = (function (thisModule) {
     console.log('pdfFileJustCreated:', pdfFileJustCreated)
     if (pdfFileJustCreated) {
       $.jAlert({
-        'title': 'PDF digitalmente assinado?',
-        'content': 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
-        'theme': 'dark_blue',
-        'onClose': function () {
+        title: 'PDF digitalmente assinado?',
+        content: 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
+        theme: 'dark_blue',
+        onClose: function () {
           pdfFileJustCreated = false
         },
-        'btns': [
+        btns: [
           {
-            'text': 'Sim',
-            'theme': 'green',
-            'class': 'jButtonAlert',
-            'onClick': function () {
+            text: 'Sim',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: function () {
               $.jAlert({
-                'title': 'Envio do PDF digitalmente assinado',
-                'content': 'Abrir-se-á de seguida a sua APP de email onde terá apenas que anexar o PDF digitalmente assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.',
-                'theme': 'dark_blue',
-                'btns': [
+                title: 'Envio do PDF digitalmente assinado',
+                content: 'Abrir-se-á de seguida a sua APP de email onde terá apenas que anexar o PDF digitalmente assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.',
+                theme: 'dark_blue',
+                btns: [
                   {
-                    'text': 'Avançar',
-                    'theme': 'green',
-                    'class': 'jButtonAlert',
-                    'onClick': sendMailMessageWithCMD // CMD -> Chave Móvel Digital
+                    text: 'Avançar',
+                    theme: 'green',
+                    class: 'jButtonAlert',
+                    onClick: sendMailMessageWithCMD // CMD -> Chave Móvel Digital
                   }
                 ]
               })
             }
           },
           {
-            'text': 'Não, mas quero tentar novamente',
-            'theme': 'green',
-            'closeAlert': false,
-            'class': 'jButtonAlert',
-            'onClick': function () {
+            text: 'Não, mas quero tentar novamente',
+            theme: 'green',
+            closeAlert: false,
+            class: 'jButtonAlert',
+            onClick: function () {
               pdfFileJustCreated = false
               window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
             }
           },
           {
-            'text': 'Não, mas quero enviar sem Chave Móvel Digital',
-            'theme': 'green',
-            'class': 'jButtonAlert',
-            'onClick': function () {
+            text: 'Não, mas quero enviar sem Chave Móvel Digital',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: function () {
               app.main.sendMailMessageWithoutCMD() // CMD -> Chave Móvel Digital
               pdfFileJustCreated = false
             }

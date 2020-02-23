@@ -96,15 +96,15 @@ getFileSize(filename, function (filePath, err) {
 })
 
 $.jAlert({
-  'title': 'Criação de ficheiro PDF',
-  'content': 'msg',
-  'theme': 'dark_blue',
-  'btns': [
+  title: 'Criação de ficheiro PDF',
+  content: 'msg',
+  theme: 'dark_blue',
+  btns: [
     {
-      'text': 'Assinar PDF com Chave Móvel Digital',
-      'theme': 'green',
-      'class': 'jButtonAlert',
-      'onClick': function () {
+      text: 'Assinar PDF com Chave Móvel Digital',
+      theme: 'green',
+      class: 'jButtonAlert',
+      onClick: function () {
         if (IN_APP_BROWSER_AUTH) {
           inAppBrowserRef.show()
         }

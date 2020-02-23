@@ -107,9 +107,9 @@ app.photos = (function (thisModule) {
         var Long = app.localization.ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
 
         var postion = {
-          'coords': {
-            'latitude': Lat,
-            'longitude': Long
+          coords: {
+            latitude: Lat,
+            longitude: Long
           }
         }
         console.log(postion)

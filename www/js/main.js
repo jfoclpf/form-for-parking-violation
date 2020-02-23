@@ -116,20 +116,20 @@ app.main = (function (thisModule) {
     }
 
     $.jAlert({
-      'title': 'Método de obtenção da foto:',
-      'theme': 'dark_blue',
-      'btns': [
+      title: 'Método de obtenção da foto:',
+      theme: 'dark_blue',
+      btns: [
         {
-          'text': 'Câmara',
-          'theme': 'green',
-          'class': 'jButtonAlert',
-          'onClick': function () { app.photos.getPhoto(num, 'camera', callback) }
+          text: 'Câmara',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () { app.photos.getPhoto(num, 'camera', callback) }
         },
         {
-          'text': 'Biblioteca de fotos',
-          'theme': 'green',
-          'class': 'jButtonAlert',
-          'onClick': function () { app.photos.getPhoto(num, 'library', callback) }
+          text: 'Biblioteca de fotos',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () { app.photos.getPhoto(num, 'library', callback) }
         }
       ]
     })
@@ -196,15 +196,15 @@ app.main = (function (thisModule) {
       '<u><a href="' + app.main.urls.Chave_Movel_Digital.aderir + '">aqui</a></u> como pedi-la.'
 
       $.jAlert({
-        'title': 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
-        'content': mensagem,
-        'theme': 'dark_blue',
-        'btns': [
+        title: 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
+        content: mensagem,
+        theme: 'dark_blue',
+        btns: [
           {
-            'text': '<b>Usar</b> Chave Móvel Digital',
-            'theme': 'green',
-            'class': 'jButtonAlert',
-            'onClick': function () {
+            text: '<b>Usar</b> Chave Móvel Digital',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: function () {
               if (IN_APP_BROWSER_AUTH) {
                 app.authentication.startAuthentication()
               } else {
@@ -213,10 +213,10 @@ app.main = (function (thisModule) {
             }
           },
           {
-            'text': '<b>Não usar</b> Chave Móvel Digital',
-            'theme': 'green',
-            'class': 'jButtonAlert',
-            'onClick': sendMailMessageWithoutCMD
+            text: '<b>Não usar</b> Chave Móvel Digital',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: sendMailMessageWithoutCMD
           }
         ]
       })

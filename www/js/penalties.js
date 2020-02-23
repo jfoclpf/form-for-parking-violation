@@ -146,7 +146,7 @@ app.penalties = (function (thisModule) {
   function populatesPenalties () {
     var keys = []
     for (var key in penalties) {
-      if (penalties.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(penalties, key)) {
         keys.push(key)
       }
     }

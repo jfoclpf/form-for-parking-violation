@@ -58,9 +58,9 @@ app.localization = (function (thisModule) {
 
   function PositionError () {
     $.jAlert({
-      'title': 'Erro na obtenção do local da ocorrência!',
-      'theme': 'red',
-      'content': 'Confirme se tem o GPS ligado e autorizado, e se tem acesso à Internet. Caso contrário pode introduzir manualmente o Concelho, Local (rua, travessa, etc.) e número de porta da ocorrência.'
+      title: 'Erro na obtenção do local da ocorrência!',
+      theme: 'red',
+      content: 'Confirme se tem o GPS ligado e autorizado, e se tem acesso à Internet. Caso contrário pode introduzir manualmente o Concelho, Local (rua, travessa, etc.) e número de porta da ocorrência.'
     })
     GPSLoadingOnFields(false)
   }
@@ -71,7 +71,7 @@ app.localization = (function (thisModule) {
   function getAuthoritiesFromGMap (latitude, longitude) {
     var reverseGeocoder = new google.maps.Geocoder()
     var currentPosition = new google.maps.LatLng(latitude, longitude)
-    reverseGeocoder.geocode({ 'latLng': currentPosition }, function (results, status) {
+    reverseGeocoder.geocode({ latLng: currentPosition }, function (results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results[0]) {
           var addressComponents = results[0].address_components
@@ -182,7 +182,7 @@ app.localization = (function (thisModule) {
   // gets "street_number", "route", "locality", "country", "postal_code", "administrative_area_level_2"(concelho)
   function getAddressComponents (components, type) {
     for (var key in components) {
-      if (components.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(components, key)) {
         if (type === components[key].types[0]) {
           return components[key].long_name
         }
@@ -198,8 +198,8 @@ app.localization = (function (thisModule) {
     postalCode = postalCode.substring(0, 4)
     if (postalCode.length !== 4) {
       toReturn = {
-        'locality': '',
-        'municipality': ''
+        locality: '',
+        municipality: ''
       }
       return toReturn
     }
@@ -224,8 +224,8 @@ app.localization = (function (thisModule) {
     }
 
     toReturn = {
-      'locality': $.trim(locality),
-      'municipality': $.trim(municipality)
+      locality: $.trim(locality),
+      municipality: $.trim(municipality)
     }
     return toReturn
   }

@@ -9,7 +9,7 @@ app.text = (function (thisModule) {
     var authority, authorityName, key
 
     for (key in app.localization.AUTHORITIES) {
-      if (!app.localization.AUTHORITIES.hasOwnProperty(key)) continue
+      if (!Object.prototype.hasOwnProperty.call(app.localization.AUTHORITIES, key)) continue
 
       if ($('#authority').val() === key) {
         authority = app.localization.AUTHORITIES[key].authority
@@ -24,7 +24,7 @@ app.text = (function (thisModule) {
     var penaltyLawArticle
     var penalties = app.penalties.getPenalties()
     for (key in penalties) {
-      if (!penalties.hasOwnProperty(key)) continue
+      if (!Object.prototype.hasOwnProperty.call(penalties, key)) continue
 
       var obj = penalties[key]
       if ($('#penalties').val() === obj.select) {
@@ -121,15 +121,15 @@ app.text = (function (thisModule) {
       if (to_break) {
         if (count === 1) {
           $.jAlert({
-            'title': 'Erro!',
-            'theme': 'red',
-            'content': 'Preencha o seguinte campo obrigatório:<br>' + error_string
+            title: 'Erro!',
+            theme: 'red',
+            content: 'Preencha o seguinte campo obrigatório:<br>' + error_string
           })
         } else {
           $.jAlert({
-            'title': 'Erro!',
-            'theme': 'red',
-            'content': 'Preencha os seguintes campos obrigatórios:<br>' + error_string
+            title: 'Erro!',
+            theme: 'red',
+            content: 'Preencha os seguintes campos obrigatórios:<br>' + error_string
           })
         }
         return false
@@ -140,18 +140,18 @@ app.text = (function (thisModule) {
     var Name = $('#name').val()
     if (!app.functions.isFullNameOK(Name) && !DEBUG) {
       $.jAlert({
-        'title': 'Erro no nome!',
-        'theme': 'red',
-        'content': 'Insira o nome completo.'
+        title: 'Erro no nome!',
+        theme: 'red',
+        content: 'Insira o nome completo.'
       })
       return false
     }
 
     if (!app.functions.isPostalCodeOK() && !DEBUG) {
       $.jAlert({
-        'title': 'Erro no Código Postal!',
-        'theme': 'red',
-        'content': 'Insira o Código Postal no formato XXXX-XXX'
+        title: 'Erro no Código Postal!',
+        theme: 'red',
+        content: 'Insira o Código Postal no formato XXXX-XXX'
       })
       return false
     }
@@ -159,9 +159,9 @@ app.text = (function (thisModule) {
     // detects if the Portuguese car plate is correctly filled
     if (!$('#free_plate').is(':checked') && !app.functions.isCarPlateOK() && !DEBUG) {
       $.jAlert({
-        'title': 'Erro na matrícula!',
-        'theme': 'red',
-        'content': 'A matrícula que introduziu não é válida'
+        title: 'Erro na matrícula!',
+        theme: 'red',
+        content: 'A matrícula que introduziu não é válida'
       })
       return false
     }
@@ -174,9 +174,9 @@ app.text = (function (thisModule) {
 
     if (app.main.imagesUriCleanArray.length === 0) {
       $.jAlert({
-        'title': 'Erro nas fotos!',
-        'theme': 'red',
-        'content': 'Adicione pelo menos uma foto do veículo em causa'
+        title: 'Erro nas fotos!',
+        theme: 'red',
+        content: 'Adicione pelo menos uma foto do veículo em causa'
       })
       return false
     }
