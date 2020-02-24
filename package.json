@@ -5,7 +5,7 @@
     "description": "Submit a parking violation complain to authority",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "standard"
     },
     "author": "Apache Cordova Team",
     "license": "GPL-3.0",
@@ -67,5 +67,15 @@
             "android",
             "browser"
         ]
+    },
+    "devDependencies": {
+        "standard": "14.3.1"
+    },
+    "standard": {
+      "ignore": [
+        "www/js/res/*",
+        "www/js/contacts.js"
+      ]
     }
+
 }
