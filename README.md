@@ -1,3 +1,8 @@
+[![js-standard-style][js-standard-style_img]][js-standard-style_url]
+
+[js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[js-standard-style_url]: https://standardjs.com/
+
 # Denúncia Estacionamento
 
 Formulário para submissão de queixa de estacionamento ilegal junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada. 
