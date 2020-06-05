@@ -398,6 +398,24 @@ app.functions = (function (thisModule) {
     }
   }
 
+  function submitDataToDB (databaseObj) {
+    $.ajax({
+      url: 'https://contabo.joaopimentel.com/passeio_livre/serverapp',
+      type: 'POST',
+      data: {
+        databaseObj: databaseObj
+      },
+      success: function (data) {
+        console.log('Values inserted into database with success. Returned: ', data)
+      },
+      error: function (error) {
+        console.error(databaseObj)
+        var errObj = JSON.parse(error.responseText)
+        console.error('There was an error submitting the values into the database', errObj.code, errObj.sqlMessage)
+      }
+    })
+  }
+
   /* === Public methods to be returned === */
   thisModule.isCarPlateOK = isCarPlateOK
   thisModule.isArrayAValidPlate = isArrayAValidPlate
@@ -420,6 +438,7 @@ app.functions = (function (thisModule) {
   thisModule.clearCache = clearCache
   thisModule.isThisAndroid = isThisAndroid
   thisModule.adaptURItoAndroid = adaptURItoAndroid
+  thisModule.submitDataToDB = submitDataToDB
 
   return thisModule
 })(app.functions || {})

@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -231,6 +231,28 @@ app.main = (function (thisModule) {
     var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
 
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
+
+    /* var databaseObj = {
+      PROD: !DEBUG,
+      foto1: 'test',
+      foto2: 'test',
+      foto3: 'test',
+      foto4: 'test',
+      carro_matricula: 'XX-XX-XX',
+      carro_marca: '',
+      carro_modelo: '',
+      data_data: '',
+      data_hora: '',
+      data_concelho: '',
+      data_local: '',
+      data_num_porta: '20',
+      data_coord_latit: 0,
+      data_coord_long: 0,
+      base_legal: 'CdE',
+      autoridade: 'PSP'
+    }
+
+    app.functions.updateDateAndTime(databaseObj) */
 
     cordova.plugins.email.open({
       to: thisModule.emailTo, // email addresses for TO field
