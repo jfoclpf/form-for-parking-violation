@@ -1,8 +1,14 @@
+/* server app that receives parking violations from the users
+and stores it in the dabatase */
+
+const fs = require('fs')
 const express = require('express')
 const mysql = require('mysql') // module to get info from database
-const debug = require('debug')('app:submitUserInput')
+const debug = require('debug')('app')
 const sqlFormatter = require('sql-formatter')
-const DBInfo = require('DBcredentials')
+
+const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
+debug(DBInfo)
 
 const app = express()
 const port = 3035
