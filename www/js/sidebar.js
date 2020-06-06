@@ -67,7 +67,6 @@ app.sidebar = (function (thisModule) {
 
       wrapper.addEventListener('touchmove', function (e) {
         if ($('#sidebar').hasClass('active')) {
-          e.preventDefault()
           e.stopImmediatePropagation()
         }
       }, { passive: false })
