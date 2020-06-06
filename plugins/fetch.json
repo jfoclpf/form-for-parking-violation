@@ -39,14 +39,6 @@
     "is_top_level": false,
     "variables": {}
   },
-  "cordova-pdf-generator": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-pdf-generator@^2.0.3"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-camera": {
     "source": {
       "type": "registry",
@@ -135,10 +127,18 @@
     "is_top_level": true,
     "variables": {}
   },
+  "cordova-pdf-generator": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-pdf-generator@^2.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
   "cordova-plugin-cache-clear": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-cache-clear"
+      "id": "cordova-plugin-cache-clear@1.3.8"
     },
     "is_top_level": true,
     "variables": {}

@@ -17,9 +17,6 @@
       "ANDROID_EXIFINTERFACES_VERSION": "27.+",
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-pdf-generator": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },

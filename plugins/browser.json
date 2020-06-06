@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-pdf-generator": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },

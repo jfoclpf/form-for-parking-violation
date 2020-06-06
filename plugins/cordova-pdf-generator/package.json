@@ -1,8 +1,8 @@
 {
   "_from": "cordova-pdf-generator@^2.0.3",
-  "_id": "cordova-pdf-generator@2.0.8",
+  "_id": "cordova-pdf-generator@2.1.1",
   "_inBundle": false,
-  "_integrity": "sha512-HIEWtypWERg8s5lpwOyhz71eq94e0XvbnTpaBUTneY1Tol3RHpsCvxniv5uN/MfrF9hi2e4FeTsGWzrZAeblTw==",
+  "_integrity": "sha512-UcA7v1APiAEIwRzOHMXF25WHnNIQtGcHLWcnRYTl3+nz6C2cCmin2b9lbtxgfS2IyTwzow0mszHIM5N4WckyZA==",
   "_location": "/cordova-pdf-generator",
   "_phantomChildren": {},
   "_requested": {
@@ -19,10 +19,10 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-pdf-generator/-/cordova-pdf-generator-2.0.8.tgz",
-  "_shasum": "2bc222d2f8958082e35ebfa6216567421d63edb4",
+  "_resolved": "https://registry.npmjs.org/cordova-pdf-generator/-/cordova-pdf-generator-2.1.1.tgz",
+  "_shasum": "3e201157a4349e5b1872ad1865f5cb33f63de8f8",
   "_spec": "cordova-pdf-generator@^2.0.3",
-  "_where": "/home/jfolpf/form-for-parking-violation/node_modules",
+  "_where": "/home/joao/form-for-parking-violation",
   "author": {
     "name": "cesar"
   },
@@ -57,5 +57,5 @@
     "type": "git",
     "url": "git+https://github.com/cesarvr/pdf-generator.git"
   },
-  "version": "2.0.8"
+  "version": "2.1.1"
 }

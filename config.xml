@@ -37,7 +37,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
     <plugin name="cordova-plugin-simple-image-resizer" spec="~0.1.1" />
-    <plugin name="cordova-pdf-generator" spec="^2.0.3" />
     <plugin name="cordova-plugin-camera" spec="~4.0.3" />
     <plugin name="info.protonet.imageresizer" spec="~0.1.1" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />

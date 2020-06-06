@@ -1,12 +1,9 @@
 #!/bin/bash
 
-export PATH=$PATH:/usr/local/android-sdk/tools
-export PATH=$PATH:/usr/local/android-sdk/tools/bin
-export PATH=$PATH:/usr/local/android-sdk
-export PATH=$PATH:/usr/local/android-sdk/platform-tools
-export PATH=$PATH:/usr/local/android-sdk/build-tools
-export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/
-export ANDROID_HOME=/usr/local/android-sdk/
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export ANDROID_HOME=/home/joao/Android/Sdk/
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
 
 cd "${0%/*}"
 
