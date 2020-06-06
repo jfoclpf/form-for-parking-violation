@@ -20,9 +20,9 @@
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-device": "2.0.3",
         "cordova-plugin-email-composer": "^0.9.2",
-        "cordova-plugin-file": "6.0.1",
+        "cordova-plugin-file": "6.0.2",
         "cordova-plugin-file-transfer": "1.7.1",
-        "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-geolocation": "^4.0.2",
         "cordova-plugin-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
         "cordova-plugin-inappbrowser": "3.2.0",
         "cordova-plugin-mobile-ocr": "3.1.1",
@@ -35,7 +35,7 @@
         "es6-promise-plugin": "4.2.2",
         "exif-js": "^2.3.0",
         "express": "4.17.1",
-        "express-handlebars": "3.1.0",
+        "express-handlebars": "4.0.4",
         "fs": "0.0.1-security",
         "mysql": "2.18.1",
         "path": "0.12.7",
@@ -68,7 +68,7 @@
         ]
     },
     "devDependencies": {
-        "standard": "14.3.1"
+        "standard": "14.3.4"
     },
     "standard": {
         "ignore": [
