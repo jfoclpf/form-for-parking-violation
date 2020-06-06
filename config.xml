@@ -24,15 +24,20 @@
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#FFFFFF" />
     <preference name="StatusBarStyle" value="blacktranslucent" />
+
+    <hook type="after_prepare" src="scripts/importNpmPackages.js" />
+
     <platform name="android">
         <preference name="android-minSdkVersion" value="17" />
         <preference name="android-targetSdkVersion" value="28" />
         <allow-intent href="market:*" />
     </platform>
+
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+
     <engine name="android" spec="^6.2.0" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
