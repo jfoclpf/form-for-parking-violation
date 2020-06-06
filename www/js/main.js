@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = true
+var DEBUG = false
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;

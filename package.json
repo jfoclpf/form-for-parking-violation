@@ -60,6 +60,8 @@
             "cordova-plugin-network-information": {},
             "cordova-plugin-inappbrowser": {},
             "cordova-plugin-mobile-ocr": {},
+            "cordova-pdf-generator": {},
+            "cordova-plugin-compat": {},
             "cordova-plugin-cache-clear": {}
         },
         "platforms": [

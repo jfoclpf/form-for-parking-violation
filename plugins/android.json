@@ -47,6 +47,9 @@
     "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
     "cordova-plugin-cache-clear": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }

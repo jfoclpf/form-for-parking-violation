@@ -49,14 +49,17 @@
     "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
     "cordova-plugin-cache-clear": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
   "dependent_plugins": {
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "es6-promise-plugin": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }

@@ -2,9 +2,9 @@
   "cordova-plugin-compat": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-compat@^1.0.0"
+      "id": "cordova-plugin-compat@1.2.0"
     },
-    "is_top_level": false,
+    "is_top_level": true,
     "variables": {}
   },
   "cordova-plugin-geolocation": {
@@ -130,7 +130,7 @@
   "cordova-pdf-generator": {
     "source": {
       "type": "registry",
-      "id": "cordova-pdf-generator@^2.0.3"
+      "id": "cordova-pdf-generator@2.1.1"
     },
     "is_top_level": true,
     "variables": {}
