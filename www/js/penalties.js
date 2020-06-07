@@ -146,6 +146,16 @@ app.penalties = (function (thisModule) {
       select: 'Transporte público pesado em zona de estacionamento',
       description: 'num parque ou zona de estacionamento, sendo um automóvel pesado utilizado em transporte público',
       law_article: 'da alínea b) do n.º 1 do art.º 71.º do Código da Estrada'
+    },
+    veiculo_inapropriado_em_parque: {
+      select: 'Veículo inapropriado para estacionar em parque ou zona de estacionamento',
+      description: 'num parque ou zona de estacionamento, sendo o veículo de categoria diferente daquela a que o parque, zona ou lugar de estacionamento está exclusivamente afeto',
+      law_article: 'da alínea c) do n.º 1 do art.º 71.º do Código da Estrada'
+    },
+    tempo_excedido_em_parque: {
+      select: 'Tempo excedido ou não pagamento de taxa, em parque ou zona de estacionamento',
+      description: 'num parque ou zona de estacionamento, sendo que o veículo estacionou por tempo superior ao estabelecido ou sem o pagamento da respetiva taxa',
+      law_article: 'da alínea d) do n.º 1 do art.º 71.º do Código da Estrada'
     }
   }
 
