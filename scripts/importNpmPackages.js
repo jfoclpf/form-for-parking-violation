@@ -9,6 +9,7 @@ module.exports = function (context) {
   projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
   console.log('Project root directory:', projectRoot)
   copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('www', 'js', 'res', 'jquery.min.js'))
+  copyFile('bootstrap', path.join('dist', 'js', 'bootstrap.min.js'), path.join('www', 'js', 'res', 'bootstrap.min.js'))
 }
 
 function copyFile (npmPackage, // oficial name of the npm package from which the file is to be copied from
