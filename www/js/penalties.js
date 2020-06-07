@@ -136,6 +136,16 @@ app.penalties = (function (thisModule) {
       select: 'A menos de 50 m. de cruzamentos, entroncamentos, rotundas, curvas ou lombas (fora das localidades)',
       description: 'a menos de 50 metros de um cruzamento, entroncamento, rotunda, curva ou lomba de visibilidade reduzida',
       law_article: 'da alínea a) do n.º 2 do art.º 49.º do Código da Estrada'
+    },
+    publicidade: {
+      select: 'Venda de artigos ou publicidade em zona de estacionamento',
+      description: 'num parque ou zona de estacionamento, vendendo artigos ou fazendo publicidade',
+      law_article: 'da alínea a) do n.º 1 do art.º 71.º do Código da Estrada'
+    },
+    pesados_estacionamento: {
+      select: 'Transporte público pesado em zona de estacionamento',
+      description: 'num parque ou zona de estacionamento, sendo um automóvel pesado utilizado em transporte público',
+      law_article: 'da alínea b) do n.º 1 do art.º 71.º do Código da Estrada'
     }
   }
 
