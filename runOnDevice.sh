@@ -7,8 +7,6 @@ export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 cd "${0%/*}"
 
-rm ../.android/adbkey
-
 adb kill-server
 adb start-server
 
