@@ -4759,7 +4759,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Funchal - Esquadra de Trânsito',
-    'contacto': 'maddt@psp.pt'
+    'contacto': 'crmadeira@psp.pt'
   },
   {
     'nome': 'Gondomar - Divisão Policial',
