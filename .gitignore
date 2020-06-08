@@ -42,4 +42,6 @@ autocosts.keystore
 
 #upload script to server
 uploadToServer.sh
+updateServer.sh
+
 
