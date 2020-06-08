@@ -122,11 +122,6 @@ app.penalties = (function (thisModule) {
       description: 'na faixa de rodagem a uma distância inferior a 3 metros entre a linha longitudinal e o veículo',
       law_article: 'da alínea g) do n.º 1 do art.º 49.º do Código da Estrada'
     },
-    faixa_de_rodagem2: {
-      select: 'Na faixa de rodagem (fora das localidades)',
-      description: 'na faixa de rodagem',
-      law_article: 'da alínea b) do n.º 2 do art.º 49.º do Código da Estrada'
-    },
     visbilidade_insuficiente: {
       select: 'Pontes, túneis, passagens de nível, passagens inferiores ou superiores e em todos os lugares de visibilidade insuficiente',
       description: 'junto a uma ponte, túnel, passagem de nível, passagem inferior ou superior, ou num lugar de visibilidade insuficiente',
@@ -136,11 +131,6 @@ app.penalties = (function (thisModule) {
       select: 'A menos de 5 m. de cruzamentos, entroncamentos ou rotundas (nas localidades)',
       description: 'a menos de 5 metros de um cruzamento, entroncamento ou rotunda',
       law_article: 'da alínea b) do n.º 1 do art.º 49.º do Código da Estrada'
-    },
-    cruzamento2: {
-      select: 'A menos de 50 m. de cruzamentos, entroncamentos, rotundas, curvas ou lombas (fora das localidades)',
-      description: 'a menos de 50 metros de um cruzamento, entroncamento, rotunda, curva ou lomba de visibilidade reduzida',
-      law_article: 'da alínea a) do n.º 2 do art.º 49.º do Código da Estrada'
     },
     publicidade: {
       select: 'Venda de artigos ou publicidade em zona de estacionamento',
@@ -162,18 +152,8 @@ app.penalties = (function (thisModule) {
       description: 'num parque ou zona de estacionamento, sendo que o veículo estacionou por tempo superior ao estabelecido ou sem o pagamento da respetiva taxa',
       law_article: 'da alínea d) do n.º 1 do art.º 71.º do Código da Estrada'
     },
-    faixa_rodagem_fora_localidades: {
-      select: 'Na faixa de rodagem, sendo possível estacionar fora da faixa de rodagem (fora das localidades)',
-      description: 'na faixa de rodagem, sendo possível estacionar fora da faixa de rodagem',
-      law_article: 'do n.º 3 do art.º 48.º do Código da Estrada'
-    },
-    nao_encostado_direita_fora_localidades: {
-      select: 'Não encostou à direita ou não está paralelo ao sentido da marcha (fora das localidades)',
-      description: 'sem estar o mais próximo possível do respetivo limite direito, ou sem estar paralelo a este e no sentido da marcha',
-      law_article: 'do n.º 3 do art.º 48.º do Código da Estrada'
-    },
     nao_encostado_direita_localidades: {
-      select: 'Não encostou à direita ou não está paralelo ao sentido da marcha (dentro das localidades)',
+      select: 'Não encostou à direita ou não está paralelo ao sentido da marcha (nas localidades)',
       description: 'sem estar o mais próximo possível do respetivo limite direito, ou sem estar paralelo a este e no sentido da marcha',
       law_article: 'do n.º 4 do art.º 48.º do Código da Estrada'
     },
@@ -181,6 +161,26 @@ app.penalties = (function (thisModule) {
       select: 'Não deixou espaço suficiente para outros veículos',
       description: 'sem deixar os intervalos indispensáveis à saída de outros veículos',
       law_article: 'do n.º 5 do art.º 48.º do Código da Estrada'
+    },
+    faixa_rodagem_fora_localidades: {
+      select: 'Na faixa de rodagem, sendo possível estacionar fora da faixa de rodagem (fora das localidades)',
+      description: 'na faixa de rodagem, sendo possível estacionar fora da faixa de rodagem',
+      law_article: 'do n.º 3 do art.º 48.º do Código da Estrada'
+    },
+    faixa_de_rodagem2: {
+      select: 'Simplesmente na faixa de rodagem (fora das localidades)',
+      description: 'na faixa de rodagem',
+      law_article: 'da alínea b) do n.º 2 do art.º 49.º do Código da Estrada'
+    },
+    nao_encostado_direita_fora_localidades: {
+      select: 'Não encostou à direita ou não está paralelo ao sentido da marcha (fora das localidades)',
+      description: 'sem estar o mais próximo possível do respetivo limite direito, ou sem estar paralelo a este e no sentido da marcha',
+      law_article: 'do n.º 3 do art.º 48.º do Código da Estrada'
+    },
+    cruzamento2: {
+      select: 'A menos de 50 m. de cruzamentos, entroncamentos, rotundas, curvas ou lombas (fora das localidades)',
+      description: 'a menos de 50 metros de um cruzamento, entroncamento, rotunda, curva ou lomba de visibilidade reduzida',
+      law_article: 'da alínea a) do n.º 2 do art.º 49.º do Código da Estrada'
     }
   }
 
