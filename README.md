@@ -5,9 +5,9 @@
 
 # Denúncia Estacionamento
 
-Formulário para submissão de queixa de estacionamento ilegal junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada. 
+Formulário para submissão de queixa de estacionamento ilegal junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada.
 
-O código está desenhado em Javascript para ser corrido num smartphone. Para tal faz uso da plataforma <a href="https://cordova.apache.org/">Apache Cordova</a>. 
+O código está desenhado em Javascript para ser corrido num smartphone. Para tal faz uso da plataforma <a href="https://cordova.apache.org/">Apache Cordova</a>.
 
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 * A APP para iOS está <a href="https://itunes.apple.com/pt/app/aqui-n%C3%A3o/id1335652238?mt=8">aqui</a>.
@@ -18,15 +18,20 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 
 Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a> para converter código HTML5 e Javascript para uma aplicação de dispositivo móvel, como Android ou iOS. Precisa, portanto, de ter Apache Cordova instalado na sua máquina.
 
+### [Node JS](https://nodejs.org/en/download/)
+
+O projeto necessita de alguns pacotes `npm`, sendo que o `npm` vem instalado com o `nodejs`.
+Alguns scripts do projeto também fazem uso do `nodejs`.
+
 ### [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
 
-O gradle é usado para fazer o `build` dos projetos Apache Cordova 
+O gradle é usado para fazer o `build` dos projetos Apache Cordova
 
-### Java 
+### Java
 
 É uma exigência do Apache Cordova
 
-### [ADB](https://developer.android.com/studio/command-line/adb?hl=pt-br)
+### [ADB](https://www.xda-developers.com/install-adb-windows-macos-linux/)
 
 O ADB é usado para testar a APP no seu telemóvel Android
 
@@ -58,10 +63,10 @@ O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um 
 - a versão global: `gradle -v`
 - a versão local do project (wrapper): `./platforms/android/gradlew -v`
 
-Tal pode dar problemas porque diferentes versões de gradle dependem de diferentes versões de java. Verificar a variável `JAVA_HOME` com `echo $JAVA_HOME`. Para resolver o problema mudar esta variável e associá-la a outras versões de java, por exemplo: 
+Tal pode dar problemas porque diferentes versões de gradle dependem de diferentes versões de java. Verificar a variável `JAVA_HOME` com `echo $JAVA_HOME`. Para resolver o problema mudar esta variável e associá-la a outras versões de java, por exemplo:
 
 `export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` ou<br>
-`export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br> 
+`export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br>
 mesmo apagar com `export JAVA_HOME=`
 
 ## Plugins necessários
@@ -69,7 +74,7 @@ mesmo apagar com `export JAVA_HOME=`
 * ver ficheiro `package.json`.
 
 ## Contribuições são muito bem-vindas
- 
+
  * respeite a estrutura dos ficheiros
  * comente sempre o código (preferencialmente em Inglês), tal ajuda os outros a compreender as suas contribuiçes
  * para identações, use sempre 4 espaços (não use 2 espaços, nem tabulaçes, ou seja TAB)
