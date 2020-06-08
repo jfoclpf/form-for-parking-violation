@@ -73,9 +73,9 @@ app.penalties = (function (thisModule) {
       law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
     },
     linha_amarela_ou_contínua: {
-      select: 'Junto a linha amarela ou contínua na berma da estrada',
-      description: 'na faixa de rodagem sobre ou a menos de 3 metros de uma linha longitudinal contínua',
-      law_article: 'da alínea g) do n.º 1 do art.º 49.º do Código da Estrada, com referência ainda ao sinal M12 do n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito'
+      select: 'Sobre linha amarela ou contínua na berma da estrada',
+      description: 'sobre linha contínua junto ao limite da faixa de rodagem',
+      law_article: 'do sinal M12 cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito'
     },
     residentes_apenas: {
       select: 'Estacionamento indevido em zona de residentes',
