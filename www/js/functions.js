@@ -49,6 +49,27 @@ app.functions = (function (thisModule) {
     return plate_str
   }
 
+  function getFullAddress () {
+    const streetNumber = getStreetNumber()
+    if (streetNumber) {
+      return `${getStreetName()} n. ${streetNumber}, ${getLocality()}`
+    } else {
+      return `${getStreetName()}, ${getLocality()}`
+    }
+  }
+
+  function getLocality () {
+    return $('#locality').val()
+  }
+
+  function getStreetName () {
+    return $('#street').val()
+  }
+
+  function getStreetNumber () {
+    return $('#street_number').val() ? $('#street_number').val() : ''
+  }
+
   // as the user writes his name, detects if the name is ok
   $('#name').on('input', function () {
     if (!isFullNameOK($(this).val()) && !DEBUG) {
@@ -421,6 +442,7 @@ app.functions = (function (thisModule) {
   thisModule.isArrayAValidPlate = isArrayAValidPlate
   thisModule.isPostalCodeOK = isPostalCodeOK
   thisModule.getCarPlate = getCarPlate
+  thisModule.getFullAddress = getFullAddress
   thisModule.isFullNameOK = isFullNameOK
   thisModule.clean_message = clean_message
   thisModule.pad = pad

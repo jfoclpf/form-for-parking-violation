@@ -228,7 +228,10 @@ app.main = (function (thisModule) {
   // CMD -> Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
     var mainMessage = app.text.getMainMessage() + '<br><br>' + app.text.getRegards() + '<br>'
-    var emailSubject = 'Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
+
+    const carPlateStr = app.functions.getCarPlate()
+    const address = app.functions.getFullAddress()
+    var emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
 
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
