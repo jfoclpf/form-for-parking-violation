@@ -101,39 +101,41 @@ app.text = (function (thisModule) {
 
   // returns true if all the fields and inputs are filled in and ready to write the message
   function isMessageReady () {
-    if (!DEBUG) {
-      var to_break = false
-      var error_string = ''
-      var count = 0
+    if (DEBUG) {
+      return true
+    }
 
-      // loops through mandatory fields
-      $('.mandatory').each(function () {
-        var val = $(this).val()
-        if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
-          console.log('Error on #' + $(this).attr('id'))
-          error_string += '- ' + $(this).attr('name') + '<br>'
-          count++
-          to_break = true
-        }
-      })
+    var to_break = false
+    var error_string = ''
+    var count = 0
 
-      console.log('#generate_message goes', to_break)
-      if (to_break) {
-        if (count === 1) {
-          $.jAlert({
-            title: 'Erro!',
-            theme: 'red',
-            content: 'Preencha o seguinte campo obrigatório:<br>' + error_string
-          })
-        } else {
-          $.jAlert({
-            title: 'Erro!',
-            theme: 'red',
-            content: 'Preencha os seguintes campos obrigatórios:<br>' + error_string
-          })
-        }
-        return false
+    // loops through mandatory fields
+    $('.mandatory').each(function () {
+      var val = $(this).val()
+      if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
+        console.log('Error on #' + $(this).attr('id'))
+        error_string += '- ' + $(this).attr('name') + '<br>'
+        count++
+        to_break = true
       }
+    })
+
+    console.log('#generate_message goes', to_break)
+    if (to_break) {
+      if (count === 1) {
+        $.jAlert({
+          title: 'Erro!',
+          theme: 'red',
+          content: 'Preencha o seguinte campo obrigatório:<br>' + error_string
+        })
+      } else {
+        $.jAlert({
+          title: 'Erro!',
+          theme: 'red',
+          content: 'Preencha os seguintes campos obrigatórios:<br>' + error_string
+        })
+      }
+      return false
     }
 
     // detects if the name is correctly filled in
