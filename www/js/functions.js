@@ -49,6 +49,23 @@ app.functions = (function (thisModule) {
     return plate_str
   }
 
+  function getCarMake () {
+    return $('#carmake').val()
+  }
+
+  function getCarModel () {
+    return $('#carmodel').val()
+  }
+
+  function getDateYYYY_MM_DD () {
+    // returns format YYYY-MM-DD
+    return $.datepicker.formatDate("yy'-'mm'-'dd", $('#date').datepicker('getDate'))
+  }
+
+  function getTimeHH_MM () {
+    return $('#time').val()
+  }
+
   function getFullAddress () {
     const streetNumber = getStreetNumber()
     if (streetNumber) {
@@ -68,6 +85,10 @@ app.functions = (function (thisModule) {
 
   function getStreetNumber () {
     return $('#street_number').val() ? $('#street_number').val() : ''
+  }
+
+  function getAuthority () {
+    return $('#authority option:selected').text()
   }
 
   // as the user writes his name, detects if the name is ok

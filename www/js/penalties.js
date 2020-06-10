@@ -199,13 +199,18 @@ app.penalties = (function (thisModule) {
     $('#penalties').append('<option></option>')
     for (var i = 0; i < keys.length; i++) {
       key = keys[i]
-      $('#penalties').append('<option>' + penalties[key].select + '</option>')
+      $('#penalties').append(`<option value="${key}">${penalties[key].select}</option>`)
     }
+  }
+
+  function getSelectedPenaltyCode () {
+    return $('#penalties').val()
   }
 
   /* === Public methods to be returned === */
   thisModule.getPenalties = getPenalties
   thisModule.populatesPenalties = populatesPenalties
+  thisModule.getSelectedPenaltyCode = getSelectedPenaltyCode
 
   return thisModule
 })(app.penalties || {})
