@@ -440,22 +440,50 @@ app.functions = (function (thisModule) {
     }
   }
 
-  function submitDataToDB (databaseObj) {
+  function submitDataToDB () {
+    var databaseObj = {
+      PROD: !DEBUG ? 1 : 0,
+      uuid: device.uuid,
+      foto1: 'test',
+      foto2: 'test',
+      foto3: 'test',
+      foto4: 'test',
+      carro_matricula: getCarPlate(),
+      carro_marca: getCarMake(),
+      carro_modelo: getCarModel(),
+      data_data: getDateYYYY_MM_DD(),
+      data_hora: getTimeHH_MM(),
+      data_concelho: getLocality(),
+      data_local: getStreetName(),
+      data_num_porta: getStreetNumber(),
+      data_coord_latit: app.localization.getCoordinates().latitude,
+      data_coord_long: app.localization.getCoordinates().longitude,
+      base_legal: app.penalties.getSelectedPenaltyCode(),
+      autoridade: getAuthority()
+    }
+
     $.ajax({
       url: 'https://contabo.joaopimentel.com/passeio_livre/serverapp',
       type: 'POST',
-      data: {
-        databaseObj: databaseObj
-      },
+      data: JSON.stringify(databaseObj),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      crossDomain: true,
       success: function (data) {
         console.log('Values inserted into database with success. Returned: ', data)
       },
       error: function (error) {
-        console.error(databaseObj)
-        var errObj = JSON.parse(error.responseText)
-        console.error('There was an error submitting the values into the database', errObj.code, errObj.sqlMessage)
+        console.error('There was an error submitting the following objecto into the database: ', databaseObj)
+        console.error(error)
       }
     })
+  }
+
+  function setDebugValues () {
+    $('#plate').val('00\u2013XX\u201300')
+    $('#carmake').val('Opel')
+    $('#carmodel').val('Corsa')
+    $('#penalties').val('bicicletas')
   }
 
   /* === Public methods to be returned === */
@@ -482,6 +510,7 @@ app.functions = (function (thisModule) {
   thisModule.isThisAndroid = isThisAndroid
   thisModule.adaptURItoAndroid = adaptURItoAndroid
   thisModule.submitDataToDB = submitDataToDB
+  thisModule.setDebugValues = setDebugValues
 
   return thisModule
 })(app.functions || {})

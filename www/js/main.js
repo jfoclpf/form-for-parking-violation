@@ -85,6 +85,10 @@ app.main = (function (thisModule) {
     app.form.setPortuguesePlateInput()
 
     app.localization.loadMapsApi()
+
+    if (DEBUG) {
+      app.functions.setDebugValues()
+    }
   }
 
   // ##############################################################################################################
@@ -235,27 +239,9 @@ app.main = (function (thisModule) {
 
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
-    /* var databaseObj = {
-      PROD: !DEBUG,
-      foto1: 'test',
-      foto2: 'test',
-      foto3: 'test',
-      foto4: 'test',
-      carro_matricula: 'XX-XX-XX',
-      carro_marca: '',
-      carro_modelo: '',
-      data_data: '',
-      data_hora: '',
-      data_concelho: '',
-      data_local: '',
-      data_num_porta: '20',
-      data_coord_latit: 0,
-      data_coord_long: 0,
-      base_legal: 'CdE',
-      autoridade: 'PSP'
-    }
+    app.functions.submitDataToDB()
 
-    app.functions.updateDateAndTime(databaseObj) */
+    app.functions.updateDateAndTime()
 
     cordova.plugins.email.open({
       to: thisModule.emailTo, // email addresses for TO field
