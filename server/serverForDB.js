@@ -3,6 +3,7 @@ and stores it in the dabatase */
 
 const fs = require('fs')
 const express = require('express')
+const bodyParser = require('body-parser')
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app')
 const sqlFormatter = require('sql-formatter')
@@ -13,10 +14,11 @@ debug(DBInfo)
 const app = express()
 const port = 3035
 
+app.use(bodyParser.json())
+
 app.post('/passeio_livre/serverapp', function (req, res) {
   // object got from POST
-  var databaseObj = req.body.databaseObj
-
+  const databaseObj = req.body
   debug(databaseObj)
   debug('\nInserting user data into ' +
                 'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
@@ -38,6 +40,7 @@ app.post('/passeio_livre/serverapp', function (req, res) {
   db.connect(function (err) {
     if (err) {
       console.error('error connecting: ' + err.stack)
+      res.status(501).send(JSON.stringify(err))
       throw err
     }
     debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
