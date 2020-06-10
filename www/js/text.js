@@ -33,7 +33,7 @@ app.text = (function (thisModule) {
       }
     }
 
-    var CarPlateStr = app.functions.getCarPlate()
+    var carPlateStr = app.functions.getCarPlate()
 
     // texto para marca e modelo
     var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
@@ -79,7 +79,7 @@ app.text = (function (thisModule) {
       ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
       ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
       $('#street_number').val() + '</b>, ' : '') + // optional
-      'a viatura com matrícula <b>' + CarPlateStr + '</b> ' + carmake_model_txt +
+      'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt +
       'encontrava-se estacionada' + ' ' + penaltyDescription +
       ', em violação ' + penaltyLawArticle + '.'
 

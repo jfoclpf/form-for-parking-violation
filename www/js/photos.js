@@ -103,8 +103,8 @@ app.photos = (function (thisModule) {
       // if the photo EXIF info has GPS information
       if (metadata.gpsLatitude && metadata.gpsLatitudeRef &&
                metadata.gpsLongitude && metadata.gpsLongitudeRef) {
-        var Lat = app.localization.ConvertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef)
-        var Long = app.localization.ConvertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
+        var Lat = app.localization.convertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef)
+        var Long = app.localization.convertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
 
         var postion = {
           coords: {
@@ -113,7 +113,7 @@ app.photos = (function (thisModule) {
           }
         }
         console.log(postion)
-        app.localization.GetPosition(postion)
+        app.localization.getPosition(postion)
       }
     }
   }

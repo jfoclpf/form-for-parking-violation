@@ -12,6 +12,7 @@ function onGoogleMapsApiLoaded () {
 
 app.localization = (function (thisModule) {
   var isGoogleMapsApiLoaded = false
+  var Latitude, Longitude
 
   function loadMapsApi () {
     if (navigator.connection.type === Connection.NONE || isGoogleMapsApiLoaded) {
@@ -43,17 +44,28 @@ app.localization = (function (thisModule) {
     if (networkState !== Connection.NONE && isGoogleMapsApiLoaded) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
       var options = { timeout: 30000, enableHighAccuracy: true }
-      navigator.geolocation.getCurrentPosition(GetPosition, PositionError, options)
+      navigator.geolocation.getCurrentPosition(getPosition, PositionError, options)
     } else {
       PositionError()
     }
   }
 
-  function GetPosition (position) {
+  function getPosition (position) {
     var latitude = position.coords.latitude
+    Latitude = latitude
     var longitude = position.coords.longitude
+    Longitude = longitude
     console.log('latitude, longitude: ', latitude, longitude)
     getAuthoritiesFromGMap(latitude, longitude) // Pass the latitude and longitude to get address.
+  }
+
+  // to be used from outside of this module
+  function getCoordinates () {
+    var coordinates = {
+      latitude: Latitude,
+      longitude: Longitude
+    }
+    return coordinates
   }
 
   function PositionError () {
@@ -356,7 +368,7 @@ app.localization = (function (thisModule) {
 
   // converts latitude, longitude coordinates from Degrees Minutes Second (DMS) to Decimal Degrees (DD)
   // the input string of the DMS is on the format "52/1,0/1,376693/10000"
-  function ConvertDMSStringInfoToDD (gpsString, direction) {
+  function convertDMSStringInfoToDD (gpsString, direction) {
     var i, temp
     var values = []
 
@@ -387,9 +399,10 @@ app.localization = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.loadMapsApi = loadMapsApi
   thisModule.getGeolocation = getGeolocation
-  thisModule.GetPosition = GetPosition
+  thisModule.getPosition = getPosition
+  thisModule.getCoordinates = getCoordinates
   thisModule.getAuthoritiesFromAddress = getAuthoritiesFromAddress
-  thisModule.ConvertDMSStringInfoToDD = ConvertDMSStringInfoToDD
+  thisModule.convertDMSStringInfoToDD = convertDMSStringInfoToDD
 
   return thisModule
 })(app.localization || {})
