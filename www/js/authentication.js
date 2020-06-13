@@ -149,6 +149,7 @@ app.authentication = (function (thisModule) {
     isAuthenticationWindowClosed = true
   }
 
+  // authentication process starts here when IN_APP_BROWSER_AUTH is false
   function savePDF () {
     var options = {
       documentSize: 'A4',
@@ -372,6 +373,8 @@ app.authentication = (function (thisModule) {
     const carPlateStr = app.functions.getCarPlate()
     const address = app.functions.getFullAddress()
     var emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+
+    app.functions.submitDataToDB()
 
     cordova.plugins.email.open({
       to: app.main.emailTo, // email addresses for TO field

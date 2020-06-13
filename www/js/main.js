@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = true
+var DEBUG = false
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -190,6 +190,8 @@ app.main = (function (thisModule) {
 
   // botão de gerar email
   $('#send_email_btn').click(function () {
+    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    thisModule.imagesUriCleanArray = app.functions.cleanArray(thisModule.imagesUriArray)
     // it popups the alerts according to needed fields
     if (!app.text.isMessageReady()) {
       return

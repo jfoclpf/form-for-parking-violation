@@ -1,9 +1,16 @@
 /* server app that receives parking violations from the users
 and stores it in the dabatase */
 
+const submissionsUrl = '/passeio_livre/serverapp'
+const submissionsUrlPort = 3035
+const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
+const imgUploadUrlPort = 3036
+
 const fs = require('fs')
 const express = require('express')
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
+const cors = require('cors')
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app')
 const sqlFormatter = require('sql-formatter')
@@ -12,11 +19,10 @@ const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
 debug(DBInfo)
 
 const app = express()
-const port = 3035
 
 app.use(bodyParser.json())
 
-app.post('/passeio_livre/serverapp', function (req, res) {
+app.post(submissionsUrl, function (req, res) {
   // object got from POST
   const databaseObj = req.body
   debug(databaseObj)
@@ -62,4 +68,45 @@ app.post('/passeio_livre/serverapp', function (req, res) {
   db.end()
 })
 
-app.listen(port, () => console.log(`Listening on port ${port}!`))
+// app2 is used for uploading files (images of cars illegaly parked)
+const app2 = express()
+
+// enable files upload
+app2.use(fileUpload({ createParentPath: true }))
+app2.use(cors())
+app2.use(bodyParser.json())
+app2.use(bodyParser.urlencoded({ extended: true }))
+
+app2.post(imgUploadUrl, async (req, res) => {
+  debug('Getting files')
+  try {
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded'
+      })
+    } else {
+      // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+      debug(req.files)
+      const img = req.files.file
+      // Use the mv() method to place the file in upload directory (i.e. "uploads")
+      img.mv('./uploadedImages/' + img.name)
+
+      // send response
+      res.send({
+        status: true,
+        message: 'File is uploaded',
+        data: {
+          name: img.name,
+          mimetype: img.mimetype,
+          size: img.size
+        }
+      })
+    }
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+app.listen(submissionsUrlPort, () => console.log(`Request server listening on port ${submissionsUrlPort}!`))
+app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))

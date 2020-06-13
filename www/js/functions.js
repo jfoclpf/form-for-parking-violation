@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, device, DEBUG */
+/* global app, $, device, FileUploadOptions, FileTransfer, DEBUG */
 
 app.functions = (function (thisModule) {
   // detects if the car plate is correctly filled in
@@ -441,13 +441,44 @@ app.functions = (function (thisModule) {
   }
 
   function submitDataToDB () {
+    const uploadImagesUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload'
+    const uploadRequesUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp'
+
+    // generates file names array for images
+    const randomString = getRandomString(10) // serves to uniquely identify the filenames
+    var imgFileNames = []
+    app.main.imagesUriCleanArray = cleanArray(app.main.imagesUriArray)
+    var numberOfImages = app.main.imagesUriCleanArray.length
+    for (let i = 0; i < 4; i++) {
+      if (i < numberOfImages) {
+        const fileName = `${DEBUG ? 'debug_' : ''}${getCarPlate()}_n${i + 1}_${getDateYYYY_MM_DD()}_${getTimeHH_MM()}_${getLocality()}_${randomString}.jpg`
+        imgFileNames.push(fileName)
+      } else {
+        imgFileNames.push('')
+      }
+    }
+
+    // upload all photos
+    for (let i = 0; i < numberOfImages; i++) {
+      uploadFile(app.main.imagesUriCleanArray[i],
+        imgFileNames[i],
+        uploadImagesUrl,
+        (err, res) => {
+          if (err) {
+            console.error(err)
+          } else {
+            console.log(res)
+          }
+        })
+    }
+
     var databaseObj = {
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
-      foto1: 'test',
-      foto2: 'test',
-      foto3: 'test',
-      foto4: 'test',
+      foto1: imgFileNames[0],
+      foto2: imgFileNames[1],
+      foto3: imgFileNames[2],
+      foto4: imgFileNames[3],
       carro_matricula: getCarPlate(),
       carro_marca: getCarMake(),
       carro_modelo: getCarModel(),
@@ -463,7 +494,7 @@ app.functions = (function (thisModule) {
     }
 
     $.ajax({
-      url: 'https://contabo.joaopimentel.com/passeio_livre/serverapp',
+      url: uploadRequesUrl,
       type: 'POST',
       data: JSON.stringify(databaseObj),
       contentType: 'application/json; charset=utf-8',
@@ -477,6 +508,45 @@ app.functions = (function (thisModule) {
         console.error(error)
       }
     })
+  }
+
+  // used to upload image files to server
+  function uploadFile (localPath, fileName, remoteUrl, callback) {
+    var win = function (r) {
+      console.log('Code = ' + r.responseCode)
+      console.log('Response = ' + r.response)
+      console.log('Sent = ' + r.bytesSent)
+      if (typeof callback === 'function') {
+        callback(null, 'File uploaded succesfully')
+      }
+    }
+
+    var fail = function (error) {
+      console.error('An error has occurred: Code = ' + error.code)
+      console.error('upload error source ' + error.source)
+      console.error('upload error target ' + error.target)
+      if (typeof callback === 'function') {
+        callback(Error('Failed to upload file ' + localPath))
+      }
+    }
+
+    var options = new FileUploadOptions()
+    options.fileKey = 'file'
+    options.fileName = fileName
+
+    var ft = new FileTransfer()
+    ft.upload(localPath, encodeURI(remoteUrl), win, fail, options)
+  }
+
+  // generate random string
+  function getRandomString (length) {
+    var result = ''
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    var charactersLength = characters.length
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
   }
 
   function setDebugValues () {

@@ -170,7 +170,6 @@ app.text = (function (thisModule) {
 
     // from here the inputs are correctly written
 
-    // check photos
     // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
     app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
 
