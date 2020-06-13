@@ -138,7 +138,7 @@
   "cordova-plugin-cache-clear": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-cache-clear@1.3.8"
+      "id": "cordova-plugin-cache-clear"
     },
     "is_top_level": true,
     "variables": {}

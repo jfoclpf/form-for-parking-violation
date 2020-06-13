@@ -1,19 +1,19 @@
 {
-  "_from": "cordova-plugin-cache-clear@1.3.8",
+  "_from": "cordova-plugin-cache-clear",
   "_id": "cordova-plugin-cache-clear@1.3.8",
   "_inBundle": false,
   "_integrity": "sha512-RaRhHywrlgHMJENDUJC273tJ7GAEwAiLsJCyJSlyXTz+kHpg3T+dYM/NIvoNk2lBK2EwtRzdJTkcHxlElYTIyQ==",
   "_location": "/cordova-plugin-cache-clear",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "tag",
     "registry": true,
-    "raw": "cordova-plugin-cache-clear@1.3.8",
+    "raw": "cordova-plugin-cache-clear",
     "name": "cordova-plugin-cache-clear",
     "escapedName": "cordova-plugin-cache-clear",
-    "rawSpec": "1.3.8",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "1.3.8"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
     "#USER",
@@ -21,7 +21,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-cache-clear/-/cordova-plugin-cache-clear-1.3.8.tgz",
   "_shasum": "b7ce70a52aff118d5731a68c675eeb1786c70504",
-  "_spec": "cordova-plugin-cache-clear@1.3.8",
+  "_spec": "cordova-plugin-cache-clear",
   "_where": "/home/joao/form-for-parking-violation",
   "author": {
     "name": "Anrip Wong",
