@@ -4755,7 +4755,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Funchal - Esquadra',
-    'contacto': 'madesqfunchal@psp.pt'
+    'contacto': 'funchal.madeira@psp.pt'
   },
   {
     'nome': 'Funchal - Esquadra de Trânsito',
