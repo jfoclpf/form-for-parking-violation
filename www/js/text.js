@@ -23,11 +23,12 @@ app.text = (function (thisModule) {
     var penaltyDescription
     var penaltyLawArticle
     var penalties = app.penalties.getPenalties()
+
     for (key in penalties) {
       if (!Object.prototype.hasOwnProperty.call(penalties, key)) continue
 
       var obj = penalties[key]
-      if ($('#penalties').val() === obj.select) {
+      if ($('#penalties').val() === key) {
         penaltyDescription = obj.description
         penaltyLawArticle = obj.law_article
       }
