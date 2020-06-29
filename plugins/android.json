@@ -7,38 +7,25 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-email-composer": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-simple-image-resizer": {
-      "ANDROID_EXIFINTERFACES_VERSION": "27.+",
+    "cordova-pdf-generator": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-file-transfer": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-email-composer": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-statusbar": {
+    "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-screen-orientation": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-network-information": {
+    "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-inappbrowser": {
@@ -47,7 +34,20 @@
     "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-pdf-generator": {
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-simple-image-resizer": {
+      "ANDROID_EXIFINTERFACES_VERSION": "27.+",
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-cache-clear": {

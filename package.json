@@ -14,7 +14,7 @@
         "body-parser": "^1.19.0",
         "bootstrap": "^4.5.0",
         "cordova": "9.0.0",
-        "cordova-android": "8.1.0",
+        "cordova-android": "^8.1.0",
         "cordova-browser": "6.0.0",
         "cordova-pdf-generator": "2.1.1",
         "cordova-plugin-cache-clear": "1.3.8",
@@ -71,7 +71,6 @@
             "cordova-plugin-cache-clear": {}
         },
         "platforms": [
-            "android",
             "browser"
         ]
     },
