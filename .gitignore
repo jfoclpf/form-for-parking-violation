@@ -30,15 +30,14 @@ plugins/**/tests/
 # project specific
 **/dist/
 **/all.min.js
-buildReleaseAPP.sh
 
 # where the build script stores the apk
-formParkingViolation.apk
+formParkingViolation.*
 
 # keys and credentials
 www/js/credentials.js
 server/DBcredentials.json
-autocosts.keystore
+keys/
 
 #upload script to server
 uploadToServer.sh
