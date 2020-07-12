@@ -2,7 +2,7 @@
 <widget id="com.form.parking.violation" version="2.3.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Denúncia Estacionamento</name>
     <description>
-        Formulário para queixa de estacionamento ilegal
+        Envio de queixa de estacionamento ilegal a autoridade competente
     </description>
     <author email="peao.exaltado@gmail.com" href="http://passeiolivre.org">
         Caminhante
