@@ -54,9 +54,6 @@
     },
     "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.form.parking.violation"
-    },
-    "cordova-plugin-cache-clear": {
-      "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
   "dependent_plugins": {

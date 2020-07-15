@@ -134,13 +134,5 @@
     },
     "is_top_level": true,
     "variables": {}
-  },
-  "cordova-plugin-cache-clear": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-cache-clear"
-    },
-    "is_top_level": true,
-    "variables": {}
   }
 }
