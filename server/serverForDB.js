@@ -43,31 +43,116 @@ app.post(submissionsUrl, function (req, res) {
 
   var db = mysql.createConnection(DBInfo)
 
-  db.connect(function (err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack)
-      res.status(501).send(JSON.stringify(err))
-      throw err
+  async.series([
+    function (next) {
+      db.connect(function (err) {
+        if (err) {
+          console.error('error connecting: ' + err.stack)
+          res.status(501).send(JSON.stringify(err))
+          next(Error(err))
+        } else {
+          debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.query(queryInsert, function (err, results, fields) {
+        if (err) {
+          // error handling code goes here
+          debug('Error inserting user data into database: ', err)
+          res.status(501).send(JSON.stringify(err))
+          next(Error(err))
+        } else {
+          debug('User data successfully added into ' +
+                            'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias + '\n\n')
+          debug('Result from db query is : ', results)
+          res.send(results)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.end(function (err) {
+        if (err) {
+          next(Error(err))
+        } else {
+          next()
+        }
+      })
     }
-    debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
-  })
-
-  db.query(queryInsert, function (err, results, fields) {
+  ],
+  function (err, results) {
     if (err) {
-      // error handling code goes here
-      debug('Error inserting user data into database: ', err)
-      res.status(501).send(JSON.stringify(err))
+      console.log('There was an error: ')
+      console.log(err)
     } else {
-      debug('User data successfully added into ' +
-                        'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias + '\n\n')
-      debug('Result from db query is : ', results)
-      res.send(results)
+      debug('Submission successfully')
     }
   })
-
-  db.end()
 })
 
+app.get(requestHistoricUrl, function (req, res) {
+  const uuid = req.body.uuid
+
+  debug('\nGetting historic from' +
+    'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
+
+  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}'`
+
+  debug(sqlFormatter.format(query))
+
+  var db = mysql.createConnection(DBInfo)
+
+  async.series([
+    function (next) {
+      db.connect(function (err) {
+        if (err) {
+          console.error('error connecting: ' + err.stack)
+          res.status(501).send(JSON.stringify(err))
+          next(Error(err))
+        } else {
+          debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.query(query, function (err, results, fields) {
+        if (err) {
+          // error handling code goes here
+          debug('Error inserting user data into database: ', err)
+          res.status(501).send(JSON.stringify(err))
+          next(Error(err))
+        } else {
+          debug('Result from db query is : ', results)
+          res.send(results)
+          next()
+        }
+      })
+    },
+    function (next) {
+      db.end(function (err) {
+        if (err) {
+          next(Error(err))
+        } else {
+          next()
+        }
+      })
+    }
+  ],
+  function (err, results) {
+    if (err) {
+      console.log('There was an error: ')
+      console.log(err)
+    } else {
+      debug('Request successfully')
+    }
+  })
+})
+
+/* ############################################################################################## */
+/* ############################################################################################## */
 // app2 is used for uploading files (images of cars illegaly parked)
 const app2 = express()
 
