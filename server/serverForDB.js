@@ -2,12 +2,14 @@
 and stores it in the dabatase */
 
 const submissionsUrl = '/passeio_livre/serverapp'
-const submissionsUrlPort = 3035
+const requestHistoricUrl = '/passeio_livre/serverapp_get_historic'
+const commonPort = 3035
 const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
 const imgUploadUrlPort = 3036
 
 const fs = require('fs')
 const express = require('express')
+const async = require('async')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const cors = require('cors')
@@ -93,12 +95,12 @@ app.post(submissionsUrl, function (req, res) {
 })
 
 app.get(requestHistoricUrl, function (req, res) {
-  const uuid = req.body.uuid
+  const uuid = req.query.uuid
 
   debug('\nGetting historic from' +
     'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
-  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}'`
+  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}' ORDER BY data_data ASC`
 
   debug(sqlFormatter.format(query))
 
@@ -193,5 +195,5 @@ app2.post(imgUploadUrl, async (req, res) => {
   }
 })
 
-app.listen(submissionsUrlPort, () => console.log(`Request server listening on port ${submissionsUrlPort}!`))
+app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
 app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
