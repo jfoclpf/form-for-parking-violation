@@ -207,10 +207,19 @@ app.penalties = (function (thisModule) {
     return $('#penalties').val()
   }
 
+  function getShortDescription (code) {
+    for (const key in penalties) {
+      if (key === code) {
+        return penalties[key].select
+      }
+    }
+  }
+
   /* === Public methods to be returned === */
   thisModule.getPenalties = getPenalties
   thisModule.populatesPenalties = populatesPenalties
   thisModule.getSelectedPenaltyCode = getSelectedPenaltyCode
+  thisModule.getShortDescription = getShortDescription
 
   return thisModule
 })(app.penalties || {})
