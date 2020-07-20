@@ -504,7 +504,7 @@ app.functions = (function (thisModule) {
         console.log('Values inserted into database with success. Returned: ', data)
       },
       error: function (error) {
-        console.error('There was an error submitting the following objecto into the database: ', databaseObj)
+        console.error('There was an error submitting the following object into the database: ', databaseObj)
         console.error(error)
       }
     })
