@@ -11,7 +11,7 @@
     default-src 'self' data: file: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com https://cmd.autenticacao.gov.pt https://frtend.reg.cmd.autenticacao.gov.pt https://contabo.joaopimentel.com 'unsafe-eval';
     style-src 'self' https://fonts.googleapis.com https://stackpath.bootstrapcdn.com 'unsafe-inline';
     media-src file: *;
-    img-src 'self' https://maps.googleapis.com data: file: content: https://csi.gstatic.com;
+    img-src 'self' https://maps.googleapis.com https://contabo.joaopimentel.com data: file: content: https://csi.gstatic.com;
     script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://cmd.autenticacao.gov.pt https://frtend.reg.cmd.autenticacao.gov.pt https://code.jquery.com
   ">
 
@@ -44,6 +44,11 @@
           <div><a>Os meus dados</a></div>
         </li>
 
+        <li id="historic_show">
+          <div><i class="fa fa-history"></i></div>
+          <div><a>Histórico</a></div>
+        </li>
+
         <li id="legal_basis_show">
           <div><i class="fa fa-gavel"></i></div>
           <div><a>Base legal</a></div>
@@ -57,6 +62,9 @@
               <ul class="collapse list-unstyled" id="pageSubmenuCmd">
                 <li id="cmd_how_it_works_show">
                   <a>Como funciona</a>
+                </li>
+                <li id="cmd_legal_basis_shows">
+                  <a>Base legal</a>
                 </li>
                 <li>
                   <a class="aderir_url" href="">Aderir</a>
@@ -81,6 +89,9 @@
             <div>
               <a href="#pageSubmenuAboutUs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sobre</a>
               <ul class="collapse list-unstyled" id="pageSubmenuAboutUs">
+                <li id="privacy_policy_show">
+                  <span>Política de privacidade</span>
+                </li>
                 <li>
                   <a href="https://passeiolivre.org">O nosso movimento</a>
                 </li>
@@ -281,6 +292,9 @@
         </div>
       </div>
 
+      <div id="historic" class="section collapse">
+      </div>
+
       <div id="legal_basis" class="section">
           <h3>Esta App funciona</h3>
           <p class="lead">
@@ -299,11 +313,6 @@
             Ao abrigo do artigo 348.º-A do Código Penal, quem declarar ou atestar falsamente à autoridade pública,
             nomeadamente um agente da autoridade policial no exercício das suas funções,
             é punido com pena de prisão até um ano ou com pena de multa.
-          </p>
-          <h3>Protegemos os seus dados pessoais</h3>
-          <p class="lead" class="collapse">
-            Ao abrigo da lei de proteção de dados, as autoridades policiais não revelam os dados do denunciante.
-            Os seus dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
           </p>
       </div>
 
@@ -329,7 +338,10 @@
           receberá um código via sms no seu telefone, ou então também pode usar a
           <a class="app_url">APP do Cartão do Cidadão</a> para obter os códigos sem a necessidade de um sms.
         </p>
-        <h3>Base legal</h3>
+      </div>
+
+      <div id="cmd_legal_basis" class="section">
+        <h4>Base legal da Chave Móvel Digital</h4>
         <p class="lead">
           Caso o PDF tenha anexo o seu certificado digital,
           <b>tal será equivalente, de acordo com a Lei, à sua presenção nas instalações da polícia</b>.
@@ -361,6 +373,16 @@
           de acordo com a referida alínea b) do n.º 2 do artigo 4.º da Lei n.º 37/2014,
           de considerar a sua queixa por meios eletrónicos, como legalmente equivalente
           àquela que eventualmente poderia fazer presencialmente.
+        </p>
+      </div>
+
+      <div id="privacy_policy" class="section">
+        <h4>Protegemos os seus dados pessoais</h4>
+        <p class="lead" class="collapse">
+          Ao abrigo da lei de proteção de dados, as autoridades policiais não revelam os dados do denunciante.
+          Os seus dados pessoais que aqui colocar ficarão guardados apenas no seu dispositivo, para futuras ocorrências.
+          Os dados das denúncias são anonimamente, i.e., sem qualquer informação relativa ao denunciante,
+          guardados numa base de dados para processamento estatístico e para evitar abusos na utilização desta aplicação.
         </p>
       </div>
 
@@ -402,6 +424,7 @@
   <script src="js/penalties.js"></script>
 
   <script src="js/functions.js"></script>
+  <script src="js/historic.js"></script>
   <script src="js/authentication.js"></script>
   <script src="js/photos.js"></script>
   <script src="js/form.js"></script>

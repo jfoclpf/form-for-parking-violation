@@ -34,6 +34,12 @@ app.form = (function (thisModule) {
     app.sidebar.toggleSidebar(false)
   })
 
+  $('#historic_show').click(function () {
+    app.historic.updateHistoric()
+    showSection('historic')
+    app.sidebar.toggleSidebar(false)
+  })
+
   $('#form_show').click(function () {
     showSection('main_form')
     app.sidebar.toggleSidebar(false)
@@ -46,6 +52,16 @@ app.form = (function (thisModule) {
 
   $('#cmd_how_it_works_show').click(function () {
     showSection('cmd_how_it_works')
+    app.sidebar.toggleSidebar(false)
+  })
+
+  $('#cmd_legal_basis_shows').click(function () {
+    showSection('cmd_legal_basis')
+    app.sidebar.toggleSidebar(false)
+  })
+
+  $('#privacy_policy_show').click(function () {
+    showSection('privacy_policy')
     app.sidebar.toggleSidebar(false)
   })
 

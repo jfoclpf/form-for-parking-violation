@@ -48,13 +48,26 @@ input[type="number"] {
   display: none;
 }
 
+.border-element {
+  border: solid 2px #343a40;
+  border-radius: .50rem;
+  margin: 18px 4px;
+  padding: 15px 0 0 0;
+}
+
 /* Images section */
-img{
+#main_form img{
   border: 2px solid black !important;
   border-radius: 10px !important;
   padding: 0 !important;
   width: 100%;
   display: none;
+}
+
+#historic img {
+  border: 0;
+  width: 100%;
+  display: block;
 }
 
 #cmd_how_it_works img{
