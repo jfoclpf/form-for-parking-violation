@@ -91,6 +91,10 @@ button#save_personal_data {
   display: none;
 }
 
+.note {
+  font-size: 0.82em;
+}
+
 /* Image Designing Propoerties */
 .thumb {
   height: 75px;

@@ -74,8 +74,14 @@ app.historic = (function (thisModule) {
   }
 
   function insertFetchedDataIntoHistoric (data) {
+    // resets and cleans <div id="historic">
     $('#historic').find('*').off() // removes all event handlers
     $('#historic').empty()
+
+    $('#historic').append(`
+      <h4>Histórico de ocorrências</h4>
+      <span class="note">Pressione nas ocorrências para ver as imagens</span>
+    `)
 
     for (var i = 0; i < data.length; i++) {
       const el = data[i]
