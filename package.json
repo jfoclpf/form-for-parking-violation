@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard",
-    "update-all": "ncu -e 2 || (ncu -u && npm install && npm update) && cordova-check-plugins --update=auto"
+    "update-plugins": "cordova-check-plugins --update=auto"
   },
   "author": "Apache Cordova Team",
   "license": "GPL-3.0",
