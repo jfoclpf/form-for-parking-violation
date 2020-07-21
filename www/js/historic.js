@@ -33,7 +33,7 @@ app.historic = (function (thisModule) {
 
   function removesDuplicates (data) {
     if (data.length <= 1) {
-      return
+      return data
     }
 
     const timeIntervalInMinutes = 10
