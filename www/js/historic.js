@@ -78,50 +78,54 @@ app.historic = (function (thisModule) {
     $('#historic').find('*').off() // removes all event handlers
     $('#historic').empty()
 
-    $('#historic').append(`
-      <h4>Histórico de ocorrências</h4>
-      <span class="note">Pressione nas ocorrências para ver as imagens</span>
-    `)
-
-    for (var i = 0; i < data.length; i++) {
-      const el = data[i]
+    if (data.length === 0) {
+      $('#historic').append('<center>Sem resultados</center>')
+    } else {
       $('#historic').append(`
-        <div class="row border-element historic_element" data-index="${i}">
-          <div class="col-xs-2 col-sm-2 form-group">
-            ${el.carro_marca} ${el.carro_modelo} na ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho},
-            no dia ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}
-          </div>
-          <div class="col-xs-2 col-sm-2 form-group">
-            Matrícula: ${el.carro_matricula}<br>
-            Infração: ${app.penalties.getShortDescription(el.base_legal)}<br>
-            Autoridade: ${el.autoridade}
-          </div>
-        </div>`
-      )
-    }
+        <h4>Histórico de ocorrências</h4>
+        <span class="note">Pressione nas ocorrências para ver as imagens</span>
+      `)
 
-    // shows or hides photos when the div historic entry is clicked
-    $('#historic .historic_element').click(function () {
-      const i = parseInt($(this).data('index'))
-
-      if ($(this).find('img').length === 0) { // no image found, adds images
-        const $photos = $('<div class="historic_photos"></div>')
-        $(this).append($photos)
-
-        // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
-        for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
-          if (data[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
-            const fullImgUrl = requestImageUrl + data[i]['foto' + photoIndex]
-            // check if the image really exists
-            $.get(fullImgUrl).done(() => {
-              $photos.append(`<img src="${fullImgUrl}">`)
-            })
-          }
-        }
-      } else { // has already images, remove them
-        $(this).find('.historic_photos').remove()
+      for (var i = 0; i < data.length; i++) {
+        const el = data[i]
+        $('#historic').append(`
+          <div class="row border-element historic_element" data-index="${i}">
+            <div class="col-xs-2 col-sm-2 form-group">
+              ${el.carro_marca} ${el.carro_modelo} na ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho},
+              no dia ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}
+            </div>
+            <div class="col-xs-2 col-sm-2 form-group">
+              Matrícula: ${el.carro_matricula}<br>
+              Infração: ${app.penalties.getShortDescription(el.base_legal)}<br>
+              Autoridade: ${el.autoridade}
+            </div>
+          </div>`
+        )
       }
-    })
+
+      // shows or hides photos when the div historic entry is clicked
+      $('#historic .historic_element').click(function () {
+        const i = parseInt($(this).data('index'))
+
+        if ($(this).find('img').length === 0) { // no image found, adds images
+          const $photos = $('<div class="historic_photos"></div>')
+          $(this).append($photos)
+
+          // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
+          for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
+            if (data[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
+              const fullImgUrl = requestImageUrl + data[i]['foto' + photoIndex]
+              // check if the image really exists
+              $.get(fullImgUrl).done(() => {
+                $photos.append(`<img src="${fullImgUrl}">`)
+              })
+            }
+          }
+        } else { // has already images, remove them
+          $(this).find('.historic_photos').remove()
+        }
+      })
+    }
   }
 
   thisModule.updateHistoric = updateHistoric
