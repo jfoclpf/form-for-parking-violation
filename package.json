@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "standard",
-    "update-plugins": "cordova-check-plugins --update=auto"
+    "update-plugins": "cordova-check-plugins --update=auto",
+    "version": "cordova-set-version --version ${npm_package_version} && git add config.xml"
   },
   "author": "Apache Cordova Team",
   "license": "GPL-3.0",
@@ -77,6 +78,7 @@
   },
   "devDependencies": {
     "cordova-check-plugins": "^4.0.5",
+    "cordova-set-version": "^10.0.0",
     "npm-check-updates": "^7.0.2",
     "standard": "14.3.4"
   },
