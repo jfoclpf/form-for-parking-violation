@@ -70,6 +70,20 @@ input[type="number"] {
   display: block;
 }
 
+#map_section, #map {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 100%;
+}
+
+#map .gm-style-iw.gm-style-iw-c {
+  max-width: none !important;
+}
+
 #cmd_how_it_works img{
   border: none !important;
   width: 100%;

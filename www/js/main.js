@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -84,7 +84,11 @@ app.main = (function (thisModule) {
     $('#plate').css('border-color', '')
     app.form.setPortuguesePlateInput()
 
+    // this is used to get address on form, and for maps section
     app.localization.loadMapsApi()
+    // to get all entries to show on the map, it does it in the background
+    // after opening the app for faster processing when user clicks on map section
+    app.map.getAllEntries()
 
     if (DEBUG) {
       app.functions.setDebugValues()

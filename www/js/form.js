@@ -40,6 +40,12 @@ app.form = (function (thisModule) {
     app.sidebar.toggleSidebar(false)
   })
 
+  $('#map_section_show').click(function () {
+    app.map.tryToShowMap()
+    showSection('map_section')
+    app.sidebar.toggleSidebar(false)
+  })
+
   $('#form_show').click(function () {
     showSection('main_form')
     app.sidebar.toggleSidebar(false)

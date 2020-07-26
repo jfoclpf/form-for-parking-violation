@@ -7,6 +7,7 @@
 function onGoogleMapsApiLoaded () {
   // get from GPS Address information
   app.localization.getGeolocation()
+  app.map.initGoogleMapLoaded()
 }
 /* eslint-enable no-unused-vars */
 
@@ -25,7 +26,8 @@ app.localization = (function (thisModule) {
     var googleMapsKey = GOOGLE_MAPS_API_KEYS[Math.floor(Math.random() * GOOGLE_MAPS_API_KEYS.length)]
     console.log(googleMapsKey)
 
-    $.getScript('https://maps.googleapis.com/maps/api/js?key=' + googleMapsKey + '&sensor=true&callback=onGoogleMapsApiLoaded')
+    const googleMapsApiJsUrl = 'https://maps.googleapis.com/maps/api/js'
+    $.getScript(`${googleMapsApiJsUrl}?key=${googleMapsKey}&sensor=true&callback=onGoogleMapsApiLoaded&language=pt`)
 
     // this flag should be here otherwise the script might be loaded several times, and Google refuses it
     isGoogleMapsApiLoaded = true

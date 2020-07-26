@@ -1,6 +1,6 @@
 /******************************************************************/
 /* When the user clicks on the Historic section on the left panel
-   the user should see a historic of complains previously submitted
+   the user should see a historic of complaints previously submitted
    These complaints are anonymously stored in the database        */
 
 /* eslint camelcase: off */
@@ -36,7 +36,7 @@ app.historic = (function (thisModule) {
       return data
     }
 
-    const timeIntervalInMinutes = 10
+    const timeIntervalInMinutes = 10 // minutes
     // entries submitted around the same time (within the timeIntervalInMinutes),
     // for the same vehicle, having the same type of traffic violation
     // and sent to the same authority are considered to be duplicates
@@ -48,15 +48,19 @@ app.historic = (function (thisModule) {
       const previousDate = getFullDateObjFromDB(data[i - 1])
       const previousAuthority = data[i - 1].autoridade
       const previousViolationType = data[i - 1].base_legal
+      const previousUuid = data[i - 1].uuid
       // current entry
       const currentPlate = data[i].carro_matricula
       const currentDate = getFullDateObjFromDB(data[i])
       const currentAuthority = data[i].autoridade
       const currentViolationType = data[i].base_legal
+      const currentUuid = data[i].uuid
 
       if (Math.abs((currentDate - previousDate) / 1000 / 60) < timeIntervalInMinutes &&
-          currentPlate === previousPlate && previousAuthority === currentAuthority &&
-          previousViolationType === currentViolationType) { // it is a duplicate
+          currentPlate === previousPlate &&
+          previousAuthority === currentAuthority &&
+          previousViolationType === currentViolationType &&
+          previousUuid === currentUuid) { // it is a duplicate
         data.splice(i - 1, 1) // removes index i-1 and reindexes the array, thus no need to i++
       } else {
         i++
@@ -129,6 +133,7 @@ app.historic = (function (thisModule) {
   }
 
   thisModule.updateHistoric = updateHistoric
+  thisModule.removesDuplicates = removesDuplicates
 
   return thisModule
 })(app.historic || {})

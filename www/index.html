@@ -11,7 +11,7 @@
     default-src 'self' data: file: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval' https://developers.google.com https://ssl.gstatic.com https://maps.googleapis.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://fonts.gstatic.com https://cmd.autenticacao.gov.pt https://frtend.reg.cmd.autenticacao.gov.pt https://contabo.joaopimentel.com 'unsafe-eval';
     style-src 'self' https://fonts.googleapis.com https://stackpath.bootstrapcdn.com 'unsafe-inline';
     media-src file: *;
-    img-src 'self' https://maps.googleapis.com https://contabo.joaopimentel.com data: file: content: https://csi.gstatic.com;
+    img-src 'self' https://maps.googleapis.com https://maps.gstatic.com https://contabo.joaopimentel.com data: file: content: https://csi.gstatic.com;
     script-src 'self' data: content: file: https://ssl.gstatic.com https://maps.googleapis.com https://developers.google.com https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com https://cdnjs.cloudflare.com https://use.fontawesome.com https://cmd.autenticacao.gov.pt https://frtend.reg.cmd.autenticacao.gov.pt https://code.jquery.com
   ">
 
@@ -47,6 +47,11 @@
         <li id="historic_show">
           <div><i class="fa fa-history"></i></div>
           <div><a>Histórico</a></div>
+        </li>
+
+        <li id="map_section_show">
+          <div><i class="fa fa-map"></i></div>
+          <div><a>Mapa Geral</a></div>
         </li>
 
         <li id="legal_basis_show">
@@ -295,6 +300,10 @@
       <div id="historic" class="section collapse">
       </div>
 
+      <div id="map_section" class="section collapse">
+        <div id="map"></div>
+      </div>
+
       <div id="legal_basis" class="section">
           <h3>Esta App funciona</h3>
           <p class="lead">
@@ -425,6 +434,7 @@
 
   <script src="js/functions.js"></script>
   <script src="js/historic.js"></script>
+  <script src="js/map.js"></script>
   <script src="js/authentication.js"></script>
   <script src="js/photos.js"></script>
   <script src="js/form.js"></script>
