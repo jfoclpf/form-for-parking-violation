@@ -97,10 +97,18 @@ app.post(submissionsUrl, function (req, res) {
 app.get(requestHistoricUrl, function (req, res) {
   const uuid = req.query.uuid
 
-  debug('\nGetting historic from' +
+  debug('\nGetting entries from' +
     'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
-  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}' ORDER BY data_data ASC`
+  var query
+  if (uuid) {
+    // get the historic for a specific user
+    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}' ORDER BY data_data ASC`
+  } else {
+    // get all production entries to generate a map
+    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634' ` +
+      `ORDER BY ${DBInfo.db_tables.denuncias}.uuid  ASC, ${DBInfo.db_tables.denuncias}.data_data ASC`
+  }
 
   debug(sqlFormatter.format(query))
 
