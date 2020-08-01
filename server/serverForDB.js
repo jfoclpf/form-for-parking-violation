@@ -8,6 +8,7 @@ const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
 const imgUploadUrlPort = 3036
 
 const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const async = require('async')
 const bodyParser = require('body-parser')
@@ -207,4 +208,4 @@ app.listen(commonPort, () => console.log(`Request server listening on port ${com
 app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
 
 console.log('Initializing timers to cleanup DB')
-require('./timersForDB.js')()
+require(path.join(__dirname, 'cleanBadPhotos'))()

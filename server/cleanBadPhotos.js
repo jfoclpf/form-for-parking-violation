@@ -1,7 +1,12 @@
+/* script that runs server side every hour, and which goes through entries of database
+   and checks if pathnames of photos are valid (i.e. photos files exist in server),
+   and in case there are entries whose all photos are invalid (inexistent photos)
+   the script deletes said entry from the database */
+
 const fs = require('fs')
 const async = require('async')
 const mysql = require('mysql') // module to get info from database
-const debug = require('debug')('timers')
+const debug = require('debug')('cleanBadPhotos')
 const sqlFormatter = require('sql-formatter')
 
 // directory where the images are stored with respect to present file
@@ -12,12 +17,12 @@ const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
 debug(DBInfo)
 
 module.exports = () => {
-  cleanBadImages()
-  setInterval(cleanBadImages, 1000 * 60 * 60) // every hour
+  cleanBadPhotos()
+  setInterval(cleanBadPhotos, 1000 * 60 * 60) // every hour
 }
 
 // goes through the db and find inexistanf images, if so, delete them
-function cleanBadImages () {
+function cleanBadPhotos () {
   // get all production entries
   var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634'`
 
@@ -73,7 +78,7 @@ function cleanBadImages () {
       console.log('There was an error: ')
       console.log(err)
     } else {
-      debug('Timer function "cleanBadImages" run successfully')
+      debug('Timer function "cleanBadPhotos" run successfully')
     }
   })
 }
