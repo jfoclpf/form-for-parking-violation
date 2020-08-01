@@ -205,3 +205,6 @@ app2.post(imgUploadUrl, async (req, res) => {
 
 app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
 app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
+
+console.log('Initializing timers to cleanup DB')
+require('./timersForDB.js')()
