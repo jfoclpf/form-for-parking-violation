@@ -7,7 +7,6 @@ bin/
 # Cordova - platforms
 platforms/
 
-
 # Cordova - plugins - remove all except json & xml
 plugins/**/.DS_Store
 plugins/**/*.cs
@@ -43,4 +42,5 @@ keys/
 uploadToServer.sh
 updateServer.sh
 
-
+# configs from Atom
+.on-save.json
