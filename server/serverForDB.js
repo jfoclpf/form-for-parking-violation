@@ -207,5 +207,8 @@ app2.post(imgUploadUrl, async (req, res) => {
 app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
 app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
 
-console.log('Initializing timers to cleanup DB')
-require(path.join(__dirname, 'cleanBadPhotos'))()
+console.log('Initializing timers to cleanup database')
+// directory where the images are stored with respect to present file
+const imgDirectory = path.join(__dirname, 'uploadedImages')
+require(path.join(__dirname, 'cleanBadPhotos'))(imgDirectory)
+require(path.join(__dirname, 'removeDuplicates'))(imgDirectory)

@@ -4,19 +4,21 @@
    the script deletes said entry from the database */
 
 const fs = require('fs')
+const path = require('path')
 const async = require('async')
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('cleanBadPhotos')
 const sqlFormatter = require('sql-formatter')
 
 // directory where the images are stored with respect to present file
-const imgDirectory = './uploadedImages/'
+var imgDirectory
 var db // database connection variable
 
 const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
 debug(DBInfo)
 
-module.exports = () => {
+module.exports = (_imgDirectory) => {
+  imgDirectory = _imgDirectory
   cleanBadPhotos()
   setInterval(cleanBadPhotos, 1000 * 60 * 60) // every hour
 }
@@ -89,7 +91,7 @@ function processDBentry (entry, callback) {
   var deleteEntry = true
   for (var i = 0; i < photoArray.length; i++) {
     if (photoArray[i]) {
-      const fileName = imgDirectory + photoArray[i]
+      const fileName = path.join(imgDirectory, photoArray[i])
       if (fs.existsSync(fileName)) {
         deleteEntry = false
       } else {
