@@ -124,7 +124,7 @@ app.map = (function (thisModule) {
       crossDomain: true,
       success: function (data) {
         console.log('Data for map obtained from database with success. Returned: ', data)
-        allDbEntries = app.historic.removesDuplicates(data)
+        allDbEntries = data
       },
       error: function (error) {
         console.error('There was an error getting the data')

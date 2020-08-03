@@ -21,60 +21,13 @@ app.historic = (function (thisModule) {
       crossDomain: true,
       success: function (data) {
         console.log('Historic obtained from database with success. Returned: ', data)
-        var data1 = removesDuplicates(data)
-        insertFetchedDataIntoHistoric(data1)
+        insertFetchedDataIntoHistoric(data)
       },
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
         console.error(error)
       }
     })
-  }
-
-  function removesDuplicates (data) {
-    if (data.length <= 1) {
-      return data
-    }
-
-    const timeIntervalInMinutes = 10 // minutes
-    // entries submitted around the same time (within the timeIntervalInMinutes),
-    // for the same vehicle, having the same type of traffic violation
-    // and sent to the same authority are considered to be duplicates
-
-    var i = 1
-    while (data[i]) {
-      // previous entry
-      const previousPlate = data[i - 1].carro_matricula
-      const previousDate = getFullDateObjFromDB(data[i - 1])
-      const previousAuthority = data[i - 1].autoridade
-      const previousViolationType = data[i - 1].base_legal
-      const previousUuid = data[i - 1].uuid
-      // current entry
-      const currentPlate = data[i].carro_matricula
-      const currentDate = getFullDateObjFromDB(data[i])
-      const currentAuthority = data[i].autoridade
-      const currentViolationType = data[i].base_legal
-      const currentUuid = data[i].uuid
-
-      if (Math.abs((currentDate - previousDate) / 1000 / 60) < timeIntervalInMinutes &&
-          currentPlate === previousPlate &&
-          previousAuthority === currentAuthority &&
-          previousViolationType === currentViolationType &&
-          previousUuid === currentUuid) { // it is a duplicate
-        data.splice(i - 1, 1) // removes index i-1 and reindexes the array, thus no need to i++
-      } else {
-        i++
-      }
-    }
-
-    return data
-  }
-
-  function getFullDateObjFromDB (dbEntry) {
-    var fullDate = new Date(dbEntry.data_data)
-    fullDate.setHours(dbEntry.data_hora.slice(0, 2))
-    fullDate.setMinutes(dbEntry.data_hora.slice(3, 5))
-    return fullDate
   }
 
   function insertFetchedDataIntoHistoric (data) {
@@ -133,7 +86,6 @@ app.historic = (function (thisModule) {
   }
 
   thisModule.updateHistoric = updateHistoric
-  thisModule.removesDuplicates = removesDuplicates
 
   return thisModule
 })(app.historic || {})
