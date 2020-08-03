@@ -95,9 +95,6 @@ app.map = (function (thisModule) {
       })
 
       marker.addListener('click', (e) => {
-        /* if (e.cancelable) {
-          e.preventDefault()
-        } */
         infowindow.open(map, marker)
         return true
       })
