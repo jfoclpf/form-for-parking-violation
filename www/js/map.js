@@ -34,9 +34,6 @@ app.map = (function (thisModule) {
   }
 
   function showMap () {
-    // adjust height
-    $('#map_section').css('height', '100%')
-
     // get coordinates for the map center
     var currentLocation = app.localization.getCoordinates() // current posiiton of user
     var latitude, longitude
@@ -51,10 +48,19 @@ app.map = (function (thisModule) {
 
     const mapOptions = {
       center: { lat: latitude, lng: longitude },
-      zoom: 8,
       disableDefaultUI: true,
       streetViewControl: false,
-      gestureHandling: 'greedy'
+      gestureHandling: 'greedy',
+      zoom: 8,
+      restriction: {
+        latLngBounds: {
+          east: -6,
+          north: 44,
+          south: 34,
+          west: -10
+        },
+        strictBounds: true
+      }
     }
 
     const map = new google.maps.Map(document.getElementById('map'), mapOptions)
@@ -69,13 +75,16 @@ app.map = (function (thisModule) {
 
       var htmlInfoContent = `
         <div style="width:200px">
-          ${el.carro_marca} ${el.carro_modelo} [${el.carro_matricula}]<br>
+          ${el.carro_marca} ${el.carro_modelo} na ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho},
+          no dia ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
+          Matrícula: ${el.carro_matricula}<br>
           Infração: ${app.penalties.getShortDescription(el.base_legal)}<br>
-          Autoridade: ${el.autoridade}<br>`
+          Autoridade: ${el.autoridade}<br><br>`
 
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
-          htmlInfoContent += `<img width="200" src="${requestImageUrl + el['foto' + photoIndex]}"><br>`
+          const photoUrl = requestImageUrl + el['foto' + photoIndex]
+          htmlInfoContent += `<img width="200" src="${photoUrl}"><br>`
         }
       }
 
@@ -86,13 +95,25 @@ app.map = (function (thisModule) {
       })
 
       marker.addListener('click', (e) => {
-        if (e.cancelable) {
+        /* if (e.cancelable) {
           e.preventDefault()
-        }
+        } */
         infowindow.open(map, marker)
         return true
       })
     }
+
+    // when map is loaded
+    map.addListener('tilesloaded', function () {
+      // adjust height of map_section div, the heigh of map should be the height of content
+      // minus the height of header and minus height of a spacer (<hr>)
+      var height = window.innerHeight - // screen useful height
+        $('#content hr').outerHeight(true) - // spacer between header and lower section
+        $('#content .container-fluid.section-head.d-flex.flex-row').outerHeight(true) - // header
+        ($('#content').innerWidth() - $('#content').width()) // pading of #content
+
+      $('#map_section').css('height', height + 'px')
+    })
   }
 
   function getAllEntries () {
