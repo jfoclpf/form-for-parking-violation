@@ -27,7 +27,7 @@ app.localization = (function (thisModule) {
     console.log(googleMapsKey)
 
     const googleMapsApiJsUrl = 'https://maps.googleapis.com/maps/api/js'
-    $.getScript(`${googleMapsApiJsUrl}?key=${googleMapsKey}&sensor=true&callback=onGoogleMapsApiLoaded&language=pt`)
+    $.getScript(`${googleMapsApiJsUrl}?key=${googleMapsKey}&callback=onGoogleMapsApiLoaded&language=pt`)
 
     // this flag should be here otherwise the script might be loaded several times, and Google refuses it
     isGoogleMapsApiLoaded = true
