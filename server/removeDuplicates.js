@@ -20,7 +20,7 @@ debug(DBInfo)
 module.exports = (_imgDirectory) => {
   imgDirectory = _imgDirectory
   removeDuplicates()
-  setInterval(removeDuplicates, 1000 * 60 * 60 + 1000 * 60 * 5) // every hour plus 5 minutes
+  setInterval(removeDuplicates, 1000 * 60 * 70) // every hour plus 70 minutes
 }
 
 // goes through the db and find inexistanf images, if so, delete them
