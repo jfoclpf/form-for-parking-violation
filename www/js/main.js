@@ -4,6 +4,12 @@
 
 var DEBUG = false
 
+if (!DEBUG) {
+  console.log = () => {}
+  console.warn = () => {}
+  console.error = () => {}
+}
+
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
 option `true` is not working, check:
