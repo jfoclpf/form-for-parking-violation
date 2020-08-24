@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-pdf-generator": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
@@ -48,6 +45,9 @@
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-pdf-generator": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },

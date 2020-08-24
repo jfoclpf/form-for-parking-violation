@@ -49,10 +49,10 @@
     "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-pdf-generator": {
+    "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-compat": {
+    "cordova-pdf-generator": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
