@@ -64,6 +64,9 @@ app.map = (function (thisModule) {
     }
 
     const map = new google.maps.Map(document.getElementById('map'), mapOptions)
+    const infowindow = new google.maps.InfoWindow()
+    var htmlInfoContent = []
+
     // Add the markers and infowindows to the map
     for (var i = 0; i < allDbEntries.length; i++) {
       const el = allDbEntries[i]
@@ -73,7 +76,7 @@ app.map = (function (thisModule) {
         title: el.carro_marca + ' ' + el.carro_modelo
       })
 
-      var htmlInfoContent = `
+      htmlInfoContent[i] = `
         <div style="width:200px">
           ${el.carro_marca} ${el.carro_modelo} na ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho},
           no dia ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
@@ -84,20 +87,18 @@ app.map = (function (thisModule) {
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
           const photoUrl = requestImageUrl + el['foto' + photoIndex]
-          htmlInfoContent += `<img width="200" src="${photoUrl}"><br>`
+          htmlInfoContent[i] += `<img width="200" src="${photoUrl}"><br>`
         }
       }
 
-      htmlInfoContent += '</div>'
+      htmlInfoContent[i] += '</div>'
 
-      const infowindow = new google.maps.InfoWindow({
-        content: htmlInfoContent
-      })
-
-      marker.addListener('click', (e) => {
-        infowindow.open(map, marker)
-        return true
-      })
+      google.maps.event.addListener(marker, 'click', (function (_marker, _i) {
+        return function () {
+          infowindow.setContent(htmlInfoContent[_i])
+          infowindow.open(map, _marker)
+        }
+      })(marker, i))
     }
 
     // when map is loaded
