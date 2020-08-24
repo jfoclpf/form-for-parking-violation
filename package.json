@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "test": "standard",
-    "update-plugins": "cordova-check-plugins --update=auto",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml"
   },
   "author": "Apache Cordova Team",
@@ -15,7 +14,7 @@
     "@fortawesome/fontawesome-free": "5.14.0",
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.2",
     "cordova": "9.0.0",
     "cordova-browser": "6.0.0",
     "cordova-pdf-generator": "^2.1.1",
@@ -40,7 +39,7 @@
     "es6-promise-plugin": "4.2.2",
     "exif-js": "^2.3.0",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.7-alpha.4",
+    "express-fileupload": "^1.2.0",
     "express-handlebars": "5.0.0",
     "fs": "0.0.1-security",
     "jAlert": "^4.9.1",
@@ -78,9 +77,8 @@
   },
   "devDependencies": {
     "cordova-android": "^9.0.0",
-    "cordova-check-plugins": "^4.0.5",
     "cordova-set-version": "^10.0.0",
-    "npm-check-updates": "^7.0.2",
+    "npm-check-updates": "^7.1.1",
     "standard": "14.3.4"
   },
   "standard": {
