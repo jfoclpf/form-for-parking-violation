@@ -18,7 +18,7 @@
     "bootstrap": "^4.5.0",
     "cordova": "9.0.0",
     "cordova-browser": "6.0.0",
-    "cordova-pdf-generator": "2.1.1",
+    "cordova-pdf-generator": "^2.1.1",
     "cordova-plugin-cache-clear": "1.3.8",
     "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-compat": "1.2.0",
@@ -68,11 +68,12 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-mobile-ocr": {},
-      "cordova-pdf-generator": {},
-      "cordova-plugin-compat": {}
+      "cordova-plugin-compat": {},
+      "cordova-pdf-generator": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "android"
     ]
   },
   "devDependencies": {
