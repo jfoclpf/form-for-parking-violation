@@ -8,6 +8,10 @@
     "test": "standard",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jfoclpf/form-for-parking-violation.git"
+  },
   "author": "Apache Cordova Team",
   "license": "GPL-3.0",
   "dependencies": {
