@@ -72,7 +72,8 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-mobile-ocr": {},
       "cordova-plugin-compat": {},
-      "cordova-pdf-generator": {}
+      "cordova-pdf-generator": {},
+      "cordova-plugin-splashscreen": {}
     },
     "platforms": [
       "browser",
@@ -81,6 +82,7 @@
   },
   "devDependencies": {
     "cordova-android": "^9.0.0",
+    "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-set-version": "^10.0.0",
     "npm-check-updates": "^7.1.1",
     "standard": "14.3.4"

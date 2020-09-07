@@ -54,6 +54,9 @@
     },
     "cordova-pdf-generator": {
       "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
   "dependent_plugins": {
