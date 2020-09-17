@@ -240,6 +240,7 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#address').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -247,6 +248,7 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#address_city').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -254,7 +256,9 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#plate').bind('input', plateOnInput)
+
   function plateOnInput () {
     $(this).val(function (index, value) {
       if (value.length < 8) { // length of XX-XX-XX
@@ -276,6 +280,7 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#carmodel').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -283,6 +288,7 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#locality').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -290,9 +296,11 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#locality').focusout(function () {
     app.localization.getAuthoritiesFromAddress()
   })
+
   $('#street').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -300,6 +308,7 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
   $('#street_number').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
