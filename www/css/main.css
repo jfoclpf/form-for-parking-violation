@@ -102,6 +102,16 @@ button#save_personal_data {
   display: none;
 }
 
+.ja_button_with_icon {
+  width: unset !important;
+  padding: 10px 15px !important;
+  margin: 0 8px;
+}
+
+.ja_300px {
+  width: 300px !important;
+}
+
 .note {
   font-size: 0.82em;
 }

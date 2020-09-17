@@ -130,19 +130,20 @@ app.main = (function (thisModule) {
     }
 
     $.jAlert({
-      title: 'Método de obtenção da foto:',
       theme: 'dark_blue',
+      class: 'ja_300px',
+      content: '<b>Método de obtenção da foto:</b>',
       btns: [
         {
-          text: 'Câmara',
+          text: '<i class="fa fa-camera" aria-hidden="true"></i>',
           theme: 'green',
-          class: 'jButtonAlert',
+          class: 'ja_button_with_icon',
           onClick: function () { app.photos.getPhoto(num, 'camera', callback) }
         },
         {
-          text: 'Biblioteca de fotos',
+          text: '<i class="fa fa-folder" aria-hidden="true"></i>',
           theme: 'green',
-          class: 'jButtonAlert',
+          class: 'ja_button_with_icon',
           onClick: function () { app.photos.getPhoto(num, 'library', callback) }
         }
       ]
