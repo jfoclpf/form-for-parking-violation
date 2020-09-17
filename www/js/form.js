@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, CAR_LIST, DEBUG */
+/* global app, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
 
 app.form = (function (thisModule) {
   // date field
@@ -267,12 +267,14 @@ app.form = (function (thisModule) {
         return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '')
       }
     })
-    if (!app.functions.isCarPlateOK() && !DEBUG) {
+    if (!app.functions.isCarPlateOK()) {
       $(this).css('border-color', 'red')
     } else {
       $(this).css('border-color', '')
+      fillCarMakeAndModelFromPlate($(this).val())
     }
   }
+
   $('#carmake').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -316,6 +318,56 @@ app.form = (function (thisModule) {
       $(this).css('border-color', '')
     }
   })
+
+  var storedRequestedCarInfo // to avoid doing many successive requests for the same plate
+  var requestGoingOn = false // to avoid parallel requests
+
+  function fillCarMakeAndModelFromPlate (_plate) {
+    // avoid parallel requests
+    if (requestGoingOn) {
+      return
+    } else {
+      requestGoingOn = true
+    }
+
+    // replace longdash by normal dash for the API
+    var plate = _plate.replaceAll('\u2013', '-')
+
+    if (plate === '00-XX-00') { // used in general debug
+      return
+    }
+
+    if (storedRequestedCarInfo && plate === storedRequestedCarInfo.license_plate) {
+      $('#carmake').val(storedRequestedCarInfo.manufacturer)
+      $('#carmodel').val(storedRequestedCarInfo.model)
+      requestGoingOn = false
+    } else {
+      // request from server
+      var requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
+
+      $.ajax({
+        type: 'GET',
+        url: requestUrl,
+        dataType: 'json',
+        headers: {
+          'x-api-key': CARROS_MATRICULAS_API['x-api-key']
+        },
+        success: function (carInfo) {
+          console.log(carInfo)
+          if (!carInfo.error && carInfo.manufacturer) {
+            storedRequestedCarInfo = carInfo
+            $('#carmake').val(carInfo.manufacturer)
+            $('#carmodel').val(carInfo.model)
+          }
+          requestGoingOn = false
+        },
+        error: function () {
+          console.error('error requesting on: ' + requestUrl)
+          requestGoingOn = false
+        }
+      })
+    }
+  }
 
   /* === Public methods to be returned === */
   thisModule.loadsPersonalInfo = loadsPersonalInfo
