@@ -338,8 +338,8 @@ app.form = (function (thisModule) {
     }
 
     if (storedRequestedCarInfo && plate === storedRequestedCarInfo.license_plate) {
-      $('#carmake').val(storedRequestedCarInfo.manufacturer)
-      $('#carmodel').val(storedRequestedCarInfo.model)
+      $('#carmake').val(storedRequestedCarInfo.manufacturer).trigger('input')
+      $('#carmodel').val(storedRequestedCarInfo.model).trigger('input')
       requestGoingOn = false
     } else {
       // request from server
@@ -356,8 +356,8 @@ app.form = (function (thisModule) {
           console.log(carInfo)
           if (!carInfo.error && carInfo.manufacturer) {
             storedRequestedCarInfo = carInfo
-            $('#carmake').val(carInfo.manufacturer)
-            $('#carmodel').val(carInfo.model)
+            $('#carmake').val(carInfo.manufacturer).trigger('input')
+            $('#carmodel').val(carInfo.model).trigger('input')
           }
           requestGoingOn = false
         },
