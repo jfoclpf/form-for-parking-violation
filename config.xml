@@ -45,6 +45,7 @@
     <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
     <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
+    <hook src="scripts/minifyFiles.js" type="after_prepare"/>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
