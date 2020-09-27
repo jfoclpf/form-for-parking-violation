@@ -287,7 +287,7 @@ app.authentication = (function (thisModule) {
               // tries to use internal browser plugin to sign the pdf document
               inAppBrowserRef.show()
             } else {
-              window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
+              cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
             }
           }
         }
@@ -338,7 +338,8 @@ app.authentication = (function (thisModule) {
             class: 'jButtonAlert',
             onClick: function () {
               pdfFileJustCreated = false
-              window.location.replace(app.main.urls.Chave_Movel_Digital.assinar_pdf)
+              // Opens in the system's default web browser
+              cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
             }
           },
           {
