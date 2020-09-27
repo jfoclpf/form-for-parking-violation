@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 
 if (!DEBUG) {
   console.log = () => {}
@@ -72,6 +72,9 @@ app.main = (function (thisModule) {
   function init () {
     console.log('init() started')
     wasInit = true
+
+    // for the plugin cordova-plugin-inappbrowser
+    window.open = cordova.InAppBrowser.open
 
     // information stored in variable window.localStorage
     app.form.loadsPersonalInfo()
@@ -223,9 +226,9 @@ app.main = (function (thisModule) {
             class: 'jButtonAlert',
             onClick: function () {
               if (IN_APP_BROWSER_AUTH) {
-                app.authentication.startAuthentication()
+                app.authentication.startAuthenticationWithInAppBrowser()
               } else {
-                app.authentication.savePDF()
+                app.authentication.startAuthenticationWithSystemBrowser()
               }
             }
           },

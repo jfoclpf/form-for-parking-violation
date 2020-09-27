@@ -7,8 +7,12 @@ app.authentication = (function (thisModule) {
   var isAuthenticationWindowClosed = true
   var pdfFileJustCreated = false
 
-  // function called by main.js
-  function startAuthentication () {
+  function startAuthenticationWithSystemBrowser () {
+    savePDF()
+  }
+
+  // this function is not yet fully funcional
+  function startAuthenticationWithInAppBrowser () {
     if (!IN_APP_BROWSER_AUTH) {
       return
     }
@@ -149,7 +153,6 @@ app.authentication = (function (thisModule) {
     isAuthenticationWindowClosed = true
   }
 
-  // authentication process starts here when IN_APP_BROWSER_AUTH is false
   function savePDF () {
     var options = {
       documentSize: 'A4',
@@ -389,8 +392,8 @@ app.authentication = (function (thisModule) {
   }
 
   /* === Public methods to be returned === */
-  thisModule.startAuthentication = startAuthentication
-  thisModule.savePDF = savePDF
+  thisModule.startAuthenticationWithInAppBrowser = startAuthenticationWithInAppBrowser
+  thisModule.startAuthenticationWithSystemBrowser = startAuthenticationWithSystemBrowser
   thisModule.onAppResume = onAppResume
 
   return thisModule
