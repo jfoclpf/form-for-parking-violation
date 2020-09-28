@@ -2,25 +2,15 @@
 
 /* global $, cordova */
 
-var DEBUG = true
-
-if (!DEBUG) {
-  console.log = () => {}
-  console.warn = () => {}
-  console.error = () => {}
-}
+var DEBUG // assign it using cli, ex: "cordova run android --[debug|release]"
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
 option `true` is not working, check:
 https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
-var IN_APP_BROWSER_AUTH = false
+var AUTHENTICATION_WITH_IN_APP_BROWSER = false
 
-/* for any type of authentication this must be true */
-var SAVE_PDF = true
-
-console.log('DEBUG: ', DEBUG)
-console.log('IN_APP_BROWSER_AUTH: ', IN_APP_BROWSER_AUTH)
+console.log('AUTHENTICATION_WITH_IN_APP_BROWSER: ', AUTHENTICATION_WITH_IN_APP_BROWSER)
 
 var app = {}
 
@@ -58,7 +48,21 @@ app.main = (function (thisModule) {
 
     window.screen.orientation.lock('portrait')
 
-    init()
+    cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
+      DEBUG = isDebug
+      console.log('DEBUG: ', DEBUG)
+
+      if (!DEBUG) {
+        console.log = () => {}
+        console.warn = () => {}
+        console.error = () => {}
+      }
+      init()
+    }, function (err) {
+      console.error('Error getting deploy mode [release|debug]')
+      console.error(err)
+      init()
+    })
   }
 
   // if by any strange reason onDeviceReady doesn't trigger, load init() anyway
