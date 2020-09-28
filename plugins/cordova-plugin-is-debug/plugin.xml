@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-is-debug" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>IsDebug</name>
+    <description>A cordova plugin to detect if the device is running in debug mode or not.</description>
+    <license>MIT</license>
+
+    <js-module name="IsDebug" src="www/isDebug.js">
+        <clobbers target="cordova.plugins.IsDebug" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="IsDebug">
+                <param name="android-package" value="me.mattlewis.isdebug.IsDebug" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+
+        <source-file src="src/android/IsDebug.java" target-dir="src/me/mattlewis/isdebug/IsDebug" />
+    </platform>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="IsDebug">
+                <param name="ios-package" value="IsDebug" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/IsDebug.h" />
+        <source-file src="src/ios/IsDebug.m" />
+    </platform>
+</plugin>
