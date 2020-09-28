@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, cordova, alert, pdf, Blob, atob, FileTransfer, IN_APP_BROWSER_AUTH */
+/* global app, $, cordova, alert, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
@@ -13,7 +13,7 @@ app.authentication = (function (thisModule) {
 
   // this function is not yet fully funcional
   function startAuthenticationWithInAppBrowser () {
-    if (!IN_APP_BROWSER_AUTH) {
+    if (!AUTHENTICATION_WITH_IN_APP_BROWSER) {
       return
     }
 
@@ -30,7 +30,7 @@ app.authentication = (function (thisModule) {
   }
 
   function loadAuthentication () {
-    if (!IN_APP_BROWSER_AUTH) {
+    if (!AUTHENTICATION_WITH_IN_APP_BROWSER) {
       return
     }
 
@@ -267,7 +267,7 @@ app.authentication = (function (thisModule) {
     console.log('folderpath : ' + folderpath)
     console.log('fileName :' + filename)
 
-    if (IN_APP_BROWSER_AUTH) {
+    if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
       inAppBrowserRef.hide()
     }
 
@@ -286,7 +286,7 @@ app.authentication = (function (thisModule) {
           theme: 'green',
           class: 'jButtonAlert',
           onClick: function () {
-            if (IN_APP_BROWSER_AUTH) {
+            if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
               // tries to use internal browser plugin to sign the pdf document
               inAppBrowserRef.show()
             } else {
@@ -300,7 +300,7 @@ app.authentication = (function (thisModule) {
 
   // depois de sair da APP para assinar o PDF na página do Estado, regressa novamente à APP e corre esta função
   function onAppResume () {
-    if (IN_APP_BROWSER_AUTH) {
+    if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
       return
     }
 
