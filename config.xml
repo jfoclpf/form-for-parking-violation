@@ -51,21 +51,4 @@
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
   </platform>
-  <plugin name="cordova-plugin-geolocation" spec="^2.4.3"/>
-  <plugin name="cordova-plugin-email-composer" spec="^0.8.15"/>
-  <plugin name="cordova-plugin-simple-image-resizer" spec="~0.1.1"/>
-  <plugin name="cordova-plugin-camera" spec="~4.0.3"/>
-  <plugin name="info.protonet.imageresizer" spec="~0.1.1"/>
-  <plugin name="cordova-plugin-file-transfer" spec="~1.7.1"/>
-  <plugin name="cordova-plugin-file" spec="~6.0.1"/>
-  <plugin name="cordova-plugin-statusbar" spec="2.4.3"/>
-  <plugin name="cordova-plugin-screen-orientation" spec="3.0.2"/>
-  <plugin name="cordova-plugin-device" spec="2.0.3"/>
-  <plugin name="cordova-plugin-whitelist" spec="1.3.4"/>
-  <plugin name="cordova-plugin-network-information" spec="2.0.2"/>
-  <plugin name="cordova-plugin-inappbrowser" spec="4.0.0"/>
-  <plugin name="cordova-plugin-mobile-ocr" spec="3.1.1"/>
-  <plugin name="cordova-plugin-compat" spec="1.2.0"/>
-  <plugin name="cordova-pdf-generator" spec="^2.1.1"/>
-  <plugin name="cordova-plugin-whitelist" spec="1.3.4"/>
 </widget>
