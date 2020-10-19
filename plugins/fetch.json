@@ -111,14 +111,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-inappbrowser": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-inappbrowser@4.0.0"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-mobile-ocr": {
     "source": {
       "type": "registry",
@@ -147,6 +139,14 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-is-debug"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-inappbrowser": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-inappbrowser@4.0.0"
     },
     "is_top_level": true,
     "variables": {}

@@ -25,9 +25,6 @@
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
@@ -54,6 +51,9 @@
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-is-debug": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },

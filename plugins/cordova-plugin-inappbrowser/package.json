@@ -1,35 +1,38 @@
 {
-  "_from": "cordova-plugin-inappbrowser@^3.0.0",
-  "_id": "cordova-plugin-inappbrowser@3.2.0",
+  "_args": [
+    [
+      "cordova-plugin-inappbrowser@4.0.0",
+      "/home/joao/form-for-parking-violation"
+    ]
+  ],
+  "_from": "cordova-plugin-inappbrowser@4.0.0",
+  "_id": "cordova-plugin-inappbrowser@4.0.0",
   "_inBundle": false,
-  "_integrity": "sha512-tYsK0H9M8POmJTVnfyIsiRgoOxnypa9IQIbf/Hsgi7vbgUYRHtBUfvXwq4RhMqLIVrCeJLXF2hTXTDNY0a/eTA==",
+  "_integrity": "sha512-w2LZzdF3R4G/EqVZ9aWch9Pksk76uw6/S5wFP1sgn7zjsSDpJBb/JhazLnioN1NZmZiCUBbROv1S4+9JCkeCgA==",
   "_location": "/cordova-plugin-inappbrowser",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "cordova-plugin-inappbrowser@^3.0.0",
+    "raw": "cordova-plugin-inappbrowser@4.0.0",
     "name": "cordova-plugin-inappbrowser",
     "escapedName": "cordova-plugin-inappbrowser",
-    "rawSpec": "^3.0.0",
+    "rawSpec": "4.0.0",
     "saveSpec": null,
-    "fetchSpec": "^3.0.0"
+    "fetchSpec": "4.0.0"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-3.2.0.tgz",
-  "_shasum": "8615e1510dcf796875b420416331b768fee28d86",
-  "_spec": "cordova-plugin-inappbrowser@^3.0.0",
-  "_where": "/home/jfolpf/form-for-parking-violation",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-4.0.0.tgz",
+  "_spec": "4.0.0",
+  "_where": "/home/joao/form-for-parking-violation",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
     "url": "https://github.com/apache/cordova-plugin-inappbrowser/issues"
   },
-  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-inappbrowser",
     "platforms": [
@@ -40,7 +43,6 @@
       "windows"
     ]
   },
-  "deprecated": false,
   "description": "Cordova InAppBrowser Plugin",
   "devDependencies": {
     "eslint": "^4.0.0",
@@ -57,6 +59,10 @@
         "cordova": ">=3.1.0"
       },
       "4.0.0": {
+        "cordova": ">=3.1.0",
+        "cordova-ios": ">=4.0.0"
+      },
+      "5.0.0": {
         "cordova": ">100"
       }
     }
@@ -86,5 +92,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "3.2.0"
+  "version": "4.0.0"
 }
