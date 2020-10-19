@@ -46,13 +46,9 @@ app.authentication = (function (thisModule) {
       'toolbarcolor=#3C5DBC'
 
     inAppBrowserRef = cordova.InAppBrowser.open(url, target, options)
-
     inAppBrowserRef.addEventListener('loadstart', loadStartCallbackFunction)
-
     inAppBrowserRef.addEventListener('loadstop', loadedCallbackFunction)
-
     inAppBrowserRef.addEventListener('loaderror', authenticationError)
-
     inAppBrowserRef.addEventListener('exit', authenticationExit)
   }
 
