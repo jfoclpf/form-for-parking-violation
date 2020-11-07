@@ -1,6 +1,9 @@
 /* server app that receives parking violations from the users
 and stores it in the dabatase */
 
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
+
 const submissionsUrl = '/passeio_livre/serverapp'
 const requestHistoricUrl = '/passeio_livre/serverapp_get_historic'
 const commonPort = 3035

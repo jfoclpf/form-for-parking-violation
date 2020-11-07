@@ -1,7 +1,10 @@
-/* script that runs server side every hour, and which goes through entries of database
+/* script that runs periodically, and which goes through entries of database
    and checks if pathnames of photos are valid (i.e. photos files exist in server),
    and in case there are entries whose all photos are invalid (inexistent photos)
    the script deletes said entry from the database */
+
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 const fs = require('fs')
 const path = require('path')
@@ -26,7 +29,7 @@ module.exports = (_imgDirectory) => {
 // goes through the db and find inexistanf images, if so, delete them
 function cleanBadPhotos () {
   // get all production entries
-  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634'`
+  var query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634'` // android uuid of the main developer should be ignored
 
   debug(sqlFormatter.format(query))
 

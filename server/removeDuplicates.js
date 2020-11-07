@@ -1,7 +1,10 @@
-/* script that runs server side every hour, and which goes through entries of database
+/* script that runs periodically, and which goes through entries of database
    and checks for entries' duplicates. It does it by checking if photos are exactly the same
-   even if they have different names. If two entries have exatly the same photos (same file JPG data content),
-   and if they are from the same user, the older entry is a duplicate and it is deleted */
+   even if they have different names. If two entries have exactly the same photos (same file JPG data content),
+   and if they are from the same user, the older entry is considered a duplicate and it is deleted */
+
+/* eslint prefer-const: "off" */
+/* eslint no-var: "off" */
 
 const fs = require('fs')
 const path = require('path')
@@ -87,6 +90,8 @@ function removeDuplicates () {
   })
 }
 
+// repeated entries normally are inserted consecutively in the database
+// that is, when an user submits twice the same entry
 function getEntriesToBeDeleted (results) {
   var output = []
   // due to the mysql query, results are already grouped by uuid, and then ordered by date
@@ -109,7 +114,8 @@ function getEntriesToBeDeleted (results) {
         previousViolationType === currentViolationType &&
         previousUuid === currentUuid) {
       // check if photo1 is the same
-      if (areTwoPhotosEqual(previousPhotos[0], currentPhotos[0])) {
+      if (fs.existsSync(previousPhotos[0]) && fs.existsSync(currentPhotos[0]) &&
+          areTwoPhotosEqual(previousPhotos[0], currentPhotos[0])) {
         output.push(results[i - 1])
       }
     }
