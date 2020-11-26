@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG // assign it using cli, ex: "cordova run android --[debug|release]"
+var DEBUG = false
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -48,21 +48,15 @@ app.main = (function (thisModule) {
 
     window.screen.orientation.lock('portrait')
 
-    cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
-      DEBUG = isDebug
-      console.log('DEBUG: ', DEBUG)
+    // DEBUG = isDebug
+    console.log('DEBUG: ', DEBUG)
 
-      if (!DEBUG) {
-        console.log = () => {}
-        console.warn = () => {}
-        console.error = () => {}
-      }
-      init()
-    }, function (err) {
-      console.error('Error getting deploy mode [release|debug]')
-      console.error(err)
-      init()
-    })
+    if (!DEBUG) {
+      console.log = () => {}
+      console.warn = () => {}
+      console.error = () => {}
+    }
+    init()
   }
 
   // if by any strange reason onDeviceReady doesn't trigger, load init() anyway

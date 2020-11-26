@@ -55,9 +55,6 @@
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-is-debug": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }

@@ -135,14 +135,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-is-debug": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-is-debug"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-inappbrowser": {
     "source": {
       "type": "registry",
