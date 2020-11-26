@@ -39,42 +39,35 @@ app.authentication = (function (thisModule) {
     var url = app.main.urls.Chave_Movel_Digital.assinar_pdf
 
     var target = '_blank'
-    var options = 'location=no,' +
-      'hidden=yes,' +
+    var options = 'hidden=yes,' +
       'footer=yes,' +
+      'beforeload=yes' +
       'zoom=no,' +
       'toolbarcolor=#3C5DBC'
 
     inAppBrowserRef = cordova.InAppBrowser.open(url, target, options)
+    inAppBrowserRef.addEventListener('beforeload', beforeLoadCallbackFunction)
     inAppBrowserRef.addEventListener('loadstart', loadStartCallbackFunction)
     inAppBrowserRef.addEventListener('loadstop', loadedCallbackFunction)
     inAppBrowserRef.addEventListener('loaderror', authenticationError)
     inAppBrowserRef.addEventListener('exit', authenticationExit)
   }
 
+  function beforeLoadCallbackFunction (params, callback) {
+    if (params.url.match('DigitalSignConfirmTan.aspx')) {
+      cordova.InAppBrowser.open(params.url, '_system')
+    } else {
+      // Default handling:
+      callback(params.url)
+    }
+  }
+
   function loadStartCallbackFunction (event) {
     console.log('%c ========== loadstart ========== ', 'background: yellow; color: blue')
     console.log(event.url)
 
-    if (event.url.split('/').pop() === 'DocumentSigning.aspx') {
-      console.log('got DocumentSigning.aspx')
-
-      var pdfFile = 'https://frtend.reg.cmd.autenticacao.gov.pt/Ama.Registry.Frontend/GetDocument.ashx'
-      var targetPath = cordova.file.documentsDirectory + 'doc.pdf'
-      var options = {}
-      var args = {
-        url: pdfFile,
-        targetPath: targetPath,
-        options: options
-      }
-
-      // inAppBrowserRef.close() // close window or you get exception
-
-      document.addEventListener('deviceready', function () {
-        setTimeout(function () {
-          downloadPdfFile(args) // call the function which will download the file 1s after the window is closed, just in case..
-        }, 1000)
-      })
+    if (event.url.split('/').pop() === 'DigitalSignConfirmTan.aspx') {
+      console.log(event)
     }
   }
 
@@ -93,13 +86,12 @@ app.authentication = (function (thisModule) {
       success: function (JScodeRes) {
         // altera o texto quando refere o Documento para assinar
         var JScode = JScodeRes +
-                  '(function(){' +
-                      "var textEl = document.getElementById('MainContent_lblTitleChooseDoc');" +
-                      'if(textEl){' +
-                          "textEl.innerHTML = 'Escolha o documento <u>" +
-                              getPdfFileName() + "</u> na pasta <i>Downloads</i> para assinar digitalmente';" +
-                      '}' +
-                  '})();'
+          `(function(){
+             var textEl = document.getElementById('MainContent_lblTitleChooseDoc');
+             if(textEl){
+               textEl.innerHTML = 'Escolha o documento <u>${getPdfFileName()}</u> na pasta <i>Downloads</i> para assinar digitalmente';
+             }
+           })();`
 
         inAppBrowserRef.executeScript(
           { code: JScode },
