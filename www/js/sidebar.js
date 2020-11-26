@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $ */
+/* global app, cordova, $ */
 
 app.sidebar = (function (thisModule) {
   function init () {
@@ -22,6 +22,16 @@ app.sidebar = (function (thisModule) {
     $('a.a_minha_area_url').attr('href', app.main.urls.Chave_Movel_Digital.a_minha_area)
     $('a.assinar_pdf_url').attr('href', app.main.urls.Chave_Movel_Digital.assinar_pdf)
     $('a.app_url').attr('href', app.main.urls.Chave_Movel_Digital.app)
+
+    // opens http links with system browser
+    $('a[href]').click(function (event) {
+      var href = $(this).attr('href')
+      if (href.startsWith('https://') || href.startsWith('http://')) {
+        event.preventDefault()
+
+        cordova.InAppBrowser.open(href, '_system')
+      }
+    })
   }
 
   // staus undefined - togle sidebar
