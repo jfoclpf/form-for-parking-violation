@@ -2,6 +2,10 @@ h1 {
   text-align: center
 }
 
+#content {
+  width: 100%;
+}
+
 #sub_title{
   width:90%;
   margin:0 auto;
