@@ -23,60 +23,6 @@ app.form = (function (thisModule) {
     })
   }
 
-  function showSection (sectionId) {
-    $('.section').not('#' + sectionId).hide()
-    $('#' + sectionId).show()
-
-    // when the user clicks on the map section on the sidebar, shows different header
-    if (sectionId === 'map_section') {
-      $('#header_title').hide()
-      $('#header_for_map').show()
-    } else {
-      $('#header_title').show()
-      $('#header_for_map').hide()
-    }
-
-    // hides sidebar
-    $('#sidebar').toggleClass('active', false)
-  }
-
-  $('#personal_data_show').click(function () {
-    showSection('personal_data')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#historic_show').click(function () {
-    app.historic.updateHistoric()
-    showSection('historic')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#map_section_show').click(function () {
-    app.map.tryToShowMap()
-    showSection('map_section')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#form_show').click(function () {
-    showSection('main_form')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#legal_basis_show').click(function () {
-    showSection('legal_basis')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#cmd_how_it_works_show').click(function () {
-    showSection('cmd_how_it_works')
-    app.sidebar.toggleSidebar(false)
-  })
-
-  $('#cmd_legal_basis_shows').click(function () {
-    showSection('cmd_legal_basis')
-    app.sidebar.toggleSidebar(false)
-  })
-
   // removes leading and trailing spaces on every text field "on focus out"
   $(':text').each(function (index) {
     $(this).focusout(function () {
@@ -383,7 +329,6 @@ app.form = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.loadsPersonalInfo = loadsPersonalInfo
   thisModule.setPortuguesePlateInput = setPortuguesePlateInput
-  thisModule.showSection = showSection
 
   return thisModule
 })(app.form || {})

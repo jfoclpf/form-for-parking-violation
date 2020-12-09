@@ -35,9 +35,8 @@ app.main = (function (thisModule) {
     wasInit = false
     document.addEventListener('deviceready', onDeviceReady, false)
 
-    // hides Personal Data information section
-    app.form.showSection('main_form')
     app.sidebar.init()
+    app.sidebar.showSection('main_form')
   })
 
   function onDeviceReady () {
