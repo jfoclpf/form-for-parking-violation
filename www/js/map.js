@@ -68,7 +68,8 @@ app.map = (function (thisModule) {
     var htmlInfoContent = []
 
     // Add the markers and infowindows to the map
-    for (var i = 0; i < allDbEntries.length; i++) {
+    const allDbEntriesLength = allDbEntries.length
+    for (let i = 0; i < allDbEntriesLength; i++) {
       const el = allDbEntries[i]
       const marker = new google.maps.Marker({
         position: { lat: el.data_coord_latit, lng: el.data_coord_long },
