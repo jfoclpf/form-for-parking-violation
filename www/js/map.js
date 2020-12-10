@@ -4,7 +4,7 @@
    These complaints are anonymously stored in the database             */
 
 /* eslint camelcase: off */
-/* global app, $, google, DEBUG */
+/* global app, device, $, google, DEBUG */
 
 app.map = (function (thisModule) {
   const requestHistoricUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic'
@@ -13,27 +13,55 @@ app.map = (function (thisModule) {
 
   var allDbEntries
 
+  function init () {
+    // to get all entries to show on the map, it does it in the init in the background
+    // after opening the app for faster processing when user clicks on map section
+    getAllEntries()
+
+    // populate select box to select map view, i.e, filter ocurrences/drops in the map
+    var mapOptions = {
+      all: 'Todas as ocorrências',
+      mine: 'Apenas as minhas denúncias'
+    }
+
+    for (const key in mapOptions) {
+      $('#map_view_select').append(`<option value="${key}">${mapOptions[key]}</option>`)
+    }
+
+    // populates yet with type of penalties: faixa_bus, baixa_bus, etc.
+    const penalties = app.penalties.getPenalties()
+    for (const key in penalties) {
+      $('#map_view_select').append(`<option value="${key}">${penalties[key].select}</option>`)
+    }
+
+    $('#map_view_select').on('change', function () {
+      tryToShowMap(this.value)
+    })
+  }
+
   // this funcion is run when the API is loaded, see file js/localization.js
   function initGoogleMapLoaded () {
     isGoogleMapsApiLoaded = true
   }
 
   // does not show map until the Google API script and the DB entries are loaded
-  function tryToShowMap () {
+  // this done on the beginning
+  function tryToShowMap (selectOption) {
     if (!isGoogleMapsApiLoaded || !allDbEntries) {
       setTimeout(() => {
         if (isGoogleMapsApiLoaded && allDbEntries) {
-          showMap()
+          showMap(selectOption)
         } else {
-          tryToShowMap()
+          tryToShowMap(selectOption)
         }
       }, 500)
     } else {
-      showMap()
+      showMap(selectOption)
     }
   }
 
-  function showMap () {
+  // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
+  function showMap (selectOption) {
     // get coordinates for the map center
     var currentLocation = app.localization.getCoordinates() // current posiiton of user
     var latitude, longitude
@@ -67,10 +95,28 @@ app.map = (function (thisModule) {
     const infowindow = new google.maps.InfoWindow()
     var htmlInfoContent = []
 
+    // get filtered array of db entries according to selected Option (filter)
+    var dbEntries = []
+    if (!selectOption || selectOption === 'all') {
+      dbEntries = allDbEntries
+    } else {
+      const allDbEntriesLength = allDbEntries.length
+      for (let i = 0; i < allDbEntriesLength; i++) {
+        const el = allDbEntries[i]
+
+        if (selectOption === 'mine' && el.uuid === device.uuid) {
+          dbEntries.push(el)
+        } else if (selectOption === el.base_legal) {
+          dbEntries.push(el)
+        }
+      }
+    }
+
     // Add the markers and infowindows to the map
-    const allDbEntriesLength = allDbEntries.length
-    for (let i = 0; i < allDbEntriesLength; i++) {
-      const el = allDbEntries[i]
+    const dbEntriesLength = dbEntries.length
+    for (let i = 0; i < dbEntriesLength; i++) {
+      const el = dbEntries[i]
+
       const marker = new google.maps.Marker({
         position: { lat: el.data_coord_latit, lng: el.data_coord_long },
         map: map,
@@ -132,9 +178,9 @@ app.map = (function (thisModule) {
     })
   }
 
+  thisModule.init = init
   thisModule.tryToShowMap = tryToShowMap
   thisModule.initGoogleMapLoaded = initGoogleMapLoaded
-  thisModule.getAllEntries = getAllEntries
 
   return thisModule
 })(app.map || {})

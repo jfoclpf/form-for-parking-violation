@@ -45,9 +45,12 @@ app.sidebar = (function (thisModule) {
     })
 
     $('#map_section_show').click(function () {
-      app.map.tryToShowMap()
       showSection('map_section')
       app.sidebar.toggleSidebar(false)
+
+      // this must be here on the last line,
+      // because `$('#map_view_select').val()` returns null before Sidebar is hidden
+      app.map.tryToShowMap($('#map_view_select').val())
     })
 
     $('#form_show').click(function () {

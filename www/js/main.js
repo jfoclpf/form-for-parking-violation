@@ -92,9 +92,8 @@ app.main = (function (thisModule) {
 
     // this is used to get address on form, and for maps section
     app.localization.loadMapsApi()
-    // to get all entries to show on the map, it does it in the background
-    // after opening the app for faster processing when user clicks on map section
-    app.map.getAllEntries()
+
+    app.map.init()
 
     if (DEBUG) {
       app.functions.setDebugValues()
