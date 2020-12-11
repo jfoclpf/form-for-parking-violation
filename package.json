@@ -15,7 +15,7 @@
   "author": "Apache Cordova Team",
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.14.0",
+    "@fortawesome/fontawesome-free": "5.15.1",
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
