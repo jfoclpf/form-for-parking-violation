@@ -31,7 +31,7 @@
     "cordova-plugin-file-transfer": "1.7.1",
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
-    "cordova-plugin-mobile-ocr": "3.1.1",
+    "cordova-plugin-mobile-ocr": "3.1.2",
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-screen-orientation": "3.0.2",
     "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
