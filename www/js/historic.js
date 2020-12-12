@@ -43,7 +43,9 @@ app.historic = (function (thisModule) {
         <span class="note">Pressione nas ocorrências para ver as imagens</span>
       `)
 
-      for (var i = 0; i < data.length; i++) {
+      // since the results are stored as they are submitted, they are ordered by time
+      // we want to show on top the most recent ones, i.e., the last on the array
+      for (var i = data.length - 1; i >= 0; i--) {
         const el = data[i]
         $('#historic').append(`
           <div class="row border-element historic_element" data-index="${i}">
