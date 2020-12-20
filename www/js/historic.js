@@ -197,7 +197,7 @@ app.historic = (function (thisModule) {
       if (occurrence['foto' + photoIndex]) { // if that photo index exists in the DB entry
         const fileName = occurrence['foto' + photoIndex]
         const fileExtension = fileName.split('.').pop()
-        const fullImgUrl = requestImageUrl + fileName
+        const fullImgUrl = requestImageUrl + '/' + fileName
 
         photosDeferred[photoIndex] = $.Deferred()
         downloadFileToDevice(photoIndex, fullImgUrl, `img${photoIndex}.${fileExtension}`)
