@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, device, FileUploadOptions, FileTransfer, DEBUG */
+/* global app, $, device, FileUploadOptions, FileTransfer, XMLHttpRequest, DEBUG */
 
 app.functions = (function (thisModule) {
   // detects if the car plate is correctly filled in
@@ -380,6 +380,34 @@ app.functions = (function (thisModule) {
     })
   }
 
+  // download file to device
+  // for different types of cordovaFileSystem check here: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#where-to-store-files
+  // or simple in the console type `console.log(cordova.file)`
+  function downloadFileToDevice (fileurl, filename, cordovaFileSystem, callback) {
+    var blob = null
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET', fileurl)
+    xhr.responseType = 'blob' // force the HTTP response, response-type header to be blob
+    xhr.onload = function () {
+      blob = xhr.response // xhr.response is now a blob object
+      var DataBlob = blob
+      window.resolveLocalFileSystemURL(cordovaFileSystem, function (dir) {
+        dir.getFile(filename, { create: true }, function (file) {
+          file.createWriter(function (fileWriter) {
+            fileWriter.write(DataBlob)
+            console.log(`%c File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + filename}`, console.successMessage)
+            callback(null, cordovaFileSystem + filename)
+          }, function (err) {
+            console.error(`Error downloading file from url: ${fileurl} to cordovaFileSystem: ${cordovaFileSystem}`)
+            console.error(err)
+            callback(err)
+          })
+        })
+      })
+    }
+    xhr.send()
+  }
+
   function resizeImage (imageUri, callback) {
     // generate filename for resized image
     var uriAdapted = adaptFilenameFromUri(imageUri) // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
@@ -575,6 +603,7 @@ app.functions = (function (thisModule) {
   thisModule.adaptFilenameFromUri = adaptFilenameFromUri
   thisModule.getExtensionFromURL = getExtensionFromURL
   thisModule.getFileSize = getFileSize
+  thisModule.downloadFileToDevice = downloadFileToDevice
   thisModule.resizeImage = resizeImage
   thisModule.clearCache = clearCache
   thisModule.isThisAndroid = isThisAndroid
