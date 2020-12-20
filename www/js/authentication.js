@@ -260,9 +260,9 @@ app.authentication = (function (thisModule) {
     }
 
     var msg = 'Foi criado o ficheiro PDF<br><span style="color:orange"><b>' + filename + '</b></span><br>' +
-    'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.' + '<br><br>'
-    msg += 'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.' + '<br><br>'
-    msg += 'Guarde o PDF gerado com a sua assinatura digital.'
+      'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.<br><br>' +
+      'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br><br>' +
+      'Guarde o PDF gerado com a sua assinatura digital.'
 
     $.jAlert({
       title: 'Criação de ficheiro PDF',
