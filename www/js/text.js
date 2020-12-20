@@ -52,7 +52,7 @@ app.text = (function (thisModule) {
       carmake_model_txt = ''
     }
 
-    var msg = getRandomGreetings + // get initial random greeting
+    var msg = getRandomGreetings() + // get initial random greeting
       ' ' + 'da' + ' ' + authority + ', ' + authorityName + ';'
 
     var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
