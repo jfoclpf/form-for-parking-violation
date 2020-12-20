@@ -1,179 +1,86 @@
 /* eslint camelcase: off */
 
-/* global app, $, DEBUG */
+/* global app, $ */
 
 app.text = (function (thisModule) {
   // main message
-  function getMainMessage () {
-    // Authority
-    var authority, authorityName, key
+  function getMainMessage (option) {
+    if (option === 'body') {
+      // Penalties
+      var penaltyDescription
+      var penaltyLawArticle
+      var penalties = app.penalties.getPenalties()
 
-    // app.localization.AUTHORITIES is an array of possible authorities applicable for that area
-    for (key in app.localization.AUTHORITIES) {
-      if (!Object.prototype.hasOwnProperty.call(app.localization.AUTHORITIES, key)) continue
+      for (const key in penalties) {
+        if (!Object.prototype.hasOwnProperty.call(penalties, key)) continue
 
-      if ($('#authority').val() === key) {
-        authority = app.localization.AUTHORITIES[key].authority
-        /* authorityShort = app.localization.AUTHORITIES[key].authorityShort */
-        authorityName = app.localization.AUTHORITIES[key].nome
-        app.main.emailTo = app.localization.AUTHORITIES[key].contacto
+        var obj = penalties[key]
+        if ($('#penalties').val() === key) {
+          penaltyDescription = obj.description
+          penaltyLawArticle = obj.law_article
+        }
       }
-    }
 
-    // Penalties
-    var penaltyDescription
-    var penaltyLawArticle
-    var penalties = app.penalties.getPenalties()
+      var carPlateStr = app.functions.getCarPlate()
 
-    for (key in penalties) {
-      if (!Object.prototype.hasOwnProperty.call(penalties, key)) continue
-
-      var obj = penalties[key]
-      if ($('#penalties').val() === key) {
-        penaltyDescription = obj.description
-        penaltyLawArticle = obj.law_article
-      }
-    }
-
-    var carPlateStr = app.functions.getCarPlate()
-
-    // texto para marca e modelo
-    var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
-    var is_model = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length !== 0)
-    var carmake_model_txt
-    if (is_carmake && is_model) {
-      carmake_model_txt = 'de marca e modelo <b>' + $('#carmake').val() +
-        ' ' + $('#carmodel').val() + '</b>, '
-    } else if (is_carmake) {
-      carmake_model_txt = 'de marca <b>' + $('#carmake').val() + '</b>, '
-    } else if (is_model) {
-      carmake_model_txt = 'de modelo <b>' + $('#carmodel').val() + '</b>, '
-    } else {
-      carmake_model_txt = ''
-    }
-
-    var msg = getRandomGreetings() + // get initial random greeting
-      ' ' + 'da' + ' ' + authority + ', ' + authorityName + ';'
-
-    var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
-      ' com o <b>' + $('#id_type').val() + '</b> com o número <b>' + $('#id_number').val() + '</b> ' +
-      'e com residência em <b>' + $('#address').val() +
-      ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
-      '</b>, venho por este meio,' + ' ' +
-      'ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
-      'fazer a seguinte denúncia de contra-ordenação para que a ' +
-      authority + ' ' + 'levante o auto respetivo e multe o infra-mencionado responsável.'
-
-    var msg2 = 'No passado dia <b>' +
-      $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
-      ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
-      ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
-      ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
-      $('#street_number').val() + '</b>, ' : '') + // optional
-      'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt +
-      'encontrava-se estacionada' + ' ' + penaltyDescription +
-      ', em violação ' + penaltyLawArticle + '.'
-
-    var msg3 = 'Pode-se comprovar esta situação através' +
-      ' ' + ((app.main.imagesUriCleanArray.length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
-      ' ' + 'à presente mensagem eletrónica. ' +
-      'Juro pela minha honra que a informação supra citada é verídica.' +
-      ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
-      ' ' + 'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto,' +
-      ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
-      'situação a que se aplica o n.º 1 do mesmo artigo.' + '</b></b>' +
-      ' ' + 'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha' +
-      ' ' + 'no processo que vier a ser instaurado com referência à presente missiva.'
-
-    var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3
-
-    return message
-  }
-
-  // returns true if all the fields and inputs are filled in and ready to write the message
-  function isMessageReady () {
-    if (DEBUG) {
-      return true
-    }
-
-    var to_break = false
-    var error_string = ''
-    var count = 0
-
-    // loops through mandatory fields
-    $('.mandatory').each(function () {
-      var val = $(this).val()
-      if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
-        console.log('Error on #' + $(this).attr('id'))
-        error_string += '- ' + $(this).attr('name') + '<br>'
-        count++
-        to_break = true
-      }
-    })
-
-    console.log('#generate_message goes', to_break)
-    if (to_break) {
-      if (count === 1) {
-        $.jAlert({
-          title: 'Erro!',
-          theme: 'red',
-          content: 'Preencha o seguinte campo obrigatório:<br>' + error_string
-        })
+      // texto para marca e modelo
+      var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
+      var is_model = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length !== 0)
+      var carmake_model_txt
+      if (is_carmake && is_model) {
+        carmake_model_txt = 'de marca e modelo <b>' + $('#carmake').val() +
+          ' ' + $('#carmodel').val() + '</b>, '
+      } else if (is_carmake) {
+        carmake_model_txt = 'de marca <b>' + $('#carmake').val() + '</b>, '
+      } else if (is_model) {
+        carmake_model_txt = 'de modelo <b>' + $('#carmodel').val() + '</b>, '
       } else {
-        $.jAlert({
-          title: 'Erro!',
-          theme: 'red',
-          content: 'Preencha os seguintes campos obrigatórios:<br>' + error_string
-        })
+        carmake_model_txt = ''
       }
-      return false
+
+      var msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
+
+      var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
+        ' com o <b>' + $('#id_type').val() + '</b> com o número <b>' + $('#id_number').val() + '</b> ' +
+        'e com residência em <b>' + $('#address').val() +
+        ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
+        '</b>, venho por este meio,' + ' ' +
+        'ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
+        'fazer a seguinte denúncia de contra-ordenação para que V. Exas. ' +
+        'levantem o auto respetivo e multem o infra-mencionado responsável.'
+
+      var msg2 = 'No passado dia <b>' +
+        $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
+        ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
+        ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
+        ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
+        $('#street_number').val() + '</b>, ' : '') + // optional
+        'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt +
+        'encontrava-se estacionada' + ' ' + penaltyDescription +
+        ', em violação ' + penaltyLawArticle + '.'
+
+      var msg3 = 'Pode-se comprovar esta situação através' +
+        ' ' + ((app.main.imagesUriCleanArray.length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
+        ' ' + 'à presente mensagem eletrónica. ' +
+        'Juro pela minha honra que a informação supra citada é verídica.' +
+        ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +
+        ' ' + 'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto,' +
+        ' ' + 'não carecendo de presenciar tal contraordenação rodoviária, ' +
+        'situação a que se aplica o n.º 1 do mesmo artigo.' + '</b></b>' +
+        ' ' + 'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha' +
+        ' ' + 'no processo que vier a ser instaurado com referência à presente missiva.'
+
+      var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3 + '<br><br>' + getRegards() + '<br>'
+
+      return message
+    } else if (option === 'subject') {
+      const carPlateStr = app.functions.getCarPlate()
+      const address = app.functions.getFullAddress()
+
+      return `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+    } else {
+      console.error('Error in getMainMessage(option) wth option=' + option)
     }
-
-    // detects if the name is correctly filled in
-    var Name = $('#name').val()
-    if (!app.functions.isFullNameOK(Name) && !DEBUG) {
-      $.jAlert({
-        title: 'Erro no nome!',
-        theme: 'red',
-        content: 'Insira o nome completo.'
-      })
-      return false
-    }
-
-    if (!app.functions.isPostalCodeOK() && !DEBUG) {
-      $.jAlert({
-        title: 'Erro no Código Postal!',
-        theme: 'red',
-        content: 'Insira o Código Postal no formato XXXX-XXX'
-      })
-      return false
-    }
-
-    // detects if the Portuguese car plate is correctly filled
-    if (!$('#free_plate').is(':checked') && !app.functions.isCarPlateOK() && !DEBUG) {
-      $.jAlert({
-        title: 'Erro na matrícula!',
-        theme: 'red',
-        content: 'A matrícula que introduziu não é válida'
-      })
-      return false
-    }
-
-    // from here the inputs are correctly written
-
-    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
-
-    if (app.main.imagesUriCleanArray.length === 0) {
-      $.jAlert({
-        title: 'Erro nas fotos!',
-        theme: 'red',
-        content: 'Adicione pelo menos uma foto do veículo em causa'
-      })
-      return false
-    }
-
-    return true
   }
 
   function getExtraAuthenticationHTMLText () {
@@ -280,7 +187,7 @@ app.text = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.getMainMessage = getMainMessage
   thisModule.getReminderMessage = getReminderMessage
-  thisModule.isMessageReady = isMessageReady
+  thisModule.getMailMessageWithCMD = getMailMessageWithCMD
   thisModule.getRegards = getRegards
   thisModule.getExtraAuthenticationHTMLText = getExtraAuthenticationHTMLText
 

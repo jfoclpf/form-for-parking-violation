@@ -23,6 +23,92 @@ app.form = (function (thisModule) {
     })
   }
 
+  // returns true if all the fields and inputs in the form are filled in and ready to write the message
+  function isMessageReady () {
+    if (DEBUG) {
+      return true
+    }
+
+    var to_break = false
+    var error_string = ''
+    var count = 0
+
+    // loops through mandatory fields
+    $('.mandatory').each(function () {
+      var val = $(this).val()
+      if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
+        console.log('Error on #' + $(this).attr('id'))
+        error_string += '- ' + $(this).attr('name') + '<br>'
+        count++
+        to_break = true
+      }
+    })
+
+    console.log('#generate_message goes', to_break)
+    if (to_break) {
+      if (count === 1) {
+        $.jAlert({
+          title: 'Erro!',
+          theme: 'red',
+          content: 'Preencha o seguinte campo obrigatório:<br>' + error_string
+        })
+      } else {
+        $.jAlert({
+          title: 'Erro!',
+          theme: 'red',
+          content: 'Preencha os seguintes campos obrigatórios:<br>' + error_string
+        })
+      }
+      return false
+    }
+
+    // detects if the name is correctly filled in
+    var Name = $('#name').val()
+    if (!app.functions.isFullNameOK(Name) && !DEBUG) {
+      $.jAlert({
+        title: 'Erro no nome!',
+        theme: 'red',
+        content: 'Insira o nome completo.'
+      })
+      return false
+    }
+
+    if (!app.functions.isPostalCodeOK() && !DEBUG) {
+      $.jAlert({
+        title: 'Erro no Código Postal!',
+        theme: 'red',
+        content: 'Insira o Código Postal no formato XXXX-XXX'
+      })
+      return false
+    }
+
+    // detects if the Portuguese car plate is correctly filled
+    if (!$('#free_plate').is(':checked') && !app.functions.isCarPlateOK() && !DEBUG) {
+      $.jAlert({
+        title: 'Erro na matrícula!',
+        theme: 'red',
+        content: 'A matrícula que introduziu não é válida'
+      })
+      return false
+    }
+
+    // from here the inputs are correctly written
+
+    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
+
+    if (app.main.imagesUriCleanArray.length === 0) {
+      $.jAlert({
+        title: 'Erro nas fotos!',
+        theme: 'red',
+        content: 'Adicione pelo menos uma foto do veículo em causa'
+      })
+      return false
+    }
+
+    return true
+  }
+
   // removes leading and trailing spaces on every text field "on focus out"
   $(':text').each(function (index) {
     $(this).focusout(function () {
@@ -329,6 +415,7 @@ app.form = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.loadsPersonalInfo = loadsPersonalInfo
   thisModule.setPortuguesePlateInput = setPortuguesePlateInput
+  thisModule.isMessageReady = isMessageReady
 
   return thisModule
 })(app.form || {})
