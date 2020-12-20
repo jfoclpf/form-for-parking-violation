@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -11,13 +11,13 @@ https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
 var AUTHENTICATION_WITH_IN_APP_BROWSER = false
 
 console.log('AUTHENTICATION_WITH_IN_APP_BROWSER: ', AUTHENTICATION_WITH_IN_APP_BROWSER)
+console.successMessage = 'color: green; font-weight:bold'
 
 var app = {}
 
 app.main = (function (thisModule) {
   var wasInit
 
-  thisModule.emailTo = ''
   thisModule.imagesUriArray = []
   thisModule.imagesUriCleanArray = []
   thisModule.variables = {} // global object used for debug
@@ -184,7 +184,7 @@ app.main = (function (thisModule) {
 
   // when user clicks "generate_email"
   $('#generate_message').click(function () {
-    if (!app.text.isMessageReady()) {
+    if (!app.form.isMessageReady()) {
       return
     }
 
@@ -203,7 +203,7 @@ app.main = (function (thisModule) {
     // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
     thisModule.imagesUriCleanArray = app.functions.cleanArray(thisModule.imagesUriArray)
     // it popups the alerts according to needed fields
-    if (!app.text.isMessageReady()) {
+    if (!app.form.isMessageReady()) {
       return
     }
 
@@ -239,12 +239,6 @@ app.main = (function (thisModule) {
 
   // CMD -> Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
-    var mainMessage = app.text.getMainMessage() + '<br><br>' + app.text.getRegards() + '<br>'
-
-    const carPlateStr = app.functions.getCarPlate()
-    const address = app.functions.getFullAddress()
-    var emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
-
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
     app.functions.submitDataToDB()
@@ -252,10 +246,10 @@ app.main = (function (thisModule) {
     app.functions.updateDateAndTime()
 
     cordova.plugins.email.open({
-      to: thisModule.emailTo, // email addresses for TO field
+      to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
       attachments: thisModule.imagesUriCleanArray, // file paths or base64 data streams
-      subject: emailSubject, // subject of the email
-      body: mainMessage, // email body (for HTML, set isHtml to true)
+      subject: app.text.getMainMessage('subject'), // subject of the email
+      body: app.text.getMainMessage('body'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
     })
   }
