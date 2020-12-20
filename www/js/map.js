@@ -7,8 +7,8 @@
 /* global app, device, $, google, DEBUG */
 
 app.map = (function (thisModule) {
-  const requestHistoricUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic'
-  const requestImageUrl = 'https://contabo.joaopimentel.com/passeio_livre/image_server/'
+  const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
+  const requestImageUrl = app.main.urls.databaseServer.requestImage
   var isGoogleMapsApiLoaded = false
 
   var allDbEntries
@@ -133,7 +133,7 @@ app.map = (function (thisModule) {
 
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
-          const photoUrl = requestImageUrl + el['foto' + photoIndex]
+          const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
           htmlInfoContent[i] += `<img width="200" src="${photoUrl}"><br>`
         }
       }

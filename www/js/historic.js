@@ -4,11 +4,11 @@
    These complaints are anonymously stored in the database        */
 
 /* eslint camelcase: off */
-/* global app, $, device */
+/* global app, $, device, cordova */
 
 app.historic = (function (thisModule) {
-  const requestHistoricUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic'
-  const requestImageUrl = 'https://contabo.joaopimentel.com/passeio_livre/image_server/'
+  const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
+  const requestImageUrl = app.main.urls.databaseServer.requestImage
 
   function updateHistoric () {
     const uuid = device.uuid

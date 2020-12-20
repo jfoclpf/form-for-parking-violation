@@ -469,8 +469,8 @@ app.functions = (function (thisModule) {
   }
 
   function submitDataToDB () {
-    const uploadImagesUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload'
-    const uploadRequesUrl = 'https://contabo.joaopimentel.com/passeio_livre/serverapp'
+    const uploadImagesUrl = app.main.urls.databaseServer.uploadImages
+    const uploadOccurenceUrl = app.main.urls.databaseServer.uploadOccurence
 
     // generates file names array for images
     const randomString = getRandomString(10) // serves to uniquely identify the filenames
@@ -522,7 +522,7 @@ app.functions = (function (thisModule) {
     }
 
     $.ajax({
-      url: uploadRequesUrl,
+      url: uploadOccurenceUrl,
       type: 'POST',
       data: JSON.stringify(databaseObj),
       contentType: 'application/json; charset=utf-8',

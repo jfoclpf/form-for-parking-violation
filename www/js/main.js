@@ -27,6 +27,12 @@ app.main = (function (thisModule) {
       a_minha_area: 'https://www.autenticacao.gov.pt/a-chave-movel-digital',
       assinar_pdf: 'https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx',
       app: 'https://play.google.com/store/apps/details?id=pt.ama.autenticacaogov&hl=pt'
+    },
+    databaseServer: {
+      uploadImages: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload', // used to upload an image
+      requestImage: 'https://contabo.joaopimentel.com/passeio_livre/image_server', // folder where all the images are stored
+      uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload the data of an occurence
+      requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
     }
   }
 
