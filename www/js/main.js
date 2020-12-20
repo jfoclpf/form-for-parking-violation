@@ -188,7 +188,7 @@ app.main = (function (thisModule) {
       return
     }
 
-    var mainMessage = app.text.getMainMessage() + '<br><br>' + app.text.getRegards() + '<br>'
+    var mainMessage = app.text.getMainMessage('body') + '<br><br>' + app.text.getRegards() + '<br>'
     $('#message').html(mainMessage)
     $('#mail_message').show()
 

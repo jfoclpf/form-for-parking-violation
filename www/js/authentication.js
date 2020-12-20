@@ -148,7 +148,7 @@ app.authentication = (function (thisModule) {
       type: 'base64'
     }
 
-    var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage()
+    var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body')
 
     for (var i = 0; i < app.main.imagesUriCleanArray.length; i++) {
       pdfhtml += '<br><br>'
