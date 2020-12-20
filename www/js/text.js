@@ -8,6 +8,7 @@ app.text = (function (thisModule) {
     // Authority
     var authority, authorityName, key
 
+    // app.localization.AUTHORITIES is an array of possible authorities applicable for that area
     for (key in app.localization.AUTHORITIES) {
       if (!Object.prototype.hasOwnProperty.call(app.localization.AUTHORITIES, key)) continue
 
@@ -51,18 +52,7 @@ app.text = (function (thisModule) {
       carmake_model_txt = ''
     }
 
-    // get initial random greeting
-    var greetingsInitial = [
-      'Excelentíssimos senhores',
-      'Excelentíssimos agentes',
-      'Prezados senhores',
-      'Prezados agentes',
-      'Caros senhores',
-      'Ex.mos Senhores',
-      'Ex.mos Senhores Agentes'
-    ]
-
-    var msg = greetingsInitial[Math.floor(Math.random() * greetingsInitial.length)] +
+    var msg = getRandomGreetings + // get initial random greeting
       ' ' + 'da' + ' ' + authority + ', ' + authorityName + ';'
 
     var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
@@ -186,6 +176,44 @@ app.text = (function (thisModule) {
     return true
   }
 
+  function getExtraAuthenticationHTMLText () {
+    var text = 'Refira-se ainda que esta mensagem tem anexo o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presenção nas instalações de V. Exas</b>.<br><br>' +
+    'Tenho pleno conhecimento de que a Autoridade Nacional de Segurança Rodoviária (ANSR) consigna que os agentes de autoridade, mediante denúncia de um cidadão, deverão levantar auto de contraordenação, tornando-se necessário recolher os elementos ' +
+    'probatórios que sustentem formalmente os documentos de denúncia, conforme o n.º 3 do artigo 170.º do Código Estrada (CE). Contudo, de acordo com o n. 1) do artigo 169.º-A do Código da Estrada, introuzido pelo Decreto-Lei n.º 102-B/2020, ' +
+    'os atos processuais podem ser praticados em suporte informático com aposição de assinatura digital qualificada, nomeadamente através do Cartão de Cidadão e da Chave Móvel Digital, o que se verifica no presente caso. ' +
+    'O n. 2 do mesmo artigo 169.º-A do Código da Estrada refere que os atos processuais e documentos assinados nos termos do número anterior substituem e dispensam para quaisquer efeitos a assinatura autografa no processo em suporte de papel. ' +
+    'Logo, considerando as instruções emanadas pela ANSR, o artigo 169.º-A do Código da Estrada introuzido pelo Decreto-Lei n.º 102-B/2020, e o facto de esta mensagem estar assinada com recurso à Chave Móvel Digital, ' +
+    'deverá V. Exa. proceder ao levantamento de auto de contraordenação, de acordo com o artigo 170.º do Código da Estrada, sem a necessidade de que eu me dirija presencialmente às instalações policiais as quais eu endereço esta denúncia.'
+
+    return text
+  }
+
+  // called by historic module
+  function getReminderMessage (occurrence) {
+    var text = `${getRandomGreetings()} da ${occurrence.autoridade}<br><br>` +
+      `No seguimento da denúncia já enviada anteriormente a V. Exas. a propósito da violação do Código da Estrada perpetrada pelo condutor do veículo ${occurrence.carro_marca} ${occurrence.carro_modelo} com a matrícula ${occurrence.carro_matricula}, ` +
+      `na ${occurrence.data_local} n. ${occurrence.data_num_porta}, ${occurrence.data_concelho}, no dia ${(new Date(occurrence.data_data)).toLocaleDateString('pt-PT')} às ${occurrence.data_hora.slice(0, 5)}, ` +
+      `veículo esse que se encontrava ${app.penalties.getDescription(occurrence.base_legal)} em violação ${app.penalties.getLawArticle(occurrence.base_legal)}, ` +
+      `vinha por este meio inquirir V. Exas. sobre o estado do processo respetivo, considerando que já decorreram ${Math.round(((new Date()) - new Date(occurrence.data_data)) / (1000 * 60 * 60 * 24))} dias desde a data da ocorrência.<br><br>` +
+      `Fico a aguardar resposta de V. Exas.<br><br>${getRegards()}`
+
+    return text
+  }
+
+  function getRandomGreetings () {
+    var greetingsInitial = [
+      'Excelentíssimos senhores',
+      'Excelentíssimos agentes',
+      'Prezados senhores',
+      'Prezados agentes',
+      'Caros senhores',
+      'Ex.mos Senhores',
+      'Ex.mos Senhores Agentes'
+    ]
+
+    return greetingsInitial[Math.floor(Math.random() * greetingsInitial.length)]
+  }
+
   // best regards
   // Andrey
   function getRegards () {
@@ -213,18 +241,9 @@ app.text = (function (thisModule) {
     return msgEnd
   }
 
-  function getExtraAuthenticationHTMLText () {
-    var text = 'Refira-se ainda que esta mensagem tem anexo o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presenção nas instalações de V. Exas</b>.<br><br>Tenho pleno conhecimento de que a Autoridade Nacional de Segurança Rodoviária – ANSR – consigna que os agentes de autoridade, mediante denúncia de um cidadão, deverão levantar auto de contraordenação, tornando-se necessário recolher os elementos ' +
-    'probatórios que sustentem formalmente os documentos de denúncia, conforme o n.º 3 do artigo 170.º do Código Estrada (CE).<br><br>Todavia, quero enfatizar que esta denúncia foi enviada com certificado digital presente no cartão de cidadão, o que implica que a presunção de autoria do denunciante é válida, de acordo com a alínea b) do n.º 2 do artigo 4.º da Lei n.º 37/2014 reforçada pela Lei n.º 32/2017 na mesma alínea, número e artigo. Recordo que, de acordo com a referida lei, o uso de ' +
-    'certificado digital, designadamente o constante do cartão de cidadão que aqui se envia, para efeitos de presunção de autoria, é um meio válido para apresentação de atos jurídicos junto dos serviços do Estado, dispensando-se, assim, a assinatura do cidadão e a sua presença física junto dos referidos serviços públicos.<br><br>Ou seja, de acordo com o n.º 1 do artigo 4.º da Lei n.º 37/2014, os atos praticados por um cidadão junto da Administração Pública presumem-se ser da sua autoria, ' +
-    'dispensando-se a sua assinatura, sempre que sejam utilizados meios de autenticação segura para o efeito, meios esses, que de acordo com o número 2 do mesmo artigo, incluem o uso de certificado digital constante do cartão de cidadão.<br><br>Por conseguinte, terá V. Exa. e a Polícia a quem endereço esta queixa, de acordo com a referida alínea b) do n.º 2 do artigo 4.º da Lei n.º 37/2014, <b>de considerar a minha queixa por meios eletrónicos, como legalmente equivalente àquela que ' +
-    'eventualmente poderia fazer presencialmente</b>. Neste sentido, deverá, no seguimento das instruções emanadas pela ANSR, proceder ao levantamento de auto de contraordenação, de acordo com o artigo 170.º do Código da Estrada, sem a necessidade de que eu me dirija presencialmente às instalações policiais as quais eu endereço esta queixa.'
-
-    return text
-  }
-
   /* === Public methods to be returned === */
   thisModule.getMainMessage = getMainMessage
+  thisModule.getReminderMessage = getReminderMessage
   thisModule.isMessageReady = isMessageReady
   thisModule.getRegards = getRegards
   thisModule.getExtraAuthenticationHTMLText = getExtraAuthenticationHTMLText
