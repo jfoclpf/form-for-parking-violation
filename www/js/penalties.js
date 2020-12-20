@@ -215,11 +215,29 @@ app.penalties = (function (thisModule) {
     }
   }
 
+  function getDescription (code) {
+    for (const key in penalties) {
+      if (key === code) {
+        return penalties[key].description
+      }
+    }
+  }
+
+  function getLawArticle (code) {
+    for (const key in penalties) {
+      if (key === code) {
+        return penalties[key].law_article
+      }
+    }
+  }
+
   /* === Public methods to be returned === */
   thisModule.getPenalties = getPenalties
   thisModule.populatesPenalties = populatesPenalties
   thisModule.getSelectedPenaltyCode = getSelectedPenaltyCode
   thisModule.getShortDescription = getShortDescription
+  thisModule.getDescription = getDescription
+  thisModule.getLawArticle = getLawArticle
 
   return thisModule
 })(app.penalties || {})
