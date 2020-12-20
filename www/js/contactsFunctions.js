@@ -156,10 +156,16 @@ app.contactsFunctions = (function (thisModule) {
     }
   }
 
+  function getEmailOfCurrentSelectedAuthority () {
+    var index = $('#authority').val()
+    return app.localization.AUTHORITIES[index].contacto
+  }
+
   thisModule.getEmailByFullName = getEmailByFullName
   thisModule.getPMcontacts = getPMcontacts
   thisModule.getGNRcontacts = getGNRcontacts
   thisModule.getPSPcontacts = getPSPcontacts
+  thisModule.getEmailOfCurrentSelectedAuthority = getEmailOfCurrentSelectedAuthority
 
   return thisModule
 })(app.contactsFunctions || {})
