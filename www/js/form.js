@@ -109,6 +109,75 @@ app.form = (function (thisModule) {
     return true
   }
 
+  // buttons "Add Image"
+  $('#addImg_1, #addImg_2, #addImg_3, #addImg_4').click(function () {
+    // get id, for example #remImg_2
+    var id = $(this).attr('id')
+    console.log('photo id: ' + id)
+    // gets the number of the element, by obtaining the last character of the id
+    var num = id[id.length - 1]
+
+    var callback = function (imgNmbr) {
+      // hides "Adds image" button
+      $('#' + 'addImg_' + imgNmbr).html('<i class="fa fa-edit"></i>')
+      $('#' + 'remImg_' + imgNmbr).show()
+      updateImgContainers()
+    }
+
+    $.jAlert({
+      theme: 'dark_blue',
+      class: 'ja_300px',
+      content: '<b>Método de obtenção da foto:</b>',
+      btns: [
+        {
+          text: '<i class="fa fa-camera" aria-hidden="true"></i>',
+          theme: 'green',
+          class: 'ja_button_with_icon',
+          onClick: function () { app.photos.getPhoto(num, 'camera', callback) }
+        },
+        {
+          text: '<i class="fa fa-folder" aria-hidden="true"></i>',
+          theme: 'green',
+          class: 'ja_button_with_icon',
+          onClick: function () { app.photos.getPhoto(num, 'library', callback) }
+        }
+      ]
+    })
+  })
+
+  // buttons "Remove Image"
+  $('#remImg_1, #remImg_2, #remImg_3, #remImg_4').click(function () {
+    // get id, for example #remImg_2
+    var id = $(this).attr('id')
+    // gets the number of the element, by obtaining the last character of the id
+    var num = id[id.length - 1]
+
+    app.photos.removeImage('myImg_' + num, num)
+    $(this).hide()
+
+    $('#addImg_' + num).html('<i class="fa fa-plus"></i>')
+
+    updateImgContainers()
+  })
+
+  function updateImgContainers () {
+    var numberOfContainers = $('#image_selector .img-container').length
+    var hasShownButton = false
+    for (var i = 0; i < numberOfContainers; i++) {
+      console.log(i)
+      var $this = $('#image_selector .img-container').eq(i)
+      if (!$this.find('img').attr('src')) {
+        if (!hasShownButton) {
+          console.log('show')
+          $this.show()
+          hasShownButton = true
+        } else {
+          $this.hide()
+        }
+      }
+    }
+  }
+
   // removes leading and trailing spaces on every text field "on focus out"
   $(':text').each(function (index) {
     $(this).focusout(function () {
