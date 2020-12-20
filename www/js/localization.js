@@ -158,9 +158,10 @@ app.localization = (function (thisModule) {
 
     geoNames = app.functions.cleanArray(geoNames) // removes empty strings
     console.log('geoNames :', geoNames)
-    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getPMcontacts(geoNames))
-    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getGNRcontacts(geoNames))
-    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, getPSPcontacts(geoNames))
+    // to check JS apply, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, app.contactsFunctions.getPMcontacts(geoNames))
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, app.contactsFunctions.getGNRcontacts(geoNames))
+    thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, app.contactsFunctions.getPSPcontacts(geoNames))
 
     var PSPGeral = {
       authority: 'Polícia',
@@ -242,114 +243,6 @@ app.localization = (function (thisModule) {
       municipality: $.trim(municipality)
     }
     return toReturn
-  }
-
-  // try to get PM contacts based on name of municipality
-  // geoNames is an array with possible names for the area
-  function getPMcontacts (geoNames) {
-    var PMrelevantContacts = []
-    var municipalityName
-    var toAddBool
-
-    for (var key in app.contacts.PM_Contacts) {
-      municipalityName = app.contacts.PM_Contacts[key].nome
-
-      toAddBool = false
-      for (var key2 in geoNames) {
-        toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
-      }
-
-      if (toAddBool) {
-        var PMrelevantContact = {
-          authority: 'Polícia Municipal',
-          authorityShort: 'Polícia Municipal',
-          nome: app.contacts.PM_Contacts[key].nome,
-          contacto: app.contacts.PM_Contacts[key].contacto
-        }
-        PMrelevantContacts.push(PMrelevantContact)
-      }
-    }
-
-    return PMrelevantContacts
-  }
-
-  // try to get GNR contacts based on name of municipality and locality
-  // geoNames is an array with possible names for the area
-  function getGNRcontacts (geoNames) {
-    var GNRrelevantContacts = []
-    var municipalityName
-    var toAddBool
-
-    for (var key in app.contacts.GNR_Contacts) {
-      municipalityName = app.contacts.GNR_Contacts[key].nome
-
-      toAddBool = false
-      for (var key2 in geoNames) {
-        toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
-      }
-
-      if (toAddBool) {
-        var GNRrelevantContact = {
-          authority: 'Guarda Nacional Republicana',
-          authorityShort: 'GNR',
-          nome: app.contacts.GNR_Contacts[key].nome,
-          contacto: app.contacts.GNR_Contacts[key].contacto
-        }
-        GNRrelevantContacts.push(GNRrelevantContact)
-      }
-    }
-
-    return GNRrelevantContacts
-  }
-
-  // try to get PSP contacts based on name of municipality and locality
-  // geoNames is an array with possible names for the area
-  function getPSPcontacts (geoNames) {
-    var PSPrelevantContacts = []
-    var municipalityName
-    var toAddBool
-
-    for (var key in app.contacts.PSP_Contacts) {
-      municipalityName = app.contacts.PSP_Contacts[key].nome
-
-      toAddBool = false
-      for (var key2 in geoNames) {
-        toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
-      }
-
-      if (toAddBool) {
-        var PSPrelevantContact = {
-          authority: 'Polícia de Segurança Pública',
-          authorityShort: 'PSP',
-          nome: app.contacts.PSP_Contacts[key].nome,
-          contacto: app.contacts.PSP_Contacts[key].contacto
-        }
-        PSPrelevantContacts.push(PSPrelevantContact)
-      }
-    }
-
-    return PSPrelevantContacts
-  }
-
-  // for example: "Porto District" overlap with "Porto"
-  // this function is used to try to find similarities between strings
-  // so that one can find the authority applicable for a specific area name
-  function doStringsOverlap (string1, string2) {
-    if (string1 === '' || string2 === '') {
-      return false
-    }
-
-    string1 = $.trim(string1)
-    string1 = string1.toLowerCase()
-    string2 = $.trim(string2)
-    string2 = string2.toLowerCase()
-
-    // indexOf returns -1 when one string doesn't contain the other
-    if (string1.indexOf(string2) !== -1 || string2.indexOf(string1) !== -1) {
-      return true
-    } else {
-      return false
-    }
   }
 
   // removes the loading gif from input fields
