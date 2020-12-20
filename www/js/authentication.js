@@ -156,7 +156,6 @@ app.authentication = (function (thisModule) {
     }
 
     pdfhtml += '<br><br>' + app.text.getExtraAuthenticationHTMLText()
-    pdfhtml += '<br><br>' + app.text.getRegards() + '<br>'
 
     pdfhtml += '</body></html>'
 
@@ -352,7 +351,7 @@ app.authentication = (function (thisModule) {
     app.functions.submitDataToDB()
 
     cordova.plugins.email.open({
-      to: app.main.emailTo, // email addresses for TO field
+      to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
       subject: app.text.getMailMessageWithCMD('subject'), // subject of the email
       body: app.text.getMailMessageWithCMD('body'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
