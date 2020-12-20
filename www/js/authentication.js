@@ -349,30 +349,12 @@ app.authentication = (function (thisModule) {
   }
 
   function sendMailMessageWithCMD () {
-    var mainMessage = 'Exmos. Srs.,<br><br>'
-    mainMessage += 'Envio em anexo ficheiro PDF com uma denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada.<br><br>'
-
-    mainMessage += 'Realço que de acordo com o n.º 1 do artigo 4.º da Lei n.º 37/2014, ' +
-      'os atos praticados por um cidadão junto da Administração Pública presumem-se ser da sua autoria, ' +
-      'dispensando-se a sua assinatura ou presença, ' +
-      'sempre que sejam utilizados meios de autenticação segura para o efeito, ' +
-      'meios esses, que de acordo com o número 2 do mesmo artigo, ' +
-      'incluem o uso de certificado digital constante do cartão de cidadão. ' +
-      'Por conseguinte, no seguimento das instruções emanadas pela ANSR, terão V. Exas. ' +
-      'que emitir a respetiva coima sem que eu tenha que me apresentar junto das instalações de V. Exas.'
-
-    mainMessage += '<br><br>' + app.text.getRegards() + '<br>'
-
-    const carPlateStr = app.functions.getCarPlate()
-    const address = app.functions.getFullAddress()
-    var emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
-
     app.functions.submitDataToDB()
 
     cordova.plugins.email.open({
       to: app.main.emailTo, // email addresses for TO field
-      subject: emailSubject, // subject of the email
-      body: mainMessage, // email body (for HTML, set isHtml to true)
+      subject: app.text.getMailMessageWithCMD('subject'), // subject of the email
+      body: app.text.getMailMessageWithCMD('body'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
     }, function () {
       console.log('email view dismissed')

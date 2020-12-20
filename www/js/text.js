@@ -200,6 +200,42 @@ app.text = (function (thisModule) {
     return text
   }
 
+  function getMailMessageWithCMD (option) {
+    if (option === 'body') {
+      var mainMessage = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';<br><br>' +
+        'Envio em anexo ficheiro PDF com uma denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada.<br><br>'
+
+      mainMessage += 'Refira-se ainda que o PDF em anexo tem o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presenção nas instalações de V. Exas</b>.<br><br>' +
+        'Recordo que a Autoridade Nacional de Segurança Rodoviária (ANSR) consigna que os agentes de autoridade, mediante denúncia de um cidadão, deverão levantar auto de contraordenação, tornando-se necessário recolher os elementos ' +
+        'probatórios que sustentem formalmente os documentos de denúncia, conforme o n.º 3 do artigo 170.º do Código Estrada (CE). Contudo, de acordo com o n. 1) do artigo 169.º-A do Código da Estrada, introuzido pelo Decreto-Lei n.º 102-B/2020, ' +
+        'os atos processuais podem ser praticados em suporte informático com aposição de assinatura digital qualificada, nomeadamente através do Cartão de Cidadão e da Chave Móvel Digital, o que se verifica no presente caso. ' +
+        'O n.º 2 do mesmo artigo 169.º-A do Código da Estrada refere que os atos processuais e documentos assinados nos termos do número anterior substituem e dispensam para quaisquer efeitos a assinatura autografa no processo em suporte de papel.<br><br>' +
+        'Logo, considerando as instruções emanadas pela ANSR, o artigo 169.º-A do Código da Estrada introuzido pelo Decreto-Lei n.º 102-B/2020, e o facto de esta mensagem estar assinada com recurso à Chave Móvel Digital, ' +
+        'deverá V. Exa. proceder ao levantamento de auto de contraordenação, de acordo com o artigo 170.º do Código da Estrada, sem a necessidade de que eu me dirija presencialmente às instalações policiais as quais eu endereço esta denúncia.'
+
+      mainMessage += '<br><br>' + getRegards() + '<br>'
+      return mainMessage
+    } else if (option === 'subject') {
+      const carPlateStr = app.functions.getCarPlate()
+      const address = app.functions.getFullAddress()
+      const emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+      return emailSubject
+    } else {
+      console.error('Error in getMailMessageWithCMD(option) wth option=' + option)
+    }
+  }
+
+  function getNameOfCurrentSelectedAuthority () {
+    // Authority
+    var authority, authorityName
+    var index = $('#authority').val()
+
+    authority = app.localization.AUTHORITIES[index].authority
+    authorityName = app.localization.AUTHORITIES[index].nome
+
+    return authority + ', ' + authorityName
+  }
+
   function getRandomGreetings () {
     var greetingsInitial = [
       'Excelentíssimos senhores',
