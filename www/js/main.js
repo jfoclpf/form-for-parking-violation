@@ -33,7 +33,8 @@ app.main = (function (thisModule) {
       requestImage: 'https://contabo.joaopimentel.com/passeio_livre/image_server', // folder where all the images are stored
       uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload the data of an occurence
       requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
-    }
+    },
+    androidPlayStore: 'https://play.google.com/store/apps/details?id=com.form.parking.violation'
   }
 
   $(document).ready(function () {
@@ -104,6 +105,8 @@ app.main = (function (thisModule) {
     if (DEBUG) {
       app.functions.setDebugValues()
     }
+
+    requestUserAppEvaluation()
   }
 
   // ##############################################################################################################
@@ -117,6 +120,39 @@ app.main = (function (thisModule) {
     console.log('onResume')
     app.authentication.onAppResume()
     app.localization.loadMapsApi()
+  }
+
+  // request user to evaluate this app on Play Store
+  function requestUserAppEvaluation () {
+    if (JSON.parse(window.localStorage.getItem('didUserAlreadyClickedToEvaluatedApp'))) {
+      return
+    }
+
+    const minimumOccurencesToRequestUserToEvaluteApp = 5
+    app.historic.requestNumberOfHistoricOccurrences(
+      (err, result) => {
+        if (!err && result > minimumOccurencesToRequestUserToEvaluteApp) {
+          var msg = 'Reparámos que tem usado esta APP, que é gratuita, de código aberto e sem publicidade. Fizemo-lo dentro do espírito de serviço público.<br><br>' +
+            'Contudo vários utilizadores movidos por uma lógica vingativa, presumivelmente automobilistas cujas ações foram reportadas, têm dado nota negativa (nota 1) a esta APP na Play Store.<br><br>' +
+            'Ajude-nos avaliando o nosso trabalho cívico. Muito obrigados'
+
+          $.jAlert({
+            content: msg,
+            theme: 'dark_blue',
+            btns: [
+              {
+                text: 'Avaliar na Play Sore',
+                theme: 'green',
+                class: 'jButtonAlert',
+                onClick: function () {
+                  window.localStorage.setItem('didUserAlreadyClickedToEvaluatedApp', 'true')
+                  cordova.InAppBrowser.open(thisModule.urls.androidPlayStore, '_system')
+                }
+              }
+            ]
+          })
+        }
+      })
   }
 
   // when user clicks "generate_email"

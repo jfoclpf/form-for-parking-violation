@@ -30,6 +30,27 @@ app.historic = (function (thisModule) {
     })
   }
 
+  function requestNumberOfHistoricOccurrences (callback) {
+    const uuid = device.uuid
+
+    console.log('Fetching historic with uuid ' + uuid)
+    $.ajax({
+      url: requestHistoricUrl,
+      type: 'GET',
+      data: { uuid: uuid },
+      crossDomain: true,
+      success: function (data) {
+        console.log('Historic obtained from database with success. Returned: ', data)
+        callback(null, data.length)
+      },
+      error: function (error) {
+        console.error('There was an error getting the historic for the following uuid: ' + uuid)
+        console.error(error)
+        callback(error)
+      }
+    })
+  }
+
   function insertFetchedDataIntoHistoric (data) {
     // resets and cleans <div id="historic">
     $('#historic').find('*').off() // removes all event handlers
@@ -226,6 +247,7 @@ app.historic = (function (thisModule) {
   }
 
   thisModule.updateHistoric = updateHistoric
+  thisModule.requestNumberOfHistoricOccurrences = requestNumberOfHistoricOccurrences
 
   return thisModule
 })(app.historic || {})
