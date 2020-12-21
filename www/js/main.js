@@ -81,7 +81,7 @@ app.main = (function (thisModule) {
     window.open = cordova.InAppBrowser.open
 
     // information stored in variable window.localStorage
-    app.form.loadsPersonalInfo()
+    app.personalInfo.loadsPersonalInfo()
 
     // populates HTML select according to the information on penalties.js file
     app.penalties.populatesPenalties()
@@ -214,7 +214,7 @@ app.main = (function (thisModule) {
   function sendMailMessageWithoutCMD () {
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
-    app.functions.submitDataToDB()
+    app.dbServerLink.submitDataToDB()
 
     app.functions.updateDateAndTime()
 

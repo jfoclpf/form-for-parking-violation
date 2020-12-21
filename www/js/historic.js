@@ -204,7 +204,7 @@ app.historic = (function (thisModule) {
     var downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
       // externalCacheDirectory ("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/") is indeed normally internal memory,
       // see https://www.reddit.com/r/Android/comments/496sn3/lets_clear_up_the_confusion_regarding_storage_in/
-      app.functions.downloadFileToDevice(fullImgUrl, fileName, cordova.file.externalCacheDirectory,
+      app.file.downloadFileToDevice(fullImgUrl, fileName, cordova.file.externalCacheDirectory,
         (err, localFileName) => {
           if (err) {
             photosDeferred[photoIndex].resolve(null)

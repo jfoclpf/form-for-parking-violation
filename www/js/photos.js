@@ -161,7 +161,7 @@ app.photos = (function (thisModule) {
             if (plateArray.length === 3) {
               plateArray[0] = plateArray[0].slice(-2)
               plateArray[2] = plateArray[2].slice(0, 2)
-              if (app.functions.isArrayAValidPlate(plateArray)) {
+              if (app.form.isArrayAValidPlate(plateArray)) {
                 success(plateArray)
                 return
               }
@@ -177,7 +177,7 @@ app.photos = (function (thisModule) {
             if (plateArray.length === 3) {
               plateArray[0] = plateArray[0].slice(-2)
               plateArray[2] = plateArray[2].slice(0, 2)
-              if (app.functions.isArrayAValidPlate(plateArray)) {
+              if (app.form.isArrayAValidPlate(plateArray)) {
                 success(plateArray)
                 return
               }
@@ -273,7 +273,7 @@ app.photos = (function (thisModule) {
   }
 
   function resizeImage (imageUri, callback) {
-    app.functions.resizeImage(imageUri, function (resizedImageUri, err) {
+    app.file.resizeImage(imageUri, function (resizedImageUri, err) {
       if (err) {
         // could not resize image
         callback(imageUri, Error(err))

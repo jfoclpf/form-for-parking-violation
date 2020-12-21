@@ -173,7 +173,7 @@ app.authentication = (function (thisModule) {
   }
 
   function getPdfFileName () {
-    var carPlate = app.functions.getCarPlate()
+    var carPlate = app.form.getCarPlate()
 
     var fileNameExtra
     if (carPlate) {
@@ -348,7 +348,7 @@ app.authentication = (function (thisModule) {
   }
 
   function sendMailMessageWithCMD () {
-    app.functions.submitDataToDB()
+    app.dbServerLink.submitDataToDB()
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field

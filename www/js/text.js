@@ -21,7 +21,7 @@ app.text = (function (thisModule) {
         }
       }
 
-      var carPlateStr = app.functions.getCarPlate()
+      var carPlateStr = app.form.getCarPlate()
 
       // texto para marca e modelo
       var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
@@ -74,8 +74,8 @@ app.text = (function (thisModule) {
 
       return message
     } else if (option === 'subject') {
-      const carPlateStr = app.functions.getCarPlate()
-      const address = app.functions.getFullAddress()
+      const carPlateStr = app.form.getCarPlate()
+      const address = app.form.getFullAddress()
 
       return `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
     } else {
@@ -123,8 +123,8 @@ app.text = (function (thisModule) {
       mainMessage += '<br><br>' + getRegards() + '<br>'
       return mainMessage
     } else if (option === 'subject') {
-      const carPlateStr = app.functions.getCarPlate()
-      const address = app.functions.getFullAddress()
+      const carPlateStr = app.form.getCarPlate()
+      const address = app.form.getFullAddress()
       const emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
       return emailSubject
     } else {

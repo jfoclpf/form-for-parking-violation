@@ -3,26 +3,61 @@
 /* global app, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
 
 app.form = (function (thisModule) {
-  // date field
-  $.datepicker.setDefaults({
-    dateFormat: 'dd-mm-yy',
-    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-    monthNames: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
-  })
-  $('#date').datepicker()
+  /* ********************************************************************** */
+  /* ******************* FORM FIELDS FETCHING FUNCTIONS ******************* */
+  // get carplate
+  function getCarPlate () {
+    var plate_str = $('#plate').val()
+    plate_str = plate_str.toUpperCase() // force place upcase
+    plate_str = plate_str.replace(/\u2013|\u2014/g, '-') // it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
 
-  // populates personal in fields information if available in storage
-  function loadsPersonalInfo () {
-    $('.personal_info').each(function () {
-      var id = $(this).attr('id')
-      var value = window.localStorage.getItem(id)
-      if (value) {
-        $(this).val(value)
-      }
-    })
+    return plate_str
   }
 
+  function getCarMake () {
+    return $('#carmake').val()
+  }
+
+  function getCarModel () {
+    return $('#carmodel').val()
+  }
+
+  function getDateYYYY_MM_DD () {
+    // returns format YYYY-MM-DD
+    return $.datepicker.formatDate("yy'-'mm'-'dd", $('#date').datepicker('getDate'))
+  }
+
+  function getTimeHH_MM () {
+    return $('#time').val()
+  }
+
+  function getFullAddress () {
+    const streetNumber = getStreetNumber()
+    if (streetNumber) {
+      return `${getStreetName()} n. ${streetNumber}, ${getLocality()}`
+    } else {
+      return `${getStreetName()}, ${getLocality()}`
+    }
+  }
+
+  function getLocality () {
+    return $('#locality').val()
+  }
+
+  function getStreetName () {
+    return $('#street').val()
+  }
+
+  function getStreetNumber () {
+    return $('#street_number').val() ? $('#street_number').val() : ''
+  }
+
+  function getAuthority () {
+    return $('#authority option:selected').text()
+  }
+
+  /* ********************************************************************** */
+  /* ******************* IS FORM CORRECTLY FILLED  ************************ */
   // returns true if all the fields and inputs in the form are filled in and ready to write the message
   function isMessageReady () {
     if (DEBUG) {
@@ -64,7 +99,7 @@ app.form = (function (thisModule) {
 
     // detects if the name is correctly filled in
     var Name = $('#name').val()
-    if (!app.functions.isFullNameOK(Name) && !DEBUG) {
+    if (!app.personalInfo.isFullNameOK(Name) && !DEBUG) {
       $.jAlert({
         title: 'Erro no nome!',
         theme: 'red',
@@ -83,7 +118,7 @@ app.form = (function (thisModule) {
     }
 
     // detects if the Portuguese car plate is correctly filled
-    if (!$('#free_plate').is(':checked') && !app.functions.isCarPlateOK() && !DEBUG) {
+    if (!$('#free_plate').is(':checked') && !isCarPlateOK() && !DEBUG) {
       $.jAlert({
         title: 'Erro na matrícula!',
         theme: 'red',
@@ -109,6 +144,22 @@ app.form = (function (thisModule) {
     return true
   }
 
+  /* ************** GENERAL FORM HANDLERS ******************* */
+  // removes leading and trailing spaces on every text field "on focus out"
+  $(':text').each(function (index) {
+    $(this).focusout(function () {
+      var text = $(this).val()
+      text = $.trim(text)
+      text = text.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
+      $(this).val(text)
+    })
+  })
+
+  /* *************************************************************************** */
+  /* ********************* MAIN FORM HANDLERS ********************************** */
+
+  /* ********************************************************************** */
+  /* *********************** IMAGES/PHOTOS ******************************** */
   // buttons "Add Image"
   $('#addImg_1, #addImg_2, #addImg_3, #addImg_4').click(function () {
     // get id, for example #remImg_2
@@ -178,69 +229,15 @@ app.form = (function (thisModule) {
     }
   }
 
-  // removes leading and trailing spaces on every text field "on focus out"
-  $(':text').each(function (index) {
-    $(this).focusout(function () {
-      var text = $(this).val()
-      text = $.trim(text)
-      text = text.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
-      $(this).val(text)
-    })
-  })
-
-  // save to storage for later usage on every select
-  $('select.personal_info').each(function () {
-    $(this).on('change', function () {
-      var id = $(this).attr('id')
-      console.log(id)
-      var value = $(this).val()
-      window.localStorage.setItem(id, value)
-    })
-  })
-
-  // save to storage for later usage on every "focus out" of text input fields
-  $('input.personal_info').each(function () {
-    $(this).focusout(function () {
-      var id = $(this).attr('id')
-      console.log(id)
-      var value = $(this).val()
-      value = $.trim(value)
-      value = value.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
-      window.localStorage.setItem(id, value)
-
-      $('button#save_personal_data').show(300).hide(900)
-    })
-  })
-
-  // as the user writes Postal Code, detects if the name is ok
-  $('#postal_code').on('input', function () {
-    if (!app.functions.isPostalCodeOK()) {
-      $(this).css('border-color', 'red')
+  /* ********************************************************************** */
+  /* *********************** VEHICLE PLATE ******************************** */
+  $('#free_plate').change(function () {
+    if (this.checked) {
+      setAnyPlateFormat()
     } else {
-      $(this).css('border-color', '')
+      setPortuguesePlateInput()
     }
-
-    $(this).val(function (index, value) {
-      if (value.length < 8) { // length of 0000-000
-        return value.toUpperCase().replace(/[^0-9]/g, '').replace(/(.{4})/g, '$1\u2013')
-      } else {
-        return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/[^0-9]/g, '')
-      }
-    })
   })
-
-  function setPortuguesePlateInput () {
-    $('#plate').bind('input', plateOnInput)
-    $('#plate').attr('placeholder', 'XX\u2013XX\u2013XX')
-    $('#plate').addClass('mandatory')
-    $('#plate').attr('maxlength', '8')
-
-    if (!app.functions.isCarPlateOK() && !DEBUG) {
-      $('#plate').css('border-color', 'red')
-    } else {
-      $('#plate').css('border-color', '')
-    }
-  }
 
   // matrícula estrangeira, matrículas da GNR, etc.
   function setAnyPlateFormat () {
@@ -251,14 +248,105 @@ app.form = (function (thisModule) {
     $('#plate').css('border-color', '')
   }
 
-  $('#free_plate').change(function () {
-    if (this.checked) {
-      setAnyPlateFormat()
-    } else {
-      setPortuguesePlateInput()
-    }
-  });
+  function setPortuguesePlateInput () {
+    $('#plate').bind('input', plateOnInput)
+    $('#plate').attr('placeholder', 'XX\u2013XX\u2013XX')
+    $('#plate').addClass('mandatory')
+    $('#plate').attr('maxlength', '8')
 
+    if (!isCarPlateOK() && !DEBUG) {
+      $('#plate').css('border-color', 'red')
+    } else {
+      $('#plate').css('border-color', '')
+    }
+  }
+
+  $('#plate').bind('input', plateOnInput)
+
+  function plateOnInput () {
+    $(this).val(function (index, value) {
+      if (value.length < 8) { // length of XX-XX-XX
+        return value.toUpperCase().replace(/\W/gi, '').replace(/(.{2})/g, '$1\u2013')
+      } else {
+        return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '')
+      }
+    })
+    if (!isCarPlateOK()) {
+      $(this).css('border-color', 'red')
+    } else {
+      $(this).css('border-color', '')
+      fillCarMakeAndModelFromPlate($(this).val())
+    }
+  }
+
+  // detects if the car plate is correctly filled in
+  function isCarPlateOK () {
+    var plateArray = $('#plate').val().split(/[-–—]/)
+    return isArrayAValidPlate(plateArray)
+  }
+
+  // check if array is valid, p.e. ['AA','99','DD']
+  function isArrayAValidPlate (arrayPlate) {
+    var plateString = arrayPlate.join('-')
+    // four valid plate types: AA-00-00, 00-00-AA, 00-AA-00, AA-00-AA
+    // see: https://pt.stackoverflow.com/a/431398/101186
+    var expr = RegExp(/(([A-Z]{2}-[0-9]{2}-[0-9]{2})|([0-9]{2}-[0-9]{2}-[A-Z]{2})|([0-9]{2}-[A-Z]{2}-[0-9]{2})|([A-Z]{2}-[0-9]{2}-[A-Z]{2}))$/)
+
+    return expr.test(plateString)
+  }
+
+  var storedRequestedCarInfo // to avoid doing many successive requests for the same plate
+  var requestGoingOn = false // to avoid parallel requests
+
+  function fillCarMakeAndModelFromPlate (_plate) {
+    // avoid parallel requests
+    if (requestGoingOn) {
+      return
+    } else {
+      requestGoingOn = true
+    }
+
+    // replace longdash by normal dash for the API
+    var plate = _plate.replaceAll('\u2013', '-')
+
+    if (plate === '00-XX-00') { // used in general debug
+      return
+    }
+
+    if (storedRequestedCarInfo && plate === storedRequestedCarInfo.license_plate) {
+      $('#carmake').val(storedRequestedCarInfo.manufacturer).trigger('input')
+      $('#carmodel').val(storedRequestedCarInfo.model).trigger('input')
+      requestGoingOn = false
+    } else {
+      // request from server
+      var requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
+
+      $.ajax({
+        type: 'GET',
+        url: requestUrl,
+        dataType: 'json',
+        headers: {
+          'x-api-key': CARROS_MATRICULAS_API['x-api-key']
+        },
+        success: function (carInfo) {
+          console.log(carInfo)
+          if (!carInfo.error && carInfo.manufacturer) {
+            storedRequestedCarInfo = carInfo
+            $('#carmake').val(carInfo.manufacturer).trigger('input')
+            $('#carmodel').val(carInfo.model).trigger('input')
+          }
+          requestGoingOn = false
+        },
+        error: function () {
+          console.error('error requesting on: ' + requestUrl)
+          requestGoingOn = false
+        }
+      })
+    }
+  }
+
+  /* ********************************************************************** */
+  /* ******************** CAR MAKE AND MODEL ****************************** */
   // Car Make and Car Model dealing with input
   // Car List and Models are got from www/js/res/car-list.js
   (function () {
@@ -345,48 +433,6 @@ app.form = (function (thisModule) {
     })
   }())
 
-  $('#id_number').on('input', function () {
-    if ($(this).val() === '' && !DEBUG) {
-      $(this).css('border-color', 'red')
-    } else {
-      $(this).css('border-color', '')
-    }
-  })
-
-  $('#address').on('input', function () {
-    if ($(this).val() === '' && !DEBUG) {
-      $(this).css('border-color', 'red')
-    } else {
-      $(this).css('border-color', '')
-    }
-  })
-
-  $('#address_city').on('input', function () {
-    if ($(this).val() === '' && !DEBUG) {
-      $(this).css('border-color', 'red')
-    } else {
-      $(this).css('border-color', '')
-    }
-  })
-
-  $('#plate').bind('input', plateOnInput)
-
-  function plateOnInput () {
-    $(this).val(function (index, value) {
-      if (value.length < 8) { // length of XX-XX-XX
-        return value.toUpperCase().replace(/\W/gi, '').replace(/(.{2})/g, '$1\u2013')
-      } else {
-        return value.toUpperCase().substr(0, 7) + value.toUpperCase().substr(7, 8).replace(/\W/gi, '')
-      }
-    })
-    if (!app.functions.isCarPlateOK()) {
-      $(this).css('border-color', 'red')
-    } else {
-      $(this).css('border-color', '')
-      fillCarMakeAndModelFromPlate($(this).val())
-    }
-  }
-
   $('#carmake').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -403,6 +449,18 @@ app.form = (function (thisModule) {
     }
   })
 
+  /* ********************************************************************** */
+  /* ********************* DATE OF OCCURRENCE ***************************** */
+  $.datepicker.setDefaults({
+    dateFormat: 'dd-mm-yy',
+    dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    monthNames: ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+  })
+  $('#date').datepicker()
+
+  /* ********************************************************************** */
+  /* ********************* LOCAL OF OCCURRENCE **************************** */
   $('#locality').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -431,60 +489,22 @@ app.form = (function (thisModule) {
     }
   })
 
-  var storedRequestedCarInfo // to avoid doing many successive requests for the same plate
-  var requestGoingOn = false // to avoid parallel requests
-
-  function fillCarMakeAndModelFromPlate (_plate) {
-    // avoid parallel requests
-    if (requestGoingOn) {
-      return
-    } else {
-      requestGoingOn = true
-    }
-
-    // replace longdash by normal dash for the API
-    var plate = _plate.replaceAll('\u2013', '-')
-
-    if (plate === '00-XX-00') { // used in general debug
-      return
-    }
-
-    if (storedRequestedCarInfo && plate === storedRequestedCarInfo.license_plate) {
-      $('#carmake').val(storedRequestedCarInfo.manufacturer).trigger('input')
-      $('#carmodel').val(storedRequestedCarInfo.model).trigger('input')
-      requestGoingOn = false
-    } else {
-      // request from server
-      var requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
-
-      $.ajax({
-        type: 'GET',
-        url: requestUrl,
-        dataType: 'json',
-        headers: {
-          'x-api-key': CARROS_MATRICULAS_API['x-api-key']
-        },
-        success: function (carInfo) {
-          console.log(carInfo)
-          if (!carInfo.error && carInfo.manufacturer) {
-            storedRequestedCarInfo = carInfo
-            $('#carmake').val(carInfo.manufacturer).trigger('input')
-            $('#carmodel').val(carInfo.model).trigger('input')
-          }
-          requestGoingOn = false
-        },
-        error: function () {
-          console.error('error requesting on: ' + requestUrl)
-          requestGoingOn = false
-        }
-      })
-    }
-  }
-
   /* === Public methods to be returned === */
-  thisModule.loadsPersonalInfo = loadsPersonalInfo
-  thisModule.setPortuguesePlateInput = setPortuguesePlateInput
+  /* === Form field fetching functions === */
+  thisModule.getCarPlate = getCarPlate
+  thisModule.getCarMake = getCarMake
+  thisModule.getCarModel = getCarModel
+  thisModule.getDateYYYY_MM_DD = getDateYYYY_MM_DD
+  thisModule.getTimeHH_MM = getTimeHH_MM
+  thisModule.getFullAddress = getFullAddress
+  thisModule.getLocality = getLocality
+  thisModule.getStreetName = getStreetName
+  thisModule.getStreetNumber = getStreetNumber
+  thisModule.getAuthority = getAuthority
+  /* ======================================== */
   thisModule.isMessageReady = isMessageReady
+  thisModule.setPortuguesePlateInput = setPortuguesePlateInput
+  thisModule.isArrayAValidPlate = isArrayAValidPlate
 
   return thisModule
 })(app.form || {})
