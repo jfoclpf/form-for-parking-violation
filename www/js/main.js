@@ -11,7 +11,7 @@ https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
 var AUTHENTICATION_WITH_IN_APP_BROWSER = false
 
 console.log('AUTHENTICATION_WITH_IN_APP_BROWSER: ', AUTHENTICATION_WITH_IN_APP_BROWSER)
-console.successMessage = 'color: green; font-weight:bold'
+console.success = (message) => { console.log('%c ' + message, 'color: green; font-weight:bold') }
 
 var app = {}
 

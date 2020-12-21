@@ -395,7 +395,7 @@ app.functions = (function (thisModule) {
         dir.getFile(filename, { create: true }, function (file) {
           file.createWriter(function (fileWriter) {
             fileWriter.write(DataBlob)
-            console.log(`%c File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + filename}`, console.successMessage)
+            console.success(`File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + filename}`)
             callback(null, cordovaFileSystem + filename)
           }, function (err) {
             console.error(`Error downloading file from url: ${fileurl} to cordovaFileSystem: ${cordovaFileSystem}`)
@@ -529,7 +529,8 @@ app.functions = (function (thisModule) {
       dataType: 'json',
       crossDomain: true,
       success: function (data) {
-        console.log('Values inserted into database with success. Returned: ', data)
+        console.success('Values inserted into database with success.')
+        console.log('Returned:', data)
       },
       error: function (error) {
         console.error('There was an error submitting the following object into the database: ', databaseObj)
