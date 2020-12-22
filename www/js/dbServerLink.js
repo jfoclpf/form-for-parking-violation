@@ -131,7 +131,7 @@ app.dbServerLink = (function (thisModule) {
       dataType: 'json',
       crossDomain: true,
       success: function (data) {
-        console.success('Values inserted into database with success.')
+        console.success('Status of processed by authority updated in database with success.')
         console.log('Returned:', data)
         if (typeof callback === 'function') { callback() }
       },
