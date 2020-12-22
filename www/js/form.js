@@ -108,7 +108,7 @@ app.form = (function (thisModule) {
       return false
     }
 
-    if (!app.functions.isPostalCodeOK() && !DEBUG) {
+    if (!app.personalInfo.isPostalCodeOK() && !DEBUG) {
       $.jAlert({
         title: 'Erro no Código Postal!',
         theme: 'red',

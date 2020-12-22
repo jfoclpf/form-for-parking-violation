@@ -150,6 +150,7 @@ app.personalInfo = (function (thisModule) {
 
   thisModule.loadsPersonalInfo = loadsPersonalInfo
   thisModule.isFullNameOK = isFullNameOK
+  thisModule.isPostalCodeOK = isPostalCodeOK
 
   return thisModule
 })(app.personalInfo || {})
