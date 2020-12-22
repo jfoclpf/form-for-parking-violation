@@ -2,10 +2,10 @@
 /* global app, device, $, FileUploadOptions, FileTransfer, DEBUG */
 
 app.dbServerLink = (function (thisModule) {
-  function submitDataToDB () {
-    const uploadImagesUrl = app.main.urls.databaseServer.uploadImages
-    const uploadOccurenceUrl = app.main.urls.databaseServer.uploadOccurence
+  const uploadImagesUrl = app.main.urls.databaseServer.uploadImages
+  const uploadOccurenceUrl = app.main.urls.databaseServer.uploadOccurence
 
+  function submitDataToDB () {
     const carPlate = app.form.getCarPlate()
     const dateYYYY_MM_DD = app.form.getDateYYYY_MM_DD()
     const timeHH_MM = app.form.getTimeHH_MM()
@@ -40,6 +40,7 @@ app.dbServerLink = (function (thisModule) {
     }
 
     var databaseObj = {
+      table_row_uuid: generateUuid(),
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
       foto1: imgFileNames[0],
@@ -117,7 +118,42 @@ app.dbServerLink = (function (thisModule) {
     return result
   }
 
+  // for a certain occurence it sets that it was dealt, or not, by authority
+  function setProcessedByAuthorityStatus (occurence, status, callback) {
+    var databaseObj = Object.assign({}, occurence) // cloning Object
+    databaseObj.processada_por_autoridade = status ? 1 : 0
+
+    $.ajax({
+      url: uploadOccurenceUrl,
+      type: 'POST',
+      data: JSON.stringify(databaseObj),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      crossDomain: true,
+      success: function (data) {
+        console.success('Values inserted into database with success.')
+        console.log('Returned:', data)
+        if (typeof callback === 'function') { callback() }
+      },
+      error: function (error) {
+        console.error('There was an error submitting the following object into the database: ', databaseObj)
+        console.error(error)
+        if (typeof callback === 'function') { callback(error) }
+      }
+    })
+  }
+
+  function generateUuid () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0
+      var v = c === 'x' ? r : (r & 0x3 | 0x8)
+      return v.toString(16)
+    })
+  }
+
+  console.log(generateUuid())
   thisModule.submitDataToDB = submitDataToDB
+  thisModule.setProcessedByAuthorityStatus = setProcessedByAuthorityStatus
 
   return thisModule
 })(app.dbServerLink || {})

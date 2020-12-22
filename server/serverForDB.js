@@ -35,17 +35,25 @@ app.post(submissionsUrl, function (req, res) {
   debug('\nInserting user data into ' +
                 'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
-  // builds sql query to insert user data
-  var queryInsert = 'INSERT INTO ' + DBInfo.db_tables.denuncias + ' ('
-  var databaseKeys = Object.keys(databaseObj)
-  for (let i = 0; i < databaseKeys.length; i++) {
-    queryInsert += databaseKeys[i] + (i !== databaseKeys.length - 1 ? ', ' : ')')
+  var query
+  if (!Object.prototype.hasOwnProperty.call(databaseObj, 'processada_por_autoridade')) {
+    // builds sql query to insert user data, i.e., a new line/entry in the table
+    query = 'INSERT INTO ' + DBInfo.db_tables.denuncias + ' ('
+    var databaseKeys = Object.keys(databaseObj)
+    for (let i = 0; i < databaseKeys.length; i++) {
+      query += databaseKeys[i] + (i !== databaseKeys.length - 1 ? ', ' : ')')
+    }
+    query += ' ' + 'VALUES('
+    for (let i = 0; i < databaseKeys.length; i++) {
+      query += '\'' + databaseObj[databaseKeys[i]] + '\'' + (i !== databaseKeys.length - 1 ? ', ' : ')')
+    }
+  } else {
+    // when field 'processada_por_autoridade' is present it means just an update of a previous existing entry/line
+    query = `UPDATE ${DBInfo.db_tables.denuncias} SET processada_por_autoridade=${databaseObj.processada_por_autoridade} ` +
+            `WHERE PROD=${databaseObj.PROD} AND uuid='${databaseObj.uuid}' AND foto1='${databaseObj.foto1}' AND carro_matricula='${databaseObj.carro_matricula}'`
   }
-  queryInsert += ' ' + 'VALUES('
-  for (let i = 0; i < databaseKeys.length; i++) {
-    queryInsert += '\'' + databaseObj[databaseKeys[i]] + '\'' + (i !== databaseKeys.length - 1 ? ', ' : ')')
-  }
-  debug(sqlFormatter.format(queryInsert))
+
+  debug(sqlFormatter.format(query))
 
   var db = mysql.createConnection(DBInfo)
 
@@ -63,7 +71,7 @@ app.post(submissionsUrl, function (req, res) {
       })
     },
     function (next) {
-      db.query(queryInsert, function (err, results, fields) {
+      db.query(query, function (err, results, fields) {
         if (err) {
           // error handling code goes here
           debug('Error inserting user data into database: ', err)
@@ -71,7 +79,7 @@ app.post(submissionsUrl, function (req, res) {
           next(Error(err))
         } else {
           debug('User data successfully added into ' +
-                            'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias + '\n\n')
+                'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias + '\n\n')
           debug('Result from db query is : ', results)
           res.send(results)
           next()

@@ -10,6 +10,8 @@ app.historic = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
   const requestImageUrl = app.main.urls.databaseServer.requestImage
 
+  var historicData
+
   function updateHistoric () {
     const uuid = device.uuid
 
@@ -20,8 +22,10 @@ app.historic = (function (thisModule) {
       data: { uuid: uuid },
       crossDomain: true,
       success: function (data) {
-        console.log('Historic obtained from database with success. Returned: ', data)
-        insertFetchedDataIntoHistoric(data)
+        console.success('Historic obtained from database with success.')
+        console.log('Returned: ', data)
+        historicData = data
+        insertFetchedDataIntoHistoric()
       },
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
@@ -40,7 +44,8 @@ app.historic = (function (thisModule) {
       data: { uuid: uuid },
       crossDomain: true,
       success: function (data) {
-        console.log('Historic obtained from database with success. Returned: ', data)
+        console.success('Historic obtained from database with success.')
+        console.log('Returned: ', data)
         callback(null, data.length)
       },
       error: function (error) {
@@ -51,12 +56,12 @@ app.historic = (function (thisModule) {
     })
   }
 
-  function insertFetchedDataIntoHistoric (data) {
+  function insertFetchedDataIntoHistoric () {
     // resets and cleans <div id="historic">
     $('#historic').find('*').off() // removes all event handlers
     $('#historic').empty()
 
-    if (data.length === 0) {
+    if (historicData.length === 0) {
       $('#historic').append('<center>Sem resultados</center>')
       return
     }
@@ -68,8 +73,8 @@ app.historic = (function (thisModule) {
 
     // since the results are stored as they are submitted, they are ordered by time
     // we want to show on top the most recent ones, i.e., the last on the array
-    for (var i = data.length - 1; i >= 0; i--) {
-      const el = data[i]
+    for (var i = historicData.length - 1; i >= 0; i--) {
+      const el = historicData[i]
       $('#historic').append(`
         <div class="p-3 border-element historic_element" data-index="${i}">
           <div class="row">
@@ -89,6 +94,11 @@ app.historic = (function (thisModule) {
           </div>
         </div>`
       )
+
+      if (historicData[i].processada_por_autoridade) {
+        $(`#historic button[data-index="${i}"].history-refresh-button`).hide()
+        $(`#historic button[data-index="${i}"].history-check-button`).removeClass('btn-primary').addClass('btn-success')
+      }
     }
 
     // deals with button to send refresh message
@@ -105,7 +115,7 @@ app.historic = (function (thisModule) {
             theme: 'green',
             class: 'ja_button_with_icon',
             onClick: function () {
-              sendReminderEmail(data[i])
+              sendReminderEmail(historicData[i])
             }
           },
           {
@@ -117,11 +127,12 @@ app.historic = (function (thisModule) {
       })
     })
 
-    // deals with button to set status as processed
+    // deals with button to set status as processed or not processed
     $('#historic .history-check-button').click(function (event) {
       event.stopPropagation()
 
       const $thisButton = $(this)
+      const i = parseInt($(this).data('index'))
 
       if ($thisButton.hasClass('btn-primary')) {
         $.jAlert({
@@ -136,6 +147,7 @@ app.historic = (function (thisModule) {
               onClick: function () {
                 $thisButton.siblings('.history-refresh-button').hide()
                 $thisButton.removeClass('btn-primary').addClass('btn-success')
+                app.dbServerLink.setProcessedByAuthorityStatus(historicData[i], true)
               }
             },
             {
@@ -158,6 +170,7 @@ app.historic = (function (thisModule) {
               onClick: function () {
                 $thisButton.siblings('.history-refresh-button').show()
                 $thisButton.removeClass('btn-success').addClass('btn-primary')
+                app.dbServerLink.setProcessedByAuthorityStatus(historicData[i], false)
               }
             },
             {
@@ -182,8 +195,8 @@ app.historic = (function (thisModule) {
 
         // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
         for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
-          if (data[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
-            const fullImgUrl = requestImageUrl + '/' + data[i]['foto' + photoIndex]
+          if (historicData[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
+            const fullImgUrl = requestImageUrl + '/' + historicData[i]['foto' + photoIndex]
             // check if the image really exists
             $.get(fullImgUrl).done(() => {
               $photos.append(`<img src="${fullImgUrl}">`)
