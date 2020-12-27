@@ -21,6 +21,6 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keyst
 zipalign -v 4 app-release-unsigned.apk formParkingViolation.apk
 
 cd ../../../../../../..
-rm formParkingViolation.apk
+rm dist/formParkingViolation.apk
 
-cp platforms/android/app/build/outputs/apk/release/formParkingViolation.apk .
+cp platforms/android/app/build/outputs/apk/release/formParkingViolation.apk dist/

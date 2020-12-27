@@ -23,6 +23,6 @@ cd platforms/android/app/build/outputs/bundle/release/
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass $PASS app-release.aab autocosts &&
 
 cd ../../../../../../..
-rm formParkingViolation.aab
+rm dist/formParkingViolation.aab
 
-cp platforms/android/app/build/outputs/bundle/release/app-release.aab ./formParkingViolation.aab
+cp platforms/android/app/build/outputs/bundle/release/app-release.aab dist/formParkingViolation.aab
