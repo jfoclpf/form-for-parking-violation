@@ -75,7 +75,8 @@
       "cordova-plugin-compat": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-is-debug": {}
     },
     "platforms": [
       "browser",
@@ -84,6 +85,7 @@
   },
   "devDependencies": {
     "cordova-android": "^9.0.0",
+    "cordova-plugin-is-debug": "^1.0.0",
     "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-set-version": "^10.0.0",
     "html-minifier": "^4.0.0",
