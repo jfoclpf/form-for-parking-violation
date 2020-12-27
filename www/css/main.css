@@ -139,7 +139,7 @@ button#save_personal_data {
 
 .loading {
   background-color: #ffffff;
-  background-image: url("res/loading.gif") !important;
+  background-image: url("res/images/loading.gif") !important;
   background-size: 25px 25px;
   background-position:right center;
   background-repeat: no-repeat;
