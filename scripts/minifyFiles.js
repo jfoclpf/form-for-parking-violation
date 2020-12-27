@@ -1,7 +1,5 @@
-/* NodeJS script that minifies files stored in the bin/ folder replacing their content
-  with the minfied version, that is, it minifies all js files that will be sent to the client side,
-  namely on the build/client/ directory. These are thus .js files that will be sent from
-  the server to the client. It also concatenates somes files, for better bandwith performance
+/* NodeJS script that minifies files stored from www/ to platforms/android/app/src/main/assets/www
+   It minifies all js, css and html files that will be sent to android build.
 */
 
 // node/npm includes
