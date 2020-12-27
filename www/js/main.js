@@ -54,27 +54,35 @@ app.main = (function (thisModule) {
 
     window.screen.orientation.lock('portrait')
 
-    // DEBUG = isDebug
-    console.log('DEBUG: ', DEBUG)
-
-    if (!DEBUG) {
-      console.log = () => {}
-      console.warn = () => {}
-    }
-    init()
+    cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
+      // in release mode the app is not debuggable (in chrome), thus I may stil want to debug with DEBUG=false
+      // but in release mode I want to be sure that DEBUG is always false
+      if (!isDebug) { // release mode
+        DEBUG = false
+        console.log = () => {}
+        console.warn = () => {}
+        console.error = () => {}
+      }
+      init()
+    }, function (err) {
+      console.error(err)
+      init()
+    })
   }
 
-  // if by any strange reason onDeviceReady doesn't trigger, load init() anyway
+  // if by any strange reason onDeviceReady doesn't trigger after 5 seconds, load init() anyway
   setTimeout(function () {
     if (!wasInit) {
       init()
     }
-  }, 3000)
+  }, 5000)
 
   // when the page loads (only on smartphone)
   function init () {
     console.log('init() started')
     wasInit = true
+
+    console.log('DEBUG: ', DEBUG)
 
     // for the plugin cordova-plugin-inappbrowser
     window.open = cordova.InAppBrowser.open
