@@ -2,7 +2,7 @@
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 export ANDROID_SDK_ROOT=/home/joao/Android/Sdk/
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=${PATH}:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools
 
 cd "${0%/*}"
 
