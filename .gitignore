@@ -26,12 +26,8 @@ plugins/**/tests/
 # res
 **/resources/signing
 
-# project specific
-**/dist/
-**/all.min.js
-
 # where the build script stores the apk
-formParkingViolation.*
+dist/formParkingViolation.*
 
 # keys and credentials
 www/js/credentials.js
