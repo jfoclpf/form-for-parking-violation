@@ -2,7 +2,7 @@
 
 /* global $, cordova */
 
-var DEBUG = false
+var DEBUG = true
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
@@ -60,7 +60,6 @@ app.main = (function (thisModule) {
     if (!DEBUG) {
       console.log = () => {}
       console.warn = () => {}
-      console.error = () => {}
     }
     init()
   }
