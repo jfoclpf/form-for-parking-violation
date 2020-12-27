@@ -7,7 +7,9 @@
   "scripts": {
     "test": "standard",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml",
-    "rad": "cordova run android --device"
+    "buildReleaseAPK": "scripts/buildReleaseAPK.sh",
+    "buildReleaseAAB": "scripts/buildReleaseAAB.sh",
+    "runReleaseOnDevice": "scripts/runReleaseOnDevice.sh"
   },
   "repository": {
     "type": "git",
