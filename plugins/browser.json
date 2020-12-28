@@ -60,6 +60,9 @@
     },
     "cordova-plugin-is-debug": {
       "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
   "dependent_plugins": {
