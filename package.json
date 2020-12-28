@@ -7,9 +7,10 @@
   "scripts": {
     "test": "standard",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml",
-    "buildReleaseAPK": "scripts/buildReleaseAPK.sh",
-    "buildReleaseAAB": "scripts/buildReleaseAAB.sh",
-    "runReleaseOnDevice": "scripts/runReleaseOnDevice.sh"
+    "build-release-apk": "scripts/buildReleaseAPK.sh",
+    "build-release-aab": "scripts/buildReleaseAAB.sh",
+    "run-release-on-device": "scripts/runReleaseOnDevice.sh",
+    "run-debug-on-device": "adb get-state 1>/dev/null 2>&1 && echo 'DEVICE ATTACHED' || { echo 'No device attached'; exit 1; } && cordova run android --device --debug"
   },
   "repository": {
     "type": "git",
