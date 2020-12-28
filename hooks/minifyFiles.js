@@ -19,7 +19,7 @@ module.exports = function (context) {
   var projectRoot = context.opts.projectRoot
   wwwDir = path.join(projectRoot, 'platforms', 'android', 'app', 'src', 'main', 'assets', 'www')
 
-  console.log(context.hook + ': Minifying files at ' + wwwDir)
+  console.log(context.hook + ': Minifying files at ' + path.relative(projectRoot, wwwDir))
 
   return new Promise((resolve, reject) => {
     async.parallel([processJSfiles, processCSSFiles, processHTMLfiles],
