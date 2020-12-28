@@ -54,6 +54,11 @@ app.main = (function (thisModule) {
 
     window.screen.orientation.lock('portrait')
 
+    cordova.getAppVersion.getVersionNumber(function (version) {
+      console.log('APP version is ' + version)
+      $('.version').text('versão ' + version)
+    })
+
     cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
       // in release mode the app is not debuggable (in chrome), thus I may stil want to debug with DEBUG=false
       // but in release mode I want to be sure that DEBUG is always false
@@ -83,7 +88,6 @@ app.main = (function (thisModule) {
     wasInit = true
 
     console.log('DEBUG: ', DEBUG)
-
     // for the plugin cordova-plugin-inappbrowser
     window.open = cordova.InAppBrowser.open
 
