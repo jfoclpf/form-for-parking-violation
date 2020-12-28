@@ -5,7 +5,7 @@
   "description": "Submit a parking violation complain to authority",
   "main": "index.js",
   "scripts": {
-    "test": "standard",
+    "test": "standard && html-validate www/**/*.html",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml",
     "build-release-apk": "scripts/buildReleaseAPK.sh",
     "build-release-aab": "scripts/buildReleaseAAB.sh",
@@ -92,6 +92,7 @@
     "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-set-version": "^10.0.0",
     "html-minifier": "^4.0.0",
+    "html-validate": "^4.1.0",
     "npm-check-updates": "^7.1.1",
     "standard": "14.3.4",
     "uglify-es": "^3.3.9",
