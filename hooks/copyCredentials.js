@@ -1,8 +1,10 @@
 const fse = require('fs-extra')
 const path = require('path')
 
+const twoSpaces = '  ' // for log indentation
+
 module.exports = function (context) {
-  console.log(context.hook + ': copying credentials')
+  console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
 
   var projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
 
@@ -15,5 +17,5 @@ module.exports = function (context) {
     path.relative(projectRoot, fileOriginFullPath) + ' -> ' +
     path.relative(projectRoot, fileDestFullPath)
 
-  console.log(consoleMsg)
+  console.log(twoSpaces + consoleMsg)
 }

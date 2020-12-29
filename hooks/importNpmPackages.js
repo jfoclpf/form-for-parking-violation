@@ -1,13 +1,15 @@
 const fse = require('fs-extra')
 const path = require('path')
 
+const twoSpaces = '  ' // for log indentation
+
 var projectRoot
 
 module.exports = function (context) {
-  console.log(context.hook + ': Importing npm packages files')
+  console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
 
   projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
-  console.log('Project root directory:', projectRoot)
+  console.log(twoSpaces + 'Project root directory: ' + projectRoot)
   copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('www', 'js', 'res', 'jquery.min.js'))
 
   copyFile('bootstrap', path.join('dist', 'js', 'bootstrap.min.js'), path.join('www', 'js', 'res', 'bootstrap.min.js'))
@@ -32,5 +34,5 @@ function copyFile (npmPackage, // oficial name of the npm package from which the
     path.relative(projectRoot, fileOriginFullPath) + ' -> ' +
     path.relative(projectRoot, fileDestFullPath)
 
-  console.log(consoleMsg)
+  console.log(twoSpaces + consoleMsg)
 }
