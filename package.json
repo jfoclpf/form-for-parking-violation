@@ -91,13 +91,15 @@
     "cordova-plugin-is-debug": "^1.0.0",
     "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-set-version": "^10.0.0",
+    "handlebars": "^4.7.6",
     "html-minifier": "^4.0.0",
     "html-validate": "^4.1.0",
     "npm-check-updates": "^7.1.1",
     "standard": "14.3.4",
     "uglify-es": "^3.3.9",
     "uglifycss": "0.0.29",
-    "walk": "^2.3.14"
+    "walk": "^2.3.14",
+    "xml2js": "^0.4.23"
   },
   "standard": {
     "ignore": [
