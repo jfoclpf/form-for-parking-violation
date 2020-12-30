@@ -7,8 +7,8 @@
   "scripts": {
     "test": "standard && node test/convertHbsToHtml.js && html-validate test/www/index.html && printf '\\n\\nTest OK\\n\\n'",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml",
-    "build-release-apk": "scripts/buildReleaseAPK.sh",
-    "build-release-aab": "scripts/buildReleaseAAB.sh",
+    "build-release-apk": "npm test && scripts/buildReleaseAPK.sh",
+    "build-release-aab": "npm test && scripts/buildReleaseAAB.sh",
     "run-release-on-device": "scripts/runReleaseOnDevice.sh",
     "run-debug-on-device": "adb get-state 1>/dev/null 2>&1 && echo 'DEVICE ATTACHED' || { echo 'No device attached'; exit 1; } && cordova run android --device --debug"
   },
