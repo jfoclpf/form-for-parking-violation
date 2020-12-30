@@ -8,7 +8,7 @@ var projectRoot
 module.exports = function (context) {
   console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
 
-  projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
+  projectRoot = context.opts.projectRoot
   console.log(twoSpaces + 'Project root directory: ' + projectRoot)
   copyFile('jquery', path.join('dist', 'jquery.min.js'), path.join('www', 'js', 'res', 'jquery.min.js'))
 
