@@ -20,7 +20,6 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.14.0",
-    "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "cordova": "^9.0.0",
@@ -86,6 +85,7 @@
     ]
   },
   "devDependencies": {
+    "async": "^3.2.0",
     "cordova-android": "^9.0.0",
     "cordova-plugin-app-version": "^0.1.12",
     "cordova-plugin-is-debug": "^1.0.0",

@@ -1,5 +1,6 @@
-/* NodeJS script that minifies files stored from www/ to platforms/android/app/src/main/assets/www
-   It minifies all js, css and html files that will be sent to android build.
+/* NodeJS script that minifies files stored in pltaforms/ after cordova prepare, and for every added platform
+   It minifies all js, css and html files that will be compiled to build apk or aab file.
+   This script is asynchronous for every file in any platform, to improve performance.
 */
 
 // node/npm includes
