@@ -12,32 +12,60 @@ const walk = require('walk')
 const UglifyJS = require('uglify-es')
 const uglifycss = require('uglifycss')
 const minifyHTML = require('html-minifier').minify
-
-var wwwDir
+const twoSpaces = '  '
 
 module.exports = function (context) {
+  console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
   var projectRoot = context.opts.projectRoot
-  wwwDir = path.join(projectRoot, 'platforms', 'android', 'app', 'src', 'main', 'assets', 'www')
 
-  console.log(context.hook + ': Minifying files at ' + path.relative(projectRoot, wwwDir))
+  var platforms = []
+  for (var i = 0; i < context.opts.platforms.length; i++) {
+    const platform = { name: context.opts.platforms[i], path: context.opts.paths[i] }
+    platforms.push(platform)
+  }
 
   return new Promise((resolve, reject) => {
-    async.parallel([processJSfiles, processCSSFiles, processHTMLfiles],
-      function (err, results) {
-        if (err) {
-          console.log(Error(('\nError minifying file.\n' + err.message)), err)
-          reject(new Error(err))
-        } else {
-          console.log('All files minified successfully')
-          resolve()
-        }
+    async.each(platforms, function (platform, callback) {
+      console.log(`${twoSpaces}Minifying html/css/js files for ${platform.name} at ${path.relative(projectRoot, platform.path)}`)
+      processAllFilesForOnePlatform(platform, callback)
+    }, function (err) {
+      if (err) {
+        console.error(Error(err))
+        reject(Error(err))
+      } else {
+        console.log(`${twoSpaces}All files for all platforms have been minified successfully`)
+        resolve()
       }
-    )
+    })
   })
 }
 
-function processJSfiles (callback) {
-  var walker = walk.walk(path.join(wwwDir, 'js'))
+function processAllFilesForOnePlatform (platform, mainCallback) {
+  async.parallel([
+    (localCallback) => {
+      processJSfiles(platform, localCallback)
+    },
+    (localCallback) => {
+      processCSSFiles(platform, localCallback)
+    },
+    (localCallback) => {
+      processHTMLfiles(platform, localCallback)
+    }],
+  function (err, results) {
+    if (err) {
+      console.error(Error(('\nError minifying file.\n' + err.message)), err)
+      mainCallback(new Error(err))
+    } else {
+      console.log(`${twoSpaces + twoSpaces}All files minified successfully for ${platform.name}`)
+      mainCallback()
+    }
+  }
+  )
+}
+
+function processJSfiles (platform, callback) {
+  const wwwDistDir = platform.path
+  var walker = walk.walk(path.join(wwwDistDir, 'js'))
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
@@ -49,11 +77,11 @@ function processJSfiles (callback) {
       var result = UglifyJS.minify(code)
 
       if (result.error) {
-        callback(Error('Error minifying file: ' + path.relative(wwwDir, filename) + '.\n' + result.error))
-        console.log(result)
+        callback(Error('Error minifying file: ' + path.relative(wwwDistDir, filename) + '.\n' + result.error))
+        console.error(result)
         return
       } else {
-        console.log(path.relative(wwwDir, filename))
+        console.log(`${twoSpaces + twoSpaces}${platform.name}:${path.relative(wwwDistDir, filename)}`)
         fs.writeFileSync(filename, result.code, 'utf8')
       }
     }
@@ -71,8 +99,9 @@ function processJSfiles (callback) {
 
 // minifies all css files on the client side, namely on the build/css/ directory,
 // i.e., these are CSS files that will be sent from the server to the client
-function processCSSFiles (callback) {
-  var walker = walk.walk(path.join(wwwDir, 'css')) // dir to walk into
+function processCSSFiles (platform, callback) {
+  const wwwDistDir = platform.path
+  var walker = walk.walk(path.join(wwwDistDir, 'css')) // dir to walk into
 
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
@@ -85,7 +114,7 @@ function processCSSFiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        console.log(path.relative(wwwDir, filename))
+        console.log(`${twoSpaces + twoSpaces}${platform.name}:${path.relative(wwwDistDir, filename)}`)
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
@@ -105,8 +134,9 @@ function processCSSFiles (callback) {
 // namely on the build/views/ directory,
 // i.e., these are handlebars .hbs files that will be rendered as HTML files
 // and then sent from the server to the client/browser
-function processHTMLfiles (callback) {
-  var walker = walk.walk(wwwDir) // dir to walk into
+function processHTMLfiles (platform, callback) {
+  const wwwDistDir = platform.path
+  var walker = walk.walk(wwwDistDir) // dir to walk into
   walker.on('file', function (root, fileStats, next) {
     var filename = path.join(root, fileStats.name)
 
@@ -128,7 +158,7 @@ function processHTMLfiles (callback) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
         return
       } else {
-        console.log(path.relative(wwwDir, filename))
+        console.log(`${twoSpaces + twoSpaces}${platform.name}:${path.relative(wwwDistDir, filename)}`)
         fs.writeFileSync(filename, result, 'utf8')
       }
     }
