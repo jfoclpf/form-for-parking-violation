@@ -5,7 +5,7 @@
   "description": "Submit a parking violation complain to authority",
   "main": "index.js",
   "scripts": {
-    "test": "standard && html-validate www/**/*.html",
+    "test": "standard && cordova prepare browser && html-validate platforms/browser/www/index.html && printf '\\n\\nTest OK\\n\\n'",
     "version": "cordova-set-version --version ${npm_package_version} && git add config.xml",
     "build-release-apk": "scripts/buildReleaseAPK.sh",
     "build-release-aab": "scripts/buildReleaseAAB.sh",
