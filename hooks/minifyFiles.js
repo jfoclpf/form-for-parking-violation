@@ -12,6 +12,7 @@ const walk = require('walk')
 const UglifyJS = require('uglify-es')
 const uglifycss = require('uglifycss')
 const minifyHTML = require('html-minifier').minify
+
 const twoSpaces = '  '
 
 module.exports = function (context) {
