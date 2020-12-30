@@ -39,14 +39,6 @@
     "is_top_level": false,
     "variables": {}
   },
-  "cordova-plugin-camera": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-camera@4.0.3"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "info.protonet.imageresizer": {
     "source": {
       "type": "registry",
@@ -111,14 +103,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-mobile-ocr": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-mobile-ocr"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-pdf-generator": {
     "source": {
       "type": "registry",
@@ -155,6 +139,22 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-app-version"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-camera": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-camera@5.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-mobile-ocr": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-mobile-ocr"
     },
     "is_top_level": true,
     "variables": {}

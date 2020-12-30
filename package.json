@@ -26,7 +26,6 @@
     "cordova-browser": "^6.0.0",
     "cordova-pdf-generator": "^2.1.1",
     "cordova-plugin-cache-clear": "^1.3.8",
-    "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-email-composer": "^0.9.2",
@@ -63,7 +62,6 @@
       "cordova-plugin-simple-image-resizer": {
         "ANDROID_EXIFINTERFACES_VERSION": "27.+"
       },
-      "cordova-plugin-camera": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-file": {},
       "cordova-plugin-statusbar": {},
@@ -71,13 +69,16 @@
       "cordova-plugin-device": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-mobile-ocr": {},
       "cordova-plugin-compat": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-is-debug": {},
-      "cordova-plugin-app-version": {}
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-mobile-ocr": {}
     },
     "platforms": [
       "browser",
@@ -88,6 +89,7 @@
     "async": "^3.2.0",
     "cordova-android": "^9.0.0",
     "cordova-plugin-app-version": "^0.1.12",
+    "cordova-plugin-camera": "^5.0.1",
     "cordova-plugin-is-debug": "^1.0.0",
     "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-set-version": "^10.0.0",

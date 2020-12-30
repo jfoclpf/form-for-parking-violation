@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-email-composer": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
@@ -43,9 +40,6 @@
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
-    "cordova-plugin-mobile-ocr": {
-      "PACKAGE_NAME": "com.form.parking.violation"
-    },
     "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.form.parking.violation"
     },
@@ -62,6 +56,12 @@
       "PACKAGE_NAME": "com.form.parking.violation"
     },
     "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.form.parking.violation"
+    },
+    "cordova-plugin-mobile-ocr": {
       "PACKAGE_NAME": "com.form.parking.violation"
     }
   },
