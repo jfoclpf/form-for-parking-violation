@@ -1,0 +1,129 @@
+<div id="main_form" class="section">
+  <h3>Imagens</h3>
+  <div id="image_selector">
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+          <button type="button" class="btn btn-primary" id="addImg_1"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn btn-primary" id="remImg_1"><i class="fa fa-minus"></i></button>
+        </div>
+        <!-- [html-validate-disable-next attribute-allowed-values] -->
+        <img alt="Imagem 1" id="myImg_1" src="" class="col-xs-12">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+          <button type="button" class="btn btn-primary" id="addImg_2"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn btn-primary" id="remImg_2"><i class="fa fa-minus"></i></button>
+        </div>
+        <!-- [html-validate-disable-next attribute-allowed-values] -->
+        <img alt="Imagem 2" id="myImg_2" src="" class="col-xs-12">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+          <button type="button" class="btn btn-primary" id="addImg_3"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn btn-primary" id="remImg_3"><i class="fa fa-minus"></i></button>
+        </div>
+        <!-- [html-validate-disable-next attribute-allowed-values] -->
+        <img alt="Imagem 3" id="myImg_3" src="" class="col-xs-12">
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 img-container">
+        <div class="form-group col-xs-12 col-sm-6 col-md-3">
+          <button type="button" class="btn btn-primary" id="addImg_4"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn btn-primary" id="remImg_4"><i class="fa fa-minus"></i></button>
+        </div>
+        <!-- [html-validate-disable-next attribute-allowed-values] -->
+        <img alt="Imagem 4" id="myImg_4" src="" class="col-xs-12">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Dados do veículo</h3>
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-4 form-group">
+      <label for="plate">Matrícula </label>
+      <div>Formato Livre <input type="checkbox" id="free_plate"></div>
+      <input class="form-control input-lg mandatory" maxlength="8"
+             id="plate" name="Matrícula do veículo" type="text" required>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 form-group">
+      <label for="carmake">Marca</label>
+      <input class="form-control input-lg" id="carmake"
+             name="Marca do veículo" placeholder="Opel" type="text">
+    </div>
+
+    <div class="col-xs-12 col-sm-4 form-group">
+      <label for="carmodel">Modelo</label>
+      <input class="form-control input-lg" id="carmodel"
+             name="Modelo do veículo" placeholder="Corsa" type="text">
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Data e local</h3>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-6 form-group">
+      <button type="button" class="btn btn-primary ml-2" id="getCurrentAddresBtn"><i class="fa fa-refresh"></i></button>
+      <br><br>
+      <label for="date">Data </label>
+      <input class="form-control input-lg mandatory" type="text" id="date" name="Data" required>
+    </div>
+    <div class="col-xs-12 col-md-6 form-group">
+      <label for="time">Hora</label>
+      <input class="form-control input-lg mandatory" id="time" name="Hora" type="time">
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+      <label for="locality">Concelho ou Localidade da ocorrência</label>
+      <p>Caso introduza manualmente, coloque sempre o Concelho</p>
+      <input size="35" class="form-control input-lg mandatory"
+             id="locality" name="Localidade da ocorrência" placeholder="Oeiras" type="text" required>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+      <label for="street">Local da ocorrência</label>
+      <input size="35" class="form-control input-lg mandatory"
+             id="street" name="Local da ocorrência" placeholder="Rua do Ouro" type="text" required>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+      <label for="street_number">Junto ao Número</label>
+      <input size="4" class="form-control input-lg"
+             id="street_number" name="Número postal do Local da Ocorrência" type="text">
+    </div>
+   </div>
+
+   <hr>
+
+   <h3>Base legal</h3>
+
+   <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+        <label for="penalties">Tipo de Ocorrência</label>
+        <select class="form-control input-lg mandatory"
+                id="penalties" name="Tipo de Ocorrência">
+        </select>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Autoridade</h3>
+
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-3 ">
+        <p>Esta lista é atualizada em função do Concelho da ocorrência</p>
+        <select class="form-control input-lg mandatory"
+                id="authority" name="Autoridade">
+        </select>
+      </div>
+  </div>
+
+  <hr>
+  <button type="button" class="btn btn-success" id="generate_message">Gerar texto</button>
+</div>

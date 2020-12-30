@@ -1,0 +1,42 @@
+<div id="personal_data" class="section collapse">
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 form-group">
+      <label for="name">Nome <u>Completo</u></label>
+      <input size="30" id="name" name="O seu Nome Completo" class="form-control input-lg mandatory personal_info" type="text" required>
+    </div>
+    <div class="col-xs-12 col-sm-2 form-group">
+      <label for="id_type">A sua Identificação</label>
+      <select class="form-control input-lg personal_info" id="id_type">
+        <option>Cartão de Cidadão</option>
+        <option>Bilhete de Identidade</option>
+        <option>Passaporte</option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-2 form-group">
+      <label for="id_number">Número </label>
+      <input size="30" id="id_number" name="O seu número de identificação" class="form-control input-lg mandatory personal_info" placeholder="00000000" type="text" required>
+    </div>
+    <div class="col-xs-12 col-sm-5 form-group">
+      <label for="address">A sua Morada </label>
+      <input size="30" id="address" name="A sua morada" class="form-control input-lg mandatory personal_info" type="text" required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 form-group">
+      <label for="postal_code">Código Postal</label>
+      <input size="10" id="postal_code" name="O seu Código Postal" maxlength="8"
+        class="form-control input-lg mandatory personal_info" placeholder="0000-000" type="text" required>
+    </div>
+    <div class="col-xs-12 col-sm-2 form-group">
+      <label for="address_city">Localidade (da sua residência)</label>
+      <input size="10" id="address_city" name="A Localidade onde reside" class="form-control input-lg mandatory personal_info" placeholder="Lisboa" type="text" required>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 form-group">
+      <button type="button" class="btn btn-success" id="save_personal_data"><i class="fa fa-save"></i></button>
+    </div>
+  </div>
+</div>
