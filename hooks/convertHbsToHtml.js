@@ -7,7 +7,6 @@ const xml2js = require('xml2js')
 const Handlebars = require('handlebars')
 
 const mainIndexHbsFile = 'index.hbs' // with respect to www/ dir
-
 const twoSpaces = '  '
 
 module.exports = function (context) {
