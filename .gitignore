@@ -3,6 +3,7 @@ node_modules/
 temp/
 build/
 bin/
+test/www/*
 
 # Cordova - platforms
 platforms/
