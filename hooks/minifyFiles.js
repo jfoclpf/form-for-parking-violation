@@ -17,6 +17,11 @@ const minifyHTML = require('html-minifier').minify
 const twoSpaces = '  '
 
 module.exports = function (context) {
+  // do not minify in debug mode
+  if (context.opts.options.debug) {
+    return
+  }
+
   console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
   var projectRoot = context.opts.projectRoot
 
