@@ -299,6 +299,10 @@ app.form = (function (thisModule) {
   var requestGoingOn = false // to avoid parallel requests
 
   function fillCarMakeAndModelFromPlate (_plate) {
+    if (!CARROS_MATRICULAS_API) {
+      return
+    }
+
     // avoid parallel requests
     if (requestGoingOn) {
       return
