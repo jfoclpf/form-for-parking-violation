@@ -99,7 +99,6 @@ app.map = (function (thisModule) {
     }
 
     const map = new google.maps.Map(document.getElementById('map'), mapOptions)
-    var htmlInfoContent = []
 
     // get filtered array of db entries according to selected Option (filter)
     dbEntries = []
@@ -130,7 +129,7 @@ app.map = (function (thisModule) {
         title: el.carro_marca + ' ' + el.carro_modelo
       })
 
-      htmlInfoContent[i] = `
+      let htmlInfoContent = `
         <div style="width:200px">
           <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
           <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
@@ -141,25 +140,25 @@ app.map = (function (thisModule) {
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
           const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
-          htmlInfoContent[i] += `<img width="200" src="${photoUrl}"><br>`
+          htmlInfoContent += `<img width="200" src="${photoUrl}"><br>`
         }
       }
 
-      htmlInfoContent[i] += '</div>'
+      htmlInfoContent += '</div>'
 
       // an admin is able to mark an entry in the db as deleted
       if (isCurrentUserAnAdmin) {
-        htmlInfoContent[i] += '<hr><b>Opções de administrador:</b><br><br>' +
+        htmlInfoContent += '<hr><b>Opções de administrador:</b><br><br>' +
           `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${i})"><i class="fa fa-trash"></i></button>`
       }
 
-      google.maps.event.addListener(marker, 'click', (function (_marker, _i) {
+      google.maps.event.addListener(marker, 'click', (function (_marker, _htmlInfoContent) {
         return function () {
           const infowindow = new google.maps.InfoWindow()
-          infowindow.setContent(htmlInfoContent[_i])
+          infowindow.setContent(_htmlInfoContent)
           infowindow.open(map, _marker)
         }
-      })(marker, i))
+      })(marker, htmlInfoContent))
     }
 
     // when map is loaded
