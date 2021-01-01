@@ -11,7 +11,8 @@ app.map = (function (thisModule) {
   const requestImageUrl = app.main.urls.databaseServer.requestImage
   var isGoogleMapsApiLoaded = false
 
-  var allDbEntries
+  var allDbEntries // all entries fetched from database
+  var dbEntries // entries filtered according to user selection
 
   function init () {
     // to get all entries to show on the map, it does it in the init in the background
@@ -92,11 +93,10 @@ app.map = (function (thisModule) {
     }
 
     const map = new google.maps.Map(document.getElementById('map'), mapOptions)
-    const infowindow = new google.maps.InfoWindow()
     var htmlInfoContent = []
 
     // get filtered array of db entries according to selected Option (filter)
-    var dbEntries = []
+    dbEntries = []
     if (!selectOption || selectOption === 'all') {
       dbEntries = allDbEntries
     } else {
@@ -113,6 +113,7 @@ app.map = (function (thisModule) {
     }
 
     // Add the markers and infowindows to the map
+    const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
     const dbEntriesLength = dbEntries.length
     for (let i = 0; i < dbEntriesLength; i++) {
       const el = dbEntries[i]
@@ -125,11 +126,11 @@ app.map = (function (thisModule) {
 
       htmlInfoContent[i] = `
         <div style="width:200px">
-          ${el.carro_marca} ${el.carro_modelo} na ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho},
-          no dia ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
-          Matrícula: ${el.carro_matricula}<br>
-          Infração: ${app.penalties.getShortDescription(el.base_legal)}<br>
-          Autoridade: ${el.autoridade}<br><br>`
+          <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
+          <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
+          <b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
+          <b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>
+          <b>Autoridade</b>: ${el.autoridade}<br><br>`
 
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
@@ -140,8 +141,15 @@ app.map = (function (thisModule) {
 
       htmlInfoContent[i] += '</div>'
 
+      // an admin is able to mark an entry in the db as deleted
+      if (isCurrentUserAnAdmin) {
+        htmlInfoContent[i] += '<hr><b>Opções de administrador:</b><br><br>' +
+          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${i})"><i class="fa fa-trash"></i></button>`
+      }
+
       google.maps.event.addListener(marker, 'click', (function (_marker, _i) {
         return function () {
+          const infowindow = new google.maps.InfoWindow()
           infowindow.setContent(htmlInfoContent[_i])
           infowindow.open(map, _marker)
         }
@@ -178,9 +186,22 @@ app.map = (function (thisModule) {
     })
   }
 
+  function setEntryAsDeletedInDatabase (i) {
+    if (app.functions.isCurrentUserAnAdmin()) {
+      app.dbServerLink.setEntryAsDeletedInDatabase(dbEntries[i], (err) => {
+        if (!err) {
+          window.alert('Entrada marcada como apagada')
+        } else {
+          window.alert('Erro a tentar marcar entrada como apagada\n\n' + JSON.stringify(err, {}, 2))
+        }
+      })
+    }
+  }
+
   thisModule.init = init
   thisModule.tryToShowMap = tryToShowMap
   thisModule.initGoogleMapLoaded = initGoogleMapLoaded
+  thisModule.setEntryAsDeletedInDatabase = setEntryAsDeletedInDatabase
 
   return thisModule
 })(app.map || {})
