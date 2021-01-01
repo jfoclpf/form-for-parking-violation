@@ -1,8 +1,13 @@
 /* eslint camelcase: off */
 
-/* global app, $, device */
+/* global app, $, device, ADMIN_DEVICE_UUIDs */
 
 app.functions = (function (thisModule) {
+  // tell if current user is an authorized admin
+  function isCurrentUserAnAdmin () {
+    return ADMIN_DEVICE_UUIDs && ADMIN_DEVICE_UUIDs.includes(device.uuid)
+  }
+
   // limpar a mensagem para o email, remove HTML tags,
   // pois o mailto não aceita HTML tags, apenas texto simples
   function clean_message (message) {
@@ -76,6 +81,7 @@ app.functions = (function (thisModule) {
   }
 
   /* === Public methods to be returned === */
+  thisModule.isCurrentUserAnAdmin = isCurrentUserAnAdmin
   thisModule.clean_message = clean_message
   thisModule.pad = pad
   thisModule.cleanArray = cleanArray
