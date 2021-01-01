@@ -40,7 +40,6 @@ app.dbServerLink = (function (thisModule) {
     }
 
     var databaseObj = {
-      table_row_uuid: generateUuid(),
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
       foto1: imgFileNames[0],
@@ -64,7 +63,7 @@ app.dbServerLink = (function (thisModule) {
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify(databaseObj),
+      data: JSON.stringify({ dbCommand: 'submitNewEntryToDB', databaseObj: databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
@@ -73,7 +72,7 @@ app.dbServerLink = (function (thisModule) {
         console.log('Returned:', data)
       },
       error: function (error) {
-        console.error('There was an error submitting the following object into the database: ', databaseObj)
+        console.error(`There was an error submitting the following object into the database: ${error.responseText}`, databaseObj)
         console.error(error)
       }
     })
@@ -121,39 +120,58 @@ app.dbServerLink = (function (thisModule) {
   // for a certain occurence it sets that it was dealt, or not, by authority
   function setProcessedByAuthorityStatus (occurence, status, callback) {
     var databaseObj = Object.assign({}, occurence) // cloning Object
+
     databaseObj.processada_por_autoridade = status ? 1 : 0
 
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify(databaseObj),
+      data: JSON.stringify({ dbCommand: 'setProcessedByAuthorityStatus', databaseObj: databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
       success: function (data) {
         console.success('Status of processed by authority updated in database with success.')
+        console.log(databaseObj)
         console.log('Returned:', data)
         if (typeof callback === 'function') { callback() }
       },
       error: function (error) {
-        console.error('There was an error submitting the following object into the database: ', databaseObj)
+        console.error(`There was an error submitting the following object into the database: ${error.responseText}`, databaseObj)
         console.error(error)
         if (typeof callback === 'function') { callback(error) }
       }
     })
   }
 
-  function generateUuid () {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0
-      var v = c === 'x' ? r : (r & 0x3 | 0x8)
-      return v.toString(16)
+  function setEntryAsDeletedInDatabase (dbEntry, callback) {
+    var databaseObj = Object.assign({}, dbEntry) // cloning Object
+    databaseObj.deleted_by_admin = 1
+
+    $.ajax({
+      url: uploadOccurenceUrl,
+      type: 'POST',
+      data: JSON.stringify({ dbCommand: 'setEntryAsDeletedInDatabase', databaseObj: databaseObj }),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      crossDomain: true,
+      success: function (data) {
+        console.success('Status of deleted_by_admin set to 1 in database with success.')
+        console.log(databaseObj)
+        console.log('Returned:', data)
+        if (typeof callback === 'function') { callback() }
+      },
+      error: function (error) {
+        console.error(`There was an error submitting the following object into the database: ${error.responseText}`, databaseObj)
+        console.error(error)
+        if (typeof callback === 'function') { callback(error) }
+      }
     })
   }
 
-  console.log(generateUuid())
-  thisModule.submitDataToDB = submitDataToDB
+  thisModule.submitNewEntryToDB = submitNewEntryToDB
   thisModule.setProcessedByAuthorityStatus = setProcessedByAuthorityStatus
+  thisModule.setEntryAsDeletedInDatabase = setEntryAsDeletedInDatabase
 
   return thisModule
 })(app.dbServerLink || {})

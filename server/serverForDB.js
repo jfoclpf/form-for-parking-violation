@@ -3,8 +3,9 @@ and stores it in the dabatase */
 
 /* eslint prefer-const: "off" */
 /* eslint no-var: "off" */
+/* eslint no-prototype-builtins: "off" */
 
-const submissionsUrl = '/passeio_livre/serverapp'
+const submissionsUrl = '/passeio_livre/serverapp' // to upload anew or update the data of an occurence
 const requestHistoricUrl = '/passeio_livre/serverapp_get_historic'
 const commonPort = 3035
 const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
@@ -28,29 +29,49 @@ const app = express()
 
 app.use(bodyParser.json())
 
+// to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
   // object got from POST
-  const databaseObj = req.body
-  debug(databaseObj)
+  const dbCommand = req.body.dbCommand
+  const databaseObj = req.body.databaseObj
+  debug('dbCommand: ' + dbCommand); debug(databaseObj)
+  if (!dbCommand || !databaseObj) {
+    debug('Bad request')
+    res.status(501).send('property dbCommand or databaseObj of reqquest does not exist')
+    return // leave now
+  }
+
   debug('\nInserting user data into ' +
                 'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
   var query
-  if (!Object.prototype.hasOwnProperty.call(databaseObj, 'processada_por_autoridade')) {
-    // builds sql query to insert user data, i.e., a new line/entry in the table
-    query = 'INSERT INTO ' + DBInfo.db_tables.denuncias + ' ('
-    var databaseKeys = Object.keys(databaseObj)
-    for (let i = 0; i < databaseKeys.length; i++) {
-      query += databaseKeys[i] + (i !== databaseKeys.length - 1 ? ', ' : ')')
-    }
-    query += ' ' + 'VALUES('
-    for (let i = 0; i < databaseKeys.length; i++) {
-      query += '\'' + databaseObj[databaseKeys[i]] + '\'' + (i !== databaseKeys.length - 1 ? ', ' : ')')
-    }
-  } else {
-    // when field 'processada_por_autoridade' is present it means just an update of a previous existing entry/line
-    query = `UPDATE ${DBInfo.db_tables.denuncias} SET processada_por_autoridade=${databaseObj.processada_por_autoridade} ` +
-            `WHERE PROD=${databaseObj.PROD} AND uuid='${databaseObj.uuid}' AND foto1='${databaseObj.foto1}' AND carro_matricula='${databaseObj.carro_matricula}'`
+  switch (dbCommand) {
+    case 'submitNewEntryToDB': // (new entry in table) builds sql query to insert user data
+      databaseObj.table_row_uuid = generateUuid()
+      query = 'INSERT INTO ' + DBInfo.db_tables.denuncias + ' ('
+      var databaseKeys = Object.keys(databaseObj)
+      for (let i = 0; i < databaseKeys.length; i++) {
+        query += databaseKeys[i] + (i !== databaseKeys.length - 1 ? ', ' : ')')
+      }
+      query += ' ' + 'VALUES('
+      for (let i = 0; i < databaseKeys.length; i++) {
+        query += '\'' + databaseObj[databaseKeys[i]] + '\'' + (i !== databaseKeys.length - 1 ? ', ' : ')')
+      }
+      break
+    case 'setProcessedByAuthorityStatus':
+      // (update) when field 'processada_por_autoridade' is present in the request (client) it means just an update of a previous existing entry/line
+      query = `UPDATE ${DBInfo.db_tables.denuncias} SET processada_por_autoridade=${databaseObj.processada_por_autoridade} ` +
+              `WHERE PROD=${databaseObj.PROD} AND uuid='${databaseObj.uuid}' AND foto1='${databaseObj.foto1}' AND carro_matricula='${databaseObj.carro_matricula}'`
+      break
+    case 'setEntryAsDeletedInDatabase':
+      // (update) when field 'deleted_by_admin' is present in the request (client) it means just an update of a previous existing entry/line
+      query = `UPDATE ${DBInfo.db_tables.denuncias} SET deleted_by_admin=${databaseObj.deleted_by_admin} ` +
+              `WHERE PROD=${databaseObj.PROD} AND uuid='${databaseObj.uuid}' AND foto1='${databaseObj.foto1}' AND carro_matricula='${databaseObj.carro_matricula}'`
+      break
+    default:
+      debug('Bad request on dbCommand: ' + dbCommand)
+      res.status(501).send(`dbCommand ${dbCommand} does not exist`)
+      return // leave now
   }
 
   debug(sqlFormatter.format(query))
@@ -114,11 +135,11 @@ app.get(requestHistoricUrl, function (req, res) {
 
   var query
   if (uuid) {
-    // get the historic for a specific user
-    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}' ORDER BY data_data ASC`
+    // get the all entries for a specific user (ex: to generate historic for user)
+    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid='${uuid}' AND deleted_by_admin=0 ORDER BY data_data ASC`
   } else {
-    // get all production entries to generate a map
-    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634' ` +
+    // get all production entries for all users except admin (ex: to generate a map of all entries)
+    query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634' AND deleted_by_admin=0 ` +
       `ORDER BY ${DBInfo.db_tables.denuncias}.uuid  ASC, ${DBInfo.db_tables.denuncias}.data_data ASC`
   }
 
@@ -214,6 +235,14 @@ app2.post(imgUploadUrl, async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+function generateUuid () {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0
+    var v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
 
 app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
 app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
