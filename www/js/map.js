@@ -126,17 +126,16 @@ app.map = (function (thisModule) {
 
       const marker = new google.maps.Marker({
         position: { lat: el.data_coord_latit, lng: el.data_coord_long },
-        map: map,
-        title: el.carro_marca + ' ' + el.carro_modelo
+        map: map
       })
 
-      let htmlInfoContent = `
-        <div style="width:200px">
-          <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
-          <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
-          <b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
-          <b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>
-          <b>Autoridade</b>: ${el.autoridade}<br><br>`
+      let htmlInfoContent =
+        '<div style="width:200px">' +
+          `<b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>` +
+          `<b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>` +
+          `<b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>` +
+          `<b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>` +
+          `<b>Autoridade</b>: ${el.autoridade}<br><br>`
 
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
