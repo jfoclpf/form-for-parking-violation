@@ -4,7 +4,7 @@
    These complaints are anonymously stored in the database             */
 
 /* eslint camelcase: off */
-/* global app, device, $, google, DEBUG */
+/* global app, device, $, google, performance, DEBUG */
 
 app.map = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
@@ -13,6 +13,10 @@ app.map = (function (thisModule) {
 
   var allDbEntries // all entries fetched from database
   var dbEntries // entries filtered according to user selection
+
+  // to measure performance
+  var tLoadMapInit
+  var tLoadMapEnd
 
   function init () {
     // to get all entries to show on the map, it does it in the init in the background
@@ -63,6 +67,8 @@ app.map = (function (thisModule) {
 
   // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
   function showMap (selectOption) {
+    tLoadMapInit = performance.now()
+
     // get coordinates for the map center
     var currentLocation = app.localization.getCoordinates() // current posiiton of user
     var latitude, longitude
@@ -158,6 +164,8 @@ app.map = (function (thisModule) {
 
     // when map is loaded
     map.addListener('tilesloaded', function () {
+      tLoadMapEnd = performance.now()
+      console.log('Loading map took ' + (tLoadMapEnd - tLoadMapInit) + ' milliseconds.')
       // adjust height of map_section div, the heigh of map should be the height of content
       // minus the height of header and minus height of a spacer (<hr>)
       var height = window.innerHeight - // screen useful height
