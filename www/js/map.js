@@ -70,7 +70,7 @@ app.map = (function (thisModule) {
     tLoadMapInit = performance.now()
 
     // get coordinates for the map center
-    var currentLocation = app.localization.getCoordinates() // current posiiton of user
+    var currentLocation = app.localization.getCoordinates() // current position of user
     var latitude, longitude
     if (currentLocation.latitude && currentLocation.longitude && !DEBUG) {
       latitude = currentLocation.latitude
