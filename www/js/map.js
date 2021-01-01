@@ -68,6 +68,7 @@ app.map = (function (thisModule) {
   // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
   function showMap (selectOption) {
     tLoadMapInit = performance.now()
+    tLoadMapEnd = null
 
     // get coordinates for the map center
     var currentLocation = app.localization.getCoordinates() // current position of user
@@ -163,8 +164,10 @@ app.map = (function (thisModule) {
 
     // when map is loaded
     map.addListener('tilesloaded', function () {
-      tLoadMapEnd = performance.now()
-      console.log('Loading map took ' + (tLoadMapEnd - tLoadMapInit) + ' milliseconds.')
+      if (!tLoadMapEnd) {
+        tLoadMapEnd = performance.now()
+        console.log('Loading map took ' + (tLoadMapEnd - tLoadMapInit) + ' milliseconds.')
+      }
       // adjust height of map_section div, the heigh of map should be the height of content
       // minus the height of header and minus height of a spacer (<hr>)
       var height = window.innerHeight - // screen useful height
