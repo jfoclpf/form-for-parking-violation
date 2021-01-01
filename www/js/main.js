@@ -31,7 +31,7 @@ app.main = (function (thisModule) {
     databaseServer: {
       uploadImages: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload', // used to upload an image
       requestImage: 'https://contabo.joaopimentel.com/passeio_livre/image_server', // folder where all the images are stored
-      uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload the data of an occurence
+      uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload anew or update the data of an occurence
       requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
     },
     androidPlayStore: 'https://play.google.com/store/apps/details?id=com.form.parking.violation'
@@ -228,7 +228,7 @@ app.main = (function (thisModule) {
   function sendMailMessageWithoutCMD () {
     console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
 
-    app.dbServerLink.submitDataToDB()
+    app.dbServerLink.submitNewEntryToDB()
 
     app.functions.updateDateAndTime()
 

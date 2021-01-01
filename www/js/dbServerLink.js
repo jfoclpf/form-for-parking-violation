@@ -5,7 +5,7 @@ app.dbServerLink = (function (thisModule) {
   const uploadImagesUrl = app.main.urls.databaseServer.uploadImages
   const uploadOccurenceUrl = app.main.urls.databaseServer.uploadOccurence
 
-  function submitDataToDB () {
+  function submitNewEntryToDB () {
     const carPlate = app.form.getCarPlate()
     const dateYYYY_MM_DD = app.form.getDateYYYY_MM_DD()
     const timeHH_MM = app.form.getTimeHH_MM()

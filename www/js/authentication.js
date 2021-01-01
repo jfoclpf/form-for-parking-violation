@@ -348,7 +348,7 @@ app.authentication = (function (thisModule) {
   }
 
   function sendMailMessageWithCMD () {
-    app.dbServerLink.submitDataToDB()
+    app.dbServerLink.submitNewEntryToDB()
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
