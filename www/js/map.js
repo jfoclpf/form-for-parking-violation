@@ -126,7 +126,8 @@ app.map = (function (thisModule) {
 
       const marker = new google.maps.Marker({
         position: { lat: el.data_coord_latit, lng: el.data_coord_long },
-        map: map
+        map: map,
+        icon: 'file:///android_asset/www/img/map_icon.png'
       })
 
       let htmlInfoContent =
