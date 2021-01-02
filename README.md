@@ -37,10 +37,10 @@ O ADB é usado para testar a APP no seu telemóvel Android
 
 ## Como instalar e testar
 
- 1. Clone este projeto `git clone https://github.com/jfoclpf/form-for-parking-violation form-for-parking-violation`
- 2. Entre na pasta recém criada `cd form-for-parking-violation`
+ 1. Clone este projeto `git clone https://github.com/jfoclpf/form-for-parking-violation`
+ 2. Entre na pasta recém criada e instale as dependências `cd form-for-parking-violation && npm install`
  3. Adicione a plataforma. Para Android `cordova platform add android`.
- 3. Corra `cordova build --release android` para construir o projeto na sua máquina. Em Android cria o ficheiro APK na pasta `platforms/android/build/outputs/apk`
+ 3. Corra `cordova build android` para construir o projeto na sua máquina. Em Android cria o ficheiro APK na pasta `platforms/android/build/outputs/apk`
 
 ### Testar num smartphone
 
