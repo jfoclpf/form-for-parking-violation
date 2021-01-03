@@ -5,8 +5,9 @@ build/
 bin/
 test/www/*
 
-# Cordova - platforms
+# Cordova - platforms and plugins
 platforms/
+plugins/
 
 # Cordova - plugins - remove all except json & xml
 plugins/**/.DS_Store
