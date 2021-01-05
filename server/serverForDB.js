@@ -16,7 +16,6 @@ const path = require('path')
 const express = require('express')
 const async = require('async')
 const bodyParser = require('body-parser')
-const fileUpload = require('express-fileupload')
 const cors = require('cors')
 const mysql = require('mysql') // module to get info from database
 const debug = require('debug')('app')
@@ -197,31 +196,36 @@ app.get(requestHistoricUrl, function (req, res) {
 /* ############################################################################################## */
 /* ############################################################################################## */
 // app2 is used for uploading files (images of cars illegaly parked)
+
+const fileUpload = require('express-fileupload')
+const debugFileTransfer = require('debug')('file-transfer')
 const app2 = express()
 
 // enable files upload
-app2.use(fileUpload({ createParentPath: true }))
+app2.use(fileUpload({ createParentPath: true, debug: debugFileTransfer.enabled }))
 app2.use(cors())
 app2.use(bodyParser.json())
 app2.use(bodyParser.urlencoded({ extended: true }))
 
 app2.post(imgUploadUrl, async (req, res) => {
-  debug('Getting files')
+  debugFileTransfer('Getting files')
   try {
     if (!req.files) {
-      res.send({
+      debugFileTransfer('No files')
+      res.status(400).send({
         status: false,
         message: 'No file uploaded'
       })
     } else {
       // Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
-      debug(req.files)
+      debugFileTransfer('Fetching files:')
+      debugFileTransfer(req.files)
       const img = req.files.file
       // Use the mv() method to place the file in upload directory (i.e. "uploads")
       img.mv('./uploadedImages/' + img.name)
 
       // send response
-      res.send({
+      res.status(200).send({
         status: true,
         message: 'File is uploaded',
         data: {
@@ -232,6 +236,7 @@ app2.post(imgUploadUrl, async (req, res) => {
       })
     }
   } catch (err) {
+    debugFileTransfer('Error on requesting files:', err)
     res.status(500).send(err)
   }
 })
