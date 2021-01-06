@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, XMLHttpRequest  */
+/* global app, XMLHttpRequest, FileReader, Blob, FormData  */
 
 app.file = (function (thisModule) {
   // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
@@ -233,6 +233,43 @@ app.file = (function (thisModule) {
     xhr.send()
   }
 
+  function uploadFileToServer (fileUri, fileName, remoteUrl, callback) {
+    window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
+      fileEntry.file(function (file) {
+        var reader = new FileReader()
+        reader.onloadend = function () {
+          var blob = new Blob([new Uint8Array(this.result)], { type: 'application/octet-stream' })
+          var fd = new FormData()
+
+          fd.append('file', blob, fileName)
+
+          var xhr = new XMLHttpRequest()
+          xhr.open('POST', remoteUrl, true)
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              console.success(`File ${fileUri} uploaded succesfully to url ${remoteUrl}`)
+              if (typeof callback === 'function') { callback() }
+            } else {
+              console.error(`Error uploading file ${fileUri}. Server returned ${xhr.status}`)
+              if (typeof callback === 'function') { callback(xhr.status) }
+            }
+          }
+          xhr.onerror = function (err) {
+            console.error(`Error uploading file ${fileUri} to server`)
+            console.error(err)
+            if (typeof callback === 'function') { callback(err) }
+          }
+          xhr.send(fd)
+        }
+        reader.readAsArrayBuffer(file)
+      }, function (err) {
+        console.error(`Error uploading file ${fileUri} to server`)
+        console.error(err)
+        if (typeof callback === 'function') { callback(err) }
+      })
+    })
+  }
+
   function resizeImage (imageUri, callback) {
     // generate filename for resized image
     var uriAdapted = adaptFilenameFromUri(imageUri) // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
@@ -273,6 +310,7 @@ app.file = (function (thisModule) {
   thisModule.getExtensionFromURL = getExtensionFromURL
   thisModule.getFileSize = getFileSize
   thisModule.downloadFileToDevice = downloadFileToDevice
+  thisModule.uploadFileToServer = uploadFileToServer
   thisModule.resizeImage = resizeImage
 
   return thisModule
