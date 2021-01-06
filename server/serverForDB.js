@@ -18,7 +18,7 @@ const async = require('async')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mysql = require('mysql') // module to get info from database
-const debug = require('debug')('app')
+const debug = require('debug')('server:main')
 const sqlFormatter = require('sql-formatter')
 
 const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
@@ -31,12 +31,21 @@ app.use(bodyParser.json())
 // to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
   // object got from POST
-  const dbCommand = req.body.dbCommand
-  const databaseObj = req.body.databaseObj
-  debug('dbCommand: ' + dbCommand); debug(databaseObj)
-  if (!dbCommand || !databaseObj) {
+  var serverCommand = req.body.serverCommand || req.body.dbCommand // dbCommand for backward compatibility
+  var databaseObj = req.body.databaseObj
+
+  // for backward compatibility, wherein it was req.body === databaseObj
+  if (!serverCommand && req.body.hasOwnProperty('foto1')) {
+    if (req.body.hasOwnProperty('processada_por_autoridade')) {
+      serverCommand = 'setProcessedByAuthorityStatus'
+    } else {
+      serverCommand = 'submitNewEntryToDB'
+    }
+  }
+
+  if (!serverCommand || !databaseObj) {
     debug('Bad request')
-    res.status(501).send('property dbCommand or databaseObj of reqquest does not exist')
+    res.status(501).send('property serverCommand or databaseObj of reqquest does not exist')
     return // leave now
   }
 
@@ -44,7 +53,7 @@ app.post(submissionsUrl, function (req, res) {
                 'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
   var query
-  switch (dbCommand) {
+  switch (serverCommand) {
     case 'submitNewEntryToDB': // (new entry in table) builds sql query to insert user data
       databaseObj.table_row_uuid = generateUuid()
       query = 'INSERT INTO ' + DBInfo.db_tables.denuncias + ' ('
@@ -68,8 +77,8 @@ app.post(submissionsUrl, function (req, res) {
               `WHERE PROD=${databaseObj.PROD} AND uuid='${databaseObj.uuid}' AND foto1='${databaseObj.foto1}' AND carro_matricula='${databaseObj.carro_matricula}'`
       break
     default:
-      debug('Bad request on dbCommand: ' + dbCommand)
-      res.status(501).send(`dbCommand ${dbCommand} does not exist`)
+      debug('Bad request on dbCommand: ' + serverCommand)
+      res.status(501).send(`dbCommand ${serverCommand} does not exist`)
       return // leave now
   }
 
@@ -198,7 +207,7 @@ app.get(requestHistoricUrl, function (req, res) {
 // app2 is used for uploading files (images of cars illegaly parked)
 
 const fileUpload = require('express-fileupload')
-const debugFileTransfer = require('debug')('file-transfer')
+const debugFileTransfer = require('debug')('server:file-transfer')
 const app2 = express()
 
 // enable files upload
