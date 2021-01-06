@@ -117,7 +117,9 @@ app.main = (function (thisModule) {
       app.functions.setDebugValues()
     }
 
-    requestUserAppEvaluation()
+    if (!DEBUG) {
+      requestUserAppEvaluation()
+    }
   }
 
   // ##############################################################################################################
