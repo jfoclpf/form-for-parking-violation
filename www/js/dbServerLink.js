@@ -1,5 +1,5 @@
 /* eslint camelcase: "off" */
-/* global app, device, $, FileUploadOptions, FileTransfer, DEBUG */
+/* global app, device, $, DEBUG */
 
 app.dbServerLink = (function (thisModule) {
   const uploadImagesUrl = app.main.urls.databaseServer.uploadImages
@@ -27,14 +27,14 @@ app.dbServerLink = (function (thisModule) {
 
     // upload all photos
     for (let i = 0; i < numberOfImages; i++) {
-      uploadFile(app.main.imagesUriCleanArray[i],
+      app.file.uploadFileToServer(app.main.imagesUriCleanArray[i],
         imgFileNames[i],
         uploadImagesUrl,
-        (err, res) => {
+        (err) => {
           if (err) {
             console.error(err)
           } else {
-            console.success(res)
+            console.success(`File ${imgFileNames[i]} uploaded`)
           }
         })
     }
@@ -76,34 +76,6 @@ app.dbServerLink = (function (thisModule) {
         console.error(error)
       }
     })
-  }
-
-  // used to upload image files to server
-  function uploadFile (localPath, fileName, remoteUrl, callback) {
-    var win = function (r) {
-      console.log('Code = ' + r.responseCode)
-      console.log('Response = ' + r.response)
-      console.log('Sent = ' + r.bytesSent)
-      if (typeof callback === 'function') {
-        callback(null, 'File uploaded succesfully')
-      }
-    }
-
-    var fail = function (error) {
-      console.error('An error has occurred: Code = ' + error.code)
-      console.error('upload error source ' + error.source)
-      console.error('upload error target ' + error.target)
-      if (typeof callback === 'function') {
-        callback(Error('Failed to upload file ' + localPath))
-      }
-    }
-
-    var options = new FileUploadOptions()
-    options.fileKey = 'file'
-    options.fileName = fileName
-
-    var ft = new FileTransfer()
-    ft.upload(localPath, encodeURI(remoteUrl), win, fail, options)
   }
 
   // generate random string
