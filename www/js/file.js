@@ -207,7 +207,7 @@ app.file = (function (thisModule) {
 
   // download file to device
   // for different types of cordovaFileSystem check here: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#where-to-store-files
-  // or simple in the console type `console.log(cordova.file)`
+  // or simply in the console type `console.log(cordova.file)`
   function downloadFileToDevice (fileurl, filename, cordovaFileSystem, callback) {
     var blob = null
     var xhr = new XMLHttpRequest()
