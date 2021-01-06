@@ -221,11 +221,11 @@ app.file = (function (thisModule) {
           file.createWriter(function (fileWriter) {
             fileWriter.write(DataBlob)
             console.success(`File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + filename}`)
-            callback(null, cordovaFileSystem + filename)
+            if (typeof callback === 'function') { callback(null, cordovaFileSystem + filename) }
           }, function (err) {
             console.error(`Error downloading file from url: ${fileurl} to cordovaFileSystem: ${cordovaFileSystem}`)
             console.error(err)
-            callback(err)
+            if (typeof callback === 'function') { callback(err) }
           })
         })
       })
