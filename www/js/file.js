@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, XMLHttpRequest, FileReader, Blob, FormData  */
+/* global app, cordova, XMLHttpRequest, FileReader, Blob, FormData  */
 
 app.file = (function (thisModule) {
   // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
@@ -246,9 +246,11 @@ app.file = (function (thisModule) {
 
     window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
       fileEntry.file((file) => {
+        if (!file.size) { onerror('File is empty (on fileEntry from resolveLocalFileSystemURL)'); return }
         var reader = new FileReader()
         reader.onloadend = () => {
-          var blob = new Blob([new Uint8Array(this.result)], { type: 'application/octet-stream' })
+          var blob = new Blob([new Uint8Array(reader.result)], { type: 'application/octet-stream' })
+          if (!blob.size) { onerror('File is empty (on blob)'); return }
           var fd = new FormData()
           fd.append('file', blob, fileName)
 
@@ -287,6 +289,10 @@ app.file = (function (thisModule) {
       width: 1200,
       height: 1200,
       base64: false
+    }
+
+    if (app.functions.isThisAndroid()) {
+      resizeOptions.folderName = cordova.file.cacheDirectory
     }
 
     window.ImageResizer.resize(resizeOptions,
