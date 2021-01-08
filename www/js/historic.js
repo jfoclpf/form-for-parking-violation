@@ -236,11 +236,7 @@ app.historic = (function (thisModule) {
           if (err) {
             photosDeferred[photoIndex].resolve(null)
           } else {
-            var filePathForEmailAttachment
-            if (device.platform === 'Android') {
-              // check: https://www.npmjs.com/package/cordova-plugin-email-composer#attach-files-from-the-internal-app-file-system
-              filePathForEmailAttachment = localFileName.replace(cordova.file.applicationStorageDirectory, 'app://')
-            }
+            const filePathForEmailAttachment = cordova.plugins.email.adaptFilePathInInternalStorage(localFileName)
             photosDeferred[photoIndex].resolve(filePathForEmailAttachment)
           }
         })
