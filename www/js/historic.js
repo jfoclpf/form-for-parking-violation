@@ -213,19 +213,35 @@ app.historic = (function (thisModule) {
   }
 
   function sendReminderEmail (occurrence) {
+    var progressAlert = $.jAlert({
+      class: 'ja_300px',
+      closeBtn: false,
+      content: 'Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="file:///android_asset/www/css/res/images/loading.gif" />'
+    })
     // download images from server to cache to attach them in email
     // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
     var photosDeferred = []
     console.log('start sendReminderEmail')
     var downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
-      // externalCacheDirectory ("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/") is indeed normally internal memory,
-      // see https://www.reddit.com/r/Android/comments/496sn3/lets_clear_up_the_confusion_regarding_storage_in/
-      app.file.downloadFileToDevice(fullImgUrl, fileName, cordova.file.externalCacheDirectory,
+      var destPathDir
+      if (device.platform === 'Android') {
+        // https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#file-system-layouts
+        destPathDir = cordova.file.cacheDirectory // normally: file:///data/data/<app-id>/cache
+      } else {
+        window.alert('Unknown device: ' + device.platform)
+        return
+      }
+      app.file.downloadFileToDevice(fullImgUrl, fileName, destPathDir,
         (err, localFileName) => {
           if (err) {
             photosDeferred[photoIndex].resolve(null)
           } else {
-            photosDeferred[photoIndex].resolve(localFileName)
+            var filePathForEmailAttachment
+            if (device.platform === 'Android') {
+              // check: https://www.npmjs.com/package/cordova-plugin-email-composer#attach-files-from-the-internal-app-file-system
+              filePathForEmailAttachment = localFileName.replace(cordova.file.applicationStorageDirectory, 'app://')
+            }
+            photosDeferred[photoIndex].resolve(filePathForEmailAttachment)
           }
         })
     }
@@ -233,11 +249,10 @@ app.historic = (function (thisModule) {
     for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
       if (occurrence['foto' + photoIndex]) { // if that photo index exists in the DB entry
         const fileName = occurrence['foto' + photoIndex]
-        const fileExtension = fileName.split('.').pop()
         const fullImgUrl = requestImageUrl + '/' + fileName
 
         photosDeferred[photoIndex] = $.Deferred()
-        downloadFileToDevice(photoIndex, fullImgUrl, `img${photoIndex}.${fileExtension}`)
+        downloadFileToDevice(photoIndex, fullImgUrl, fileName)
       }
     }
 
@@ -252,13 +267,16 @@ app.historic = (function (thisModule) {
 
       var emailSubject = `[${occurrence.carro_matricula}] na ${occurrence.data_local}, ${occurrence.data_concelho} - Inquirição sobre estado processual da denúncia de estacionamento anteriormente efetuada`
 
-      cordova.plugins.email.open({
-        to: app.contactsFunctions.getEmailByFullName(occurrence.autoridade),
-        attachments: attachments, // file paths or base64 data streams
-        subject: emailSubject, // subject of the email
-        body: app.text.getReminderMessage(occurrence), // email body (for HTML, set isHtml to true)
-        isHtml: true // indicats if the body is HTML or plain text
-      })
+      setTimeout(() => {
+        progressAlert.closeAlert()
+        cordova.plugins.email.open({
+          to: app.contactsFunctions.getEmailByFullName(occurrence.autoridade),
+          attachments: attachments, // file paths or base64 data streams
+          subject: emailSubject, // subject of the email
+          body: app.text.getReminderMessage(occurrence), // email body (for HTML, set isHtml to true)
+          isHtml: true // indicats if the body is HTML or plain text
+        })
+      }, 3000)
     })
   }
 
