@@ -25,20 +25,6 @@ app.dbServerLink = (function (thisModule) {
       }
     }
 
-    // upload all photos
-    for (let i = 0; i < numberOfImages; i++) {
-      app.file.uploadFileToServer(app.main.imagesUriCleanArray[i],
-        imgFileNames[i],
-        uploadImagesUrl,
-        (err) => {
-          if (err) {
-            console.error(err)
-          } else {
-            console.success(`File ${imgFileNames[i]} uploaded`)
-          }
-        })
-    }
-
     var databaseObj = {
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
@@ -70,6 +56,17 @@ app.dbServerLink = (function (thisModule) {
       success: function (data) {
         console.success('Values inserted into database with success.')
         console.log('Returned:', data)
+        // upload all photos
+        for (let i = 0; i < app.main.imagesUriCleanArray.length; i++) {
+          app.file.uploadFileToServer(app.main.imagesUriCleanArray[i], imgFileNames[i], uploadImagesUrl,
+            (err) => {
+              if (err) {
+                console.error(err)
+              } else {
+                console.success(`File ${imgFileNames[i]} uploaded`)
+              }
+            })
+        }
       },
       error: function (error) {
         console.error(`There was an error submitting the following object into the database: ${error.responseText}`, databaseObj)
