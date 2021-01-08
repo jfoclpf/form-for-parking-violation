@@ -4,7 +4,7 @@
 
 app.functions = (function (thisModule) {
   // to run on startup
-  // functions related with respective plugins
+  // add functions related with respective plugins
   function addFunctionsToPlugins () {
     cordova.plugins.email.adaptFilePathInInternalStorage = function (path) {
       if (isThisAndroid()) {
