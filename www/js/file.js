@@ -257,7 +257,7 @@ app.file = (function (thisModule) {
           var xhr = new XMLHttpRequest()
           xhr.open('POST', remoteUrl, true)
           xhr.onload = function () {
-            if (xhr.status === 200) {
+            if (xhr.status === 200 || xhr.status === 201) {
               console.success(`File ${fileUri} uploaded succesfully to url ${remoteUrl}`)
               if (typeof callback === 'function') { callback() }
             } else {
