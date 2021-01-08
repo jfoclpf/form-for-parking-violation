@@ -91,6 +91,8 @@ app.main = (function (thisModule) {
     // for the plugin cordova-plugin-inappbrowser
     window.open = cordova.InAppBrowser.open
 
+    app.functions.addFunctionsToPlugins()
+
     // information stored in variable window.localStorage
     app.personalInfo.loadsPersonalInfo()
 
@@ -186,8 +188,6 @@ app.main = (function (thisModule) {
 
   // botão de gerar email
   $('#send_email_btn').click(function () {
-    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    thisModule.imagesUriCleanArray = app.functions.cleanArray(thisModule.imagesUriArray)
     // it popups the alerts according to needed fields
     if (!app.form.isMessageReady()) {
       return
@@ -228,15 +228,18 @@ app.main = (function (thisModule) {
 
   // CMD -> Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
-    console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
-
     app.dbServerLink.submitNewEntryToDB()
 
     app.functions.updateDateAndTime()
 
+    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    thisModule.imagesUriCleanArray = app.functions.cleanArray(thisModule.imagesUriArray)
+    console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
+    const attachments = thisModule.imagesUriCleanArray.map(path => cordova.plugins.email.adaptFilePathInInternalStorage(path))
+
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
-      attachments: thisModule.imagesUriCleanArray, // file paths or base64 data streams
+      attachments: attachments,
       subject: app.text.getMainMessage('subject'), // subject of the email
       body: app.text.getMainMessage('body'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
