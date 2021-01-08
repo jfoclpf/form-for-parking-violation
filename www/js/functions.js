@@ -1,8 +1,20 @@
 /* eslint camelcase: off */
 
-/* global app, $, device, ADMIN_DEVICE_UUIDs */
+/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs */
 
 app.functions = (function (thisModule) {
+  // to run on startup
+  // functions related with respective plugins
+  function addFunctionsToPlugins () {
+    cordova.plugins.email.adaptFilePathInInternalStorage = function (path) {
+      if (isThisAndroid()) {
+        return path.replace(cordova.file.applicationStorageDirectory, 'app://')
+      } else {
+        return path
+      }
+    }
+  }
+
   // tell if current user is an authorized admin
   function isCurrentUserAnAdmin () {
     return ADMIN_DEVICE_UUIDs && ADMIN_DEVICE_UUIDs.includes(device.uuid)
@@ -81,6 +93,7 @@ app.functions = (function (thisModule) {
   }
 
   /* === Public methods to be returned === */
+  thisModule.addFunctionsToPlugins = addFunctionsToPlugins
   thisModule.isCurrentUserAnAdmin = isCurrentUserAnAdmin
   thisModule.clean_message = clean_message
   thisModule.pad = pad
