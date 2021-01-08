@@ -209,38 +209,47 @@ app.file = (function (thisModule) {
   // for different types of cordovaFileSystem check here: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#where-to-store-files
   // or simply in the console type `console.log(cordova.file)`
   function downloadFileToDevice (fileurl, filename, cordovaFileSystem, callback) {
+    var onerror = (err) => {
+      console.error(`Error downloading file from url ${fileurl} to cordovaFileSystem ${cordovaFileSystem}`,
+        err, new Error(err))
+      if (typeof callback === 'function') { callback(Error(err)) }
+    }
+
     var blob = null
     var xhr = new XMLHttpRequest()
     xhr.open('GET', fileurl)
     xhr.responseType = 'blob' // force the HTTP response, response-type header to be blob
-    xhr.onload = function () {
+    xhr.onload = () => {
       blob = xhr.response // xhr.response is now a blob object
       var DataBlob = blob
-      window.resolveLocalFileSystemURL(cordovaFileSystem, function (dir) {
-        dir.getFile(filename, { create: true }, function (file) {
-          file.createWriter(function (fileWriter) {
+      window.resolveLocalFileSystemURL(cordovaFileSystem, (dirEntry) => {
+        const sanitizedFilename = filename.replace(/[^a-z0-9.]/gi, '_').toLowerCase() // sanitize filename
+        dirEntry.getFile(sanitizedFilename, { create: true }, (file) => {
+          file.createWriter((fileWriter) => {
             fileWriter.write(DataBlob)
-            console.success(`File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + filename}`)
-            if (typeof callback === 'function') { callback(null, cordovaFileSystem + filename) }
-          }, function (err) {
-            console.error(`Error downloading file from url: ${fileurl} to cordovaFileSystem: ${cordovaFileSystem}`)
-            console.error(err)
-            if (typeof callback === 'function') { callback(err) }
-          })
-        })
-      })
+            console.success(`File downloaded succesfully from url ${fileurl} to ${cordovaFileSystem + sanitizedFilename}`)
+            if (typeof callback === 'function') { callback(null, cordovaFileSystem + sanitizedFilename) }
+          }, (err) => { console.error('Error on file.createWriter'); onerror(err) })
+        }, (err) => { console.error('Error on dirEntry.getFile'); onerror(err) })
+      }, (err) => { console.error('Error on resolveLocalFileSystemURL'); onerror(err) })
     }
+    xhr.onerror = (err) => { console.error('Error on XMLHttpRequest'); onerror(err) }
     xhr.send()
   }
 
   function uploadFileToServer (fileUri, fileName, remoteUrl, callback) {
+    var onerror = (err) => {
+      console.error(`Error uploading file ${fileUri} to ${remoteUrl}`,
+        err, new Error(err))
+      if (typeof callback === 'function') { callback(Error(err)) }
+    }
+
     window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
-      fileEntry.file(function (file) {
+      fileEntry.file((file) => {
         var reader = new FileReader()
-        reader.onloadend = function () {
+        reader.onloadend = () => {
           var blob = new Blob([new Uint8Array(this.result)], { type: 'application/octet-stream' })
           var fd = new FormData()
-
           fd.append('file', blob, fileName)
 
           var xhr = new XMLHttpRequest()
@@ -250,24 +259,16 @@ app.file = (function (thisModule) {
               console.success(`File ${fileUri} uploaded succesfully to url ${remoteUrl}`)
               if (typeof callback === 'function') { callback() }
             } else {
-              console.error(`Error uploading file ${fileUri}. Server returned ${xhr.status}`)
-              if (typeof callback === 'function') { callback(xhr.status) }
+              console.error('Error on xhr.status: ' + xhr.status); onerror(xhr.status)
             }
           }
-          xhr.onerror = function (err) {
-            console.error(`Error uploading file ${fileUri} to server`)
-            console.error(err)
-            if (typeof callback === 'function') { callback(err) }
-          }
+          xhr.onerror = (err) => { console.error('Error on XMLHttpRequest'); onerror(err) }
           xhr.send(fd)
         }
+        reader.onerror = (err) => { console.error('Error on FileReader'); onerror(err) }
         reader.readAsArrayBuffer(file)
-      }, function (err) {
-        console.error(`Error uploading file ${fileUri} to server`)
-        console.error(err)
-        if (typeof callback === 'function') { callback(err) }
-      })
-    })
+      }, (err) => { console.error('Error on fileEntry.file'); onerror(err) })
+    }, (err) => { console.error('Error on resolveLocalFileSystemURL'); onerror(err) })
   }
 
   function resizeImage (imageUri, callback) {
