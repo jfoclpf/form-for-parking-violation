@@ -108,6 +108,7 @@ app.historic = (function (thisModule) {
       $.jAlert({
         theme: 'dark_blue',
         class: 'ja_300px',
+        closeBtn: false,
         content: 'Deseja enviar um lembrete à autoridade respetiva a propósito desta ocurrência?',
         btns: [
           {
@@ -138,6 +139,7 @@ app.historic = (function (thisModule) {
         $.jAlert({
           theme: 'dark_blue',
           class: 'ja_300px',
+          closeBtn: false,
           content: 'Deseja colocar esta denúncia como tratada e resolvida?',
           btns: [
             {
@@ -161,6 +163,7 @@ app.historic = (function (thisModule) {
         $.jAlert({
           theme: 'dark_blue',
           class: 'ja_300px',
+          closeBtn: false,
           content: 'Deseja remarcar esta denúncia como não tratada e não resolvida?',
           btns: [
             {
