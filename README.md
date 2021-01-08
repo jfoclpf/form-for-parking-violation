@@ -1,4 +1,4 @@
-[![js-standard-style][js-standard-style_img]][js-standard-style_url]
+[![js-standard-style][js-standard-style_img]][js-standard-style_url] [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
