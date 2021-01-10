@@ -7,6 +7,7 @@ app.authentication = (function (thisModule) {
   var inAppBrowserRef
   var isAuthenticationWindowClosed = true
   var pdfFileJustCreated = false
+  var jAlertOnAppResume
 
   function startAuthenticationWithSystemBrowser () {
     savePDF()
@@ -280,8 +281,8 @@ app.authentication = (function (thisModule) {
   }
 
   function showPDFAuthInfo (folderpath, filename) {
-    console.log('folderpath : ' + folderpath)
-    console.log('fileName :' + filename)
+    console.log('PDF folderpath: ' + folderpath)
+    console.log('PDF fileName: ' + filename)
 
     if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
       inAppBrowserRef.hide()
@@ -321,58 +322,67 @@ app.authentication = (function (thisModule) {
     }
 
     console.log('pdfFileJustCreated:', pdfFileJustCreated)
-    if (pdfFileJustCreated) {
-      $.jAlert({
-        title: 'PDF digitalmente assinado?',
-        content: 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
-        theme: 'dark_blue',
-        onClose: function () {
-          pdfFileJustCreated = false
-        },
-        btns: [
-          {
-            text: 'Sim',
-            theme: 'green',
-            class: 'jButtonAlert',
-            onClick: function () {
-              $.jAlert({
-                title: 'Envio do PDF digitalmente assinado',
-                content: 'Abrir-se-á de seguida a sua APP de email onde terá apenas que anexar o PDF digitalmente assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.',
-                theme: 'dark_blue',
-                btns: [
-                  {
-                    text: 'Avançar',
-                    theme: 'green',
-                    class: 'jButtonAlert',
-                    onClick: sendMailMessageWithCMD // CMD -> Chave Móvel Digital
-                  }
-                ]
-              })
-            }
-          },
-          {
-            text: 'Não, mas quero tentar novamente',
-            theme: 'green',
-            closeAlert: false,
-            class: 'jButtonAlert',
-            onClick: function () {
-              pdfFileJustCreated = false
-              // Opens in the system's default web browser
-              cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
-            }
-          },
-          {
-            text: 'Não, mas quero enviar sem Chave Móvel Digital',
-            theme: 'green',
-            class: 'jButtonAlert',
-            onClick: function () {
-              app.main.sendMailMessageWithoutCMD() // CMD -> Chave Móvel Digital
-              pdfFileJustCreated = false
-            }
-          }
-        ]
-      })
+    // if the PDF file was not just recently cr eated, leave
+    if (!pdfFileJustCreated) {
+      return
     }
+
+    // if the alert is already open, don't do anything
+    if (jAlertOnAppResume && $.jAlert('current') && jAlertOnAppResume.content === $.jAlert('current').content) {
+      console.log('jAlert window already open, don\'t open a new one')
+      return
+    }
+
+    jAlertOnAppResume = $.jAlert({
+      title: 'PDF digitalmente assinado?',
+      content: 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
+      theme: 'dark_blue',
+      onClose: function () {
+        pdfFileJustCreated = false
+      },
+      btns: [
+        {
+          text: 'Sim',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () {
+            $.jAlert({
+              title: 'Envio do PDF digitalmente assinado',
+              content: 'Abrir-se-á de seguida a sua APP de email onde terá apenas que anexar o PDF digitalmente assinado. Garanta que anexa apenas o PDF que está digitalmente assinado.',
+              theme: 'dark_blue',
+              btns: [
+                {
+                  text: 'Avançar',
+                  theme: 'green',
+                  class: 'jButtonAlert',
+                  onClick: sendMailMessageWithCMD // CMD -> Chave Móvel Digital
+                }
+              ]
+            })
+          }
+        },
+        {
+          text: 'Não, mas quero tentar novamente',
+          theme: 'green',
+          closeAlert: false,
+          class: 'jButtonAlert',
+          onClick: function () {
+            pdfFileJustCreated = false
+            // Opens in the system's default web browser
+            cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
+          }
+        },
+        {
+          text: 'Não, mas quero enviar sem Chave Móvel Digital',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () {
+            app.main.sendMailMessageWithoutCMD() // CMD -> Chave Móvel Digital
+            pdfFileJustCreated = false
+          }
+        }
+      ]
+    })
   }
 
   function sendMailMessageWithCMD () {
