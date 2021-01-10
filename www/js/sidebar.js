@@ -72,6 +72,11 @@ app.sidebar = (function (thisModule) {
       showSection('cmd_legal_basis')
       app.sidebar.toggleSidebar(false)
     })
+
+    $('#privacy_policy_shows').click(function () {
+      showSection('privacy_policy')
+      app.sidebar.toggleSidebar(false)
+    })
   }
 
   function showSection (sectionId) {
