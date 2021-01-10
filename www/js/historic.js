@@ -224,7 +224,7 @@ app.historic = (function (thisModule) {
     console.log('start sendReminderEmail')
     var downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
       var destPathDir
-      if (device.platform === 'Android') {
+      if (app.functions.isThisAndroid()) {
         // https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#file-system-layouts
         destPathDir = cordova.file.cacheDirectory // normally: file:///data/data/<app-id>/cache
       } else {
