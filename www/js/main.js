@@ -18,8 +18,6 @@ var app = {}
 app.main = (function (thisModule) {
   var wasInit
 
-  thisModule.imagesUriArray = []
-  thisModule.imagesUriCleanArray = []
   thisModule.variables = {} // global object used for debug
   thisModule.urls = {
     Chave_Movel_Digital: {
@@ -232,10 +230,9 @@ app.main = (function (thisModule) {
 
     app.functions.updateDateAndTime()
 
-    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    thisModule.imagesUriCleanArray = app.functions.cleanArray(thisModule.imagesUriArray)
-    console.log(JSON.stringify(thisModule.imagesUriCleanArray, 0, 3))
-    const attachments = thisModule.imagesUriCleanArray.map(path => cordova.plugins.email.adaptFilePathInInternalStorage(path))
+    var imagesArray = app.photos.getImagesArray()
+    console.log(JSON.stringify(imagesArray, 0, 3))
+    const attachments = imagesArray.map(path => cordova.plugins.email.adaptFilePathInInternalStorage(path))
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field

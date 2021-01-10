@@ -129,10 +129,7 @@ app.form = (function (thisModule) {
 
     // from here the inputs are correctly written
 
-    // removes empty values from array, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
-
-    if (app.main.imagesUriCleanArray.length === 0) {
+    if (app.photos.getImagesArray().length === 0) {
       $.jAlert({
         title: 'Erro nas fotos!',
         theme: 'red',

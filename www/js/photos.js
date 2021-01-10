@@ -6,6 +6,9 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
+  // array with full paths of images shown on form
+  var imagesUriArray = []
+
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
 
@@ -68,7 +71,7 @@ app.photos = (function (thisModule) {
       var imgToShowUri = !err ? resizedImgUri : imageUri
       displayImage(imgToShowUri, 'myImg_' + imgNmbr)
       console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
-      app.main.imagesUriArray[imgNmbr] = resizedImgUri
+      imagesUriArray[imgNmbr] = resizedImgUri
       callback(imgNmbr)
     })
 
@@ -269,7 +272,7 @@ app.photos = (function (thisModule) {
     var elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
-    app.main.imagesUriArray[num] = null
+    imagesUriArray[num] = null
   }
 
   function resizeImage (imageUri, callback) {
@@ -283,9 +286,15 @@ app.photos = (function (thisModule) {
     })
   }
 
+  // removes empty values from imagesUriArray, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+  function getImagesArray () {
+    return app.functions.cleanArray(imagesUriArray)
+  }
+
   /* === Public methods to be returned === */
   thisModule.getPhoto = getPhoto
   thisModule.removeImage = removeImage
+  thisModule.getImagesArray = getImagesArray
 
   return thisModule
 })(app.photos || {})

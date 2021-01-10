@@ -14,8 +14,8 @@ app.dbServerLink = (function (thisModule) {
     // generates file names array for images
     const randomString = getRandomString(10) // serves to uniquely identify the filenames
     var imgFileNames = []
-    app.main.imagesUriCleanArray = app.functions.cleanArray(app.main.imagesUriArray)
-    var numberOfImages = app.main.imagesUriCleanArray.length
+    var imagesArray = app.photos.getImagesArray()
+    var numberOfImages = imagesArray.length
     for (let i = 0; i < 4; i++) {
       if (i < numberOfImages) {
         const fileName = `${DEBUG ? 'debug_' : ''}${carPlate}_n${i + 1}_${dateYYYY_MM_DD}_${timeHH_MM}_${locality}_${randomString}.jpg`
@@ -57,8 +57,8 @@ app.dbServerLink = (function (thisModule) {
         console.success('Values inserted into database with success.')
         console.log('Returned:', data)
         // upload all photos
-        for (let i = 0; i < app.main.imagesUriCleanArray.length; i++) {
-          app.file.uploadFileToServer(app.main.imagesUriCleanArray[i], imgFileNames[i], uploadImagesUrl,
+        for (let i = 0; i < imagesArray.length; i++) {
+          app.file.uploadFileToServer(imagesArray[i], imgFileNames[i], uploadImagesUrl,
             (err) => {
               if (err) {
                 console.error(err)

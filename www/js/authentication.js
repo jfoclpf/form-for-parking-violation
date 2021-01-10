@@ -150,13 +150,13 @@ app.authentication = (function (thisModule) {
 
     var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body')
 
-    for (var i = 0; i < app.main.imagesUriCleanArray.length; i++) {
+    var imagesArray = app.photos.getImagesArray()
+    for (var i = 0; i < imagesArray; i++) {
       pdfhtml += '<br><br>'
-      pdfhtml += '<img src="' + app.main.imagesUriCleanArray[i] + '" width="320">'
+      pdfhtml += '<img src="' + imagesArray[i] + '" width="320">'
     }
 
     pdfhtml += '<br><br>' + app.text.getExtraAuthenticationHTMLText()
-
     pdfhtml += '</body></html>'
 
     pdf.fromData(pdfhtml, options)
