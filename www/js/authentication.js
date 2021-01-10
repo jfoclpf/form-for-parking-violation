@@ -1,7 +1,7 @@
 /* eslint camelcase: off */
 
 /* eslint no-unused-vars: "off" */
-/* global app, $, cordova, alert, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
+/* global app, $, cordova, device, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
 
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
@@ -164,12 +164,38 @@ app.authentication = (function (thisModule) {
         // To define the type of the Blob
         var contentType = 'application/pdf'
 
-        // if cordova.file is not available use instead :
-        // var folderpath = "file:///storage/emulated/0/Download/";
-        var folderpath = cordova.file.externalRootDirectory + 'Download/'
-        savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+        var folderpath
+        if (app.functions.isThisAndroid()) {
+          if (navigator.Env) { // from plugin cordova-plugin-env
+            navigator.Env.getDirectory('Downloads',
+              function (path) {
+                if (path) {
+                  folderpath = cordova.file.externalRootDirectory + path
+                  console.log('Using plugin cordova-plugin-env to get Downloads directory: ' + folderpath)
+                  savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+                } else {
+                  folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+                  savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+                }
+              },
+              function (error) {
+                folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+                console.error(`getDirectory error: ${error}. Using ${folderpath} to store pdf`)
+                savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+              }
+            )
+          } else {
+            folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+            savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+          }
+        } else {
+          window.alert('Platform not supportted: ' + device.platform)
+        }
       })
-      .catch((err) => console.err(err))
+      .catch((err) => {
+        console.err('Error on creating pdf: ', err)
+        window.alert('Houve um erro na geração do PDF')
+      })
   }
 
   function getPdfFileName () {
@@ -228,6 +254,11 @@ app.authentication = (function (thisModule) {
    * @param content {Base64 String} Important : The content can't contain the following string (data:application/pdf;base64). Only the base64 string is expected.
    */
   function savebase64AsPDF (folderpath, filename, content, contentType) {
+    var onerror = function (err, message) {
+      pdfFileJustCreated = false
+      console.error(err)
+      window.alert(`Não foi possível salvar o ficheiro na pasta "${folderpath}". ${message}`)
+    }
     // Convert the base64 string in a Blob
     var DataBlob = b64toBlob(content, contentType)
 
@@ -243,12 +274,9 @@ app.authentication = (function (thisModule) {
 
           pdfFileJustCreated = true
           showPDFAuthInfo(folderpath, filename)
-        }, function () {
-          pdfFileJustCreated = false
-          alert('Não foi possível salvar o ficheiro em ' + folderpath)
-        })
-      })
-    })
+        }, (err) => { onerror(err, 'Erro ao tentar escrever no ficheiro!') })
+      }, (err) => { onerror(err, 'Erro ao tentar criar o ficheiro!') })
+    }, (err) => { onerror(err, 'Erro ao tentar procurar a pasta!') })
   }
 
   function showPDFAuthInfo (folderpath, filename) {
