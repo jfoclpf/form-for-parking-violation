@@ -78,7 +78,8 @@
       "cordova-plugin-mobile-ocr": {},
       "cordova-plugin-simple-image-resizer": {
         "ANDROID_EXIFINTERFACES_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-env": {}
     },
     "platforms": [
       "browser",
@@ -88,6 +89,7 @@
   "devDependencies": {
     "async": "^3.2.0",
     "cordova-android": "^9.0.0",
+    "cordova-plugin-env": "^1.0.0",
     "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
     "fs-extra": "^9.0.1",
     "handlebars": "^4.7.6",
