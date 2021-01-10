@@ -151,7 +151,7 @@ app.authentication = (function (thisModule) {
     var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body')
 
     var imagesArray = app.photos.getImagesArray()
-    for (var i = 0; i < imagesArray; i++) {
+    for (var i = 0; i < imagesArray.length; i++) {
       pdfhtml += '<br><br>'
       pdfhtml += '<img src="' + imagesArray[i] + '" width="320">'
     }
