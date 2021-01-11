@@ -145,15 +145,14 @@ app.authentication = (function (thisModule) {
     pdf.fromData(pdfhtml, options)
       .then(function (base64) {
         // To define the type of the Blob
-        getPdfFilePath((err, res) => {
-          if (!err) {
-            const contentType = 'application/pdf'
-            savebase64AsPDF(res.folderpath, res.fileName, base64, contentType)
-          } else {
-            console.error('Error while creating pdf: ', err)
-            window.alert('Houve um erro na geração do PDF')
-          }
-        })
+        const res = getPdfFilePath()
+        if (res) {
+          const contentType = 'application/pdf'
+          savebase64AsPDF(res.folderpath, res.fileName, base64, contentType)
+        } else {
+          console.error('Error while creating pdf')
+          window.alert('Houve um erro na geração do PDF')
+        }
       })
       .catch((err) => {
         console.error('Error while creating pdf: ', err)
@@ -179,31 +178,16 @@ app.authentication = (function (thisModule) {
 
     // now get folderpath
     if (app.functions.isThisAndroid()) {
-      if (navigator.Env) { // from plugin cordova-plugin-env
-        navigator.Env.getDirectory('Downloads',
-          function (path) {
-            if (path) {
-              folderpath = cordova.file.externalRootDirectory + path
-              console.log('Using plugin cordova-plugin-env to get Downloads directory: ' + folderpath)
-              callback(null, { folderpath, fileName })
-            } else {
-              folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-              callback(null, { folderpath, fileName })
-            }
-          },
-          function (error) {
-            folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-            console.log(`getDirectory error: ${error}. Using ${folderpath} to store pdf`)
-            callback(null, { folderpath, fileName })
-          }
-        )
-      } else {
+      console.log('Android version: ' + device.version)
+      if (parseFloat(device.version) <= 10) {
         folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-        callback(null, { folderpath, fileName })
+      } else {
+        window.alert('Para já não suportamos versões de Android superiores a 10 para Chave Móvel Digital')
       }
+      return { folderpath, fileName }
     } else {
       window.alert('Platform not supportted: ' + device.platform)
-      callback(Error('Platform not supportted:'))
+      return null
     }
   }
 
@@ -257,18 +241,24 @@ app.authentication = (function (thisModule) {
     // Convert the base64 string in a Blob
     var DataBlob = b64toBlob(content, contentType)
 
-    console.log('Starting to write the file :3')
+    console.log('Starting to write the file')
 
     window.resolveLocalFileSystemURL(folderpath, function (dir) {
-      console.log('Access to the directory granted succesfully')
-      dir.getFile(filename, { create: true }, function (file) {
+      console.log('Access to the directory granted succesfully: ' + folderpath)
+      dir.getFile(filename, { create: true, exclusive: false }, function (file) {
         console.log('File created succesfully.')
         file.createWriter(function (fileWriter) {
           console.log('Writing content to file')
-          fileWriter.write(DataBlob)
 
-          pdfFileJustCreated = true
-          showPDFAuthInfo(folderpath, filename)
+          fileWriter.onwriteend = function () {
+            console.success('Successful file write')
+            pdfFileJustCreated = true
+            showPDFAuthInfo(folderpath, filename)
+          }
+
+          fileWriter.onerror = (err) => { onerror(err, 'Erro ao tentar escrever no ficheiro!') }
+
+          fileWriter.write(DataBlob)
         }, (err) => { onerror(err, 'Erro ao tentar escrever no ficheiro!') })
       }, (err) => { onerror(err, 'Erro ao tentar criar o ficheiro!') })
     }, (err) => { onerror(err, 'Erro ao tentar procurar a pasta!') })
