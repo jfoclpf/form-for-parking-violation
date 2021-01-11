@@ -183,6 +183,7 @@ app.authentication = (function (thisModule) {
         folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
       } else {
         window.alert('Para já não suportamos versões de Android superiores a 10 para Chave Móvel Digital')
+        return null
       }
       return { folderpath, fileName }
     } else {
