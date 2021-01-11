@@ -32,6 +32,7 @@
   <platform name="android">
     <preference name="android-minSdkVersion" value="22"/>
     <preference name="android-targetSdkVersion" value="29"/>
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <allow-intent href="market:*"/>
     <icon height="512" src="res/icon/android/512.png" width="512"/>
     <icon density="xhdpi" height="192" src="res/icon/android/192.png" width="192"/>
