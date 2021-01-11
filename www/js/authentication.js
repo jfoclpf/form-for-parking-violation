@@ -91,7 +91,7 @@ app.authentication = (function (thisModule) {
           `(function(){
              var textEl = document.getElementById('MainContent_lblTitleChooseDoc');
              if(textEl){
-               textEl.innerHTML = 'Escolha o documento <u>${getPdfFileName()}</u> na pasta <i>Downloads</i> para assinar digitalmente';
+               textEl.innerHTML = 'Escolha o documento PDF na pasta <i>Downloads</i> para assinar digitalmente';
              }
            })();`
 
@@ -145,54 +145,66 @@ app.authentication = (function (thisModule) {
     pdf.fromData(pdfhtml, options)
       .then(function (base64) {
         // To define the type of the Blob
-        var contentType = 'application/pdf'
-
-        var folderpath
-        if (app.functions.isThisAndroid()) {
-          if (navigator.Env) { // from plugin cordova-plugin-env
-            navigator.Env.getDirectory('Downloads',
-              function (path) {
-                if (path) {
-                  folderpath = cordova.file.externalRootDirectory + path
-                  console.log('Using plugin cordova-plugin-env to get Downloads directory: ' + folderpath)
-                  savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
-                } else {
-                  folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-                  savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
-                }
-              },
-              function (error) {
-                folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-                console.error(`getDirectory error: ${error}. Using ${folderpath} to store pdf`)
-                savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
-              }
-            )
+        getPdfFilePath((err, res) => {
+          if (!err) {
+            const contentType = 'application/pdf'
+            savebase64AsPDF(res.folderpath, res.fileName, base64, contentType)
           } else {
-            folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
-            savebase64AsPDF(folderpath, getPdfFileName(), base64, contentType)
+            console.error('Error while creating pdf: ', err)
+            window.alert('Houve um erro na geração do PDF')
           }
-        } else {
-          window.alert('Platform not supportted: ' + device.platform)
-        }
+        })
       })
       .catch((err) => {
-        console.err('Error on creating pdf: ', err)
+        console.error('Error while creating pdf: ', err)
         window.alert('Houve um erro na geração do PDF')
       })
   }
 
-  function getPdfFileName () {
-    var carPlate = app.form.getCarPlate()
+  function getPdfFilePath (callback) {
+    // folderpath/fileName
+    var folderpath
+    var fileName
 
-    var fileNameExtra
+    // get fileName
+    var carPlate = app.form.getCarPlate()
     if (carPlate) {
-      fileNameExtra = carPlate
+      fileName = carPlate
     } else {
       var rightNow = new Date()
-      fileNameExtra = rightNow.toISOString().slice(0, 10)
+      fileName = rightNow.toISOString().slice(0, 10)
     }
 
-    return fileNameExtra + '_Denuncia_Estacionamento' + '.pdf'
+    fileName = fileName + '_Denuncia_Estacionamento' + '.pdf'
+
+    // now get folderpath
+    if (app.functions.isThisAndroid()) {
+      if (navigator.Env) { // from plugin cordova-plugin-env
+        navigator.Env.getDirectory('Downloads',
+          function (path) {
+            if (path) {
+              folderpath = cordova.file.externalRootDirectory + path
+              console.log('Using plugin cordova-plugin-env to get Downloads directory: ' + folderpath)
+              callback(null, { folderpath, fileName })
+            } else {
+              folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+              callback(null, { folderpath, fileName })
+            }
+          },
+          function (error) {
+            folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+            console.log(`getDirectory error: ${error}. Using ${folderpath} to store pdf`)
+            callback(null, { folderpath, fileName })
+          }
+        )
+      } else {
+        folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
+        callback(null, { folderpath, fileName })
+      }
+    } else {
+      window.alert('Platform not supportted: ' + device.platform)
+      callback(Error('Platform not supportted:'))
+    }
   }
 
   // these two function got from here: https://ourcodeworld.com/articles/read/230/how-to-save-a-pdf-from-a-base64-string-on-the-device-with-cordova
