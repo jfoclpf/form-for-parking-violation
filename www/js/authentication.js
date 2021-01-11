@@ -109,25 +109,7 @@ app.authentication = (function (thisModule) {
 
   function downloadPdfFile (args) {
     console.log('downloadPdfFile')
-
-    var fileTransfer = new FileTransfer()
-    var uri = encodeURI(args.url)
-
-    fileTransfer.download(
-      uri, // file's uri
-      args.targetPath, // where will be saved
-      function (entry) {
-        console.log('download complete: ' + entry.toURL())
-        window.open(entry.toURL(), '_blank', 'location=no,closebuttoncaption=Cerrar,toolbar=yes,enableViewportScale=yes')
-      },
-      function (error) {
-        console.log('download error source ' + error.source)
-        console.log('download error target ' + error.target)
-        console.log('upload error code' + error.code)
-      },
-      true,
-      args.options
-    )
+    /* on construction */
   }
 
   function authenticationError () {
