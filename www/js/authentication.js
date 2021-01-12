@@ -6,10 +6,11 @@
 app.authentication = (function (thisModule) {
   var inAppBrowserRef
   var isAuthenticationWindowClosed = true
-  var pdfFileJustCreated = false
+  var leftAppToSignPdf = false
   var jAlertOnAppResume
 
   function startAuthenticationWithSystemBrowser () {
+    leftAppToSignPdf = false
     savePDF()
   }
 
@@ -235,7 +236,7 @@ app.authentication = (function (thisModule) {
    */
   function savebase64AsPDF (folderpath, filename, content, contentType) {
     var onerror = function (err, message) {
-      pdfFileJustCreated = false
+      leftAppToSignPdf = false
       console.error(err)
       window.alert(`Não foi possível salvar o ficheiro na pasta "${folderpath}". ${message}`)
     }
@@ -253,7 +254,6 @@ app.authentication = (function (thisModule) {
 
           fileWriter.onwriteend = function () {
             console.success('Successful file write')
-            pdfFileJustCreated = true
             showPDFAuthInfo(folderpath, filename)
           }
 
@@ -293,6 +293,7 @@ app.authentication = (function (thisModule) {
               inAppBrowserRef.show()
             } else {
               cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
+              leftAppToSignPdf = true
             }
           }
         }
@@ -306,9 +307,9 @@ app.authentication = (function (thisModule) {
       return
     }
 
-    console.log('pdfFileJustCreated:', pdfFileJustCreated)
+    console.log('leftAppToSignPdf:', leftAppToSignPdf)
     // if the PDF file was not just recently cr eated, leave
-    if (!pdfFileJustCreated) {
+    if (!leftAppToSignPdf) {
       return
     }
 
@@ -323,7 +324,7 @@ app.authentication = (function (thisModule) {
       content: 'Consegiu assinar o PDF com sucesso, fazendo uso da sua Chave Móvel Digital?',
       theme: 'dark_blue',
       onClose: function () {
-        pdfFileJustCreated = false
+        leftAppToSignPdf = false
       },
       btns: [
         {
@@ -352,7 +353,7 @@ app.authentication = (function (thisModule) {
           closeAlert: false,
           class: 'jButtonAlert',
           onClick: function () {
-            pdfFileJustCreated = false
+            leftAppToSignPdf = false
             // Opens in the system's default web browser
             cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
           }
@@ -363,7 +364,7 @@ app.authentication = (function (thisModule) {
           class: 'jButtonAlert',
           onClick: function () {
             app.main.sendMailMessageWithoutCMD() // CMD -> Chave Móvel Digital
-            pdfFileJustCreated = false
+            leftAppToSignPdf = false
           }
         }
       ]
@@ -380,7 +381,7 @@ app.authentication = (function (thisModule) {
       isHtml: true // indicats if the body is HTML or plain text
     }, function () {
       console.log('email view dismissed')
-      pdfFileJustCreated = false
+      leftAppToSignPdf = false
     }, this)
   }
 
