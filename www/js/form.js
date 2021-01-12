@@ -308,7 +308,7 @@ app.form = (function (thisModule) {
     }
 
     // replace longdash by normal dash for the API
-    var plate = _plate.replaceAll('\u2013', '-')
+    var plate = _plate.replace(/\u2013/g, '-')
 
     if (plate === '00-XX-00') { // used in general debug
       return
