@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git://github.com/jfoclpf/form-for-parking-violation.git"
   },
-  "author": "Apache Cordova Team",
+  "author": "João Pimentel Ferreira",
   "license": "GPL-3.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.14.0",
