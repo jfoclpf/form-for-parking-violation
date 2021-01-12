@@ -103,7 +103,8 @@
   "standard": {
     "ignore": [
       "www/js/res/*",
-      "www/js/contacts.js"
+      "www/js/contacts.js",
+      "test/www/*"
     ]
   }
 }
