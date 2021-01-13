@@ -9,7 +9,7 @@ const submissionsUrl = '/passeio_livre/serverapp' // to upload anew or update th
 const requestHistoricUrl = '/passeio_livre/serverapp_get_historic'
 const commonPort = 3035
 const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
-const imgUploadUrlPort = 3036 // a comment
+const imgUploadUrlPort = 3036 // a comment, another comment
 
 const fs = require('fs')
 const path = require('path')
