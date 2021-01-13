@@ -1,6 +1,6 @@
 //  LOCALIZATION/GPS/Contacts
 
-/* global app, $, google, Connection, GOOGLE_MAPS_API_KEYS */
+/* global app, $, google, GOOGLE_MAPS_API_KEYS */
 
 /* eslint-disable no-unused-vars */
 /* this function is global because of gmaps api */
@@ -16,7 +16,7 @@ app.localization = (function (thisModule) {
   var Latitude, Longitude
 
   function loadMapsApi () {
-    if (navigator.connection.type === Connection.NONE || isGoogleMapsApiLoaded) {
+    if (!navigator.onLine || isGoogleMapsApiLoaded) {
       return
     }
     // GOOGLE_MAPS_API_KEYS is an JS Array defined in www/js/credentials.js. Each Array element is a KEY
@@ -42,8 +42,7 @@ app.localization = (function (thisModule) {
   /* Geo location functions */
   function getGeolocation () {
     // detect if has Internet AND if the GoogleMaps API is loaded
-    var networkState = app.main.variables.networkState = navigator.connection.type
-    if (networkState !== Connection.NONE && isGoogleMapsApiLoaded) {
+    if (navigator.onLine && isGoogleMapsApiLoaded) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
       var options = { timeout: 30000, enableHighAccuracy: true }
       navigator.geolocation.getCurrentPosition(getPosition, PositionError, options)

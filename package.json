@@ -34,7 +34,6 @@
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-is-debug": "^1.0.0",
     "cordova-plugin-mobile-ocr": "^3.1.2",
-    "cordova-plugin-network-information": "^2.0.2",
     "cordova-plugin-screen-orientation": "^3.0.2",
     "cordova-plugin-splashscreen": "^6.0.0",
     "cordova-plugin-statusbar": "^2.4.3",
@@ -63,7 +62,6 @@
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-device": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-network-information": {},
       "cordova-plugin-compat": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-splashscreen": {},
@@ -77,7 +75,8 @@
       "cordova-plugin-simple-image-resizer": {
         "ANDROID_EXIFINTERFACES_VERSION": "27.+"
       },
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "browser",
@@ -88,6 +87,7 @@
     "async": "^3.2.0",
     "cordova-android": "^9.0.0",
     "cordova-plugin-file": "git+https://github.com/apache/cordova-plugin-file.git",
+    "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
     "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
     "fs-extra": "^9.0.1",
     "handlebars": "^4.7.6",
