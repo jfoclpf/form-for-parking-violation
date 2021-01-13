@@ -10,7 +10,7 @@ const requestHistoricUrl = '/passeio_livre/serverapp_get_historic'
 const commonPort = 3035
 const imgUploadUrl = '/passeio_livre/serverapp_img_upload'
 const imgUploadUrlPort = 3036
-const browserPort = 3037 // comments
+const browserPort = 3037
 
 const fs = require('fs')
 const path = require('path')
