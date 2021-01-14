@@ -154,7 +154,7 @@ app.main = (function (thisModule) {
             theme: 'dark_blue',
             btns: [
               {
-                text: 'Avaliar na Play Sore',
+                text: 'Avaliar na Play Store',
                 theme: 'green',
                 class: 'jButtonAlert',
                 onClick: function () {
