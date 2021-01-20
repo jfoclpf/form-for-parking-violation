@@ -4,7 +4,7 @@
    These complaints are anonymously stored in the database             */
 
 /* eslint camelcase: off */
-/* global app, device, $, google, performance, DEBUG */
+/* global app, device, cordova, $, google, performance, DEBUG */
 
 app.map = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
@@ -121,13 +121,14 @@ app.map = (function (thisModule) {
     // Add the markers and infowindows to the map
     const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
     const dbEntriesLength = dbEntries.length
+    const mapIconUrl = cordova.file.applicationDirectory + 'www/img/map_icon.png'
     for (let i = 0; i < dbEntriesLength; i++) {
       const el = dbEntries[i]
 
       const marker = new google.maps.Marker({
         position: { lat: el.data_coord_latit, lng: el.data_coord_long },
         map: map,
-        icon: 'file:///android_asset/www/img/map_icon.png'
+        icon: mapIconUrl
       })
 
       let htmlInfoContent =
