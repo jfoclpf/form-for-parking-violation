@@ -216,7 +216,7 @@ app.historic = (function (thisModule) {
     var progressAlert = $.jAlert({
       class: 'ja_300px',
       closeBtn: false,
-      content: 'Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="file:///android_asset/www/css/res/images/loading.gif" />'
+      content: `Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="${cordova.file.applicationDirectory + 'www/css/res/images/loading.gif'}" />`
     })
     // download images from server to cache to attach them in email
     // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
