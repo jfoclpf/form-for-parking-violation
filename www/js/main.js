@@ -10,9 +10,6 @@ option `true` is not working, check:
 https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
 var AUTHENTICATION_WITH_IN_APP_BROWSER = false
 
-console.log('AUTHENTICATION_WITH_IN_APP_BROWSER: ', AUTHENTICATION_WITH_IN_APP_BROWSER)
-console.success = (message) => { console.log('%c ' + message, 'color: green; font-weight:bold') }
-
 var app = {}
 
 app.main = (function (thisModule) {
@@ -46,6 +43,8 @@ app.main = (function (thisModule) {
 
   function onDeviceReady () {
     console.log('onDeviceReady() started')
+    console.log('AUTHENTICATION_WITH_IN_APP_BROWSER: ', AUTHENTICATION_WITH_IN_APP_BROWSER)
+    console.success = (message) => { console.log('%c ' + message, 'color: green; font-weight:bold') }
 
     document.addEventListener('online', onOnline, false)
     document.addEventListener('resume', onResume, false)
