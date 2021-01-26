@@ -29,25 +29,25 @@
   <hook src="hooks/copyCredentials.js" type="before_prepare"/>
   <hook src="hooks/convertHbsToHtml.js" type="after_prepare"/>
   <hook src="hooks/minifyFiles.js" type="after_prepare"/>
-  <icon height="512" src="res/icon/android/512.png" width="512"/>
-  <icon density="xhdpi" height="192" src="res/icon/android/192.png" width="192"/>
-  <icon density="xxxhdpi" height="192" src="res/icon/android/192.png" width="192"/>
-  <icon density="xxhdpi" height="144" src="res/icon/android/144.png" width="144"/>
-  <icon density="hdpi" height="72" src="res/icon/android/72.png" width="72"/>
-  <icon density="mdpi" height="48" src="res/icon/android/48.png" width="48"/>
-  <splash density="hdpi" src="res/screen/android/screen-hdpi-portrait.png"/>
-  <splash density="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png"/>
-  <splash density="ldpi" src="res/screen/android/screen-ldpi-portrait.png"/>
-  <splash density="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png"/>
-  <splash density="mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
-  <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
-  <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
-  <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
   <platform name="android">
     <preference name="android-minSdkVersion" value="22"/>
     <preference name="android-targetSdkVersion" value="29"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
     <allow-intent href="market:*"/>
+    <icon height="512" src="res/icon/android/512.png" width="512"/>
+    <icon density="xhdpi" height="192" src="res/icon/android/192.png" width="192"/>
+    <icon density="xxxhdpi" height="192" src="res/icon/android/192.png" width="192"/>
+    <icon density="xxhdpi" height="144" src="res/icon/android/144.png" width="144"/>
+    <icon density="hdpi" height="72" src="res/icon/android/72.png" width="72"/>
+    <icon density="mdpi" height="48" src="res/icon/android/48.png" width="48"/>
+    <splash density="hdpi" src="res/screen/android/screen-hdpi-portrait.png"/>
+    <splash density="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png"/>
+    <splash density="ldpi" src="res/screen/android/screen-ldpi-portrait.png"/>
+    <splash density="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png"/>
+    <splash density="mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
+    <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
+    <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
+    <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
