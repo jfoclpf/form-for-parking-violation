@@ -7,7 +7,7 @@ app.functions = (function (thisModule) {
   // add functions related with respective plugins
   function addFunctionsToPlugins () {
     cordova.plugins.email.adaptFilePathInInternalStorage = function (path) {
-      if (isThisAndroid()) {
+      if (isThisAndroid() || isThis_iOS()) {
         // see: https://www.npmjs.com/package/cordova-plugin-email-composer#attach-files-from-the-internal-app-file-system
         return path.replace(cordova.file.applicationStorageDirectory, 'app://')
       } else {
