@@ -71,6 +71,10 @@ app.functions = (function (thisModule) {
     return device.platform.toLowerCase() === 'android'
   }
 
+  function isThis_iOS () {
+    return device.platform === 'iOS'
+  }
+
   function adaptURItoAndroid (imgUR) {
     if (!isThisAndroid() || !imgUR) {
       return imgUR
@@ -102,6 +106,7 @@ app.functions = (function (thisModule) {
   thisModule.updateDateAndTime = updateDateAndTime
   thisModule.clearCache = clearCache
   thisModule.isThisAndroid = isThisAndroid
+  thisModule.isThis_iOS = isThis_iOS
   thisModule.adaptURItoAndroid = adaptURItoAndroid
   thisModule.setDebugValues = setDebugValues
 
