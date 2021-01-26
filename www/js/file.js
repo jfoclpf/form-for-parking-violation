@@ -285,13 +285,12 @@ app.file = (function (thisModule) {
     var resizeOptions = {
       uri: imageUri,
       fileName: fileNameResized,
+      folderName: cordova.file.cacheDirectory,
       quality: 90,
       width: 1200,
       height: 1200,
       base64: false
     }
-
-    resizeOptions.folderName = cordova.file.cacheDirectory
 
     window.ImageResizer.resize(resizeOptions,
       function (resizedImageUri) {

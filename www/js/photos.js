@@ -67,13 +67,20 @@ app.photos = (function (thisModule) {
       console.log('erro no OCR: ' + err)
     })
 
-    resizeImage(imageUri, function (resizedImgUri, err) {
-      var imgToShowUri = !err ? resizedImgUri : imageUri
-      displayImage(imgToShowUri, 'myImg_' + imgNmbr)
-      console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
-      imagesUriArray[imgNmbr] = resizedImgUri
+    if (app.functions.isThisAndroid()) { // this plugin is just working on android
+      resizeImage(imageUri, function (resizedImgUri, err) {
+        var imgToShowUri = !err ? resizedImgUri : imageUri
+        displayImage(imgToShowUri, 'myImg_' + imgNmbr)
+        console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
+        imagesUriArray[imgNmbr] = resizedImgUri
+        callback(imgNmbr)
+      })
+    } else {
+      displayImage(imageUri, 'myImg_' + imgNmbr)
+      console.log('display image ' + imgNmbr + ' : ' + imageUri)
+      imagesUriArray[imgNmbr] = imageUri
       callback(imgNmbr)
-    })
+    }
 
     // if user selects a photo from the library
     // it gets, when available on the photo the EXIF information
