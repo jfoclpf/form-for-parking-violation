@@ -187,6 +187,9 @@ app.authentication = (function (thisModule) {
         return null
       }
       return { folderpath, fileName }
+    } else if (app.functions.isThis_iOS()) {
+      folderpath = cordova.file.documentsDirectory
+      return { folderpath, fileName }
     } else {
       window.alert('Platform not supportted: ' + device.platform)
       return null
