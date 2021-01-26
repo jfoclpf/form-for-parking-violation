@@ -291,9 +291,7 @@ app.file = (function (thisModule) {
       base64: false
     }
 
-    if (app.functions.isThisAndroid()) {
-      resizeOptions.folderName = cordova.file.cacheDirectory
-    }
+    resizeOptions.folderName = cordova.file.cacheDirectory
 
     window.ImageResizer.resize(resizeOptions,
       function (resizedImageUri) {
