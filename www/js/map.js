@@ -181,14 +181,18 @@ app.map = (function (thisModule) {
   }
 
   function getAllEntries () {
+    // because there's parameter uuid, it gets all entries with PROD=1
     $.ajax({
       url: requestHistoricUrl,
       type: 'GET',
-      data: { uuid: null }, // because uuid is null, it gets all entries with PROD=1
       crossDomain: true,
       success: function (data) {
-        console.log('Data for map obtained from database with success. Returned: ', data)
-        allDbEntries = data
+        if (data && data.length) {
+          console.log('Data for map obtained from database with success. Returned: ', data)
+          allDbEntries = data
+        } else {
+          console.error('There was an error getting the data, data fetched but $is empty')
+        }
       },
       error: function (error) {
         console.error('There was an error getting the data')
