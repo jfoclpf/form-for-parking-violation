@@ -18,7 +18,7 @@ app.functions = (function (thisModule) {
 
   // tell if current user is an authorized admin
   function isCurrentUserAnAdmin () {
-    return ADMIN_DEVICE_UUIDs && ADMIN_DEVICE_UUIDs.includes(device.uuid)
+    return (typeof ADMIN_DEVICE_UUIDs !== 'undefined') && ADMIN_DEVICE_UUIDs.includes(device.uuid)
   }
 
   // limpar a mensagem para o email, remove HTML tags,

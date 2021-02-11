@@ -28,6 +28,7 @@ debug(DBInfo)
 const app = express()
 
 app.use(bodyParser.json())
+app.use(cors())
 
 // to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
