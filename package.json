@@ -56,9 +56,7 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-geolocation": {
-        "GPS_REQUIRED": "true"
-      },
+      "cordova-plugin-geolocation": {},
       "cordova-plugin-email-composer": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-screen-orientation": {},
@@ -89,9 +87,8 @@
   "devDependencies": {
     "async": "^3.2.0",
     "cordova-android": "^9.0.0",
-    "cordova-ios": "^6.1.1",
+    "cordova-ios": "^6.2.0",
     "cordova-plugin-file": "git+https://github.com/apache/cordova-plugin-file.git",
-    "cordova-plugin-inappbrowser": "^4.1.0",
     "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
     "cordova-plugin-simple-image-resizer": "git+https://github.com/protonet/cordova-plugin-image-resizer.git",
     "fs-extra": "^9.0.1",
