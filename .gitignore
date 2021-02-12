@@ -42,3 +42,4 @@ updateServer.sh
 
 # configs from Atom
 .on-save.json
+www/credentials.js
