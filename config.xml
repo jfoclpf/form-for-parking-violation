@@ -2,11 +2,11 @@
 <widget id="com.form.parking.violation" version="2.6.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Denúncia Estacionamento</name>
   <description>
-        Envio de queixa de estacionamento ilegal a autoridade competente
-    </description>
+    Envio de queixa de estacionamento ilegal a autoridade competente
+  </description>
   <author email="joao.pimentel.ferreira@gmail.com" href="https://www.joaopimentel.com/">
-        João Pimentel Ferreira
-    </author>
+    João Pimentel Ferreira
+  </author>
   <content src="index.html"/>
   <icon height="512" src="res/icon/universal/icon4_512x512_playstore.png" width="512"/>
   <icon density="xhdpi" height="196" src="res/icon/universal/icon4_XHDPI_196x196_320dpi.png" width="196"/>
@@ -84,26 +84,25 @@
     <icon src="res/icon/ios/512.png" width="512" height="512" />
     <icon src="res/icon/ios/1024.png" width="1024" height="1024" />
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-         <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
-       </edit-config>
-       <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
-       </edit-config>
-       <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
-       </edit-config>
-       <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
-       </edit-config>
-
-       <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da acesso à câmera para tirar fotos aos veículos em infração</string>
-       </edit-config>
-       <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da acesso à galeria, caso você já tenha tirado anteriormente a foto ao veículo em infração</string>
-       </edit-config>
-       <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-           <string>Necessita da acesso à galeria para guardar algumas fotos, mesmo que temporariamente</string>
-       </edit-config>
+      <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+    </edit-config>
+    <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+    </edit-config>
+    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+    </edit-config>
+    <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+    </edit-config>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da acesso à câmera para tirar fotos aos veículos em infração</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da acesso à galeria, caso você já tenha tirado anteriormente a foto ao veículo em infração</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Necessita da acesso à galeria para guardar algumas fotos, mesmo que temporariamente</string>
+    </edit-config>
   </platform>
 </widget>
