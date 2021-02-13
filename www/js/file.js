@@ -38,7 +38,7 @@ app.file = (function (thisModule) {
   }
 
   /* use it like this, for example:
-  copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg",        "myImg.jpg", LocalFileSystem.TEMPORARY);
+  copyFile("file:///storage/emulated/0/Android/data/com.form.parking.violation/cache/IMG-20180505-WA0004.jpg", "myImg.jpg", LocalFileSystem.TEMPORARY);
   see https://stackoverflow.com/a/50221986/1243247 */
   function _copyFile (baseFileURI, destPathName, fileSystem) {
     console.log('Copying from: ' + baseFileURI)

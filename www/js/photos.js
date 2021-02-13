@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, Camera, textocr */
+/* global app, cordova, $, Camera, textocr */
 
 app.photos = (function (thisModule) {
   // get Photo function
@@ -73,6 +73,15 @@ app.photos = (function (thisModule) {
         displayImage(imgToShowUri, 'myImg_' + imgNmbr)
         console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
         imagesUriArray[imgNmbr] = resizedImgUri
+        callback(imgNmbr)
+      })
+    } else if (app.functions.isThis_iOS()) {
+      // in ios the camera always saves the file in temporary dir,
+      // we must move it for the email plugin to be able to attach it
+      app.file.moveFile(imageUri, cordova.file.applicationDirectory).then((movedImageUri) => {
+        displayImage(movedImageUri, 'myImg_' + imgNmbr)
+        console.log('display image ' + imgNmbr + ' : ' + movedImageUri)
+        imagesUriArray[imgNmbr] = movedImageUri
         callback(imgNmbr)
       })
     } else {
