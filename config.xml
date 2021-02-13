@@ -87,22 +87,22 @@
       <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
     <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+      <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
     <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+      <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
     <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
+      <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da acesso à câmera para tirar fotos aos veículos em infração</string>
+      <string>Necessita da acesso à câmera para tirar fotos aos veículos em infração</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da acesso à galeria, caso você já tenha tirado anteriormente a foto ao veículo em infração</string>
+      <string>Necessita da acesso à galeria, caso você já tenha tirado anteriormente a foto ao veículo em infração</string>
     </edit-config>
     <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-        <string>Necessita da acesso à galeria para guardar algumas fotos, mesmo que temporariamente</string>
+      <string>Necessita da acesso à galeria para guardar algumas fotos, mesmo que temporariamente</string>
     </edit-config>
   </platform>
 </widget>
