@@ -83,6 +83,7 @@
     <icon src="res/icon/ios/256.png" width="256" height="256" />
     <icon src="res/icon/ios/512.png" width="512" height="512" />
     <icon src="res/icon/ios/1024.png" width="1024" height="1024" />
+    <preference name="iosPersistentFileLocation" value="Library" />
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
       <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
