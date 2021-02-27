@@ -375,7 +375,9 @@ app.authentication = (function (thisModule) {
   }
 
   function sendMailMessageWithCMD () {
-    app.dbServerLink.submitNewEntryToDB()
+    if (app.functions.isThisAndroid()) {
+      app.dbServerLink.submitNewEntryToDB() // for now just submits to DB in android
+    }
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field

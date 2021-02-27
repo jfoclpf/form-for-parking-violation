@@ -225,13 +225,16 @@ app.main = (function (thisModule) {
 
   // CMD -> Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
-    app.dbServerLink.submitNewEntryToDB()
+    if (app.functions.isThisAndroid()) {
+      app.dbServerLink.submitNewEntryToDB() // for now just submits to DB in android
+    }
 
     app.functions.updateDateAndTime()
 
     var imagesArray = app.photos.getImagesArray()
     console.log(JSON.stringify(imagesArray, 0, 3))
-    const attachments = imagesArray.map(path => cordova.plugins.email.adaptFilePathInInternalStorage(path))
+    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptFilePathInInternalStorage(path, i))
+    console.log(JSON.stringify(attachments, 0, 3))
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field

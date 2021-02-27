@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, cordova, $, Camera, textocr */
+/* global app, FileReader, $, Camera, textocr */
 
 app.photos = (function (thisModule) {
   // get Photo function
@@ -12,17 +12,7 @@ app.photos = (function (thisModule) {
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
 
-    var srcType
-    if (type === 'camera') {
-      srcType = Camera.PictureSourceType.CAMERA
-    } else if (type === 'library') {
-      srcType = Camera.PictureSourceType.PHOTOLIBRARY
-    } else {
-      console.log('getPhoto error')
-      return
-    }
-
-    var options = setCameraOptions(srcType)
+    var options = setCameraOptions(type)
 
     console.log('starting navigator.camera.getPicture')
     navigator.camera.getPicture(function (result) {
@@ -76,14 +66,23 @@ app.photos = (function (thisModule) {
         callback(imgNmbr)
       })
     } else if (app.functions.isThis_iOS()) {
-      // in ios the camera always saves the file in temporary dir,
-      // we must move it for the email plugin to be able to attach it
-      app.file.moveFile(imageUri, cordova.file.applicationDirectory).then((movedImageUri) => {
-        displayImage(movedImageUri, 'myImg_' + imgNmbr)
-        console.log('display image ' + imgNmbr + ' : ' + movedImageUri)
-        imagesUriArray[imgNmbr] = movedImageUri
-        callback(imgNmbr)
-      })
+      displayImage(imageUri, 'myImg_' + imgNmbr)
+      console.log('display image ' + imgNmbr + ' : ' + imageUri)
+
+      // ios is a mess with file location, thus for email attachment convert photo to base64
+      window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+        fileEntry.file((file) => {
+          if (!file.size) { console.error('File is empty (on fileEntry from resolveLocalFileSystemURL)'); return }
+          var reader = new FileReader()
+          reader.onloadend = () => {
+            imagesUriArray[imgNmbr] = reader.result
+          }
+          reader.onerror = (err) => { console.error('Error on FileReader', err) }
+          reader.readAsDataURL(file)
+        }, (err) => { console.error('Error on fileEntry.file', err) })
+      }, (err) => { console.error('Error on resolveLocalFileSystemURL', err) })
+
+      callback(imgNmbr)
     } else {
       displayImage(imageUri, 'myImg_' + imgNmbr)
       console.log('display image ' + imgNmbr + ' : ' + imageUri)
@@ -138,7 +137,17 @@ app.photos = (function (thisModule) {
   }
 
   // camera plugin options
-  function setCameraOptions (srcType) {
+  function setCameraOptions (type) {
+    var srcType
+    if (type === 'camera') {
+      srcType = Camera.PictureSourceType.CAMERA
+    } else if (type === 'library') {
+      srcType = Camera.PictureSourceType.PHOTOLIBRARY
+    } else {
+      console.log('getPhoto error')
+      return
+    }
+
     var options = {
       // Some common settings are 20, 50, and 100
       quality: 50, // do not increase, otherwise the email plugin cannot attach photo due to photo file size
