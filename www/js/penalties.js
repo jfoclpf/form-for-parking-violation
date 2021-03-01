@@ -67,6 +67,11 @@ app.penalties = (function (thisModule) {
       description: 'num lugar reservado exclusivamente para carros partilhados',
       law_article: 'da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada'
     },
+    rent_a_car: {
+      select: 'Veículo Rent-a-Car na via pública, não estando alugado e nem junto a terminal de transporte',
+      description: 'na via via pública, sendo um veículo Rent-a-Car que não estava a ser alugado, não tendo estacionado sequer em lugares especialmente fixados para este efeito designadamente os situados junto de terminais de transporte',
+      law_article: 'n.º 4 do art.º 6.º do Decreto Lei 181/2012, considerando demais que n.º 1 do art.º 16 do referido Decreto Lei atribui às forças de segurança a fiscalização'
+    },
     carro_especifico: {
       select: 'Lugar reservado a veículos específicos (ex: EDP, PT, Pároco, serviço de hotel, etc.)',
       description: 'num lugar reservado ao estacionamento exclusivo de determinados veículos',
