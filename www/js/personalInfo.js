@@ -74,7 +74,7 @@ app.personalInfo = (function (thisModule) {
 
     console.log('Number of relevant names: ', number_of_names)
     // if user inserted only 1 or 2 words, it didn't inserted full name, as demanded
-    if ((number_of_names === 1 || number_of_names === 2)) {
+    if (number_of_names <= 1) {
       return false
     }
 
