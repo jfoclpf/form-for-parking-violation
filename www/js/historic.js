@@ -236,7 +236,7 @@ app.historic = (function (thisModule) {
           if (err) {
             photosDeferred[photoIndex].resolve(null)
           } else {
-            const filePathForEmailAttachment = cordova.plugins.email.adaptFilePathInInternalStorage(localFileName)
+            const filePathForEmailAttachment = cordova.plugins.email.adaptPhotoInfoForEmailAttachment(localFileName)
             photosDeferred[photoIndex].resolve(filePathForEmailAttachment)
           }
         })
