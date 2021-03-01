@@ -121,6 +121,10 @@ app.contacts.PM_Contacts = [
     'contacto': 'policia.municipal@cm-oeiras.pt'
   },
   {
+    'nome': 'Olhão',
+    'contacto': 'policiamunicipal@cm-olhao.pt'
+  },
+  {
     'nome': 'Paços de Ferreira',
     'contacto': 'policiamunicipalpfr@iol.pt'
   },
