@@ -6,8 +6,8 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
-  // array with full paths of images shown on form
-  var imagesUriArray = []
+  var photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
+  var photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
 
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
@@ -57,12 +57,14 @@ app.photos = (function (thisModule) {
       console.log('erro no OCR: ' + err)
     })
 
+    photosUriOnFileSystem[imgNmbr] = imageUri
+
     if (app.functions.isThisAndroid()) { // this plugin is just working on android
       resizeImage(imageUri, function (resizedImgUri, err) {
         var imgToShowUri = !err ? resizedImgUri : imageUri
         displayImage(imgToShowUri, 'myImg_' + imgNmbr)
         console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
-        imagesUriArray[imgNmbr] = resizedImgUri
+        photosForEmailAttachment[imgNmbr] = resizedImgUri
         callback(imgNmbr)
       })
     } else if (app.functions.isThis_iOS()) {
@@ -75,7 +77,7 @@ app.photos = (function (thisModule) {
           if (!file.size) { console.error('File is empty (on fileEntry from resolveLocalFileSystemURL)'); return }
           var reader = new FileReader()
           reader.onloadend = () => {
-            imagesUriArray[imgNmbr] = reader.result
+            photosForEmailAttachment[imgNmbr] = reader.result
           }
           reader.onerror = (err) => { console.error('Error on FileReader', err) }
           reader.readAsDataURL(file)
@@ -86,7 +88,7 @@ app.photos = (function (thisModule) {
     } else {
       displayImage(imageUri, 'myImg_' + imgNmbr)
       console.log('display image ' + imgNmbr + ' : ' + imageUri)
-      imagesUriArray[imgNmbr] = imageUri
+      photosForEmailAttachment[imgNmbr] = imageUri
       callback(imgNmbr)
     }
 
@@ -297,7 +299,7 @@ app.photos = (function (thisModule) {
     var elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
-    imagesUriArray[num] = null
+    photosUriOnFileSystem[num] = null
   }
 
   function resizeImage (imageUri, callback) {
@@ -311,15 +313,21 @@ app.photos = (function (thisModule) {
     })
   }
 
-  // removes empty values from imagesUriArray, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-  function getImagesArray () {
-    return app.functions.cleanArray(imagesUriArray)
+  function getPhotosForEmailAttachment () {
+    // removes empty values from photosForEmailAttachment, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    return app.functions.cleanArray(photosForEmailAttachment)
+  }
+
+  function getPhotosUriOnFileSystem () {
+    // removes empty values from photosUriOnFileSystem, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    return app.functions.cleanArray(photosUriOnFileSystem)
   }
 
   /* === Public methods to be returned === */
   thisModule.getPhoto = getPhoto
   thisModule.removeImage = removeImage
-  thisModule.getImagesArray = getImagesArray
+  thisModule.getPhotosForEmailAttachment = getPhotosForEmailAttachment
+  thisModule.getPhotosUriOnFileSystem = getPhotosUriOnFileSystem
 
   return thisModule
 })(app.photos || {})

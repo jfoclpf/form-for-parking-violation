@@ -14,7 +14,7 @@ app.dbServerLink = (function (thisModule) {
     // generates file names array for images
     const randomString = getRandomString(10) // serves to uniquely identify the filenames
     var imgFileNames = []
-    var imagesArray = app.photos.getImagesArray()
+    var imagesArray = app.photos.getPhotosUriOnFileSystem()
     var numberOfImages = imagesArray.length
     for (let i = 0; i < 4; i++) {
       if (i < numberOfImages) {

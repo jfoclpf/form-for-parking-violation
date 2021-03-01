@@ -60,7 +60,7 @@ app.text = (function (thisModule) {
         ', em violação ' + penaltyLawArticle + '.'
 
       var msg3 = 'Pode-se comprovar esta situação através' +
-        ' ' + ((app.photos.getImagesArray().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
+        ' ' + ((app.photos.getPhotosUriOnFileSystem().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
         ' ' + 'à presente mensagem eletrónica. ' +
         'Juro pela minha honra que a informação supra citada é verídica.' +
         ' ' + 'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada,' +

@@ -129,7 +129,7 @@ app.form = (function (thisModule) {
 
     // from here the inputs are correctly written
 
-    if (app.photos.getImagesArray().length === 0) {
+    if (app.photos.getPhotosUriOnFileSystem().length === 0) {
       $.jAlert({
         title: 'Erro nas fotos!',
         theme: 'red',

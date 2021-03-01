@@ -231,7 +231,7 @@ app.main = (function (thisModule) {
 
     app.functions.updateDateAndTime()
 
-    var imagesArray = app.photos.getImagesArray()
+    var imagesArray = app.photos.getPhotosForEmailAttachment()
     console.log(JSON.stringify(imagesArray, 0, 3))
     const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptFilePathInInternalStorage(path, i))
     console.log(JSON.stringify(attachments, 0, 3))
