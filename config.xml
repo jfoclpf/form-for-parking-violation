@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.form.parking.violation" version="2.6.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.form.parking.violation" version="2.6.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Denúncia Estacionamento</name>
   <description>
     Envio de queixa de estacionamento ilegal a autoridade competente
@@ -52,38 +52,38 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-    <icon src="res/icon/ios/16.png" width="16" height="16" />
-    <icon src="res/icon/ios/20.png" width="20" height="20" />
-    <icon src="res/icon/ios/29.png" width="29" height="29" />
-    <icon src="res/icon/ios/32.png" width="32" height="32" />
-    <icon src="res/icon/ios/40.png" width="40" height="40" />
-    <icon src="res/icon/ios/48.png" width="48" height="48" />
-    <icon src="res/icon/ios/50.png" width="50" height="50" />
-    <icon src="res/icon/ios/55.png" width="55" height="55" />
-    <icon src="res/icon/ios/57.png" width="57" height="57" />
-    <icon src="res/icon/ios/58.png" width="58" height="58" />
-    <icon src="res/icon/ios/60.png" width="60" height="60" />
-    <icon src="res/icon/ios/64.png" width="64" height="64" />
-    <icon src="res/icon/ios/72.png" width="72" height="72" />
-    <icon src="res/icon/ios/76.png" width="76" height="76" />
-    <icon src="res/icon/ios/80.png" width="80" height="80" />
-    <icon src="res/icon/ios/87.png" width="87" height="87" />
-    <icon src="res/icon/ios/88.png" width="88" height="88" />
-    <icon src="res/icon/ios/100.png" width="100" height="100" />
-    <icon src="res/icon/ios/114.png" width="114" height="114" />
-    <icon src="res/icon/ios/120.png" width="120" height="120" />
-    <icon src="res/icon/ios/128.png" width="128" height="128" />
-    <icon src="res/icon/ios/144.png" width="144" height="144" />
-    <icon src="res/icon/ios/152.png" width="152" height="152" />
-    <icon src="res/icon/ios/167.png" width="167" height="167" />
-    <icon src="res/icon/ios/172.png" width="172" height="172" />
-    <icon src="res/icon/ios/180.png" width="180" height="180" />
-    <icon src="res/icon/ios/196.png" width="196" height="196" />
-    <icon src="res/icon/ios/216.png" width="216" height="216" />
-    <icon src="res/icon/ios/256.png" width="256" height="256" />
-    <icon src="res/icon/ios/512.png" width="512" height="512" />
-    <icon src="res/icon/ios/1024.png" width="1024" height="1024" />
-    <preference name="iosPersistentFileLocation" value="Library" />
+    <icon src="res/icon/ios/16.png" width="16" height="16"/>
+    <icon src="res/icon/ios/20.png" width="20" height="20"/>
+    <icon src="res/icon/ios/29.png" width="29" height="29"/>
+    <icon src="res/icon/ios/32.png" width="32" height="32"/>
+    <icon src="res/icon/ios/40.png" width="40" height="40"/>
+    <icon src="res/icon/ios/48.png" width="48" height="48"/>
+    <icon src="res/icon/ios/50.png" width="50" height="50"/>
+    <icon src="res/icon/ios/55.png" width="55" height="55"/>
+    <icon src="res/icon/ios/57.png" width="57" height="57"/>
+    <icon src="res/icon/ios/58.png" width="58" height="58"/>
+    <icon src="res/icon/ios/60.png" width="60" height="60"/>
+    <icon src="res/icon/ios/64.png" width="64" height="64"/>
+    <icon src="res/icon/ios/72.png" width="72" height="72"/>
+    <icon src="res/icon/ios/76.png" width="76" height="76"/>
+    <icon src="res/icon/ios/80.png" width="80" height="80"/>
+    <icon src="res/icon/ios/87.png" width="87" height="87"/>
+    <icon src="res/icon/ios/88.png" width="88" height="88"/>
+    <icon src="res/icon/ios/100.png" width="100" height="100"/>
+    <icon src="res/icon/ios/114.png" width="114" height="114"/>
+    <icon src="res/icon/ios/120.png" width="120" height="120"/>
+    <icon src="res/icon/ios/128.png" width="128" height="128"/>
+    <icon src="res/icon/ios/144.png" width="144" height="144"/>
+    <icon src="res/icon/ios/152.png" width="152" height="152"/>
+    <icon src="res/icon/ios/167.png" width="167" height="167"/>
+    <icon src="res/icon/ios/172.png" width="172" height="172"/>
+    <icon src="res/icon/ios/180.png" width="180" height="180"/>
+    <icon src="res/icon/ios/196.png" width="196" height="196"/>
+    <icon src="res/icon/ios/216.png" width="216" height="216"/>
+    <icon src="res/icon/ios/256.png" width="256" height="256"/>
+    <icon src="res/icon/ios/512.png" width="512" height="512"/>
+    <icon src="res/icon/ios/1024.png" width="1024" height="1024"/>
+    <preference name="iosPersistentFileLocation" value="Library"/>
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
       <string>Necessita da sua localização para indicar o endereço da ocorrência a ser enviada às autoridades</string>
     </edit-config>
