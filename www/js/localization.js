@@ -99,8 +99,16 @@ app.localization = (function (thisModule) {
         $('#street_number').val(address.house_number)
       }
 
+      if (address.town) {
+        geoNames.push(address.town)
+      }
+
       if (address.municipality) {
         geoNames.push(address.municipality)
+      }
+
+      if (address.suburb) {
+        geoNames.push(address.suburb)
       }
 
       if (address.city) {
@@ -109,10 +117,6 @@ app.localization = (function (thisModule) {
 
       if (address.county) {
         geoNames.push(address.county)
-      }
-
-      if (address.suburb) {
-        geoNames.push(address.suburb)
       }
 
       // from the Postal Code got from OMS
@@ -138,8 +142,8 @@ app.localization = (function (thisModule) {
         $('#locality').val(address.municipality)
       } else if (address.city) {
         $('#locality').val(address.city)
-      } else if (address.county) {
-        $('#locality').val(address.county)
+      } else if (address.town) {
+        $('#locality').val(address.town)
       } else if (address.suburb) {
         $('#locality').val(address.suburb)
       } else if (municipalityFromDB) {
