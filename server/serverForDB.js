@@ -32,6 +32,7 @@ app.use(cors())
 
 // to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
+  debug(req.get('user-agent'))
   // object got from POST
   var serverCommand = req.body.serverCommand || req.body.dbCommand // dbCommand for backward compatibility
   var databaseObj = req.body.databaseObj

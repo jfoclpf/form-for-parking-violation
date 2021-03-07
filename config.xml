@@ -18,6 +18,7 @@
   <allow-navigation href="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
+  <preference name="OverrideUserAgent" value="APP/com.form.parking.violation" />
   <preference name="windows-target-version" value="10.0"/>
   <preference name="windows-phone-target-version" value="10.0"/>
   <preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle"/>

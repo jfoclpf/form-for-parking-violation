@@ -15,7 +15,6 @@ var app = {}
 app.main = (function (thisModule) {
   var wasInit
 
-  thisModule.variables = {} // global object used for debug
   thisModule.urls = {
     Chave_Movel_Digital: {
       aderir: 'https://www.autenticacao.gov.pt/cmd-pedido-chave',
@@ -29,7 +28,10 @@ app.main = (function (thisModule) {
       uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload anew or update the data of an occurence
       requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
     },
-    androidPlayStore: 'https://play.google.com/store/apps/details?id=com.form.parking.violation'
+    androidPlayStore: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
+    openStreetMaps: {
+      nominatimReverse: 'https://nominatim.openstreetmap.org/reverse'
+    }
   }
 
   $(document).ready(function () {
@@ -53,6 +55,7 @@ app.main = (function (thisModule) {
 
     cordova.getAppVersion.getVersionNumber(function (version) {
       console.log('APP version is ' + version)
+      thisModule.APPversion = version
       $('.version').text('versão ' + version)
     })
 

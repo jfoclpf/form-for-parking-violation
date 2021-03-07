@@ -1,36 +1,17 @@
 //  LOCALIZATION/GPS/Contacts
 
-/* global app, $, google, GOOGLE_MAPS_API_KEYS */
-
-/* eslint-disable no-unused-vars */
-/* this function is global because of gmaps api */
-function onGoogleMapsApiLoaded () {
-  // get from GPS Address information
-  app.localization.getGeolocation()
-  app.map.initGoogleMapLoaded()
-}
-/* eslint-enable no-unused-vars */
+/* global app, $, cordova */
 
 app.localization = (function (thisModule) {
-  var isGoogleMapsApiLoaded = false
   var Latitude, Longitude
 
   function loadMapsApi () {
-    if (!navigator.onLine || isGoogleMapsApiLoaded) {
-      return
+    if (!navigator.onLine) {
+      console.log('Device Navigator not online')
+    } else {
+      console.log('Device Navigator is online')
+      getGeolocation()
     }
-    // GOOGLE_MAPS_API_KEYS is an JS Array defined in www/js/credentials.js. Each Array element is a KEY
-    // to get a Google maps Key visit https://console.cloud.google.com/apis/credentials
-
-    // get randomly a KEY from the array
-    var googleMapsKey = GOOGLE_MAPS_API_KEYS[Math.floor(Math.random() * GOOGLE_MAPS_API_KEYS.length)]
-    console.log(googleMapsKey)
-
-    const googleMapsApiJsUrl = 'https://maps.googleapis.com/maps/api/js'
-    $.getScript(`${googleMapsApiJsUrl}?key=${googleMapsKey}&callback=onGoogleMapsApiLoaded&language=pt`)
-
-    // this flag should be here otherwise the script might be loaded several times, and Google refuses it
-    isGoogleMapsApiLoaded = true
   }
 
   // botão get address by GPS (Atualizar)
@@ -42,7 +23,7 @@ app.localization = (function (thisModule) {
   /* Geo location functions */
   function getGeolocation () {
     // detect if has Internet AND if the GoogleMaps API is loaded
-    if (navigator.onLine && isGoogleMapsApiLoaded) {
+    if (navigator.onLine) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
       var options = { timeout: 30000, enableHighAccuracy: true }
       navigator.geolocation.getCurrentPosition(getPosition, PositionError, options)
@@ -57,7 +38,7 @@ app.localization = (function (thisModule) {
     var longitude = position.coords.longitude
     Longitude = longitude
     console.log('latitude, longitude: ', latitude, longitude)
-    getAuthoritiesFromGMap(latitude, longitude) // Pass the latitude and longitude to get address.
+    getAuthoritiesFromOSM(latitude, longitude) // Pass the latitude and longitude to get address.
   }
 
   // to be used from outside of this module
@@ -81,75 +62,90 @@ app.localization = (function (thisModule) {
   /* Get address by coordinates */
   thisModule.AUTHORITIES = [] // array of possible authorities applicable for that area
 
-  function getAuthoritiesFromGMap (latitude, longitude) {
-    var reverseGeocoder = new google.maps.Geocoder()
-    var currentPosition = new google.maps.LatLng(latitude, longitude)
-    reverseGeocoder.geocode({ latLng: currentPosition }, function (results, status) {
-      if (status === google.maps.GeocoderStatus.OK) {
-        if (results[0]) {
-          var addressComponents = results[0].address_components
-          getAuthoritiesFromAddress(addressComponents)
-        } else {
-          PositionError()
-        }
-      } else {
-        PositionError()
-      }
+  function getAuthoritiesFromOSM (latitude, longitude) {
+    $.ajax({
+      url: app.main.urls.openStreetMaps.nominatimReverse,
+      data: {
+        lat: latitude,
+        lon: longitude,
+        format: 'json',
+        namedetails: 1,
+        'accept-language': 'pt'
+      },
+      dataType: 'json',
+      type: 'GET',
+      async: true,
+      crossDomain: true
+    }).done(function (res) {
+      const address = res.address
+      console.log(address)
+      getAuthoritiesFromAddress(address)
+    }).fail(function (err) {
+      console.error(err)
+      PositionError()
     })
   }
 
-  function getAuthoritiesFromAddress (addressComponents) {
+  function getAuthoritiesFromAddress (address) {
     thisModule.AUTHORITIES = []
     var geoNames = [] // array of possible names for the locale, for example ["Lisboa", "Odivelas"]
 
-    if (addressComponents !== undefined) {
-      $('#street').val(getAddressComponents(addressComponents, 'route')) // nome da rua/avenida/etc.
-      $('#street_number').val(getAddressComponents(addressComponents, 'street_number'))
-
-      // get concelho/municipality according to Google Maps API
-      var municipalityFromGmaps = getAddressComponents(addressComponents, 'administrative_area_level_2')
-      console.log('municipality from Goolge Maps is ' + municipalityFromGmaps)
-      if (municipalityFromGmaps) {
-        geoNames.push(municipalityFromGmaps)
+    if (address) {
+      if (address.road) {
+        $('#street').val(address.road) // nome da rua/avenida/etc.
       }
 
-      var localityFromGmaps = getAddressComponents(addressComponents, 'locality')
-      console.log('locality from Goolge Maps is ' + localityFromGmaps)
-      if (localityFromGmaps) {
-        geoNames.push(localityFromGmaps)
+      if (address.house_number) {
+        $('#street_number').val(address.house_number)
       }
 
-      var postalCodeFromGmaps = getAddressComponents(addressComponents, 'postal_code')
-      console.log('postal_code from Goolge Maps is ' + postalCodeFromGmaps, typeof postalCodeFromGmaps)
+      if (address.municipality) {
+        geoNames.push(address.municipality)
+      }
 
-      // from the Postal Code got from GPS/Google
+      if (address.city) {
+        geoNames.push(address.city)
+      }
+
+      if (address.county) {
+        geoNames.push(address.county)
+      }
+
+      if (address.suburb) {
+        geoNames.push(address.suburb)
+      }
+
+      // from the Postal Code got from OMS
       // tries to get locality using the offline Data Base (see file contacts.js)
-      var dataFromDB = getDataFromPostalCode(postalCodeFromGmaps)
+      var localityFromDB, municipalityFromDB
+      if (address.postcode) {
+        const dataFromDB = getDataFromPostalCode(address.postcode)
 
-      var localityFromDB = dataFromDB.locality
-      console.log('locality from DB is ' + localityFromDB)
-      if (localityFromDB) {
-        geoNames.push(localityFromDB)
+        localityFromDB = dataFromDB.locality
+        console.log('locality from DB is ' + localityFromDB)
+        if (localityFromDB) {
+          geoNames.push(localityFromDB)
+        }
+
+        municipalityFromDB = dataFromDB.municipality
+        console.log('municipality from DB is ' + municipalityFromDB)
+        if (municipalityFromDB) {
+          geoNames.push(municipalityFromDB)
+        }
       }
 
-      var municipalityFromDB = dataFromDB.municipality
-      console.log('municipality from DB is ' + municipalityFromDB)
-      if (municipalityFromDB) {
-        geoNames.push(municipalityFromDB)
-      }
-
-      if (localityFromGmaps) {
-        $('#locality').val(localityFromGmaps)
-      } else if (municipalityFromGmaps) {
-        $('#locality').val(municipalityFromGmaps)
+      if (address.municipality) {
+        $('#locality').val(address.municipality)
+      } else if (address.city) {
+        $('#locality').val(address.city)
+      } else if (address.county) {
+        $('#locality').val(address.county)
+      } else if (address.suburb) {
+        $('#locality').val(address.suburb)
+      } else if (municipalityFromDB) {
+        $('#locality').val(municipalityFromDB)
       } else if (localityFromDB) {
         $('#locality').val(localityFromDB)
-      }
-
-      // if Google Maps has futher information of local name
-      var locality2 = getAddressComponents(addressComponents, 'administrative_area_level_3')
-      if (locality2 && locality2 !== '') {
-        geoNames.push(locality2)
       }
     } else {
       geoNames.push($('#locality').val())
@@ -193,23 +189,11 @@ app.localization = (function (thisModule) {
     })
   }
 
-  // gets "street_number", "route", "locality", "country", "postal_code", "administrative_area_level_2"(concelho)
-  function getAddressComponents (components, type) {
-    for (var key in components) {
-      if (Object.prototype.hasOwnProperty.call(components, key)) {
-        if (type === components[key].types[0]) {
-          return components[key].long_name
-        }
-      }
-    }
-  }
-
   // GPS/Google Postal Code -> Localities.postalCode -> Localities.municipality ->  Municipalities.code -> Municipalities.name -> PM_Contacts.nome
   function getDataFromPostalCode (postalCode) {
     var toReturn
 
-    // gets first 4 characters
-    postalCode = postalCode.substring(0, 4)
+    postalCode = postalCode.substring(0, 4) // gets first 4 characters
     if (postalCode.length !== 4) {
       toReturn = {
         locality: '',
