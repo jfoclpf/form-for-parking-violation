@@ -1,6 +1,6 @@
 //  LOCALIZATION/GPS/Contacts
 
-/* global app, $, cordova */
+/* global app, $ */
 
 app.localization = (function (thisModule) {
   var Latitude, Longitude
