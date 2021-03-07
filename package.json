@@ -49,6 +49,7 @@
     "fs": "0.0.1-security",
     "jAlert": "^4.9.1",
     "jquery": "^3.5.1",
+    "leaflet": "^1.7.1",
     "mysql": "^2.18.1",
     "path": "^0.12.7",
     "sql-formatter": "^2.3.4",
@@ -80,7 +81,6 @@
     },
     "platforms": [
       "browser",
-      "ios",
       "android"
     ]
   },
