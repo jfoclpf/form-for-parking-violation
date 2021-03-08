@@ -4,13 +4,13 @@
    These complaints are anonymously stored in the database             */
 
 /* eslint camelcase: off */
-/* global app, device, cordova, $, google, performance, DEBUG */
+/* global app, device, cordova, $, performance, L, DEBUG */
 
 app.map = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
   const requestImageUrl = app.main.urls.databaseServer.requestImage
-  var isGoogleMapsApiLoaded = false
 
+  var map
   var allDbEntries // all entries fetched from database
   var dbEntries // entries filtered according to user selection
 
@@ -44,17 +44,11 @@ app.map = (function (thisModule) {
     })
   }
 
-  // this funcion is run when the API is loaded, see file js/localization.js
-  function initGoogleMapLoaded () {
-    isGoogleMapsApiLoaded = true
-  }
-
-  // does not show map until the Google API script and the DB entries are loaded
-  // this done on the beginning
+  // does not show map until the DB entries are loaded
   function tryToShowMap (selectOption) {
-    if (!isGoogleMapsApiLoaded || !allDbEntries) {
+    if (!allDbEntries) {
       setTimeout(() => {
-        if (isGoogleMapsApiLoaded && allDbEntries) {
+        if (allDbEntries) {
           showMap(selectOption)
         } else {
           tryToShowMap(selectOption)
@@ -67,39 +61,9 @@ app.map = (function (thisModule) {
 
   // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
   function showMap (selectOption) {
+    // to check the time it takes to load map
     tLoadMapInit = performance.now()
     tLoadMapEnd = null
-
-    // get coordinates for the map center
-    var currentLocation = app.localization.getCoordinates() // current position of user
-    var latitude, longitude
-    if (currentLocation.latitude && currentLocation.longitude && !DEBUG) {
-      latitude = currentLocation.latitude
-      longitude = currentLocation.longitude
-    } else {
-      // coordinates of Lisbon
-      latitude = 38.736946
-      longitude = -9.142685
-    }
-
-    const mapOptions = {
-      center: { lat: latitude, lng: longitude },
-      disableDefaultUI: true,
-      streetViewControl: false,
-      gestureHandling: 'greedy',
-      zoom: 8,
-      restriction: {
-        latLngBounds: {
-          east: -6,
-          north: 44,
-          south: 34,
-          west: -10
-        },
-        strictBounds: true
-      }
-    }
-
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions)
 
     // get filtered array of db entries according to selected Option (filter)
     dbEntries = []
@@ -118,18 +82,56 @@ app.map = (function (thisModule) {
       }
     }
 
+    // get coordinates for the map center
+    var currentLocation = app.localization.getCoordinates() // current position of user
+    var latitude, longitude
+    if (currentLocation.latitude && currentLocation.longitude && !DEBUG) {
+      latitude = currentLocation.latitude
+      longitude = currentLocation.longitude
+    } else {
+      // coordinates of Lisbon
+      latitude = 38.736946
+      longitude = -9.142685
+    }
+
+    const mapOptions = {
+      center: [latitude, longitude],
+      zoom: 8,
+      maxBounds: L.latLngBounds(L.latLng(43.882057, -11.030141), L.latLng(35.942436, -4.104133)),
+      zoomControl: false
+    }
+
+    // initialize Leaflet
+    if (map) {
+      map.off()
+      map.remove()
+    }
+    map = L.map('map', mapOptions)
+
+    // add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      minZoom: 6,
+      subdomains: ['a', 'b', 'c']
+    }).addTo(map)
+
+    setInterval(function () {
+      map.invalidateSize()
+    }, 500)
+
     // Add the markers and infowindows to the map
     const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
     const dbEntriesLength = dbEntries.length
-    const mapIconUrl = cordova.file.applicationDirectory + 'www/img/map_icon.png'
+    const mapIcon = L.icon({ iconUrl: cordova.file.applicationDirectory + 'www/img/map_icon.png' })
+
+    var markerArray = []
     for (let i = 0; i < dbEntriesLength; i++) {
       const el = dbEntries[i]
 
-      const marker = new google.maps.Marker({
-        position: { lat: el.data_coord_latit, lng: el.data_coord_long },
-        map: map,
-        icon: mapIconUrl
-      })
+      const marker = L.marker(
+        [el.data_coord_latit, el.data_coord_long],
+        { icon: mapIcon }
+      )
 
       let htmlInfoContent =
         '<div style="width:200px">' +
@@ -154,20 +156,18 @@ app.map = (function (thisModule) {
           `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${i})"><i class="fa fa-trash"></i></button>`
       }
 
-      google.maps.event.addListener(marker, 'click', (function (_marker, _htmlInfoContent) {
-        return function () {
-          const infowindow = new google.maps.InfoWindow()
-          infowindow.setContent(_htmlInfoContent)
-          infowindow.open(map, _marker)
-        }
-      })(marker, htmlInfoContent))
+      marker.bindPopup(htmlInfoContent)
+      markerArray.push(marker)
     }
 
+    var group = L.featureGroup(markerArray).addTo(map)
+    map.fitBounds(group.getBounds())
+
     // when map is loaded
-    map.addListener('tilesloaded', function () {
+    map.whenReady(function () {
       if (!tLoadMapEnd) {
         tLoadMapEnd = performance.now()
-        console.log('Loading map took ' + (tLoadMapEnd - tLoadMapInit) + ' milliseconds.')
+        console.log('Loading map took ' + Math.round(tLoadMapEnd - tLoadMapInit) + ' milliseconds')
       }
       // adjust height of map_section div, the heigh of map should be the height of content
       // minus the height of header and minus height of a spacer (<hr>)
@@ -191,11 +191,11 @@ app.map = (function (thisModule) {
           console.log('Data for map obtained from database with success. Returned: ', data)
           allDbEntries = data
         } else {
-          console.error('There was an error getting the data, data fetched but $is empty')
+          console.error('There was an error getting the data, data fetched but is empty')
         }
       },
       error: function (error) {
-        console.error('There was an error getting the data')
+        console.error('There was an error getting all the entries')
         console.error(error)
       }
     })
@@ -215,7 +215,6 @@ app.map = (function (thisModule) {
 
   thisModule.init = init
   thisModule.tryToShowMap = tryToShowMap
-  thisModule.initGoogleMapLoaded = initGoogleMapLoaded
   thisModule.setEntryAsDeletedInDatabase = setEntryAsDeletedInDatabase
 
   return thisModule
