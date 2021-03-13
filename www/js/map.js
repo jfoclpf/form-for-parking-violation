@@ -4,6 +4,7 @@
    These complaints are anonymously stored in the database             */
 
 /* eslint camelcase: off */
+/* eslint no-prototype-builtins: off */
 /* global app, device, cordova, $, performance, L, DEBUG */
 
 app.map = (function (thisModule) {
@@ -11,32 +12,43 @@ app.map = (function (thisModule) {
   const requestImageUrl = app.main.urls.databaseServer.requestImage
 
   var map
+  var markersGroups // groups of markers, by type of occurence
   var allDbEntries // all entries fetched from database
-  var dbEntries // entries filtered according to user selection
-
-  // to measure performance
-  var tLoadMapInit
-  var tLoadMapEnd
+  var isMapInitiated = false
 
   function init () {
-    // to get all entries to show on the map, it does it in the init in the background
-    // after opening the app for faster processing when user clicks on map section
-    getAllEntries()
-
     // populate select box to select map view, i.e, filter ocurrences/drops in the map
-    var mapOptions = {
-      all: 'Todas as ocorrências',
-      mine: 'Apenas as minhas denúncias'
-    }
-
-    for (const key in mapOptions) {
-      $('#map_view_select').append(`<option value="${key}">${mapOptions[key]}</option>`)
+    markersGroups = {
+      mine: { select: 'Apenas as minhas denúncias' }
     }
 
     // populates yet with type of penalties: faixa_bus, baixa_bus, etc.
     const penalties = app.penalties.getPenalties()
     for (const key in penalties) {
-      $('#map_view_select').append(`<option value="${key}">${penalties[key].select}</option>`)
+      if (penalties.hasOwnProperty(key)) {
+        markersGroups[key] = {}
+        markersGroups[key].select = penalties[key].select
+      }
+    }
+
+    // to get all entries to show on the map, it does it in the init in the background
+    // after opening the app for faster processing when user clicks on map section
+    var tLoadMapInit = performance.now() // to measure performance
+    getAllEntries((err) => {
+      if (!err) {
+        processMapMarkers()
+        initializeMap(() => {
+          isMapInitiated = true
+          console.log('Processing map took ' + Math.round(performance.now() - tLoadMapInit) + ' milliseconds')
+        })
+      }
+    })
+
+    // populates select box
+    for (const key in markersGroups) {
+      if (markersGroups.hasOwnProperty(key)) {
+        $('#map_view_select').append(`<option value="${key}">${markersGroups[key].select}</option>`)
+      }
     }
 
     $('#map_view_select').on('change', function () {
@@ -46,9 +58,9 @@ app.map = (function (thisModule) {
 
   // does not show map until the DB entries are loaded
   function tryToShowMap (selectOption) {
-    if (!allDbEntries) {
+    if (!isMapInitiated) {
       setTimeout(() => {
-        if (allDbEntries) {
+        if (isMapInitiated) {
           showMap(selectOption)
         } else {
           tryToShowMap(selectOption)
@@ -61,27 +73,14 @@ app.map = (function (thisModule) {
 
   // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
   function showMap (selectOption) {
-    // to check the time it takes to load map
-    tLoadMapInit = performance.now()
-    tLoadMapEnd = null
-
-    // get filtered array of db entries according to selected Option (filter)
-    dbEntries = []
-    if (!selectOption || selectOption === 'all') {
-      dbEntries = allDbEntries
-    } else {
-      const allDbEntriesLength = allDbEntries.length
-      for (let i = 0; i < allDbEntriesLength; i++) {
-        const el = allDbEntries[i]
-
-        if (selectOption === 'mine' && el.uuid === device.uuid) {
-          dbEntries.push(el)
-        } else if (selectOption === el.base_legal) {
-          dbEntries.push(el)
-        }
-      }
+    if (markersGroups[selectOption] && markersGroups[selectOption].LFeatureGroup) {
+      const group = markersGroups[selectOption].LFeatureGroup
+      group.addTo(map)
+      map.fitBounds(group.getBounds())
     }
+  }
 
+  function initializeMap (callback) {
     // get coordinates for the map center
     var currentLocation = app.localization.getCoordinates() // current position of user
     var latitude, longitude
@@ -101,11 +100,6 @@ app.map = (function (thisModule) {
       zoomControl: false
     }
 
-    // initialize Leaflet
-    if (map) {
-      map.off()
-      map.remove()
-    }
     map = L.map('map', mapOptions)
 
     // add the OpenStreetMap tiles
@@ -119,14 +113,64 @@ app.map = (function (thisModule) {
       map.invalidateSize()
     }, 500)
 
-    // Add the markers and infowindows to the map
-    const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
-    const dbEntriesLength = dbEntries.length
-    const mapIcon = L.icon({ iconUrl: cordova.file.applicationDirectory + 'www/img/map_icon.png' })
+    // when map is loaded
+    map.whenReady(function () {
+      // adjust height of map_section div, the heigh of map should be the height of content
+      // minus the height of header and minus height of a spacer (<hr>)
+      var height = window.innerHeight - // screen useful height
+        $('#content hr').outerHeight(true) - // spacer between header and lower section
+        $('#content .container-fluid.section-head.d-flex.flex-row').outerHeight(true) - // header
+        ($('#content').innerWidth() - $('#content').width()) // pading of #content
 
-    var markerArray = []
+      $('#map_section').css('height', height + 'px')
+      callback()
+    })
+  }
+
+  function getAllEntries (callback) {
+    // because there's parameter uuid, it gets all entries with PROD=1
+    $.ajax({
+      url: requestHistoricUrl,
+      type: 'GET',
+      crossDomain: true,
+      success: function (data) {
+        if (data && data.length) {
+          console.log('Data for map obtained from database with success. Returned: ', data)
+          allDbEntries = data
+          callback()
+        } else {
+          const errMessage = 'There was an error getting the data, data fetched but is empty'
+          console.error(errMessage)
+          callback(errMessage)
+        }
+      },
+      error: function (error) {
+        console.error('There was an error getting all the entries')
+        console.error(error)
+        callback(error)
+      }
+    })
+  }
+
+  function processMapMarkers () {
+    // create an array for each type of occurence
+    for (const key in markersGroups) {
+      if (markersGroups.hasOwnProperty(key)) {
+        markersGroups[key].arrayOnMap = []
+      }
+    }
+
+    // Sort markers and infowindows to the map
+    const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
+    const dbEntriesLength = allDbEntries.length
+    const mapIcon = L.icon({
+      iconUrl: cordova.file.applicationDirectory + 'www/img/map_icon.png',
+      iconSize: [50, 50],
+      iconAnchor: [25, 50]
+    })
+
     for (let i = 0; i < dbEntriesLength; i++) {
-      const el = dbEntries[i]
+      const el = allDbEntries[i]
 
       const marker = L.marker(
         [el.data_coord_latit, el.data_coord_long],
@@ -157,53 +201,26 @@ app.map = (function (thisModule) {
       }
 
       marker.bindPopup(htmlInfoContent)
-      markerArray.push(marker)
+
+      if (markersGroups[el.base_legal]) {
+        markersGroups[el.base_legal].arrayOnMap.push(marker)
+      }
+      if (el.uuid === device.uuid) {
+        markersGroups.mine.arrayOnMap.push(marker)
+      }
     }
 
-    var group = L.featureGroup(markerArray).addTo(map)
-    map.fitBounds(group.getBounds())
-
-    // when map is loaded
-    map.whenReady(function () {
-      if (!tLoadMapEnd) {
-        tLoadMapEnd = performance.now()
-        console.log('Loading map took ' + Math.round(tLoadMapEnd - tLoadMapInit) + ' milliseconds')
+    for (const key in markersGroups) {
+      if (markersGroups.hasOwnProperty(key) && markersGroups[key].arrayOnMap && markersGroups[key].arrayOnMap.length) {
+        markersGroups[key].LFeatureGroup = L.featureGroup(markersGroups[key].arrayOnMap)
+        markersGroups[key].arrayOnMap = null // free up memory
       }
-      // adjust height of map_section div, the heigh of map should be the height of content
-      // minus the height of header and minus height of a spacer (<hr>)
-      var height = window.innerHeight - // screen useful height
-        $('#content hr').outerHeight(true) - // spacer between header and lower section
-        $('#content .container-fluid.section-head.d-flex.flex-row').outerHeight(true) - // header
-        ($('#content').innerWidth() - $('#content').width()) // pading of #content
-
-      $('#map_section').css('height', height + 'px')
-    })
-  }
-
-  function getAllEntries () {
-    // because there's parameter uuid, it gets all entries with PROD=1
-    $.ajax({
-      url: requestHistoricUrl,
-      type: 'GET',
-      crossDomain: true,
-      success: function (data) {
-        if (data && data.length) {
-          console.log('Data for map obtained from database with success. Returned: ', data)
-          allDbEntries = data
-        } else {
-          console.error('There was an error getting the data, data fetched but is empty')
-        }
-      },
-      error: function (error) {
-        console.error('There was an error getting all the entries')
-        console.error(error)
-      }
-    })
+    }
   }
 
   function setEntryAsDeletedInDatabase (i) {
     if (app.functions.isCurrentUserAnAdmin()) {
-      app.dbServerLink.setEntryAsDeletedInDatabase(dbEntries[i], (err) => {
+      app.dbServerLink.setEntryAsDeletedInDatabase(allDbEntries[i], (err) => {
         if (!err) {
           window.alert('Entrada marcada como apagada')
         } else {
