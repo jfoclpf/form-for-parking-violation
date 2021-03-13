@@ -20,6 +20,10 @@ module.exports = function (context) {
 
   copyFile('leaflet', path.join('dist', 'leaflet.js'), path.join('js', 'res', 'leaflet.js'))
   copyFile('leaflet', path.join('dist', 'leaflet.css'), path.join('css', 'res', 'leaflet.css'))
+
+  copyFile('leaflet.markercluster', path.join('dist', 'leaflet.markercluster.js'), path.join('js', 'res', 'leaflet.markercluster.js'))
+  copyFile('leaflet.markercluster', path.join('dist', 'MarkerCluster.css'), path.join('css', 'res', 'MarkerCluster.css'))
+  copyFile('leaflet.markercluster', path.join('dist', 'MarkerCluster.Default.css'), path.join('css', 'res', 'MarkerCluster.Default.css'))
 }
 
 function copyFile (npmPackage, // oficial name of the npm package from which the file is to be copied from
