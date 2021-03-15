@@ -128,6 +128,12 @@ app.map = (function (thisModule) {
       map.invalidateSize()
     }, 500)
 
+    map.on('popupopen', function (e) {
+      $('img.photo-in-popup').on('load', function () {
+        e.popup.update()
+      })
+    })
+
     // when map is loaded
     map.whenReady(function () {
       // adjust height of map_section div, the heigh of map should be the height of content
@@ -173,7 +179,7 @@ app.map = (function (thisModule) {
     for (const key in markersGroups) {
       if (markersGroups.hasOwnProperty(key)) {
         markersGroups[key].markerClusterGroup = L.markerClusterGroup(
-          { disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }
+          { disableClusteringAtZoom: 12, spiderfyOnMaxZoom: false }
         )
       }
     }
@@ -206,10 +212,7 @@ app.map = (function (thisModule) {
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
           const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
-          htmlInfoContent += '<div style="max-height:300px;overflow:hidden;">' +
-              `<img width="200" src="${photoUrl}">` +
-            '</div>'
-          break
+          htmlInfoContent += `<img class="photo-in-popup" width="200px" src="${photoUrl}">`
         }
       }
 
@@ -217,11 +220,11 @@ app.map = (function (thisModule) {
 
       // an admin is able to mark an entry in the db as deleted
       if (isCurrentUserAnAdmin) {
-        htmlInfoContent += '<hr><b>Opções de administrador:</b><br><br>' +
-          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${i})"><i class="fa fa-trash"></i></button>`
+        htmlInfoContent += '<hr><b>Opções de administrador: </b>' +
+          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${el})"><i class="fa fa-trash"></i></button>`
       }
 
-      const popup = L.popup({ closeOnClick: false, autoClose: false, maxWidth: 200 })
+      const popup = L.popup({ closeOnClick: false, autoClose: false, autoPan: false, maxHeight: 400 })
         .setContent(htmlInfoContent)
 
       marker.bindPopup(popup)
@@ -236,9 +239,9 @@ app.map = (function (thisModule) {
     }
   }
 
-  function setEntryAsDeletedInDatabase (i) {
+  function setEntryAsDeletedInDatabase (dbElement) {
     if (app.functions.isCurrentUserAnAdmin()) {
-      app.dbServerLink.setEntryAsDeletedInDatabase(allDbEntries[i], (err) => {
+      app.dbServerLink.setEntryAsDeletedInDatabase(dbElement, (err) => {
         if (!err) {
           window.alert('Entrada marcada como apagada')
         } else {
