@@ -110,10 +110,10 @@
       <key>UIFileSharingEnabled</key><true/>
     </edit-config>
     <edit-config target="LSSupportsOpeningDocumentsInPlace" file="*-Info.plist" mode="merge">
-      <key>UIFileSharingEnabled</key><true/>
+      <key>LSSupportsOpeningDocumentsInPlace</key><true/>
     </edit-config>
     <edit-config target="UISupportsDocumentBrowser" file="*-Info.plist" mode="merge">
-      <key>UIFileSharingEnabled</key><true/>
+      <key>UISupportsDocumentBrowser</key><true/>
     </edit-config>
   </platform>
 </widget>
