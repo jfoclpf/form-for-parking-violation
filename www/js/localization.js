@@ -99,24 +99,18 @@ app.localization = (function (thisModule) {
         $('#street_number').val(address.house_number)
       }
 
-      if (address.town) {
-        geoNames.push(address.town)
-      }
+      // get relevant address details to find police authority
+      // see: https://nominatim.org/release-docs/latest/api/Output/#addressdetails
+      var relevantAddressDetails = [
+        'state_district', 'county',
+        'municipality', 'city', 'town', 'village',
+        'city_district', 'district', 'borough', 'suburb', 'subdivision'
+      ]
 
-      if (address.municipality) {
-        geoNames.push(address.municipality)
-      }
-
-      if (address.suburb) {
-        geoNames.push(address.suburb)
-      }
-
-      if (address.city) {
-        geoNames.push(address.city)
-      }
-
-      if (address.county) {
-        geoNames.push(address.county)
+      for (let i = 0; i < relevantAddressDetails.length; i++) {
+        if (address[relevantAddressDetails[i]]) {
+          geoNames.push(address[relevantAddressDetails[i]])
+        }
       }
 
       // from the Postal Code got from OMS
