@@ -86,12 +86,14 @@
     },
     "platforms": [
       "browser",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "devDependencies": {
     "async": "^3.2.0",
     "cordova-android": "^9.0.0",
+    "cordova-ios": "^6.2.0",
     "cordova-plugin-file": "github:apache/cordova-plugin-file",
     "cordova-plugin-network-information": "github:apache/cordova-plugin-network-information",
     "fs-extra": "^9.0.1",
