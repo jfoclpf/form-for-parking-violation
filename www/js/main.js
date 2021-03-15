@@ -101,7 +101,7 @@ app.main = (function (thisModule) {
 
     app.functions.updateDateAndTime()
 
-    $('input').each(function () {
+    $('input.mandatory').each(function () {
       if (!DEBUG && $(this).val() === '') {
         $(this).css('border-color', 'red')
       }

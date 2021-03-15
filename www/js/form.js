@@ -482,14 +482,6 @@ app.form = (function (thisModule) {
     }
   })
 
-  $('#street_number').on('input', function () {
-    if ($(this).val() === '' && !DEBUG) {
-      $(this).css('border-color', 'red')
-    } else {
-      $(this).css('border-color', '')
-    }
-  })
-
   /* === Public methods to be returned === */
   /* === Form field fetching functions === */
   thisModule.getCarPlate = getCarPlate
