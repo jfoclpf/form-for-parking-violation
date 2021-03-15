@@ -19,6 +19,7 @@ app.map = (function (thisModule) {
   function init () {
     // populate select box to select map view, i.e, filter ocurrences/drops in the map
     markersGroups = {
+      all: { select: 'Todas as ocorrências' },
       mine: { select: 'Apenas as minhas denúncias' }
     }
 
@@ -73,10 +74,22 @@ app.map = (function (thisModule) {
 
   // selectOption can be: 'all', 'mine' or the respective legal basis ('passeios', 'na_passadeira', etc.)
   function showMap (selectOption) {
-    if (markersGroups[selectOption] && markersGroups[selectOption].LFeatureGroup) {
-      const group = markersGroups[selectOption].LFeatureGroup
-      group.addTo(map)
-      map.fitBounds(group.getBounds())
+    // clears all layers from previous selections
+    for (const key in markersGroups) {
+      if (
+        markersGroups.hasOwnProperty(key) &&
+        markersGroups[key].markerClusterGroup &&
+        markersGroups[key].markerClusterGroup.getLayers().length
+      ) {
+        map.removeLayer(markersGroups[key].markerClusterGroup)
+      }
+    }
+
+    if (
+      markersGroups[selectOption] &&
+      markersGroups[selectOption].markerClusterGroup.getLayers().length
+    ) {
+      map.addLayer(markersGroups[selectOption].markerClusterGroup)
     }
   }
 
@@ -97,7 +110,9 @@ app.map = (function (thisModule) {
       center: [latitude, longitude],
       zoom: 8,
       maxBounds: L.latLngBounds(L.latLng(43.882057, -11.030141), L.latLng(35.942436, -4.104133)),
-      zoomControl: false
+      zoomControl: false,
+      attributionControl: false,
+      closePopupOnClick: false
     }
 
     map = L.map('map', mapOptions)
@@ -123,6 +138,7 @@ app.map = (function (thisModule) {
         ($('#content').innerWidth() - $('#content').width()) // pading of #content
 
       $('#map_section').css('height', height + 'px')
+      map.invalidateSize()
       callback()
     })
   }
@@ -156,7 +172,9 @@ app.map = (function (thisModule) {
     // create an array for each type of occurence
     for (const key in markersGroups) {
       if (markersGroups.hasOwnProperty(key)) {
-        markersGroups[key].arrayOnMap = []
+        markersGroups[key].markerClusterGroup = L.markerClusterGroup(
+          { disableClusteringAtZoom: 15, spiderfyOnMaxZoom: false }
+        )
       }
     }
 
@@ -188,7 +206,10 @@ app.map = (function (thisModule) {
       for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
           const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
-          htmlInfoContent += `<img width="200" src="${photoUrl}"><br>`
+          htmlInfoContent += '<div style="max-height:300px;overflow:hidden;">' +
+              `<img width="200" src="${photoUrl}">` +
+            '</div>'
+          break
         }
       }
 
@@ -200,21 +221,18 @@ app.map = (function (thisModule) {
           `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${i})"><i class="fa fa-trash"></i></button>`
       }
 
-      marker.bindPopup(htmlInfoContent)
+      const popup = L.popup({ closeOnClick: false, autoClose: false, maxWidth: 200 })
+        .setContent(htmlInfoContent)
+
+      marker.bindPopup(popup)
 
       if (markersGroups[el.base_legal]) {
-        markersGroups[el.base_legal].arrayOnMap.push(marker)
+        markersGroups[el.base_legal].markerClusterGroup.addLayer(marker)
       }
       if (el.uuid === device.uuid) {
-        markersGroups.mine.arrayOnMap.push(marker)
+        markersGroups.mine.markerClusterGroup.addLayer(marker)
       }
-    }
-
-    for (const key in markersGroups) {
-      if (markersGroups.hasOwnProperty(key) && markersGroups[key].arrayOnMap && markersGroups[key].arrayOnMap.length) {
-        markersGroups[key].LFeatureGroup = L.featureGroup(markersGroups[key].arrayOnMap)
-        markersGroups[key].arrayOnMap = null // free up memory
-      }
+      markersGroups.all.markerClusterGroup.addLayer(marker)
     }
   }
 
