@@ -276,12 +276,21 @@ app.authentication = (function (thisModule) {
       inAppBrowserRef.hide()
     }
 
+    var platformSpecificMessage
+    if (app.functions.isThisAndroid()) {
+      platformSpecificMessage = 'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i>'
+    } else if (app.functions.isThis_iOS()) {
+      platformSpecificMessage = 'na pasta respetiva desta Aplicação no "Meu iPhone"'
+    } else {
+      platformSpecificMessage = ''
+    }
+
     var msg = 'Foi criado o ficheiro PDF<br><span style="color:orange"><b>' + filename + '</b></span><br>' +
-      'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.<br><br>' +
+      platformSpecificMessage + ' com a sua denúncia.<br><br>' +
       'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br><br>' +
       'Guarde o PDF gerado com a sua assinatura digital.<br><br>' +
       'Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +
-      `No caso de não receber o SMS, experimente usar <u><a href="${app.main.urls.Chave_Movel_Digital.app}">a APP da Chave Móvel Digital</a></u>.`
+      'No caso de não receber o SMS, experimente usar a APP da Chave Móvel Digital cuja ligação encontra no menu principal desta APP.'
 
     $.jAlert({
       title: 'Criação de ficheiro PDF',
