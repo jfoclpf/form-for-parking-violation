@@ -220,11 +220,11 @@ app.map = (function (thisModule) {
 
       // an admin is able to mark an entry in the db as deleted
       if (isCurrentUserAnAdmin) {
-        htmlInfoContent += '<hr><b>Opções de administrador: </b>' +
-          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase(${el})"><i class="fa fa-trash"></i></button>`
+        htmlInfoContent += '<hr><b>Opções de administrador</b><br><br>' +
+          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryAsDeletedInDatabase('${encodeURIComponent(JSON.stringify(el))}')"><i class="fa fa-trash"></i></button><br><br>`
       }
 
-      const popup = L.popup({ closeOnClick: false, autoClose: false, autoPan: false, maxHeight: 400 })
+      const popup = L.popup({ closeOnClick: false, autoClose: false, autoPan: true, maxHeight: 400 })
         .setContent(htmlInfoContent)
 
       marker.bindPopup(popup)
@@ -240,6 +240,8 @@ app.map = (function (thisModule) {
   }
 
   function setEntryAsDeletedInDatabase (dbElement) {
+    dbElement = JSON.parse(decodeURIComponent(dbElement))
+
     if (app.functions.isCurrentUserAnAdmin()) {
       app.dbServerLink.setEntryAsDeletedInDatabase(dbElement, (err) => {
         if (!err) {
