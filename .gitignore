@@ -40,6 +40,9 @@ keys/
 uploadToServer.sh
 updateServer.sh
 
+# server side files
+server/
+
 # configs from Atom
 .on-save.json
 www/credentials.js
