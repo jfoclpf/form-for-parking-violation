@@ -86,9 +86,9 @@ mesmo apagar com `export JAVA_HOME=`
 
 ## Contribuições são muito bem-vindas
 
- * respeite a estrutura dos ficheiros
- * comente sempre o código (preferencialmente em Inglês), tal ajuda os outros a compreender as suas contribuiçes
- * para identações, use sempre 4 espaços (não use 2 espaços, nem tabulaçes, ou seja TAB)
+ * Usamos StandardJS para o código
+ * Respeite a estrutura dos ficheiros
+ * Comente sempre o código (preferencialmente em Inglês), tal ajuda os outros a compreender as suas contribuiçes
 
 ## Licença
 
