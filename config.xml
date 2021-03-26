@@ -107,13 +107,13 @@
       <string>Necessita da acesso à galeria para guardar algumas fotos, mesmo que temporariamente</string>
     </edit-config>
     <edit-config target="UIFileSharingEnabled" file="*-Info.plist" mode="merge">
-      <string>YES</string>
+      <true/>
     </edit-config>
     <edit-config target="LSSupportsOpeningDocumentsInPlace" file="*-Info.plist" mode="merge">
-      <string>YES</string>
+      <true/>
     </edit-config>
     <edit-config target="UISupportsDocumentBrowser" file="*-Info.plist" mode="merge">
-      <string>YES</string>
+      <true/>
     </edit-config>
   </platform>
 </widget>
