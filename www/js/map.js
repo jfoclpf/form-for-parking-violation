@@ -155,6 +155,7 @@ app.map = (function (thisModule) {
       url: requestHistoricUrl,
       type: 'GET',
       crossDomain: true,
+      headers: app.dbServerLink.getAjaxHttpHeaderKeys(),
       success: function (data) {
         if (data && data.length) {
           console.log('Data for map obtained from database with success. Returned: ', data)

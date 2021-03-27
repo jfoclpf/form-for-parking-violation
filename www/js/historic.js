@@ -21,6 +21,7 @@ app.historic = (function (thisModule) {
       type: 'GET',
       data: { uuid: uuid },
       crossDomain: true,
+      headers: app.dbServerLink.getAjaxHttpHeaderKeys(),
       success: function (data) {
         console.log('Returned: ', data)
         if (data) {
@@ -45,6 +46,7 @@ app.historic = (function (thisModule) {
       type: 'GET',
       data: { uuid: uuid },
       crossDomain: true,
+      headers: app.dbServerLink.getAjaxHttpHeaderKeys(),
       success: function (data) {
         console.log('Returned: ', data)
         if (data) {
