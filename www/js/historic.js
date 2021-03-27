@@ -22,10 +22,12 @@ app.historic = (function (thisModule) {
       data: { uuid: uuid },
       crossDomain: true,
       success: function (data) {
-        console.success('Historic obtained from database with success.')
         console.log('Returned: ', data)
-        historicData = data
-        insertFetchedDataIntoHistoric()
+        if (data) {
+          console.success('Historic obtained from database with success.')
+          historicData = data
+          insertFetchedDataIntoHistoric()
+        }
       },
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
@@ -44,9 +46,13 @@ app.historic = (function (thisModule) {
       data: { uuid: uuid },
       crossDomain: true,
       success: function (data) {
-        console.success('Historic obtained from database with success.')
         console.log('Returned: ', data)
-        callback(null, data.length)
+        if (data) {
+          console.success('Historic obtained from database with success.')
+          callback(null, data.length)
+        } else {
+          callback(Error('Empty historic data'))
+        }
       },
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
