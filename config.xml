@@ -26,6 +26,7 @@
   <preference name="StatusBarOverlaysWebView" value="false"/>
   <preference name="StatusBarBackgroundColor" value="#FFFFFF"/>
   <preference name="StatusBarStyle" value="blacktranslucent"/>
+  <preference name="AndroidXEnabled" value="true" />
   <hook src="hooks/importNpmPackages.js" type="before_prepare"/>
   <hook src="hooks/copyCredentials.js" type="before_prepare"/>
   <hook src="hooks/convertHbsToHtml.js" type="after_prepare"/>

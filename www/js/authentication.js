@@ -148,11 +148,11 @@ app.authentication = (function (thisModule) {
         // To define the type of the Blob
         const res = getPdfFilePath()
         if (res) {
-          const contentType = 'application/pdf'
-          savebase64AsPDF(res.folderpath, res.fileName, base64, contentType)
+          console.log('getPdfFilePath() returns: ', res)
+          savebase64AsPDF(res.folderpath, res.fileName, base64, 'application/pdf')
         } else {
-          console.error('Error while creating pdf')
-          window.alert('Houve um erro na geração do PDF')
+          console.error('Error getting pdf filename')
+          window.alert('Houve um erro a tentar guardar o PDF. Plataforma não suportada')
         }
       })
       .catch((err) => {
@@ -179,19 +179,16 @@ app.authentication = (function (thisModule) {
 
     // now get folderpath
     if (app.functions.isThisAndroid()) {
-      console.log('Android version: ' + device.version)
       if (parseFloat(device.version) <= 10) {
         folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
       } else {
-        window.alert('Para já não suportamos versões de Android superiores a 10 para Chave Móvel Digital')
-        return null
+        folderpath = cordova.file.cacheDirectory
       }
       return { folderpath, fileName }
     } else if (app.functions.isThis_iOS()) {
       folderpath = cordova.file.documentsDirectory
       return { folderpath, fileName }
     } else {
-      window.alert('Platform not supportted: ' + device.platform)
       return null
     }
   }
@@ -257,7 +254,7 @@ app.authentication = (function (thisModule) {
 
           fileWriter.onwriteend = function () {
             console.success('Successful file write')
-            showPDFAuthInfo(folderpath, filename)
+            showSavedPdfFileInfo(folderpath, filename)
           }
 
           fileWriter.onerror = (err) => { onerror(err, 'Erro ao tentar escrever no ficheiro!') }
@@ -268,27 +265,73 @@ app.authentication = (function (thisModule) {
     }, (err) => { onerror(err, 'Erro ao tentar procurar a pasta!') })
   }
 
-  function showPDFAuthInfo (folderpath, filename) {
-    console.log('PDF folderpath: ' + folderpath)
-    console.log('PDF fileName: ' + filename)
+  function showSavedPdfFileInfo (folderpath, filename) {
+    console.log('PDF fullpath: ' + folderpath + filename)
 
     if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
       inAppBrowserRef.hide()
     }
 
-    var platformSpecificMessage
-    if (app.functions.isThisAndroid()) {
-      platformSpecificMessage = 'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i>'
-    } else if (app.functions.isThis_iOS()) {
-      platformSpecificMessage = 'na pasta respetiva desta Aplicação no "Meu iPhone"'
-    } else {
-      platformSpecificMessage = ''
-    }
+    var deviceSpecificMessage
 
-    var msg = 'Foi criado o ficheiro PDF<br><span style="color:orange"><b>' + filename + '</b></span><br>' +
-      platformSpecificMessage + ' com a sua denúncia.<br><br>' +
+    if (app.functions.isThisAndroid() && parseFloat(device.version) >= 11 && Boolean(window.plugins.socialsharing)) {
+      $.jAlert({
+        content: 'Guarde o ficheiro PDF com a denúncia num local à sua escolha',
+        theme: 'dark_blue',
+        btns: [{
+          text: 'Avançar',
+          theme: 'green',
+          class: 'jButtonAlert',
+          onClick: function () {
+            window.plugins.socialsharing.shareWithOptions({
+              message: 'PDF para Denúncia de Estacionamento',
+              subject: filename,
+              files: [folderpath + filename]
+            },
+            (res) => {
+              console.log('Share completed', res)
+              // tries to find the app name to which the pdf file was shared/downloaded
+              $.getJSON(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', (data) => {
+                var msg = 'Recorde-se do local onde guardou o ficheiro PDF'
+
+                // res.app is on the form "ComponentInfo{com.synology.DSfile/com.synology.DSfile.MainActivity}"
+                var appId = res.app.match(/\{([^)]+)\}/)
+                if (appId) {
+                  appId = appId[1]
+                  if (appId.includes('/')) {
+                    appId = appId.split('/')[0]
+                  }
+                }
+
+                for (const key in data) {
+                  if (appId === data[key].package_name) {
+                    msg += ' usando a aplicação ' + data[key].name
+                    break
+                  }
+                }
+                msg += '.'
+
+                showPDFInfoDialog(msg)
+              })
+            })
+          }
+        }]
+      })
+    } else {
+      deviceSpecificMessage = 'Foi criado o ficheiro PDF<br><span style="color:orange"><b>' + filename + '</b></span><br>'
+      if (app.functions.isThisAndroid()) {
+        deviceSpecificMessage += 'na pasta <i>Downloads</i> ou <i>Documentos/Downloads</i> com a sua denúncia.'
+      } else if (app.functions.isThis_iOS()) {
+        deviceSpecificMessage += 'com a sua denúncia na pasta respetiva desta Aplicação no "Meu iPhone".'
+      }
+      showPDFInfoDialog(deviceSpecificMessage)
+    }
+  }
+
+  function showPDFInfoDialog (deviceSpecificMessage) {
+    var msg = deviceSpecificMessage + '<br><br>' +
       'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br><br>' +
-      'Guarde o PDF gerado com a sua assinatura digital.<br><br>' +
+      'Após assinar o PDF com a sua Chave Móvel Digital, guarde esse PDF.<br><br>' +
       'Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +
       'No caso de não receber o SMS, experimente usar a APP da Chave Móvel Digital cuja ligação encontra no menu principal desta APP.'
 
@@ -296,22 +339,20 @@ app.authentication = (function (thisModule) {
       title: 'Criação de ficheiro PDF',
       content: msg,
       theme: 'dark_blue',
-      btns: [
-        {
-          text: 'Avançar',
-          theme: 'green',
-          class: 'jButtonAlert',
-          onClick: function () {
-            if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
-              // tries to use internal browser plugin to sign the pdf document
-              inAppBrowserRef.show()
-            } else {
-              cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
-              leftAppToSignPdf = true
-            }
+      btns: [{
+        text: 'Avançar',
+        theme: 'green',
+        class: 'jButtonAlert',
+        onClick: function () {
+          if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
+            // tries to use internal browser plugin to sign the pdf document
+            inAppBrowserRef.show()
+          } else {
+            cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
+            leftAppToSignPdf = true
           }
         }
-      ]
+      }]
     })
   }
 
