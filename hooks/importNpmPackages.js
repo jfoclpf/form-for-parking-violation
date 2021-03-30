@@ -26,6 +26,8 @@ module.exports = function (context) {
   copyFile('leaflet.markercluster', path.join('dist', 'MarkerCluster.Default.css'), path.join('css', 'res', 'MarkerCluster.Default.css'))
 
   copyFile('crypto-js', path.join('crypto-js.js'), path.join('js', 'res', 'crypto-js.js'))
+
+  copyFile('google-android-app-ids', path.join('dist', 'google-app-ids.json'), path.join('js', 'res', 'google-app-ids.json'))
 }
 
 function copyFile (npmPackage, // oficial name of the npm package from which the file is to be copied from
