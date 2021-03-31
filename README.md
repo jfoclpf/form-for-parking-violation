@@ -48,9 +48,7 @@ O ADB é usado para testar a APP no seu telemóvel Android
 git clone https://github.com/jfoclpf/form-for-parking-violation.git
 cd form-for-parking-violation
 cordova platform add ios
-cd platforms/ios
-pod update
-open Denúncia\ Estacionamento.xcworkspace/
+open platforms/ios/Denúncia\ Estacionamento.xcworkspace/
 ```
 
 ### Testar num smartphone
