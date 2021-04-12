@@ -168,7 +168,7 @@ app.authentication = (function (thisModule) {
 
     // get fileName
     var carPlate = app.form.getCarPlate()
-    if (carPlate) {
+    if (carPlate && !app.functions.isThis_iOS()) {
       fileName = carPlate
     } else {
       var rightNow = new Date()

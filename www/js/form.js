@@ -3,10 +3,20 @@
 /* global app, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
 
 app.form = (function (thisModule) {
+  function init () {
+    if (app.functions.isThis_iOS()) {
+      $('#plateDiv').hide()
+    }
+  }
+
   /* ********************************************************************** */
   /* ******************* FORM FIELDS FETCHING FUNCTIONS ******************* */
   // get carplate
   function getCarPlate () {
+    if (app.functions.isThis_iOS()) {
+      return ''
+    }
+
     var plate_str = $('#plate').val()
     plate_str = plate_str.toUpperCase() // force place upcase
     plate_str = plate_str.replace(/\u2013|\u2014/g, '-') // it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
@@ -482,6 +492,7 @@ app.form = (function (thisModule) {
     }
   })
 
+  thisModule.init = init
   /* === Public methods to be returned === */
   /* === Form field fetching functions === */
   thisModule.getCarPlate = getCarPlate

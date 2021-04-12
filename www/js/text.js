@@ -54,10 +54,15 @@ app.text = (function (thisModule) {
         ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
         ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
         ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
-        $('#street_number').val() + '</b>, ' : '') + // optional
-        'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt +
-        'encontrava-se estacionada' + ' ' + penaltyDescription +
-        ', em violação ' + penaltyLawArticle + '.'
+        $('#street_number').val() + '</b>, ' : '') // optional
+
+      if (app.functions.isThis_iOS()) {
+        msg2 += `a viatura <b>${carmake_model_txt}</b> cuja matrícula se encontra na foto em anexo, `
+      } else {
+        msg2 += 'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt
+      }
+      msg2 += 'encontrava-se estacionada' + ' ' + penaltyDescription +
+      ', em violação ' + penaltyLawArticle + '.'
 
       var msg3 = 'Pode-se comprovar esta situação através' +
         ' ' + ((app.photos.getPhotosUriOnFileSystem().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
@@ -77,7 +82,10 @@ app.text = (function (thisModule) {
       const carPlateStr = app.form.getCarPlate()
       const address = app.form.getFullAddress()
 
-      return `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+      const emailSubject = (app.functions.isThis_iOS() ? 'Veículo ' : `[${carPlateStr}] `) +
+        `na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+
+      return emailSubject
     } else {
       console.error('Error in getMainMessage(option) wth option=' + option)
     }
@@ -125,7 +133,10 @@ app.text = (function (thisModule) {
     } else if (option === 'subject') {
       const carPlateStr = app.form.getCarPlate()
       const address = app.form.getFullAddress()
-      const emailSubject = `[${carPlateStr}] na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+
+      const emailSubject = (app.functions.isThis_iOS() ? 'Veículo ' : `[${carPlateStr}] `) +
+        `na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+
       return emailSubject
     } else {
       console.error('Error in getMailMessageWithCMD(option) wth option=' + option)

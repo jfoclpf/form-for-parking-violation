@@ -91,6 +91,7 @@ app.main = (function (thisModule) {
     // for the plugin cordova-plugin-inappbrowser
     window.open = cordova.InAppBrowser.open
 
+    app.form.init()
     app.functions.addFunctionsToPlugins()
 
     // information stored in variable window.localStorage
