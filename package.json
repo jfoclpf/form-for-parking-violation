@@ -19,7 +19,7 @@
   "author": "João Pimentel Ferreira",
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.15.2",
+    "@fortawesome/fontawesome-free": "5.15.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
     "cordova": "^10.0.0",
