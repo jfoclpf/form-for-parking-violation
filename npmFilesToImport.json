@@ -1,0 +1,58 @@
+{
+  "jquery": {
+    "from": ["dist", "jquery.min.js"],
+    "to": ["js", "res", "jquery.min.js"]
+  },
+  "bootstrap": [
+    {
+      "from": ["dist", "js", "bootstrap.min.js"],
+      "to": ["js", "res", "bootstrap.min.js"]
+    },
+    {
+      "from": ["dist", "css", "bootstrap.min.css"],
+      "to": ["css", "res", "bootstrap.min.css"]
+    }
+  ],
+  "jAlert": [
+    {
+      "from": ["dist", "jAlert.min.js"],
+      "to": ["js", "res", "jAlert.min.js"]
+    },
+    {
+      "from": ["dist", "jAlert.css"],
+      "to": ["css", "res", "jAlert.css"]
+    }
+  ],
+  "leaflet": [
+    {
+      "from": ["dist", "leaflet.js"],
+      "to": ["js", "res", "leaflet.js"]
+    },
+    {
+      "from": ["dist", "leaflet.css"],
+      "to": ["css", "res", "leaflet.css"]
+    }
+  ],
+  "leaflet.markercluster": [
+    {
+      "from": ["dist", "leaflet.markercluster.js"],
+      "to": ["js", "res", "leaflet.markercluster.js"]
+    },
+    {
+      "from": ["dist", "MarkerCluster.css"],
+      "to": ["css", "res", "MarkerCluster.css"]
+    },
+    {
+      "from": ["dist", "MarkerCluster.Default.css"],
+      "to": ["css", "res", "MarkerCluster.Default.css"]
+    }
+  ],
+  "crypto-js": {
+    "from": ["crypto-js.js"],
+    "to": ["js", "res", "crypto-js.js"]
+  },
+  "google-android-app-ids": {
+    "from": ["dist", "google-app-ids.json"],
+    "to": ["js", "res", "google-app-ids.json"]
+  }
+}
