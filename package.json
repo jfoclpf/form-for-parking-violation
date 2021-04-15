@@ -75,9 +75,7 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-is-debug": {},
       "cordova-plugin-app-version": {},
-      "cordova-plugin-simple-image-resizer": {
-        "ANDROID_EXIFINTERFACES_VERSION": "27.+"
-      },
+      "cordova-plugin-simple-image-resizer": {},
       "cordova-plugin-file": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-x-socialsharing": {
