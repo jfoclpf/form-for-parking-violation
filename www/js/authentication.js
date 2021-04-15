@@ -365,7 +365,7 @@ app.authentication = (function (thisModule) {
     }
 
     console.log('leftAppToSignPdf:', leftAppToSignPdf)
-    // if the PDF file was not just recently cr eated, leave
+    // if the PDF file was not just recently created, leave
     if (!leftAppToSignPdf) {
       return
     }
