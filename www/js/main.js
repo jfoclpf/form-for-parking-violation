@@ -135,7 +135,6 @@ app.main = (function (thisModule) {
   function onResume () {
     console.log('onResume')
     app.authentication.onAppResume()
-    app.localization.loadMapsApi()
   }
 
   // request user to evaluate this app on Play Store
