@@ -231,8 +231,6 @@ app.main = (function (thisModule) {
   function sendMailMessageWithoutCMD () {
     app.dbServerLink.submitNewEntryToDB()
 
-    app.functions.updateDateAndTime()
-
     var imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
     const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
