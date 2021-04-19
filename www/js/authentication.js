@@ -179,7 +179,7 @@ app.authentication = (function (thisModule) {
 
     // now get folderpath
     if (app.functions.isThisAndroid()) {
-      if (parseFloat(device.version) >= 11) {
+      if (parseFloat(device.version) >= 10) {
         folderpath = cordova.file.cacheDirectory
       } else {
         folderpath = cordova.file.externalRootDirectory + 'Download/' // file:///storage/emulated/0/Download/
@@ -274,9 +274,9 @@ app.authentication = (function (thisModule) {
 
     var deviceSpecificMessage
 
-    // for Android 11 and above, we need to use social sharing plugin to save the pdf
+    // for Android 10 and above, we need to use social sharing plugin to save the pdf
     // see https://github.com/jfoclpf/form-for-parking-violation/issues/89
-    if (app.functions.isThisAndroid() && parseFloat(device.version) >= 11 && Boolean(window.plugins.socialsharing)) {
+    if (app.functions.isThisAndroid() && parseFloat(device.version) >= 10 && Boolean(window.plugins.socialsharing)) {
       $.jAlert({
         content: 'Guarde o ficheiro PDF com a denúncia num local à sua escolha',
         theme: 'dark_blue',
