@@ -21,7 +21,14 @@ app.sidebar = (function (thisModule) {
     $('a.aderir_url').attr('href', app.main.urls.Chave_Movel_Digital.aderir)
     $('a.a_minha_area_url').attr('href', app.main.urls.Chave_Movel_Digital.a_minha_area)
     $('a.assinar_pdf_url').attr('href', app.main.urls.Chave_Movel_Digital.assinar_pdf)
-    $('a.app_url').attr('href', app.main.urls.Chave_Movel_Digital.app)
+
+    if (app.functions.isThisAndroid()) {
+      $('a.app_CMD_url').attr('href', app.main.urls.Chave_Movel_Digital.appAndroid)
+    } else if (app.functions.isThis_iOS()) {
+      $('a.app_CMD_url').attr('href', app.main.urls.Chave_Movel_Digital.app_iOS)
+    } else {
+      $('a.app_CMD_url').remove()
+    }
 
     // opens http links with system browser
     $('a[href]').click(function (event) {

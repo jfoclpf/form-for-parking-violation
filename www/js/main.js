@@ -20,7 +20,8 @@ app.main = (function (thisModule) {
       aderir: 'https://www.autenticacao.gov.pt/cmd-pedido-chave',
       a_minha_area: 'https://www.autenticacao.gov.pt/a-chave-movel-digital',
       assinar_pdf: 'https://cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/Processes/DigitalSignature/DigitalSignatureIntro.aspx',
-      app: 'https://play.google.com/store/apps/details?id=pt.ama.autenticacaogov&hl=pt'
+      appAndroid: 'https://play.google.com/store/apps/details?id=pt.ama.autenticacaogov&hl=pt',
+      app_iOS: 'https://apps.apple.com/pt/app/id1291777170'
     },
     databaseServer: {
       uploadImages: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload', // used to upload an image
