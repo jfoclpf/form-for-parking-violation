@@ -337,8 +337,8 @@ app.authentication = (function (thisModule) {
     var msg = deviceSpecificMessage + '<br><br>' +
       'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br><br>' +
       'Após assinar o PDF com a sua Chave Móvel Digital, guarde esse PDF.<br><br>' +
-      'Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +
-      'No caso de não receber o SMS, experimente usar a APP da Chave Móvel Digital cuja ligação encontra no menu principal desta APP.'
+      '<span style="font-size:80%">Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +
+      'No caso de não receber o SMS, experimente usar a APP da Chave Móvel Digital cuja ligação encontra no menu principal desta APP.</span>'
 
     $.jAlert({
       title: 'Criação de ficheiro PDF',
