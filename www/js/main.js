@@ -29,7 +29,10 @@ app.main = (function (thisModule) {
       uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload anew or update the data of an occurence
       requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
     },
-    androidPlayStore: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
+    androidApps: {
+      thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
+      shareToFileSystem: 'https://play.google.com/store/apps/details?id=com.boxhead.android.sharetofilesystem&hl=pt'
+    },
     openStreetMaps: {
       nominatimReverse: 'https://nominatim.openstreetmap.org/reverse'
     }
@@ -162,7 +165,7 @@ app.main = (function (thisModule) {
                 class: 'jButtonAlert',
                 onClick: function () {
                   window.localStorage.setItem('didUserAlreadyClickedToEvaluatedApp', 'true')
-                  cordova.InAppBrowser.open(thisModule.urls.androidPlayStore, '_system')
+                  cordova.InAppBrowser.open(thisModule.urls.androidApps.thisApp, '_system')
                 }
               }
             ]

@@ -277,8 +277,11 @@ app.authentication = (function (thisModule) {
     // for Android 10 and above, we need to use social sharing plugin to save the pdf
     // see https://github.com/jfoclpf/form-for-parking-violation/issues/89
     if (app.functions.isThisAndroid() && parseFloat(device.version) >= 10 && Boolean(window.plugins.socialsharing)) {
+      const message = 'Guarde o ficheiro PDF com a denúncia num local à sua escolha.<br><br>' +
+        'Caso queira guardar no seu sistema de ficheiros Android e não consiga, use a "APP para guardar PDF" que encontra no menu principal.'
+
       $.jAlert({
-        content: 'Guarde o ficheiro PDF com a denúncia num local à sua escolha',
+        content: message,
         theme: 'dark_blue',
         btns: [{
           text: 'Avançar',

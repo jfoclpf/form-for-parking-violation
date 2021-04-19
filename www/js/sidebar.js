@@ -24,10 +24,13 @@ app.sidebar = (function (thisModule) {
 
     if (app.functions.isThisAndroid()) {
       $('a.app_CMD_url').attr('href', app.main.urls.Chave_Movel_Digital.appAndroid)
+      $('a.app_save_PDF').attr('href', app.main.urls.androidApps.shareToFileSystem)
     } else if (app.functions.isThis_iOS()) {
       $('a.app_CMD_url').attr('href', app.main.urls.Chave_Movel_Digital.app_iOS)
+      $('a.app_save_PDF').remove()
     } else {
       $('a.app_CMD_url').remove()
+      $('a.app_save_PDF').remove()
     }
 
     // opens http links with system browser
