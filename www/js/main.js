@@ -43,7 +43,6 @@ app.main = (function (thisModule) {
     wasInit = false
     document.addEventListener('deviceready', onDeviceReady, false)
 
-    app.sidebar.init()
     app.sidebar.showSection('main_form')
   })
 
@@ -96,6 +95,7 @@ app.main = (function (thisModule) {
     window.open = cordova.InAppBrowser.open
 
     app.form.init()
+    app.sidebar.init()
     app.functions.addFunctionsToPlugins()
 
     // information stored in variable window.localStorage
