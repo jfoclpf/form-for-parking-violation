@@ -278,7 +278,7 @@ app.authentication = (function (thisModule) {
     // see https://github.com/jfoclpf/form-for-parking-violation/issues/89
     if (app.functions.isThisAndroid() && parseFloat(device.version) >= 10 && Boolean(window.plugins.socialsharing)) {
       const message = 'Guarde o ficheiro PDF com a denúncia num local à sua escolha.<br><br>' +
-        'Caso queira guardar no seu sistema de ficheiros Android e não consiga, use a "APP para guardar PDF" que encontra no menu principal.'
+        '<span style="font-size:80%">Caso queira guardar no seu sistema de ficheiros Android e não consiga, use a "APP para guardar PDF" que encontra no menu principal.</span>'
 
       $.jAlert({
         content: message,
@@ -314,7 +314,7 @@ app.authentication = (function (thisModule) {
                     break
                   }
                 }
-                msg += '.'
+                msg += '. Caso contrário ou caso tenha cancelado o processo, saia deste diálogo e tente novamente.'
 
                 showPDFInfoDialog(msg)
               })
@@ -335,8 +335,8 @@ app.authentication = (function (thisModule) {
 
   function showPDFInfoDialog (deviceSpecificMessage) {
     var msg = deviceSpecificMessage + '<br><br>' +
-      'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital.<br><br>' +
-      'Após assinar o PDF com a sua Chave Móvel Digital, guarde esse PDF.<br><br>' +
+      'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital. No processo, garanta que coloca a assinatura visível no documento.<br><br>' +
+      'Após assinar o PDF com a sua Chave Móvel Digital, guarde esse PDF digitalmente assinado e depois regresse novamente a esta APP.<br><br>' +
       '<span style="font-size:80%">Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +
       'No caso de não receber o SMS, experimente usar a APP da Chave Móvel Digital cuja ligação encontra no menu principal desta APP.</span>'
 
