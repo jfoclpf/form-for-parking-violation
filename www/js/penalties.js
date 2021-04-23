@@ -206,6 +206,7 @@ app.penalties = (function (thisModule) {
       key = keys[i]
       $('#penalties').append(`<option value="${key}">${penalties[key].select}</option>`)
     }
+    $('#penalties').append('<optgroup label=""></optgroup>')
   }
 
   function getSelectedPenaltyCode () {
