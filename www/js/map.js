@@ -3,6 +3,7 @@
    should see a map of all complaints previously submitted by all users
    These complaints are anonymously stored in the database             */
 
+/* eslint no-var: off */
 /* eslint camelcase: off */
 /* eslint no-prototype-builtins: off */
 /* global app, device, cordova, $, performance, L, DEBUG */

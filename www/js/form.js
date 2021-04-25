@@ -1,4 +1,6 @@
+/* eslint no-var: off */
 /* eslint camelcase: off */
+/* eslint prefer-regex-literals: off */
 
 /* global app, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
 

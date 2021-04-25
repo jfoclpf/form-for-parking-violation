@@ -1,4 +1,6 @@
+/* eslint no-var: off */
 /* eslint camelcase: off */
+/* eslint prefer-regex-literals: off */
 
 /* global app, FileReader, $, Camera, textocr */
 

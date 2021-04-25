@@ -1,3 +1,4 @@
+/* eslint no-var: off */
 /* eslint camelcase: off */
 
 /* global app, $ */
@@ -53,8 +54,10 @@ app.text = (function (thisModule) {
         $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
         ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
         ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
-        ($('#street_number').val() ? 'aproximadamente junto à porta com o <b>número ' +
-        $('#street_number').val() + '</b>, ' : '') // optional
+        ($('#street_number').val()
+          ? 'aproximadamente junto à porta com o <b>número ' + $('#street_number').val() + '</b>, '
+          : ''
+        ) // optional
 
       if (app.functions.isThis_iOS()) {
         msg2 += `a viatura <b>${carmake_model_txt}</b> cuja matrícula se encontra na foto em anexo, `

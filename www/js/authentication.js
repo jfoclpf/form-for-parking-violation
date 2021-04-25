@@ -1,5 +1,6 @@
 /* eslint camelcase: off */
 
+/* eslint no-var: off */
 /* eslint no-unused-vars: "off" */
 /* global app, $, cordova, device, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
 
