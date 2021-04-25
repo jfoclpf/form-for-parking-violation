@@ -10,7 +10,7 @@ Aplicação móvel para submissão de queixa de estacionamento ilegal junto de a
 O código está desenhado em Javascript para ser corrido num smartphone. Para tal faz uso da plataforma <a href="https://cordova.apache.org/">Apache Cordova</a>.
 
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
-* A APP para iOS está <a href="https://itunes.apple.com/pt/app/aqui-n%C3%A3o/id1335652238?mt=8">aqui</a>.
+* A APP para iOS está <a href="https://apps.apple.com/pt/app/den%C3%BAncia-estacionamento/id1560564781">aqui</a>.
 
 ## Requisitos
 
