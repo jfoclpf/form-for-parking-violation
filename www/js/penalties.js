@@ -205,10 +205,14 @@ app.penalties = (function (thisModule) {
     $('#penalties').append('<option></option>')
     for (var i = 0; i < keys.length; i++) {
       key = keys[i]
-      $('#penalties').append(`<option value="${key}">${penalties[key].select}</option>`)
-    }
-    if (app.functions.isThis_iOS()) {
-      $('#penalties').append('<optgroup label=""></optgroup>')
+      $('#penalties').append(
+        `<option label="${penalties[key].select}" value="${key}">` +
+          `${penalties[key].select}` +
+        '</option>'
+      )
+      if (app.functions.isThis_iOS()) {
+        $('#penalties').append('<optgroup label=""></optgroup>')
+      }
     }
   }
 

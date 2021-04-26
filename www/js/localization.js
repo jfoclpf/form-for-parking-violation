@@ -181,10 +181,14 @@ app.localization = (function (thisModule) {
   function populateAuthoritySelect (arrayAuthorities) {
     $('#authority').empty() // empty select options
     $.each(arrayAuthorities, function (index, value) {
-      $('#authority').append($('<option>', {
-        value: index,
-        text: value.authorityShort + ' - ' + value.nome
-      }))
+      $('#authority').append(
+        `<option label="${value.authorityShort + ' - ' + value.nome}" value="${index}">` +
+          `${value.authorityShort + ' - ' + value.nome}` +
+        '</option>'
+      )
+      if (app.functions.isThis_iOS()) {
+        $('#authority').append('<optgroup label=""></optgroup>')
+      }
     })
   }
 
