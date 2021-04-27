@@ -25,10 +25,10 @@ app.main = (function (thisModule) {
       app_iOS: 'https://apps.apple.com/pt/app/id1291777170'
     },
     databaseServer: {
-      uploadImages: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_img_upload', // used to upload an image
-      requestImage: 'https://contabo.joaopimentel.com/passeio_livre/image_server', // folder where all the images are stored
-      uploadOccurence: 'https://contabo.joaopimentel.com/passeio_livre/serverapp', // to upload anew or update the data of an occurence
-      requestHistoric: 'https://contabo.joaopimentel.com/passeio_livre/serverapp_get_historic' // to request all historic ocurrences of current user
+      uploadImages: 'https://form-for-parking-violation.joaopimentel.com/serverapp_img_upload', // used to upload an image
+      requestImage: 'https://form-for-parking-violation.joaopimentel.com/image_server', // folder where all the images are stored
+      uploadOccurence: 'https://form-for-parking-violation.joaopimentel.com/serverapp', // to upload anew or update the data of an occurence
+      requestHistoric: 'https://form-for-parking-violation.joaopimentel.com/serverapp_get_historic' // to request all historic ocurrences of current user
     },
     androidApps: {
       thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
