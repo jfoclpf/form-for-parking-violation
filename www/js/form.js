@@ -8,6 +8,7 @@ app.form = (function (thisModule) {
   function init () {
     if (app.functions.isThis_iOS()) {
       $('#plateDiv').hide()
+      $('#plate').removeClass('mandatory')
     }
   }
 
@@ -130,7 +131,7 @@ app.form = (function (thisModule) {
     }
 
     // detects if the Portuguese car plate is correctly filled
-    if (!$('#free_plate').is(':checked') && !isCarPlateOK() && !DEBUG) {
+    if (!app.functions.isThis_iOS() && !$('#free_plate').is(':checked') && !isCarPlateOK() && !DEBUG) {
       $.jAlert({
         title: 'Erro na matrícula!',
         theme: 'red',
