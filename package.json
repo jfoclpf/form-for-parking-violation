@@ -46,7 +46,7 @@
     "exif-js": "^2.3.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
-    "express-handlebars": "^5.2.0",
+    "express-handlebars": "^5.3.1",
     "fs": "0.0.1-security",
     "google-android-app-ids": "github:petarov/google-android-app-ids",
     "jAlert": "^4.9.1",
