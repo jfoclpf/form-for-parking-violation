@@ -55,7 +55,8 @@ app.dbServerLink = (function (thisModule) {
       dataType: 'json',
       crossDomain: true,
       success: function (data) {
-        console.success('Values inserted into database with success.')
+        console.success('Values inserted into database with success:')
+        console.log(databaseObj)
         console.log('Returned:', data)
         // upload all photos
         for (let i = 0; i < imagesArray.length; i++) {
