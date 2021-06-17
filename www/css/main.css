@@ -2,6 +2,10 @@ h1 {
   text-align: center
 }
 
+select {
+  max-width: 500px;
+}
+
 #content {
   width: 100%;
 }
