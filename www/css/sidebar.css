@@ -61,11 +61,13 @@ a:focus {
     background: #343a40;
     color: #fff;
     transition: all 0.25s;
+    margin-left: -260px;
 }
 
 #sidebar.active {
     margin-left: -70vw;
     box-shadow: 10px 1px 0.5rem rgba(0,0,0,0.5);
+    margin-left: 0;
 }
 
 #sidebarCollapse {
@@ -179,26 +181,4 @@ a.article:hover {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
-}
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -260px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
-}
-
-@media (min-width: 768px) {
-  #sidebarCollapse {
-      display: none !important;
-  }
 }
