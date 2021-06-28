@@ -120,9 +120,9 @@ app.sidebar = (function (thisModule) {
     }
 
     if ($('#sidebar').hasClass('active')) {
-      $('#content').stop(true, true).fadeTo(200, 0.3).find('*').prop('disabled', true)
+      $('#content').stop(true, true).fadeTo(200, 0.3, () => { $(this).find('*').prop('disabled', true) })
     } else {
-      $('#content').stop(true, true).fadeTo(200, 1).find('*').prop('disabled', false)
+      $('#content').stop(true, true).fadeTo(200, 1, () => { $(this).find('*').prop('disabled', false) })
     }
 
     // for touch screens detects when the user slides the sidebar with the finger
