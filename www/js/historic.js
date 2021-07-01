@@ -35,6 +35,7 @@ app.historic = (function (thisModule) {
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
         console.error(error)
+        InternetError()
       }
     })
   }
@@ -61,8 +62,17 @@ app.historic = (function (thisModule) {
       error: function (error) {
         console.error('There was an error getting the historic for the following uuid: ' + uuid)
         console.error(error)
+        InternetError()
         callback(error)
       }
+    })
+  }
+
+  function InternetError () {
+    $.jAlert({
+      title: 'Erro na obtenção do histórico!',
+      theme: 'red',
+      content: 'Confirme se tem acesso à Internet. Poderá também ser uma anomalia com o servidor desta APP.'
     })
   }
 
