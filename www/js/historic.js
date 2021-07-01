@@ -15,6 +15,7 @@ app.historic = (function (thisModule) {
 
   function updateHistoric () {
     const uuid = device.uuid
+    setLoadingIcon()
 
     console.log('Fetching historic with uuid ' + uuid)
     $.ajax({
@@ -63,6 +64,11 @@ app.historic = (function (thisModule) {
         callback(error)
       }
     })
+  }
+
+  // empties the historic div and replaces with a loading gif
+  function setLoadingIcon () {
+    $('#historic').empty().append($('<div></div>').addClass('historic-loading'))
   }
 
   function insertFetchedDataIntoHistoric () {
