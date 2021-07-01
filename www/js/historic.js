@@ -91,10 +91,7 @@ app.historic = (function (thisModule) {
       return
     }
 
-    $('#historic').append(`
-      <h4>Histórico de ocorrências</h4>
-      <span class="note">Pressione nas ocorrências para ver as imagens</span>
-    `)
+    $('#historic').append('<h4>Histórico de ocorrências</h4>')
 
     // since the results are stored as they are submitted, they are ordered by time
     // we want to show on top the most recent ones, i.e., the last on the array
@@ -107,15 +104,20 @@ app.historic = (function (thisModule) {
               <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
               <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
               <b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
+              <b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>
             </div>
             <div class="col">
               <button aria-label="Reenviar ocorrência" class="btn btn-primary btn-sm m-1 history-refresh-button" data-index="${i}"><i class="fa fa-refresh"></i></button>
               <button aria-label="Marcar ocorrência como tratada" class="btn btn-primary btn-sm m-1 history-check-button" data-index="${i}"><i class="fa fa-check"></i></button>
             </div>
           </div>
-          <div>
-            <b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>
-            <b>Autoridade</b>: ${el.autoridade}
+          <div class="row">
+            <div class="col-9">
+              <b>Autoridade</b>: ${el.autoridade}
+            </div>
+            <div class="col d-flex align-items-center">
+              <button aria-label="Mostrar fotos" class="btn btn-primary btn-sm m-1 history-show-photo-button"><i class="fa fa-picture-o"></i></button>
+            </div>
           </div>
         </div>`
       )
