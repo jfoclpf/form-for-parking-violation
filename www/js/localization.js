@@ -39,7 +39,7 @@ app.localization = (function (thisModule) {
     var longitude = position.coords.longitude
     Longitude = longitude
     console.log('latitude, longitude: ', latitude, longitude)
-    getAuthoritiesFromOSM(latitude, longitude) // Pass the latitude and longitude to get address.
+    getAddressFromGPS(latitude, longitude) // Pass the latitude and longitude to get address.
   }
 
   // to be used from outside of this module
@@ -63,41 +63,83 @@ app.localization = (function (thisModule) {
   /* Get address by coordinates */
   thisModule.AUTHORITIES = [] // array of possible authorities applicable for that area
 
-  function getAuthoritiesFromOSM (latitude, longitude) {
-    $.ajax({
-      url: app.main.urls.openStreetMaps.nominatimReverse,
-      data: {
-        lat: latitude,
-        lon: longitude,
-        format: 'json',
-        namedetails: 1,
-        'accept-language': 'pt'
-      },
-      dataType: 'json',
-      type: 'GET',
-      async: true,
-      crossDomain: true
-    }).done(function (res) {
-      const address = res.address
-      console.log(address)
-      getAuthoritiesFromAddress(address)
-    }).fail(function (err) {
-      console.error(err)
-      PositionError()
+  function getAddressFromGPS (latitude, longitude) {
+    // makes two parallel async GET requests
+    Promise.allSettled([
+      $.ajax({
+        url: app.main.urls.geoApi.nominatimReverse,
+        data: {
+          lat: latitude,
+          lon: longitude,
+          format: 'json',
+          namedetails: 1,
+          'accept-language': 'pt'
+        },
+        dataType: 'json',
+        type: 'GET',
+        async: true,
+        crossDomain: true
+      }),
+      $.ajax({
+        url: app.main.urls.geoApi.ptApi + '/gps',
+        data: {
+          lat: latitude,
+          lon: longitude
+        },
+        dataType: 'json',
+        type: 'GET',
+        async: true,
+        crossDomain: true
+      })
+    ]).then(function (res) {
+      // from app.main.urls.geoApi.nominatimReverse
+      if (res[0].status !== 'fulfilled') {
+        console.error(app.main.urls.geoApi.nominatimReverse + ' returns empty')
+        GPSLoadingOnFields(false)
+        PositionError()
+      } else {
+        const addressFromOSM = res[0].value.address
+        let addressFromGeoPtApi
+        // from app.main.urls.geoApi.ptApi
+        if (res[1].status !== 'fulfilled') {
+          // this happens when user is not in Portugal
+          console.warn(app.main.urls.geoApi.ptApi + ' returns empty')
+        } else {
+          addressFromGeoPtApi = res[1].value
+        }
+
+        console.log('getLocale: ', addressFromOSM, addressFromGeoPtApi)
+        getAuthoritiesFromAddress(addressFromOSM, addressFromGeoPtApi)
+      }
     })
   }
 
-  function getAuthoritiesFromAddress (address) {
+  function getAuthoritiesFromAddress (addressFromOSM, addressFromGeoPtApi) {
     thisModule.AUTHORITIES = []
-    var geoNames = [] // array of possible names for the locale, for example ["Lisboa", "Odivelas"]
 
-    if (address) {
-      if (address.road) {
-        $('#street').val(address.road) // nome da rua/avenida/etc.
+    // array of possible names for the locale, for example ["Lisboa", "Odivelas"]
+    // to be used for searching possible corresponding authorities
+    var geoNames = []
+
+    if (addressFromGeoPtApi) {
+      if (addressFromGeoPtApi.freguesia) {
+        geoNames.push(addressFromGeoPtApi.freguesia)
+      }
+      if (addressFromGeoPtApi.concelho) {
+        geoNames.push(addressFromGeoPtApi.concelho)
+      }
+      if (addressFromGeoPtApi.distrito) {
+        geoNames.push(addressFromGeoPtApi.distrito)
+      }
+    }
+
+    if (addressFromOSM) {
+      if (addressFromOSM.road) {
+        $('#street').val(addressFromOSM.road) // nome da rua/avenida/etc.
       }
 
-      if (address.house_number) {
-        $('#street_number').val(address.house_number)
+      if (addressFromOSM.house_number) {
+        $('#street_number').val(addressFromOSM.house_number)
       }
 
       // get relevant address details to find police authority
@@ -109,16 +151,16 @@ app.localization = (function (thisModule) {
       ]
 
       for (let i = 0; i < relevantAddressDetails.length; i++) {
-        if (address[relevantAddressDetails[i]]) {
-          geoNames.push(address[relevantAddressDetails[i]])
+        if (addressFromOSM[relevantAddressDetails[i]]) {
+          geoNames.push(addressFromOSM[relevantAddressDetails[i]])
         }
       }
 
       // from the Postal Code got from OMS
       // tries to get locality using the offline Data Base (see file contacts.js)
       var localityFromDB, municipalityFromDB
-      if (address.postcode) {
-        const dataFromDB = getDataFromPostalCode(address.postcode)
+      if (addressFromOSM.postcode) {
+        const dataFromDB = getDataFromPostalCode(addressFromOSM.postcode)
 
         localityFromDB = dataFromDB.locality
         console.log('locality from DB is ' + localityFromDB)
@@ -133,18 +175,13 @@ app.localization = (function (thisModule) {
         }
       }
 
-      if (address.municipality) {
-        $('#locality').val(address.municipality)
-      } else if (address.city) {
-        $('#locality').val(address.city)
-      } else if (address.town) {
-        $('#locality').val(address.town)
-      } else if (address.suburb) {
-        $('#locality').val(address.suburb)
+      // #locality makes reference to municipality (concelho)
+      if (addressFromGeoPtApi && addressFromGeoPtApi.concelho) {
+        $('#locality').val(addressFromGeoPtApi.concelho)
+      } else if (addressFromOSM.municipality) {
+        $('#locality').val(addressFromOSM.municipality)
       } else if (municipalityFromDB) {
         $('#locality').val(municipalityFromDB)
-      } else if (localityFromDB) {
-        $('#locality').val(localityFromDB)
       }
     } else {
       geoNames.push($('#locality').val())
