@@ -29,6 +29,7 @@ const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
 debug(DBInfo)
 
 const app = express()
+var db1, db2
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -39,7 +40,7 @@ app.get('/', function (req, res) {
 
 // to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
-  var db = mysql.createConnection(DBInfo)
+  db1 = mysql.createConnection(DBInfo)
   // object got from POST
   var serverCommand = req.body.serverCommand || req.body.dbCommand // dbCommand for backward compatibility
   debug('serverCommand is ', serverCommand)
@@ -68,19 +69,19 @@ app.post(submissionsUrl, function (req, res) {
   switch (serverCommand) {
     case 'submitNewEntryToDB': // (new entry in table) builds sql query to insert user data
       databaseObj.table_row_uuid = generateUuid()
-      query = `INSERT INTO ${DBInfo.db_tables.denuncias} SET ${db.escape(databaseObj)}`
+      query = `INSERT INTO ${DBInfo.db_tables.denuncias} SET ${db1.escape(databaseObj)}`
       break
     case 'setProcessedByAuthorityStatus':
       // (update) when field 'processada_por_autoridade' is present in the request (client) it means just an update of a previous existing entry/line
-      query = `UPDATE ${DBInfo.db_tables.denuncias} SET processada_por_autoridade=${db.escape(databaseObj.processada_por_autoridade)} ` +
-              `WHERE PROD=${db.escape(databaseObj.PROD)} AND uuid=${db.escape(databaseObj.uuid)} ` +
-              `AND foto1=${db.escape(databaseObj.foto1)} AND carro_matricula=${db.escape(databaseObj.carro_matricula)}`
+      query = `UPDATE ${DBInfo.db_tables.denuncias} SET processada_por_autoridade=${db1.escape(databaseObj.processada_por_autoridade)} ` +
+              `WHERE PROD=${db1.escape(databaseObj.PROD)} AND uuid=${db1.escape(databaseObj.uuid)} ` +
+              `AND foto1=${db1.escape(databaseObj.foto1)} AND carro_matricula=${db1.escape(databaseObj.carro_matricula)}`
       break
     case 'setEntryAsDeletedInDatabase':
       // (update) when field 'deleted_by_admin' is present in the request (client) it means just an update of a previous existing entry/line
-      query = `UPDATE ${DBInfo.db_tables.denuncias} SET deleted_by_admin=${db.escape(databaseObj.deleted_by_admin)} ` +
-              `WHERE PROD=${db.escape(databaseObj.PROD)} AND uuid=${db.escape(databaseObj.uuid)} ` +
-              `AND foto1=${db.escape(databaseObj.foto1)} AND carro_matricula=${db.escape(databaseObj.carro_matricula)}`
+      query = `UPDATE ${DBInfo.db_tables.denuncias} SET deleted_by_admin=${db1.escape(databaseObj.deleted_by_admin)} ` +
+              `WHERE PROD=${db1.escape(databaseObj.PROD)} AND uuid=${db1.escape(databaseObj.uuid)} ` +
+              `AND foto1=${db1.escape(databaseObj.foto1)} AND carro_matricula=${db1.escape(databaseObj.carro_matricula)}`
       break
     default:
       debug('Bad request on dbCommand: ' + serverCommand)
@@ -92,7 +93,7 @@ app.post(submissionsUrl, function (req, res) {
 
   async.series([
     function (next) {
-      db.connect(function (err) {
+      db1.connect(function (err) {
         if (err) {
           console.error('error connecting: ' + err.stack)
           res.status(501).send(JSON.stringify(err))
@@ -104,7 +105,7 @@ app.post(submissionsUrl, function (req, res) {
       })
     },
     function (next) {
-      db.query(query, function (err, results, fields) {
+      db1.query(query, function (err, results, fields) {
         if (err) {
           // error handling code goes here
           debug('Error inserting user data into database: ', err)
@@ -120,7 +121,7 @@ app.post(submissionsUrl, function (req, res) {
       })
     },
     function (next) {
-      db.end(function (err) {
+      db1.end(function (err) {
         if (err) {
           next(Error(err))
         } else {
@@ -131,11 +132,12 @@ app.post(submissionsUrl, function (req, res) {
   ],
   function (err, results) {
     if (err) {
-      console.error('There was an error: ')
-      console.error(err)
+      console.error('There was an error: ', err)
+      db1.end()
     } else {
       debug('Submission successfully')
     }
+    db1 = null
   })
 })
 
@@ -151,7 +153,7 @@ app.get(requestHistoricUrl, function (req, res) {
         return
       }
 
-      var db = mysql.createConnection(DBInfo)
+      db2 = mysql.createConnection(DBInfo)
       const uuid = req.query.uuid
 
       debug('\nGetting entries from' +
@@ -160,7 +162,7 @@ app.get(requestHistoricUrl, function (req, res) {
       var query
       if (uuid) {
         // get the all entries for a specific user (ex: to generate historic for user)
-        query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid=${db.escape(uuid)} AND deleted_by_admin=0 ORDER BY data_data ASC`
+        query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid=${db2.escape(uuid)} AND deleted_by_admin=0 ORDER BY data_data ASC`
       } else {
         // get all production entries for all users except admin (ex: to generate a map of all entries)
         query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE PROD=1 AND uuid!='87332d2a0aa5e634' AND deleted_by_admin=0 ` +
@@ -171,7 +173,7 @@ app.get(requestHistoricUrl, function (req, res) {
 
       async.series([
         function (next) {
-          db.connect(function (err) {
+          db2.connect(function (err) {
             if (err) {
               console.error('error connecting: ' + err.stack)
               res.status(501).send(JSON.stringify(err))
@@ -183,7 +185,7 @@ app.get(requestHistoricUrl, function (req, res) {
           })
         },
         function (next) {
-          db.query(query, function (err, results, fields) {
+          db2.query(query, function (err, results, fields) {
             if (err) {
               // error handling code goes here
               debug('Error inserting user data into database: ', err)
@@ -197,7 +199,7 @@ app.get(requestHistoricUrl, function (req, res) {
           })
         },
         function (next) {
-          db.end(function (err) {
+          db2.end(function (err) {
             if (err) {
               next(Error(err))
             } else {
@@ -209,9 +211,11 @@ app.get(requestHistoricUrl, function (req, res) {
       function (err, results) {
         if (err) {
           console.error('There was an error: ', err)
+          db2.end()
         } else {
           debug('Request successfully')
         }
+        db2 = null
       })
     })
     .catch(err => console.error('isClientAuthorized with error', err))
@@ -279,8 +283,57 @@ function generateUuid () {
 /* ############################################################################################## */
 /* ############################################################################################## */
 
-app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
-app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
+const server = app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
+const server2 = app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
+
+// gracefully exiting upon CTRL-C or when PM2 stops the process
+process.on('SIGINT', gracefulShutdown)
+process.on('SIGTERM', gracefulShutdown)
+function gracefulShutdown (signal) {
+  console.log(`Received signal ${signal}. Closing http servers and db connections`)
+
+  try {
+    server.close()
+    server2.close()
+    async.parallel([function (callback) {
+      if (db1) {
+        db1.end(function (err) {
+          if (err) {
+            callback(Error(err))
+          } else {
+            callback()
+          }
+        })
+      } else { // connection not active
+        callback()
+      }
+    }, function (callback) {
+      if (db2) {
+        db2.end(function (err) {
+          if (err) {
+            callback(Error(err))
+          } else {
+            callback()
+          }
+        })
+      } else { // connection not active
+        callback()
+      }
+    }],
+    function (err, results) {
+      if (err) {
+        console.error('Error on closing db connections', err)
+        setTimeout(() => process.exit(1), 500)
+      } else {
+        console.log('Grecefully exited, servers and db connections closed')
+        setTimeout(() => process.exit(0), 500)
+      }
+    })
+  } catch (err) {
+    console.error('Error on exiting', err)
+    setTimeout(() => process.exit(1), 500)
+  }
+}
 
 console.log('Initializing timers to cleanup database')
 // directory where the images are stored with respect to present file
