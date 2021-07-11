@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "name"        : "form-for-parking-violation",
+    "script"      : "serverForDB.js",
+    "watch"       : false,
+    "instances"   : "2",
+    "exec_mode"   : "cluster",
+    "log_date_format": "DD-MM-YYYY"
+  }]
+}

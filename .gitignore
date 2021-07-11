@@ -34,14 +34,12 @@ dist/formParkingViolation.*
 # keys and credentials
 www/js/credentials.js
 server/DBcredentials.json
+server/isClientAuthorized.js
 keys/
 
 #upload script to server
 uploadToServer.sh
 updateServer.sh
-
-# server side files
-server/
 
 # configs from Atom
 .on-save.json
