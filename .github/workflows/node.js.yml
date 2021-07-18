@@ -38,3 +38,31 @@ jobs:
     - run: npm test
     - name: Building APK
       run: cordova build android --production
+
+  ios:
+    strategy:
+      matrix:
+        platform: [macos-latest]
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Changing to Java 8
+      run: | 
+        javac -version
+        export JAVA_HOME=`/usr/libexec/java_home -v 1.8` || echo OK
+        javac -version
+    - name: Install Apache Cordova
+      run: npm install -g cordova
+    - name: Add Android Platform
+      run: cordova platform add ios
+    - run: npm test
+    - name: Building APP
+      run: cordova build ios --production
