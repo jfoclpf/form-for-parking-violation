@@ -11,10 +11,56 @@ on:
     branches: [ master ]
 
 jobs:
-  android:
+  android-ubuntu:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+        platform: [ubuntu-latest]
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: install JDK 1.8
+      run: apt-get update && apt-get install openjdk-8-jdk && java -version
+    - name: Install Apache Cordova
+      run: npm install -g cordova
+    - name: Add Android Platform
+      run: cordova platform add android
+    - run: npm test
+    - name: Building APK
+      run: cordova build android --production
+  android-macos:
+    strategy:
+      matrix:
+        platform: [macos-latest]
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install Apache Cordova
+      run: npm install -g cordova
+    - name: Add Android Platform
+      run: cordova platform add android
+    - run: npm test
+    - name: Building APK
+      run: cordova build android --production
+  android-windows:
+    strategy:
+      matrix:
+        platform: [windows-latest]
         node-version: [12.x, 14.x, 16.x]
         
     runs-on: ${{ matrix.platform }}
