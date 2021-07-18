@@ -90,6 +90,7 @@ jobs:
     - run: npm test
     - name: Building APK
       run: cordova build android --production
+
   ios:
     strategy:
       matrix:
@@ -110,3 +111,5 @@ jobs:
     - name: Add Android Platform
       run: cordova platform add ios
     - run: npm test
+    - name: Building APP
+      run: cordova build ios --production
