@@ -31,6 +31,8 @@ jobs:
     - name: Add Android Platform
       run: cordova platform add android
     - run: npm test
+    - name: Building APK
+      run: cordova build android --production
   ios:
     strategy:
       matrix:
