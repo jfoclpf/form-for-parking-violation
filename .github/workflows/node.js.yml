@@ -11,7 +11,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  android:
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
@@ -26,5 +26,28 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
+    - name: Install Apache Cordova
+      run: npm install -g cordova
+    - name: Add Android Platform
+      run: cordova platform add android
+    - run: npm test
+  ios:
+    strategy:
+      matrix:
+        platform: [macos-latest]
+        node-version: [12.x, 14.x, 16.x]
+        
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install Apache Cordova
+      run: npm install -g cordova
+    - name: Add Android Platform
+      run: cordova platform add ios
     - run: npm test
