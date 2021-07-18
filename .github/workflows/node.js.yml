@@ -26,10 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: javac -version
     - name: Removing Java
-      run: javac -version && sudo apt remove openjdk* && sudo apt purge openjdk*
+      run: sudo apt remove openjdk* && sudo apt purge openjdk*
     - name: Install Java 8
-      run: sudo apt install openjdk-8-jdk openjdk-8-jre -y && javac -version
+      run: sudo apt install openjdk-8-jdk openjdk-8-jre -y
+    - run: javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
