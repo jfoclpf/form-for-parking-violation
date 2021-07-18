@@ -22,8 +22,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: javac -version
-    - run: sudo update-java-alternatives -l
+    - run: sudo update-java-alternatives -l || echo 1
     - run: sudo update-alternatives --list javac
+    - run: java8=$(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1)
+    - run: echo $java8
+    - run: sudo update-java-alternatives -s $java8
     - name: Removing Java
       run: sudo apt-get purge openjdk* -y && sudo rm -rf /usr/lib/jvm/*
     - name: Install Java 8
