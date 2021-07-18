@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: javac -version
     - name: Removing Java
-      run: sudo apt remove openjdk* && sudo apt purge openjdk*
+      run: sudo apt-get purge openjdk-\* icedtea-\* icedtea6-\* && sudo rm -rf /usr/lib/jvm/*
     - name: Install Java 8
       run: sudo apt install openjdk-8-jdk openjdk-8-jre -y
     - run: javac -version
