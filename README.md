@@ -1,7 +1,13 @@
-[![js-standard-style][js-standard-style_img]][js-standard-style_url] [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
+[![Node.js CI](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/node.js.yml/badge.svg)](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/node.js.yml)
+[![Dependency Status][dependency status_img]][dependency status_url]
+[![js-standard-style][js-standard-style_img]][js-standard-style_url]
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?hosted_button_id=J7F3ALLQAFWEJ)
 
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
+
+[dependency status_img]: https://david-dm.org/jfoclpf/form-for-parking-violation.svg
+[dependency status_url]: https://david-dm.org/jfoclpf/form-for-parking-violation
 
 # Denúncia Estacionamento
 
