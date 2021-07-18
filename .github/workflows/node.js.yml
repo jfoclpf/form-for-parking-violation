@@ -82,7 +82,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: javac- version
+    - run: javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
