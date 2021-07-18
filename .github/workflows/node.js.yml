@@ -15,91 +15,17 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
         
     runs-on: ${{ matrix.platform }}
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - run: javac -version
+    - run: sudo update-java-alternatives -l
+    - run: sudo update-alternatives --list javac
     - name: Removing Java
-      run: sudo apt-get purge openjdk-\* icedtea-\* icedtea6-\* && sudo rm -rf /usr/lib/jvm/*
+      run: sudo apt-get purge openjdk* -y && sudo rm -rf /usr/lib/jvm/*
     - name: Install Java 8
-      run: sudo apt install openjdk-8-jdk openjdk-8-jre -y
+      run: sudo apt install openjdk-8-jdk -y
     - run: javac -version
-    - name: Install Apache Cordova
-      run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add android
-    - run: npm test
-    - name: Building APK
-      run: cordova build android --production
-  android-macos:
-    strategy:
-      matrix:
-        platform: [macos-latest]
-        node-version: [12.x, 14.x, 16.x]
-        
-    runs-on: ${{ matrix.platform }}
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install Apache Cordova
-      run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add android
-    - run: npm test
-    - name: Building APK
-      run: cordova build android --production
-  android-windows:
-    strategy:
-      matrix:
-        platform: [windows-latest]
-        node-version: [12.x, 14.x, 16.x]
-        
-    runs-on: ${{ matrix.platform }}
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install Apache Cordova
-      run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add android
-    - run: npm test
-    - name: Building APK
-      run: cordova build android --production
-  ios:
-    strategy:
-      matrix:
-        platform: [macos-latest]
-        node-version: [12.x, 14.x, 16.x]
-        
-    runs-on: ${{ matrix.platform }}
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install Apache Cordova
-      run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add ios
-    - run: npm test
