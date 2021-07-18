@@ -38,6 +38,7 @@ jobs:
     - run: npm test
     - name: Building APK
       run: cordova build android --production
+
   android-macos:
     strategy:
       matrix:
@@ -53,6 +54,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Changing to Java 8
+      run: | 
+        javac -version
+        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1) || echo OK
+        javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
@@ -60,6 +66,7 @@ jobs:
     - run: npm test
     - name: Building APK
       run: cordova build android --production
+
   android-windows:
     strategy:
       matrix:
@@ -75,6 +82,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: javac- version
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
