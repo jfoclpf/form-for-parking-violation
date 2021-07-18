@@ -57,7 +57,7 @@ jobs:
     - name: Changing to Java 8
       run: | 
         javac -version
-        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1) || echo OK
+        export JAVA_HOME=`/usr/libexec/java_home -v 1.8` || echo OK
         javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
