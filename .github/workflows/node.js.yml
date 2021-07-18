@@ -26,8 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Get JDK version
-      run: java -version && sudo update-alternatives --config javac && java -version
+    - name: Install Java 8
+      run: sudo apt install openjdk-8-jdk openjdk-8-jre && javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
