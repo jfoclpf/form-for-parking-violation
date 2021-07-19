@@ -19,29 +19,6 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 * A APP para Android está <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation">aqui</a>.
 * A APP para iOS está <a href="https://apps.apple.com/pt/app/den%C3%BAncia-estacionamento/id1560564781">aqui</a>.
 
-## Requisitos
-
-### [Apache Cordova](https://cordova.apache.org/)
-
-Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a> para converter código HTML5 e Javascript para uma aplicação de dispositivo móvel, como Android ou iOS. Precisa, portanto, de ter Apache Cordova instalado na sua máquina.
-
-### [Node JS](https://nodejs.org/en/download/)
-
-O projeto necessita de alguns pacotes `npm`, sendo que o `npm` vem instalado com o `nodejs`.
-Alguns scripts do projeto também fazem uso do `nodejs`.
-
-### [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
-
-O gradle é usado para fazer o `build` dos projetos Apache Cordova
-
-### Java
-
-É uma exigência do Apache Cordova
-
-### [ADB](https://www.xda-developers.com/install-adb-windows-macos-linux/)
-
-O ADB é usado para testar a APP no seu telemóvel Android
-
 ## Como instalar e testar
 ### Android
 
@@ -72,22 +49,9 @@ para listar os dispositivos Android detectados. Caso o dispositivo seja detetado
 
 Para fazer debug no Chrome aceda a `chrome://inspect/#devices`
 
-## Eventuais problemas com Gradle
+## Requisitos e eventuais problemas
 
-O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um executor de tarefas de compilação e é instalado aquando de `cordova build`. Pode dar problemas nesse comando (erro: `Could not determine java version from 'x.x.x'`). O gradle pode envolver diferentes versões:
-
-- a versão global: `gradle -v`
-- a versão local do project (wrapper): `./platforms/android/gradlew -v`
-
-Tal pode dar problemas porque diferentes versões de gradle dependem de diferentes versões de java. Verificar a variável `JAVA_HOME` com `echo $JAVA_HOME`. Para resolver o problema mudar esta variável e associá-la a outras versões de java, por exemplo:
-
-`export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` ou<br>
-`export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br>
-mesmo apagar com `export JAVA_HOME=`
-
-## Plugins necessários
-
-* ver ficheiro `package.json`.
+* ver [requisitos](https://github.com/jfoclpf/form-for-parking-violation/blob/master/requisitos.md)
 
 ## Contribuições são muito bem-vindas
 
