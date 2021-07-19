@@ -37,7 +37,7 @@ Caso haja várias versões instaladas, para escolher a versão correta, corra:
 
 `sudo update-alternatives --config javac` 
 
-ou de uma forma mais automática para excolher a versão 8
+ou de uma forma mais automática para escolher a versão 8
 
 `sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1)`
 
