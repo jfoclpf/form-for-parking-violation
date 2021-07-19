@@ -52,6 +52,20 @@ Tal pode dar problemas porque diferentes versões de gradle dependem de diferent
 `export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/` ou<br>
 mesmo apagar com `export JAVA_HOME=`
 
+## Testar num smartphone
+
+Para testar num smartphone Android precisa de ativar nas configurações do smartphone o [Developer options](https://developer.android.com/studio/command-line/adb#Enabling) e dentro desse menu precisa de ativar a opção <b>USB debugging</b>.
+
+Depois corra numa linha de comandos
+
+`adb devices`
+
+para listar os dispositivos Android detectados. Caso o dispositivo seja detetado, corra
+
+`cordova run android --device`
+
+Para fazer debug no Chrome aceda a `chrome://inspect/#devices`
+
 ## Plugins necessários
 
 * ver ficheiro `package.json`.
