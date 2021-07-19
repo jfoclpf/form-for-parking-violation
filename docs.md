@@ -25,7 +25,7 @@ O ADB é usado para testar a APP no seu telemóvel Android
 
 Um problema comum está relacionado com as versões do Java, considerando que o Apache Cordova exige Java 8.
 
-Para saber a versão corra `java -c` e `javac -version` (compilador). O compilador (`javac`) deverá retornar `1.8.x`
+Para saber a versão corra `java -c` e `javac -version` (compilador). O compilador `javac` deverá retornar `1.8.x`
 
 ```
 $ javac -version
