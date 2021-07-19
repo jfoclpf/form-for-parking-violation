@@ -37,7 +37,7 @@ open platforms/ios/Denúncia\ Estacionamento.xcworkspace/
 
 ## Requisitos, testes e eventuais problemas
 
-* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/documentação.md)
+* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/docs.md)
 
 ## Contribuições são muito bem-vindas
 
