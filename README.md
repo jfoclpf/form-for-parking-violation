@@ -20,6 +20,10 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 * A APP para iOS está <a href="https://apps.apple.com/pt/app/den%C3%BAncia-estacionamento/id1560564781">aqui</a>.
 
 ## Como instalar e testar
+### Requisitos, _debug_ e eventuais problemas
+
+* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/docs.md)
+
 ### Android
 
  1. Clone este projeto<br>`git clone https://github.com/jfoclpf/form-for-parking-violation`
@@ -34,10 +38,6 @@ cd form-for-parking-violation
 cordova platform add ios
 open platforms/ios/Denúncia\ Estacionamento.xcworkspace/
 ```
-
-## Requisitos, testes e eventuais problemas
-
-* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/docs.md)
 
 ## Contribuições são muito bem-vindas
 
