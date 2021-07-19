@@ -35,23 +35,9 @@ cordova platform add ios
 open platforms/ios/Denúncia\ Estacionamento.xcworkspace/
 ```
 
-### Testar num smartphone
+## Requisitos, testes e eventuais problemas
 
-Para testar num smartphone Android precisa de ativar nas configurações do smartphone o [Developer options](https://developer.android.com/studio/command-line/adb#Enabling) e dentro desse menu precisa de ativar a opção <b>USB debugging</b>.
-
-Depois corra numa linha de comandos
-
-`adb devices`
-
-para listar os dispositivos Android detectados. Caso o dispositivo seja detetado, corra
-
-`cordova run android --device`
-
-Para fazer debug no Chrome aceda a `chrome://inspect/#devices`
-
-## Requisitos e eventuais problemas
-
-* ver [requisitos](https://github.com/jfoclpf/form-for-parking-violation/blob/master/requisitos.md)
+* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/documentação.md)
 
 ## Contribuições são muito bem-vindas
 
