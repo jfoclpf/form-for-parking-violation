@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest]
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12.x]
         
     runs-on: ${{ matrix.platform }}
 
@@ -28,16 +28,6 @@ jobs:
     - name: Install Android SDK
       run: |
         sudo apt install android-sdk -y
-        ls -l ~
-    - name: Changing to Java 8
-      run: | 
-        javac -version
-        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1) || echo OK
-        javac -version
-    - name: Install Apache Cordova
-      run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add android
-    - run: npm test
-    - name: Building APK
-      run: cordova build android --production
+        ls -l /usr/lib/android-sdk
+        ls -l /Library/Android/sdk/
+        sudo find / -type d -name "*sdk"
