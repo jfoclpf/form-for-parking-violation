@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         platform: [macos-latest]
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [lts/*]
         
     runs-on: ${{ matrix.platform }}
 
