@@ -13,8 +13,8 @@ jobs:
   android:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node-version: [12.x]
+        platform: [ubuntu-18.04, ubuntu-latest]
+        node-version: [lts/*]
         
     runs-on: ${{ matrix.platform }}
 
@@ -46,4 +46,4 @@ jobs:
       run: cordova platform add android
     - run: npm test
     - name: Building APK
-      run: cordova build android --production -- --gradleArg=-PcdvBuildToolsVersion=29
+      run: cordova build android --production
