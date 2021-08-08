@@ -28,6 +28,6 @@ jobs:
     - name: Install Android SDK
       run: |
         sudo apt install android-sdk -y
-        ls -l /usr/lib/android-sdk/tools/bin 
-        /usr/lib/android-sdk/tools/bin/sdkmanager -list
+    - name: search for sdkmanager
+      run: sudo find / -type f -name "sdkmanager"
 
