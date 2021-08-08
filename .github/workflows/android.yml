@@ -25,6 +25,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install Android SDK
+      run: |
+        sudo apt install android-sdk -y
+        ls -l ~
     - name: Changing to Java 8
       run: | 
         javac -version
