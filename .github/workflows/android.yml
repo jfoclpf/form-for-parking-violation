@@ -13,8 +13,8 @@ jobs:
   android:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
-        node-version: [12.x, 14.x, 16.x]
+        platform: [ubuntu-18.04, ubuntu-20.04]
+        node-version: [lts/*]
         
     runs-on: ${{ matrix.platform }}
 
@@ -30,6 +30,16 @@ jobs:
         javac -version
         sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1) || echo OK
         javac -version
+    - name: Install Android SDK
+      run: |
+        sudo apt install android-sdk -y
+    - name: Uninstall SDK v31.0.0 and list
+      run: |
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --version
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --uninstall 'build-tools;31.0.0'
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list
+    - name: echo PATH
+      run: echo "${PATH//:/$'\n'}"
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
