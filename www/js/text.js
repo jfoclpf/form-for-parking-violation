@@ -47,7 +47,7 @@ app.text = (function (thisModule) {
         ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
         '</b>, venho por este meio,' + ' ' +
         'ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
-        'fazer a seguinte denúncia de contra-ordenação para que V. Exas. ' +
+        'fazer a seguinte denúncia de contraordenação para que V. Exas. ' +
         'levantem o auto respetivo e multem o infra-mencionado responsável.'
 
       var msg2 = 'No passado dia <b>' +
