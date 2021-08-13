@@ -32,8 +32,10 @@ jobs:
         javac -version
     - name: Install Apache Cordova
       run: npm install -g cordova
-    - name: Add Android Platform
-      run: cordova platform add ios
+    - name: Add iOS Platform
+      run: | 
+        cordova platform rm android
+        cordova platform add ios
     - run: npm test
     - name: Building APP
       run: cordova build ios --production
