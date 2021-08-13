@@ -38,4 +38,4 @@ jobs:
         cordova platform add ios
     - run: npm test
     - name: Building APP
-      run: cordova build ios --production
+      run: cordova build ios --release
