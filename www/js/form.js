@@ -7,8 +7,8 @@
 app.form = (function (thisModule) {
   function init () {
     if (app.functions.isThis_iOS()) {
-      $('#plateDiv').hide()
       $('#plate').removeClass('mandatory')
+      $('#plateDiv').remove()
     }
   }
 
