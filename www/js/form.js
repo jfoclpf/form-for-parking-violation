@@ -9,6 +9,8 @@ app.form = (function (thisModule) {
     if (app.functions.isThis_iOS()) {
       $('#plate').removeClass('mandatory')
       $('#plateDiv').remove()
+    } else {
+      $('#plate').bind('input', plateOnInput)
     }
   }
 
@@ -270,8 +272,6 @@ app.form = (function (thisModule) {
       $('#plate').css('border-color', '')
     }
   }
-
-  $('#plate').bind('input', plateOnInput)
 
   function plateOnInput () {
     $(this).val(function (index, value) {
