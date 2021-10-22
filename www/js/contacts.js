@@ -5271,7 +5271,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Viseu - Esquadra',
-    'contacto': 'visesqsede@psp.pt'
+    'contacto': 'esquadrasede.viseu@psp.pt'
   },
   {
     'nome': 'Águas Santas - Maia - Esquadra',
