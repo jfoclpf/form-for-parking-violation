@@ -104,7 +104,7 @@ app.main = (function (thisModule) {
     app.personalInfo.loadsPersonalInfo()
 
     // populates HTML select according to the information on penalties.js file
-    app.penalties.populatesPenalties()
+    app.penalties.init()
 
     app.functions.updateDateAndTime()
 
