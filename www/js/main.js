@@ -40,7 +40,7 @@ app.main = (function (thisModule) {
     }
   }
 
-  $(document).ready(function () {
+  $(function () {
     console.log('$(document).ready started')
     wasInit = false
     document.addEventListener('deviceready', onDeviceReady, false)
