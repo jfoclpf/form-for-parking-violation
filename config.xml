@@ -33,7 +33,7 @@
   <hook src="node_modules/cordova-import-npm/scripts/importNpmPackages.js" type="before_prepare"/>
   <platform name="android">
     <preference name="android-minSdkVersion" value="22"/>
-    <preference name="android-targetSdkVersion" value="29"/>
+    <preference name="android-targetSdkVersion" value="30"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
     <allow-intent href="market:*"/>
     <icon height="512" src="res/icon/android/512.png" width="512"/>
