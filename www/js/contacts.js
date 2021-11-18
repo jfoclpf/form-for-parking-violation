@@ -4838,6 +4838,10 @@ app.contacts.PSP_Contacts = [
     'contacto': 'hrtlgf@psp.pt'
   },
   {
+    'nome': 'Lamego - Divisão policial',
+    'contacto': 'lamego.viseu@psp.pt'
+  },
+  {
     'nome': 'Lamego - Esquadra',
     'contacto': 'vislmg@psp.pt'
   },
