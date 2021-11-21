@@ -58,12 +58,6 @@ app.main = (function (thisModule) {
 
     window.screen.orientation.lock('portrait')
 
-    cordova.getAppVersion.getVersionNumber(function (version) {
-      console.log('APP version is ' + version)
-      thisModule.APPversion = version
-      $('.version').text(`${device.platform}, v. ${version}`)
-    })
-
     cordova.plugins.IsDebug.getIsDebug(function (isDebug) {
       // in release mode the app is not debuggable (in chrome), thus I may stil want to debug with DEBUG=false
       // but in release mode I want to be sure that DEBUG is always false
@@ -89,6 +83,12 @@ app.main = (function (thisModule) {
 
   // when the page loads (only on smartphone)
   function init () {
+    cordova.getAppVersion.getVersionNumber(function (version) {
+      console.log('APP version is ' + version)
+      thisModule.APPversion = version
+      $('.version').text(`${device.platform}, v. ${version}${DEBUG ? 'd' : 'p'}`)
+    })
+
     console.log('init() started')
     wasInit = true
 
