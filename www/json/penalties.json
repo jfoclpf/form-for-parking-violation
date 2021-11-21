@@ -73,10 +73,30 @@
         "description": "num lugar reservado ao estacionamento exclusivo de determinados veículos",
         "law_article": "da alínea f) do n.º 1 do art.º 50.º, com referência ainda à alínea g) do n.º 2 do art.º 164.º do Código da Estrada"
     },
-    "linha_amarela_ou_contínua":{
-        "select": "Sobre linha amarela ou contínua na berma da estrada",
+    "linha_amarela_ou_contínua": {
+        "select": "Linha (por norma amarela) contínua junto ao limite da faixa de rodagem",
         "description": "sobre linha contínua junto ao limite da faixa de rodagem",
         "law_article": "do sinal M12 cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
+    },
+    "linha_continua_sobre_bordo_passeio": {
+        "select": "Linha (por norma amarela) contínua sobre o bordo do passeio",
+        "description": "sobre linha contínua sobre o bordo do passeio",
+        "law_article": "do sinal M12A cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
+    },
+    "linha_descontinua_junto_ao_limite_faixa_rodagem": {
+        "select": "Linha (por norma amarela) descontínua junto ao limite da faixa de rodagem",
+        "description": "sobre linha descontínua junto ao limite da faixa de rodagem",
+        "law_article": "do sinal M13 cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
+    },
+    "linha_descontinua_sobre_bordo_do_passeio": {
+        "select": "Linha (por norma amarela) descontínua sobre o bordo do passeio",
+        "description": "sobre linha descontínua sobre o bordo do passeio",
+        "law_article": "do sinal M13A cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
+    },
+    "linha_de_ziguezague": {
+        "select": "Linha (por norma amarela) em ziguezague",
+        "description": "sobre linha em ziguezague junto ao limite da faixa de rodagem",
+        "law_article": "do sinal M14 cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
     },
     "residentes_apenas": {
         "select": "Estacionamento indevido em zona de residentes",
