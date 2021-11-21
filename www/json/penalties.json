@@ -38,6 +38,11 @@
         "description": "sobre uma placa central de rortunda",
         "law_article": "da alínea f) do n.º 1 do art.º 49.º do Código da Estrada"
     },
+    "apenas_na_rotunda": {
+        "select": "Rotunda",
+        "description": "numa rotunda",
+        "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
+    },
     "deficiente": {
         "select": "Lugar de pessoa com deficiência",
         "description": "num lugar reservado a pessoa com deficiência",
@@ -144,8 +149,28 @@
         "law_article": "da alínea g) do n.º 1 do art.º 49.º do Código da Estrada"
     },
     "visbilidade_insuficiente": {
-        "select": "Pontes, túneis, passagens de nível, passagens inferiores ou superiores e em todos os lugares de visibilidade insuficiente",
-        "description": "junto a uma ponte, túnel, passagem de nível, passagem inferior ou superior, ou num lugar de visibilidade insuficiente",
+        "select": "Lugar com visibilidade insuficiente",
+        "description": "num lugar com visibilidade insuficiente",
+        "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
+    },
+    "pontes": {
+        "select": "Ponte",
+        "description": "junto a, ou sobre uma ponte",
+        "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
+    },
+    "tunel": {
+        "select": "Túnel",
+        "description": "junto a, ou dentro de um túnel",
+        "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
+    },
+    "passagem_de_nivel": {
+        "select": "Passagem de nível",
+        "description": "junto a, ou sobre uma passagem de nível",
+        "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
+    },
+    "passagem_inferior_ou_superior": {
+        "select": "Passagem inferior ou superior",
+        "description": "junto a, sob ou sobre uma passagem inferior ou superior",
         "law_article": "da alínea a) do n.º 1 do art.º 49.º do Código da Estrada"
     },
     "cruzamento": {
