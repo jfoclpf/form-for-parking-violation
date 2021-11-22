@@ -10,6 +10,7 @@ app.photos = (function (thisModule) {
 
   var photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
   var photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
+  var photosAsBase64 = []
 
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
@@ -61,7 +62,15 @@ app.photos = (function (thisModule) {
 
     photosUriOnFileSystem[imgNmbr] = imageUri
 
-    if (app.functions.isThisAndroid()) { 
+    app.file.getFileAsBase64(imageUri, (err, res) => {
+      if (err) {
+        console.error(err)
+      } else {
+        photosAsBase64[imgNmbr] = res
+      }
+    })
+
+    if (app.functions.isThisAndroid()) {
       // this plugin is just working on android
       resizeImage(imageUri, function (resizedImgUri, err) {
         var imgToShowUri = !err ? resizedImgUri : imageUri
@@ -75,19 +84,14 @@ app.photos = (function (thisModule) {
       console.log('display image ' + imgNmbr + ' : ' + imageUri)
 
       // ios is a mess with file location, thus for email attachment convert photo to base64
-      window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
-        fileEntry.file((file) => {
-          if (!file.size) { console.error('File is empty (on fileEntry from resolveLocalFileSystemURL)'); return }
-          var reader = new FileReader()
-          reader.onloadend = () => {
-            photosForEmailAttachment[imgNmbr] = reader.result
-          }
-          reader.onerror = (err) => { console.error('Error on FileReader', err) }
-          reader.readAsDataURL(file)
-        }, (err) => { console.error('Error on fileEntry.file', err) })
-      }, (err) => { console.error('Error on resolveLocalFileSystemURL', err) })
-
-      callback(imgNmbr)
+      app.file.getFileAsBase64(imageUri, (err, res) => {
+        if (err) {
+          console.error(err)
+        } else {
+          photosForEmailAttachment[imgNmbr] = res
+        }
+        callback(imgNmbr)
+      })
     } else {
       displayImage(imageUri, 'myImg_' + imgNmbr)
       console.log('display image ' + imgNmbr + ' : ' + imageUri)
@@ -331,11 +335,17 @@ app.photos = (function (thisModule) {
     return app.functions.cleanArray(photosUriOnFileSystem)
   }
 
+  function getPhotosAsBase64 () {
+    // removes empty values from photosUriOnFileSystem, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    return app.functions.cleanArray(photosAsBase64)
+  }
+
   /* === Public methods to be returned === */
   thisModule.getPhoto = getPhoto
   thisModule.removeImage = removeImage
   thisModule.getPhotosForEmailAttachment = getPhotosForEmailAttachment
   thisModule.getPhotosUriOnFileSystem = getPhotosUriOnFileSystem
+  thisModule.getPhotosAsBase64 = getPhotosAsBase64
 
   return thisModule
 })(app.photos || {})

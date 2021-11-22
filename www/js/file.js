@@ -306,6 +306,23 @@ app.file = (function (thisModule) {
       })
   }
 
+  function getFileAsBase64 (imageUri, callback) {
+    window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+      fileEntry.file((file) => {
+        if (!file.size) {
+          callback(Error('File is empty (on fileEntry from resolveLocalFileSystemURL)'))
+          return
+        }
+        var reader = new FileReader()
+        reader.onloadend = () => {
+          callback(null, reader.result)
+        }
+        reader.onerror = (err) => { console.error('Error on FileReader', err) }
+        reader.readAsDataURL(file)
+      }, (err) => { callback(Error('Error on fileEntry.file ' + JSON.stringify(err))) })
+    }, (err) => { callback(Error('Error on resolveLocalFileSystemURL ' + JSON.stringify(err))) })
+  }
+
   thisModule.listDir = listDir
   thisModule.getFilenameFromURL = getFilenameFromURL
   thisModule.copyFile = copyFile
@@ -317,6 +334,7 @@ app.file = (function (thisModule) {
   thisModule.downloadFileToDevice = downloadFileToDevice
   thisModule.uploadFileToServer = uploadFileToServer
   thisModule.resizeImage = resizeImage
+  thisModule.getFileAsBase64 = getFileAsBase64
 
   return thisModule
 })(app.file || {})
