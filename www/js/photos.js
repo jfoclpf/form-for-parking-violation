@@ -2,7 +2,7 @@
 /* eslint camelcase: off */
 /* eslint prefer-regex-literals: off */
 
-/* global app, FileReader, $, Camera, textocr */
+/* global app, $, Camera, textocr */
 
 app.photos = (function (thisModule) {
   // get Photo function
