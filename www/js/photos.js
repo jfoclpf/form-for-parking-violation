@@ -61,7 +61,8 @@ app.photos = (function (thisModule) {
 
     photosUriOnFileSystem[imgNmbr] = imageUri
 
-    if (app.functions.isThisAndroid()) { // this plugin is just working on android
+    if (app.functions.isThisAndroid()) { 
+      // this plugin is just working on android
       resizeImage(imageUri, function (resizedImgUri, err) {
         var imgToShowUri = !err ? resizedImgUri : imageUri
         displayImage(imgToShowUri, 'myImg_' + imgNmbr)
