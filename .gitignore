@@ -9,24 +9,11 @@ test/www/*
 platforms/
 plugins/
 
-# Cordova - plugins - remove all except json & xml
-plugins/**/.DS_Store
-plugins/**/*.cs
-plugins/**/*.h
-plugins/**/*.java
-plugins/**/*.js
-plugins/**/*.m
-plugins/**/*.map
-plugins/**/*.md
-plugins/**/*.modulemap
-plugins/**/*.ts
-plugins/**/LICENSE
-plugins/**/NOTICE
-plugins/**/*.gradle
-plugins/**/tests/
-
 # res
 **/resources/signing
+
+www/js/res/*
+!www/js/res/car-list.js
 
 # where the build script stores the apk
 dist/formParkingViolation.*
