@@ -96,6 +96,8 @@ app.main = (function (thisModule) {
     // for the plugin cordova-plugin-inappbrowser
     window.open = cordova.InAppBrowser.open
 
+    $.fn.selectpicker.Constructor.BootstrapVersion = '4'
+
     app.form.init()
     app.sidebar.init()
     app.functions.addFunctionsToPlugins()

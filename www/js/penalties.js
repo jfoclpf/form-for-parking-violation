@@ -24,6 +24,8 @@ app.penalties = (function (thisModule) {
           $('#penalties').append('<optgroup label=""></optgroup>')
         }
       }
+
+      $('#penalties').selectpicker()
     })
   }
 

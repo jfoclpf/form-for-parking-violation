@@ -5,8 +5,8 @@
   },
   "bootstrap": [
     {
-      "from": ["dist", "js", "bootstrap.min.js"],
-      "to": ["js", "res", "bootstrap.min.js"]
+      "from": ["dist", "js", "bootstrap.bundle.min.js"],
+      "to": ["js", "res", "bootstrap.bundle.min.js"]
     },
     {
       "from": ["dist", "css", "bootstrap.min.css"],
@@ -54,5 +54,15 @@
   "google-android-app-ids": {
     "from": ["dist", "google-app-ids.json"],
     "to": ["js", "res", "google-app-ids.json"]
-  }
+  },
+  "bootstrap-select": [
+    {
+      "from": ["dist", "css", "bootstrap-select.min.css"],
+      "to": ["css", "res", "bootstrap-select.min.css"]
+    },
+    {
+      "from": ["dist", "js", "bootstrap-select.min.js"],
+      "to": ["js", "res", "bootstrap-select.min.js"]
+    }
+  ]
 }

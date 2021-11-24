@@ -50,6 +50,7 @@
     "google-android-app-ids": "github:petarov/google-android-app-ids",
     "jAlert": "^4.9.1",
     "jquery": "^3.5.1",
+    "jquery-ui": "^1.13.0",
     "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.5.3",
     "mysql": "^2.18.1",
@@ -98,6 +99,7 @@
   },
   "devDependencies": {
     "async": "^3.2.0",
+    "bootstrap-select": "^1.13.18",
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
