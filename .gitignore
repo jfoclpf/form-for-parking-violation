@@ -14,6 +14,7 @@ plugins/
 
 www/js/res/*
 !www/js/res/car-list.js
+!www/js/res/jquery-ui.min.js
 
 # where the build script stores the apk
 dist/formParkingViolation.*
