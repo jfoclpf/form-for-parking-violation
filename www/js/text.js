@@ -1,6 +1,3 @@
-/* eslint no-var: off */
-/* eslint camelcase: off */
-
 /* global app, $ */
 
 app.text = (function (thisModule) {
@@ -8,40 +5,37 @@ app.text = (function (thisModule) {
   function getMainMessage (option) {
     if (option === 'body') {
       // Penalties
-      var penaltyDescription
-      var penaltyLawArticle
-      var penalties = app.penalties.getPenalties()
+      const penalties = app.penalties.getPenalties()
+      // select is multiselect and $('#penalties').val() is an array of selected penalty codes
+      const selectedPenalties = []
+      $('#penalties').val()
+        .forEach(penalty => {
+          selectedPenalties.push({
+            description: penalties[penalty].description,
+            lawArticle: penalties[penalty].law_article
+          })
+        })
 
-      for (const key in penalties) {
-        if (!Object.prototype.hasOwnProperty.call(penalties, key)) continue
-
-        var obj = penalties[key]
-        if ($('#penalties').val() === key) {
-          penaltyDescription = obj.description
-          penaltyLawArticle = obj.law_article
-        }
-      }
-
-      var carPlateStr = app.form.getCarPlate()
+      const carPlateStr = app.form.getCarPlate()
 
       // texto para marca e modelo
-      var is_carmake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
-      var is_model = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length !== 0)
-      var carmake_model_txt
-      if (is_carmake && is_model) {
-        carmake_model_txt = 'de marca e modelo <b>' + $('#carmake').val() +
+      const isCarMake = ($('#carmake').val().replace(/^\s+|\s+$/g, '').length !== 0)
+      const isCarModel = ($('#carmodel').val().replace(/^\s+|\s+$/g, '').length !== 0)
+      let carmakeModelText
+      if (isCarMake && isCarModel) {
+        carmakeModelText = 'de marca e modelo <b>' + $('#carmake').val() +
           ' ' + $('#carmodel').val() + '</b>, '
-      } else if (is_carmake) {
-        carmake_model_txt = 'de marca <b>' + $('#carmake').val() + '</b>, '
-      } else if (is_model) {
-        carmake_model_txt = 'de modelo <b>' + $('#carmodel').val() + '</b>, '
+      } else if (isCarMake) {
+        carmakeModelText = 'de marca <b>' + $('#carmake').val() + '</b>, '
+      } else if (isCarModel) {
+        carmakeModelText = 'de modelo <b>' + $('#carmodel').val() + '</b>, '
       } else {
-        carmake_model_txt = ''
+        carmakeModelText = ''
       }
 
-      var msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
+      const msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
 
-      var msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
+      const msg1 = 'Eu, <b>' + $('#name').val() + '</b>,' +
         ' com o <b>' + $('#id_type').val() + '</b> com o número <b>' + $('#id_number').val() + '</b> ' +
         'e com residência em <b>' + $('#address').val() +
         ', ' + $('#postal_code').val() + ', ' + $('#address_city').val() +
@@ -50,7 +44,7 @@ app.text = (function (thisModule) {
         'fazer a seguinte denúncia de contraordenação para que V. Exas. ' +
         'levantem o auto respetivo e multem o infra-mencionado responsável.'
 
-      var msg2 = 'No passado dia <b>' +
+      let msg2 = 'No passado dia <b>' +
         $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
         ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
         ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
@@ -60,14 +54,22 @@ app.text = (function (thisModule) {
         ) // optional
 
       if (app.functions.isThis_iOS()) {
-        msg2 += `a viatura <b>${carmake_model_txt}</b> cuja matrícula se encontra na foto em anexo, `
+        msg2 += `a viatura <b>${carmakeModelText}</b> cuja matrícula se encontra na foto em anexo, `
       } else {
-        msg2 += 'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmake_model_txt
+        msg2 += 'a viatura com matrícula <b>' + carPlateStr + '</b> ' + carmakeModelText
       }
-      msg2 += 'encontrava-se estacionada' + ' ' + penaltyDescription +
-      ', em violação ' + penaltyLawArticle + '.'
 
-      var msg3 = 'Pode-se comprovar esta situação através' +
+      // penalities
+      msg2 += 'encontrava-se estacionada' + ' '
+      for (let i = 0; i < selectedPenalties.length; i++) {
+        if (i !== selectedPenalties.length - 1) {
+          msg2 += `${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}; `
+        } else { // last element
+          msg2 += `encontrando-se estacionada ainda ${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}.`
+        }
+      }
+
+      const msg3 = 'Pode-se comprovar esta situação através' +
         ' ' + ((app.photos.getPhotosUriOnFileSystem().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas') +
         ' ' + 'à presente mensagem eletrónica. ' +
         'Juro pela minha honra que a informação supra citada é verídica.' +
@@ -78,7 +80,7 @@ app.text = (function (thisModule) {
         ' ' + 'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha' +
         ' ' + 'no processo que vier a ser instaurado com referência à presente missiva.'
 
-      var message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3 + '<br><br>' + getRegards() + '<br>'
+      const message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3 + '<br><br>' + getRegards() + '<br>'
 
       return message
     } else if (option === 'subject') {
