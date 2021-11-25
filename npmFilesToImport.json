@@ -1,68 +1,68 @@
 {
   "jquery": {
-    "from": ["dist", "jquery.min.js"],
-    "to": ["js", "res", "jquery.min.js"]
+    "from": "dist/jquery.min.js",
+    "to": "js/res/jquery.min.js"
   },
   "bootstrap": [
     {
-      "from": ["dist", "js", "bootstrap.bundle.min.js"],
-      "to": ["js", "res", "bootstrap.bundle.min.js"]
+      "from": "dist/js/bootstrap.bundle.min.js",
+      "to": "js/res/bootstrap.bundle.min.js"
     },
     {
-      "from": ["dist", "css", "bootstrap.min.css"],
-      "to": ["css", "res", "bootstrap.min.css"]
+      "from": "dist/css/bootstrap.min.css",
+      "to": "css/res/bootstrap.min.css"
     }
   ],
   "jAlert": [
     {
-      "from": ["dist", "jAlert.min.js"],
-      "to": ["js", "res", "jAlert.min.js"]
+      "from": "dist/jAlert.min.js",
+      "to": "js/res/jAlert.min.js"
     },
     {
-      "from": ["dist", "jAlert.css"],
-      "to": ["css", "res", "jAlert.css"]
+      "from": "dist/jAlert.css",
+      "to": "css/res/jAlert.css"
     }
   ],
   "leaflet": [
     {
-      "from": ["dist", "leaflet.js"],
-      "to": ["js", "res", "leaflet.js"]
+      "from": "dist/leaflet.js",
+      "to": "js/res/leaflet.js"
     },
     {
-      "from": ["dist", "leaflet.css"],
-      "to": ["css", "res", "leaflet.css"]
+      "from": "dist/leaflet.css",
+      "to": "css/res/leaflet.css"
     }
   ],
   "leaflet.markercluster": [
     {
-      "from": ["dist", "leaflet.markercluster.js"],
-      "to": ["js", "res", "leaflet.markercluster.js"]
+      "from": "dist/leaflet.markercluster.js",
+      "to": "js/res/leaflet.markercluster.js"
     },
     {
-      "from": ["dist", "MarkerCluster.css"],
-      "to": ["css", "res", "MarkerCluster.css"]
+      "from": "dist/MarkerCluster.css",
+      "to": "css/res/MarkerCluster.css"
     },
     {
-      "from": ["dist", "MarkerCluster.Default.css"],
-      "to": ["css", "res", "MarkerCluster.Default.css"]
+      "from": "dist/MarkerCluster.Default.css",
+      "to": "css/res/MarkerCluster.Default.css"
     }
   ],
   "crypto-js": {
-    "from": ["crypto-js.js"],
-    "to": ["js", "res", "crypto-js.js"]
+    "from": "crypto-js.js",
+    "to": "js/res/crypto-js.js"
   },
   "google-android-app-ids": {
-    "from": ["dist", "google-app-ids.json"],
-    "to": ["js", "res", "google-app-ids.json"]
+    "from": "dist/google-app-ids.json",
+    "to": "js/res/google-app-ids.json"
   },
   "bootstrap-select": [
     {
-      "from": ["dist", "css", "bootstrap-select.min.css"],
-      "to": ["css", "res", "bootstrap-select.min.css"]
+      "from": "dist/css/bootstrap-select.min.css",
+      "to": "css/res/bootstrap-select.min.css"
     },
     {
-      "from": ["dist", "js", "bootstrap-select.min.js"],
-      "to": ["js", "res", "bootstrap-select.min.js"]
+      "from": "dist/js/bootstrap-select.min.js",
+      "to": "js/res/bootstrap-select.min.js"
     }
   ]
 }
