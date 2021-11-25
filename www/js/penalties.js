@@ -11,8 +11,6 @@ app.penalties = (function (thisModule) {
       delete data.__comment
       penalties = Object.assign({}, data) // clone object
 
-      $('#penalties').append('<option></option>') // first empty option
-
       // populates select with options from penalties.json
       for (const key of Object.keys(penalties)) {
         $('#penalties').append(
@@ -26,6 +24,13 @@ app.penalties = (function (thisModule) {
       }
 
       $('#penalties').selectpicker()
+      // add some css attributes to selectpicker
+      $('[data-id="penalties"]')
+        .css({
+          'white-space': 'normal',
+          'background-color': 'white',
+          border: '1px solid #ced4da'
+        })
     })
   }
 
