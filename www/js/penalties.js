@@ -43,27 +43,15 @@ app.penalties = (function (thisModule) {
   }
 
   function getShortDescription (code) {
-    for (const key in penalties) {
-      if (key === code) {
-        return penalties[key].select
-      }
-    }
+    return penalties[code].select
   }
 
   function getDescription (code) {
-    for (const key in penalties) {
-      if (key === code) {
-        return penalties[key].description
-      }
-    }
+    return penalties[code].description
   }
 
   function getLawArticle (code) {
-    for (const key in penalties) {
-      if (key === code) {
-        return penalties[key].law_article
-      }
-    }
+    return penalties[code].law_article
   }
 
   /* === Public methods to be returned === */
