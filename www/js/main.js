@@ -105,8 +105,12 @@ app.main = (function (thisModule) {
     // information stored in variable window.localStorage
     app.personalInfo.loadsPersonalInfo()
 
+    // loads JSON penalties files and 
     // populates HTML select according to the information on penalties.js file
-    app.penalties.init()
+    app.penalties.init(() => {
+      // map needs JSON penalties file available
+      app.map.init()
+    })
 
     app.functions.updateDateAndTime()
 
@@ -121,8 +125,6 @@ app.main = (function (thisModule) {
 
     // this is used to get address on form, and for maps section
     app.localization.loadMapsApi()
-
-    app.map.init()
 
     if (DEBUG) {
       app.functions.setDebugValues()

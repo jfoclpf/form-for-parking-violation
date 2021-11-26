@@ -6,7 +6,7 @@
 app.penalties = (function (thisModule) {
   var penalties // Object with the several penalties
 
-  function init () {
+  function init (callback) {
     $.getJSON(cordova.file.applicationDirectory + 'www/json/penalties.json', function (data) {
       delete data.__comment
       penalties = Object.assign({}, data) // clone object
@@ -31,6 +31,8 @@ app.penalties = (function (thisModule) {
           'background-color': 'white',
           border: '1px solid #ced4da'
         })
+
+      callback()
     })
   }
 
