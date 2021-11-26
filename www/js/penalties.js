@@ -45,15 +45,15 @@ app.penalties = (function (thisModule) {
   }
 
   function getShortDescription (code) {
-    return penalties[code].select
+    return code in penalties ? penalties[code].select : ''
   }
 
   function getDescription (code) {
-    return penalties[code].description
+    return code in penalties ? penalties[code].description : ''
   }
 
   function getLawArticle (code) {
-    return penalties[code].law_article
+    return code in penalties ? penalties[code].law_article : ''
   }
 
   /* === Public methods to be returned === */
