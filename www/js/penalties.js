@@ -39,7 +39,7 @@ app.penalties = (function (thisModule) {
   }
 
   function getSelectedPenaltyCode () {
-    return $('#penalties').val()
+    return $('#penalties').val().join(';')
   }
 
   function getShortDescription (code) {
