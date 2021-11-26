@@ -118,6 +118,23 @@ app.form = (function (thisModule) {
       return false
     }
 
+    // detects if the tipo de ocorrência is correctly filled in
+    if ($('#penalties').val().length === 0) {
+      $.jAlert({
+        title: 'Erro no Base Legal',
+        theme: 'red',
+        content: 'Insira pelo menos um tipo de ocorrência'
+      })
+      return false
+    } else if ($('#penalties').val().length >= 5) {
+      $.jAlert({
+        title: 'Erro no Base Legal',
+        theme: 'red',
+        content: 'Insira no máximo 4 tipos de ocorrência'
+      })
+      return false
+    }
+
     // detects if the name is correctly filled in
     var Name = $('#name').val()
     if (!app.personalInfo.isFullNameOK(Name)) {
