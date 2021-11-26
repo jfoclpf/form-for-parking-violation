@@ -105,7 +105,7 @@ app.main = (function (thisModule) {
     // information stored in variable window.localStorage
     app.personalInfo.loadsPersonalInfo()
 
-    // loads JSON penalties files and 
+    // loads JSON penalties files and
     // populates HTML select according to the information on penalties.js file
     app.penalties.init(() => {
       // map needs JSON penalties file available
