@@ -86,7 +86,13 @@ app.form = (function (thisModule) {
     // loops through mandatory fields
     $('.mandatory').each(function () {
       var val = $(this).val()
-      if (val == null || val === undefined || val === '' || (val).length === 0 || (val).replace(/^\s+|\s+$/g, '').length === 0) {
+      if (
+        val == null ||
+        val === undefined ||
+        val === '' ||
+        (val).length === 0 ||
+        (val).replace(/^\s+|\s+$/g, '').length === 0
+      ) {
         console.log('Error on #' + $(this).attr('id'))
         error_string += '- ' + $(this).attr('name') + '<br>'
         count++
