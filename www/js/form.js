@@ -120,7 +120,7 @@ app.form = (function (thisModule) {
 
     // detects if the name is correctly filled in
     var Name = $('#name').val()
-    if (!app.personalInfo.isFullNameOK(Name) && !DEBUG) {
+    if (!app.personalInfo.isFullNameOK(Name)) {
       $.jAlert({
         title: 'Erro no nome!',
         theme: 'red',
@@ -129,7 +129,7 @@ app.form = (function (thisModule) {
       return false
     }
 
-    if (!app.personalInfo.isPostalCodeOK() && !DEBUG) {
+    if (!app.personalInfo.isPostalCodeOK()) {
       $.jAlert({
         title: 'Erro no Código Postal!',
         theme: 'red',
