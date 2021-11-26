@@ -121,14 +121,14 @@ app.form = (function (thisModule) {
     // detects if the tipo de ocorrência is correctly filled in
     if ($('#penalties').val().length === 0) {
       $.jAlert({
-        title: 'Erro no Base Legal',
+        title: 'Erro na Base Legal',
         theme: 'red',
         content: 'Insira pelo menos um tipo de ocorrência'
       })
       return false
     } else if ($('#penalties').val().length > 4) {
       $.jAlert({
-        title: 'Erro no Base Legal',
+        title: 'Erro na Base Legal',
         theme: 'red',
         content: 'Insira no máximo 4 tipos de ocorrência'
       })
