@@ -126,7 +126,7 @@ app.form = (function (thisModule) {
         content: 'Insira pelo menos um tipo de ocorrência'
       })
       return false
-    } else if ($('#penalties').val().length >= 5) {
+    } else if ($('#penalties').val().length > 4) {
       $.jAlert({
         title: 'Erro no Base Legal',
         theme: 'red',
