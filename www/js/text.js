@@ -34,7 +34,6 @@ app.text = (function (thisModule) {
 
       const msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
 
-      // see https://stackoverflow.com/a/37321145/1243247
       const msg1 = `Eu, <b>${$('#name').val()}</b>, \
         com o <b>${$('#id_type').val()}</b> com o número <b>${$('#id_number').val()}</b> \
         e com residência em <b>${$('#address').val()}, ${$('#postal_code').val()}, ${$('#address_city').val()}</b>, \
