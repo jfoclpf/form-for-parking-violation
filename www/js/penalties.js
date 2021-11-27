@@ -44,25 +44,43 @@ app.penalties = (function (thisModule) {
     return $('#penalties').val()
   }
 
-  function getShortDescription (code) {
-    return code in penalties ? penalties[code].select : ''
-  }
+  function getData (penaltyCode, propertyParam) {
+    let property // from the object penalties in penalties.json
+    switch (propertyParam) {
+      case 'shortDescription':
+        property = 'select'
+        break
+      case 'description':
+        property = 'description'
+        break
+      case 'lawArticle':
+        property = 'law_article'
+        break
+      default:
+        throw Error('wrong property: ' + propertyParam)
+    }
 
-  function getDescription (code) {
-    return code in penalties ? penalties[code].description : ''
-  }
+    // in case of several penalty codes, they are separated by semicolon
+    // for ex.: 'na_passadeira' or 'na_passadeira;passeios'
+    const codes = penaltyCode.split(';')
 
-  function getLawArticle (code) {
-    return code in penalties ? penalties[code].law_article : ''
+    let text = ''
+    for (let i = 0; i < codes.length; i++) {
+      text += codes[i] in penalties ? penalties[codes[i]][property] : ''
+      if (i < codes.length - 2) {
+        text += '; '
+      } else if (i === codes.length - 2) {
+        text += '; e '
+      }
+    }
+    return text
   }
 
   /* === Public methods to be returned === */
   thisModule.init = init
   thisModule.getPenalties = getPenalties
   thisModule.getSelectedPenaltyCode = getSelectedPenaltyCode
-  thisModule.getShortDescription = getShortDescription
-  thisModule.getDescription = getDescription
-  thisModule.getLawArticle = getLawArticle
+  thisModule.getData = getData
 
   return thisModule
 })(app.penalties || {})

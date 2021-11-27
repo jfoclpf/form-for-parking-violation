@@ -104,7 +104,7 @@ app.historic = (function (thisModule) {
               <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
               <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
               <b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
-              <b>Infração</b>: ${app.penalties.getShortDescription(el.base_legal)}<br>
+              <b>Infração</b>: ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>
             </div>
             <div class="col">
               <button aria-label="Reenviar ocorrência" class="btn btn-primary btn-sm m-1 history-refresh-button" data-index="${i}"><i class="fa fa-refresh"></i></button>

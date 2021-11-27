@@ -113,8 +113,8 @@ app.text = (function (thisModule) {
     `${occurrence.carro_marca} ${occurrence.carro_modelo} com a matrícula ${occurrence.carro_matricula}, ` +
     `na ${occurrence.data_local} n. ${occurrence.data_num_porta}, ${occurrence.data_concelho}, ` +
     `no dia ${(new Date(occurrence.data_data)).toLocaleDateString('pt-PT')} às ${occurrence.data_hora.slice(0, 5)}, ` +
-    `veículo esse que se encontrava ${app.penalties.getDescription(occurrence.base_legal)} em violação ` +
-    `${app.penalties.getLawArticle(occurrence.base_legal)}, vinha por este meio inquirir V. Exas. ` +
+    `veículo esse que se encontrava ${app.penalties.getData(occurrence.base_legal, 'description')} em violação ` +
+    `${app.penalties.getData(occurrence.base_legal, 'lawArticle')}, vinha por este meio inquirir V. Exas. ` +
     'sobre o estado do processo respetivo, considerando que já decorreram ' +
     `${Math.round(((new Date()) - new Date(occurrence.data_data)) / (1000 * 60 * 60 * 24))} dias ` +
     'desde a data da ocorrência.<br><br>' +
