@@ -22,13 +22,17 @@ cordova clean
 
 cordova build --release android
 
+printf "\033[32m\n\nSIGNING APP...\033[0m\n\n\n"
+
 cp keys/autocosts.keystore platforms/android/app/build/outputs/apk/release/
 cd platforms/android/app/build/outputs/apk/release/
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass $PASS app-release-unsigned.apk autocosts
+# old method of signing; after Android 11 one must use apksigner instead
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass $PASS app-release-unsigned.apk autocosts
 
 zipalign -v 4 app-release-unsigned.apk formParkingViolation.apk
+apksigner sign --ks autocosts.keystore --pass-encoding utf-8 --ks-key-alias autocosts --ks-pass pass:$PASS --key-pass pass:$PASS formParkingViolation.apk
 
 cd ../../../../../../..
 
-cordova run android --device --release
+cordova run android --device --release --noprepare --nobuild
