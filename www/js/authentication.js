@@ -138,7 +138,6 @@ app.authentication = (function (thisModule) {
     var imagesArray = app.photos.getPhotosAsBase64()
     for (var i = 0; i < imagesArray.length; i++) {
       pdfhtml += `<br><br><img src="${imagesArray[i]}" width="320">`
-      console.log(imagesArray[i])
     }
 
     pdfhtml += '<br><br>' + app.text.getExtraAuthenticationHTMLText()
