@@ -231,9 +231,15 @@ app.map = (function (thisModule) {
 
       marker.bindPopup(popup)
 
-      if (markersGroups[el.base_legal]) {
-        markersGroups[el.base_legal].markerClusterGroup.addLayer(marker)
-      }
+      // several legal violations, may be applicable for the same occurrence
+      // ex: "ciclovia;travessia_ciclovia"
+      const penalties = el.base_legal.split(';')
+      penalties.forEach(penalty => {
+        if (markersGroups[penalty]) {
+          markersGroups[penalty].markerClusterGroup.addLayer(marker)
+        }
+      })
+
       if (el.uuid === device.uuid) {
         markersGroups.mine.markerClusterGroup.addLayer(marker)
       }
