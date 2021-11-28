@@ -27,13 +27,13 @@ app.localization = (function (thisModule) {
     if (navigator.onLine) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
       var options = { timeout: 30000, enableHighAccuracy: true }
-      navigator.geolocation.getCurrentPosition(getPosition, PositionError, options)
+      navigator.geolocation.getCurrentPosition(setCoordinates, PositionError, options)
     } else {
       PositionError()
     }
   }
 
-  function getPosition (position) {
+  function setCoordinates (position) {
     var latitude = position.coords.latitude
     Latitude = latitude
     var longitude = position.coords.longitude
@@ -317,7 +317,7 @@ app.localization = (function (thisModule) {
   /* === Public methods to be returned === */
   thisModule.loadMapsApi = loadMapsApi
   thisModule.getGeolocation = getGeolocation
-  thisModule.getPosition = getPosition
+  thisModule.setCoordinates = setCoordinates
   thisModule.getCoordinates = getCoordinates
   thisModule.getAuthoritiesFromAddress = getAuthoritiesFromAddress
   thisModule.convertDMSStringInfoToDD = convertDMSStringInfoToDD
