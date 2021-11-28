@@ -311,7 +311,10 @@ app.photos = (function (thisModule) {
     var elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
+    photosForEmailAttachment[num] = null
     photosUriOnFileSystem[num] = null
+    photosAsBase64[num] = null
+    photosAsBase64[num] = null
   }
 
   function resizeImage (imageUri, callback) {
