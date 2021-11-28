@@ -238,7 +238,14 @@ app.main = (function (thisModule) {
 
   // CMD -> Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
-    app.dbServerLink.submitNewEntryToDB()
+    // just add entry to DB when every photo was got from camera, or from library with GPS info
+    // https://github.com/jfoclpf/form-for-parking-violation/issues/115
+    const photosSyncedGPS = app.photos.getPhotoWithGPS()
+    if (photosSyncedGPS.length && photosSyncedGPS.every(el => el === 'synced')) {
+      app.dbServerLink.submitNewEntryToDB()
+    } else {
+      console.warn('Entry not added to DB, due to lack of sync between photos and GPS info')
+    }
 
     var imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))

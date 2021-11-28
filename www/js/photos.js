@@ -11,6 +11,9 @@ app.photos = (function (thisModule) {
   var photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
   var photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
   var photosAsBase64 = []
+  // tells if each photo has GPS information or if GPS info from the device
+  // coincides with the place the photo was taken
+  var photoWithGPS = [] // 'synced' or 'unsynced'
 
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
@@ -99,11 +102,19 @@ app.photos = (function (thisModule) {
       callback(imgNmbr)
     }
 
-    // if user selects a photo from the library
-    // it gets, when available on the photo the EXIF information
-    // the date, time and GPS information, to fill in the form
-    if (isCameraWithExifInfoAvailable && type === 'library' &&
-      thisResult.json_metadata && thisResult.json_metadata !== '{}') {
+    if (type === 'camera') {
+      // photo comes from the camera, thus the device GPS already coincides with the photo
+      photoWithGPS[imgNmbr] = 'synced'
+    } else if (
+      isCameraWithExifInfoAvailable &&
+      type === 'library' &&
+      thisResult.json_metadata &&
+      thisResult.json_metadata !== '{}'
+    ) {
+      // if user selects a photo from the library
+      // it gets, when available on the photo the EXIF information
+      // the date, time and GPS information, to fill in the form
+
       // convert json_metadata JSON string to JSON Object
       var metadata = JSON.parse(thisResult.json_metadata)
 
@@ -133,15 +144,22 @@ app.photos = (function (thisModule) {
         var Lat = app.localization.convertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef)
         var Long = app.localization.convertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
 
-        var postion = {
+        var position = {
           coords: {
             latitude: Lat,
             longitude: Long
           }
         }
-        console.log(postion)
-        app.localization.getPosition(postion)
+        console.log(position)
+        app.localization.setCoordinates(position)
+        // could extract GPS info from the photo
+        photoWithGPS[imgNmbr] = 'synced'
+      } else {
+        photoWithGPS[imgNmbr] = 'unsynced'
       }
+    } else {
+      // photo was got from library and it has no GPS info
+      photoWithGPS[imgNmbr] = 'unsynced'
     }
   }
 
@@ -314,7 +332,7 @@ app.photos = (function (thisModule) {
     photosForEmailAttachment[num] = null
     photosUriOnFileSystem[num] = null
     photosAsBase64[num] = null
-    photosAsBase64[num] = null
+    photoWithGPS[num] = null
   }
 
   function resizeImage (imageUri, callback) {
@@ -329,18 +347,21 @@ app.photos = (function (thisModule) {
   }
 
   function getPhotosForEmailAttachment () {
-    // removes empty values from photosForEmailAttachment, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
+    // removes empty values from photosForEmailAttachment,
+    // concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
     return app.functions.cleanArray(photosForEmailAttachment)
   }
 
   function getPhotosUriOnFileSystem () {
-    // removes empty values from photosUriOnFileSystem, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
     return app.functions.cleanArray(photosUriOnFileSystem)
   }
 
   function getPhotosAsBase64 () {
-    // removes empty values from photosUriOnFileSystem, concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
     return app.functions.cleanArray(photosAsBase64)
+  }
+
+  function getPhotoWithGPS () {
+    return app.functions.cleanArray(photoWithGPS)
   }
 
   /* === Public methods to be returned === */
@@ -349,6 +370,7 @@ app.photos = (function (thisModule) {
   thisModule.getPhotosForEmailAttachment = getPhotosForEmailAttachment
   thisModule.getPhotosUriOnFileSystem = getPhotosUriOnFileSystem
   thisModule.getPhotosAsBase64 = getPhotosAsBase64
+  thisModule.getPhotoWithGPS = getPhotoWithGPS
 
   return thisModule
 })(app.photos || {})
