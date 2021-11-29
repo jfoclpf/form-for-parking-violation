@@ -236,7 +236,7 @@ app.main = (function (thisModule) {
     })
   })
 
-  // CMD -> Chave Móvel Digital
+  // Send Email Without Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
     // just add entry to DB when every photo was got from camera, or from library with GPS info
     // https://github.com/jfoclpf/form-for-parking-violation/issues/115
