@@ -60,11 +60,15 @@ app.text = (function (thisModule) {
 
       // penalities
       msg2 += 'encontrava-se estacionada '
-      for (let i = 0; i < selectedPenalties.length; i++) {
-        if (i !== selectedPenalties.length - 1) {
-          msg2 += `${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}; `
-        } else { // last element
-          msg2 += `encontrando-se estacionada ainda ${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}.`
+      if (selectedPenalties.length === 1) {
+        msg2 += `${selectedPenalties[0].description}, em violação ${selectedPenalties[0].lawArticle}.`
+      } else {
+        for (let i = 0; i < selectedPenalties.length; i++) {
+          if (i !== selectedPenalties.length - 1) {
+            msg2 += `${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}; `
+          } else { // last element
+            msg2 += `encontrando-se estacionada ainda ${selectedPenalties[i].description}, em violação ${selectedPenalties[i].lawArticle}.`
+          }
         }
       }
 
