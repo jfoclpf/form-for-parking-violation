@@ -26,6 +26,10 @@ app.dbServerLink = (function (thisModule) {
       }
     }
 
+    // true when every photo was got directly from camera, or from library having GPS info
+    // https://github.com/jfoclpf/form-for-parking-violation/issues/115
+    const bArePhotosSyncedWithGPS = app.photos.getPhotoWithGPS().every(el => el === 'synced')
+
     var databaseObj = {
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
@@ -33,6 +37,7 @@ app.dbServerLink = (function (thisModule) {
       foto2: imgFileNames[1],
       foto3: imgFileNames[2],
       foto4: imgFileNames[3],
+      fotos_sinc_GPS: bArePhotosSyncedWithGPS,
       carro_matricula: app.form.getCarPlate(),
       carro_marca: app.form.getCarMake(),
       carro_modelo: app.form.getCarModel(),

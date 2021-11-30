@@ -198,6 +198,11 @@ app.map = (function (thisModule) {
     for (let i = 0; i < dbEntriesLength; i++) {
       const el = allDbEntries[i]
 
+      // ignore entries where the photo does not coincide with geolocation
+      if (!el.fotos_sinc_GPS) {
+        break
+      }
+
       const marker = L.marker(
         [el.data_coord_latit, el.data_coord_long],
         { icon: mapIcon }
