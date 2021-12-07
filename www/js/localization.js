@@ -8,7 +8,7 @@ app.localization = (function (thisModule) {
 
   function loadMapsApi () {
     if (!navigator.onLine) {
-      console.log('Device Navigator not online')
+      console.error('Device Navigator not online')
     } else {
       console.log('Device Navigator is online')
       getGeolocation()
@@ -29,6 +29,7 @@ app.localization = (function (thisModule) {
       var options = { timeout: 30000, enableHighAccuracy: true }
       navigator.geolocation.getCurrentPosition(setCoordinates, PositionError, options)
     } else {
+      console.error('Device Navigator not online')
       PositionError()
     }
   }
@@ -51,7 +52,9 @@ app.localization = (function (thisModule) {
     return coordinates
   }
 
-  function PositionError () {
+  function PositionError (error) {
+    console.error(`code: ${error.code}; message: ${error.message}`)
+
     $.jAlert({
       title: 'Erro na obtenção do local da ocorrência!',
       theme: 'red',
