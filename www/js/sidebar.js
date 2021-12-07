@@ -10,7 +10,7 @@ app.sidebar = (function (thisModule) {
       return false
     })
 
-    $('#content').click(function () {
+    $('#content').on('click', function () {
       if ($('#sidebar').hasClass('active')) {
         toggleSidebar(false)
         // breaks the event chain
@@ -44,18 +44,18 @@ app.sidebar = (function (thisModule) {
       }
     })
 
-    $('#personal_data_show').click(function () {
+    $('#personal_data_show').on('click', function () {
       showSection('personal_data')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#historic_show').click(function () {
+    $('#historic_show').on('click', function () {
       app.historic.updateHistoric()
       showSection('historic')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#map_section_show').click(function () {
+    $('#map_section_show').on('click', function () {
       showSection('map_section')
       app.sidebar.toggleSidebar(false)
 
@@ -64,27 +64,27 @@ app.sidebar = (function (thisModule) {
       app.map.tryToShowMap($('#map_view_select').val())
     })
 
-    $('#form_show').click(function () {
+    $('#form_show').on('click', function () {
       showSection('main_form')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#legal_basis_show').click(function () {
+    $('#legal_basis_show').on('click', function () {
       showSection('legal_basis')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#cmd_how_it_works_show').click(function () {
+    $('#cmd_how_it_works_show').on('click', function () {
       showSection('cmd_how_it_works')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#cmd_legal_basis_shows').click(function () {
+    $('#cmd_legal_basis_shows').on('click', function () {
       showSection('cmd_legal_basis')
       app.sidebar.toggleSidebar(false)
     })
 
-    $('#privacy_policy_shows').click(function () {
+    $('#privacy_policy_shows').on('click', function () {
       showSection('privacy_policy')
       app.sidebar.toggleSidebar(false)
     })

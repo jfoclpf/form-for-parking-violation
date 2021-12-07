@@ -196,7 +196,7 @@ app.form = (function (thisModule) {
   /* ********************************************************************** */
   /* *********************** IMAGES/PHOTOS ******************************** */
   // buttons "Add Image"
-  $('#addImg_1, #addImg_2, #addImg_3, #addImg_4').click(function () {
+  $('#addImg_1, #addImg_2, #addImg_3, #addImg_4').on('click', function () {
     // get id, for example #remImg_2
     var id = $(this).attr('id')
     console.log('photo id: ' + id)
@@ -232,7 +232,7 @@ app.form = (function (thisModule) {
   })
 
   // buttons "Remove Image"
-  $('#remImg_1, #remImg_2, #remImg_3, #remImg_4').click(function () {
+  $('#remImg_1, #remImg_2, #remImg_3, #remImg_4').on('click', function () {
     // get id, for example #remImg_2
     var id = $(this).attr('id')
     // gets the number of the element, by obtaining the last character of the id

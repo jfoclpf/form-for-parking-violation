@@ -216,7 +216,7 @@ app.historic = (function (thisModule) {
     })
 
     // shows or hides photos when the div historic entry is clicked
-    $('#historic .historic_element').click(function () {
+    $('#historic .historic_element').on('click', function () {
       const i = parseInt($(this).data('index'))
 
       if ($(this).find('img').length === 0) { // no image found, adds images
