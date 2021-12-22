@@ -22,7 +22,7 @@
     "@fortawesome/fontawesome-free": "5.15.4",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.1",
-    "cordova": "^10.0.0",
+    "cordova": "^11.0.0",
     "cordova-browser": "^6.0.0",
     "cordova-import-npm": "^1.0.33",
     "cordova-pdf-generator": "^2.1.1",
