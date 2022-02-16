@@ -24,8 +24,8 @@
         "law_article": "da alínea f) do n.º 1 do art.º 49.º do Código da Estrada"
     },
     "travessia_ciclovia": {
-        "select": "Menos de 5 m. antes de travessia de ciclovia",
-        "description": "a menos de 5 metros antes da travessia de uma pista para velocípedes",
+        "select": "Menos de 5 m. antes de travessia para velocípedes",
+        "description": "a menos de 5 metros antes de uma zona legalmente sinalizada para travessia de velocípedes",
         "law_article": "da alínea d) do n.º 1 do art.º 49.º do Código da Estrada"
     },
     "antes_semaforo": {
@@ -102,6 +102,16 @@
         "select": "Linha (por norma amarela) em ziguezague",
         "description": "sobre linha em ziguezague junto ao limite da faixa de rodagem",
         "law_article": "do sinal M14 cujo significado está plasmado no n.º 1 do art.º 62.º do Regulamento de Sinalização do Trânsito"
+    },
+    "sinal_estacionamento_proibido": {
+     "select": "Sinal vertical estacionamento proibido (C15)",
+        "description": "em local onde não é permitido estacionar",
+        "law_article": "do sinal C15 cujo significado está plasmado no art.º 24.º do Regulamento de Sinalização do Trânsito"
+    },
+    "sinal_estacionamento_paragem_proibido": {
+     "select": "Sinal vertical estacionamento e paragem proibido (C16)",
+        "description": "em local onde não é permitido estacionar ou parar",
+        "law_article": "do sinal C16 cujo significado está plasmado no art.º 24.º do Regulamento de Sinalização do Trânsito"
     },
     "residentes_apenas": {
         "select": "Estacionamento indevido em zona de residentes",
