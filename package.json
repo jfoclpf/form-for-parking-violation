@@ -50,7 +50,7 @@
     "google-android-app-ids": "github:petarov/google-android-app-ids",
     "jAlert": "^4.9.1",
     "jquery": "^3.5.1",
-    "jquery-ui": "^1.13.0",
+    "jquery-ui": "^1.13.1",
     "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.5.3",
     "mysql": "^2.18.1",
