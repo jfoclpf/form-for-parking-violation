@@ -106,12 +106,12 @@
     "sinal_estacionamento_proibido": {
      "select": "Sinal vertical estacionamento proibido (C15)",
         "description": "em local onde não é permitido estacionar",
-        "law_article": "do sinal C15 cujo significado está plasmado no art.º 62.º do Regulamento de Sinalização do Trânsito"
+        "law_article": "do sinal C15 cujo significado está plasmado no art.º 24.º do Regulamento de Sinalização do Trânsito"
     },
     "sinal_estacionamento_paragem_proibido": {
      "select": "Sinal vertical estacionamento e paragem proibido (C16)",
         "description": "em local onde não é permitido estacionar ou parar",
-        "law_article": "do sinal C16 cujo significado está plasmado no art.º 62.º do Regulamento de Sinalização do Trânsito"
+        "law_article": "do sinal C16 cujo significado está plasmado no art.º 24.º do Regulamento de Sinalização do Trânsito"
     },
     "residentes_apenas": {
         "select": "Estacionamento indevido em zona de residentes",
