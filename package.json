@@ -43,7 +43,7 @@
     "debug": "^4.3.2",
     "es6-promise-plugin": "^4.2.2",
     "exif-js": "^2.3.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.3.4",
     "fs": "0.0.1-security",
