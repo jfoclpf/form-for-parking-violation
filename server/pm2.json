@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"        : "form-for-parking-violation",
-    "script"      : "serverForDB.js",
+    "script"      : "main.js",
     "watch"       : false,
     "instances"   : "2",
     "exec_mode"   : "cluster",
