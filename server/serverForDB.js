@@ -188,7 +188,7 @@ app.get(requestHistoricUrl, function (req, res) {
           db2.query(query, function (err, results, fields) {
             if (err) {
               // error handling code goes here
-              debug('Error inserting user data into database: ', err)
+              debug('Error requesting history from database: ', err)
               res.status(501).send(JSON.stringify(err))
               next(Error(err))
             } else {
