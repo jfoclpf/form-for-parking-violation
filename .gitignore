@@ -27,7 +27,7 @@ keys/
 
 #upload script to server
 uploadToServer.sh
-updateServer.sh
+
 
 # configs from Atom
 .on-save.json
