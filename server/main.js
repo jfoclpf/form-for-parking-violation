@@ -160,7 +160,7 @@ app.get(requestHistoricUrl, function (req, res) {
         'database table ' + DBInfo.database + '->' + DBInfo.db_tables.denuncias)
 
       var query
-      if (uuid) {
+      if (uuid) { // device uuid
         // get the all entries for a specific user (ex: to generate historic for user)
         query = `SELECT * FROM ${DBInfo.db_tables.denuncias} WHERE uuid=${db2.escape(uuid)} AND deleted_by_admin=0 ORDER BY data_data ASC`
       } else {
