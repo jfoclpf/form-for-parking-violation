@@ -29,7 +29,7 @@ const DBInfo = JSON.parse(fs.readFileSync('DBcredentials.json', 'utf8'))
 debug(DBInfo)
 
 const app = express()
-var db1, db2
+var DB1, DB2 // create these globals to disconnect upon CTRL-C
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -40,7 +40,9 @@ app.get('/', function (req, res) {
 
 // to upload anew or update the data of an occurence
 app.post(submissionsUrl, function (req, res) {
-  db1 = mysql.createConnection(DBInfo)
+  const db1 = mysql.createConnection(DBInfo)
+  DB1 = db1
+
   // object got from POST
   var serverCommand = req.body.serverCommand || req.body.dbCommand // dbCommand for backward compatibility
   debug('serverCommand is ', serverCommand)
@@ -137,7 +139,6 @@ app.post(submissionsUrl, function (req, res) {
     } else {
       debug('Submission successfully')
     }
-    db1 = null
   })
 })
 
@@ -153,7 +154,8 @@ app.get(requestHistoricUrl, function (req, res) {
         return
       }
 
-      db2 = mysql.createConnection(DBInfo)
+      const db2 = mysql.createConnection(DBInfo)
+      DB2 = db2
       const uuid = req.query.uuid
 
       debug('\nGetting entries from' +
@@ -205,7 +207,8 @@ app.get(requestHistoricUrl, function (req, res) {
         function (next) {
           db2.end(function (err) {
             if (err) {
-              next(Error(err))
+              console.error(err)
+              next(Error('Error closing connection db2'))
             } else {
               next()
             }
@@ -215,11 +218,16 @@ app.get(requestHistoricUrl, function (req, res) {
       function (err, results) {
         if (err) {
           console.error('There was an error: ', err)
-          db2.end()
+          if (db2 && db2.state !== 'disconnected') {
+            db2.end((err) => {
+              if (err) {
+                console.error('Did NOT close db2 connection OK, probably already closed', err)
+              }
+            })
+          }
         } else {
           debug('Request successfully')
         }
-        db2 = null
       })
     })
     .catch(err => console.error('isClientAuthorized with error', err))
@@ -297,39 +305,52 @@ function gracefulShutdown (signal) {
   console.log(`Received signal ${signal}. Closing http servers and db connections`)
 
   try {
-    server.close()
-    server2.close()
-    async.parallel([function (callback) {
-      if (db1) {
-        db1.end(function (err) {
-          if (err) {
-            callback(Error(err))
-          } else {
-            callback()
-          }
+    async.parallel([
+      (callback) => {
+        server.close(() => {
+          console.log('Closed main server')
+          callback()
         })
-      } else { // connection not active
-        callback()
-      }
-    }, function (callback) {
-      if (db2) {
-        db2.end(function (err) {
-          if (err) {
-            callback(Error(err))
-          } else {
-            callback()
-          }
+      }, (callback) => {
+        server2.close(() => {
+          console.log('Closed server for file uploading')
+          callback()
         })
-      } else { // connection not active
-        callback()
-      }
-    }],
+      }, (callback) => {
+        if (DB1 && DB1.state !== 'disconnected') {
+          DB1.end(function (err) {
+            if (err) {
+              callback(Error(err))
+            } else {
+              console.log('Closed db1 connection')
+              callback()
+            }
+          })
+        } else { // connection not active
+          console.log('No need to close db1 connection, not connected')
+          callback()
+        }
+      }, (callback) => {
+        if (DB2 && DB2.state !== 'disconnected') {
+          DB2.end(function (err) {
+            if (err) {
+              callback(Error(err))
+            } else {
+              console.log('Closed db2 connection')
+              callback()
+            }
+          })
+        } else { // connection not active
+          console.log('No need to close db2 connection, not connected')
+          callback()
+        }
+      }],
     function (err, results) {
       if (err) {
         console.error('Error on closing db connections', err)
         setTimeout(() => process.exit(1), 500)
       } else {
-        console.log('Grecefully exited, servers and db connections closed')
+        console.log('Grecefully exited')
         setTimeout(() => process.exit(0), 500)
       }
     })
