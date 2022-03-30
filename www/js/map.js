@@ -165,13 +165,12 @@ app.map = (function (thisModule) {
         } else {
           const errMessage = 'There was an error getting the data, data fetched but is empty'
           console.error(errMessage)
-          callback(errMessage)
+          callback(Error(errMessage))
         }
       },
-      error: function (error) {
-        console.error('There was an error getting all the entries')
-        console.error(error)
-        callback(error)
+      error: function (err) {
+        console.error('There was an error getting all the entries', err)
+        callback(Error(err))
       }
     })
   }
