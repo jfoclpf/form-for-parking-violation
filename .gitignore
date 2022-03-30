@@ -20,15 +20,12 @@ www/js/res/*
 dist/formParkingViolation.*
 
 # keys and credentials
+credentials.js
 www/js/credentials.js
 server/DBcredentials.json
 server/isClientAuthorized.js
 keys/
 
-#upload script to server
+#server
 uploadToServer.sh
-
-
-# configs from Atom
-.on-save.json
-www/credentials.js
+server/cryptoV3.db
