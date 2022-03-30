@@ -110,7 +110,7 @@ app.map = (function (thisModule) {
     const mapOptions = {
       center: [latitude, longitude],
       zoom: 8,
-      maxBounds: L.latLngBounds(L.latLng(43.882057, -11.030141), L.latLng(35.942436, -4.104133)),
+      maxBounds: L.latLngBounds(L.latLng(43.882057, -11.030141), L.latLng(35.942436, -4.104133)), // Portugal
       zoomControl: false,
       attributionControl: false,
       closePopupOnClick: false

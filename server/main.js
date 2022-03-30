@@ -171,6 +171,8 @@ app.get(requestHistoricUrl, function (req, res) {
       }
 
       debug(sqlFormatter.format(query))
+      debug('query:')
+      debug(query)
 
       async.series([
         function (next) {
@@ -180,7 +182,8 @@ app.get(requestHistoricUrl, function (req, res) {
               res.status(501).send(JSON.stringify(err))
               next(Error(err))
             } else {
-              debug('User ' + DBInfo.user + ' connected successfully to database ' + DBInfo.database + ' at ' + DBInfo.host)
+              debug('User ' + DBInfo.user + ' connected OK to database ' + DBInfo.database + ' at ' + DBInfo.host)
+              debug(db2.state)
               next()
             }
           })
@@ -337,7 +340,7 @@ function gracefulShutdown (signal) {
 }
 
 console.log('Initializing timers to cleanup database')
-// directory where the images are stored with respect to present file
+// directory where the photos are stored with respect to present file
 const imgDirectory = path.join(__dirname, 'uploadedImages')
 require(path.join(__dirname, 'cleanBadPhotos'))(imgDirectory)
 require(path.join(__dirname, 'removeDuplicates'))(imgDirectory)
