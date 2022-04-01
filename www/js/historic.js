@@ -91,20 +91,19 @@ app.historic = (function (thisModule) {
       return
     }
 
-    $('#historic').append('<h4>Histórico de ocorrências</h4>')
+    $('#historic').append('<ul class="list-group list-group-flush"></ul>')
 
     // since the results are stored as they are submitted, they are ordered by time
     // we want to show on top the most recent ones, i.e., the last on the array
     for (var i = historicData.length - 1; i >= 0; i--) {
       const el = historicData[i]
-      $('#historic').append(`
-        <div class="p-3 border-element historic_element" data-index="${i}">
+      let elHtmlToAppend =
+       `<div class="list-group-item historic_element" data-index="${i}">
           <div class="row">
             <div class="col-9">
-              <b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
-              <b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>
-              <b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
-              <b>Infração</b>: ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>
+              ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>
+              ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho};<br>
+              ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>
             </div>
             <div class="col">
               <button aria-label="Reenviar ocorrência" class="btn btn-primary btn-sm m-1 history-refresh-button" data-index="${i}"><i class="fa fa-refresh"></i></button>
@@ -112,15 +111,24 @@ app.historic = (function (thisModule) {
             </div>
           </div>
           <div class="row">
-            <div class="col-9">
-              <b>Autoridade</b>: ${el.autoridade}
-            </div>
-            <div class="col d-flex align-items-center">
-              <button aria-label="Mostrar fotos" class="btn btn-primary btn-sm m-1 history-show-photo-button"><i class="fa fa-picture-o"></i></button>
+            <div class="col-12">
+              ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>
+              ${el.autoridade}
             </div>
           </div>
-        </div>`
-      )
+          <div class="mt-2">`
+
+      // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
+      for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
+        if (historicData[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
+          const fullImgUrl = requestImageUrl + '/' + historicData[i]['foto' + photoIndex]
+          elHtmlToAppend += `<img src="${fullImgUrl}">`
+        }
+      }
+
+      elHtmlToAppend += '</div>'
+
+      $('#historic .list-group').append(elHtmlToAppend)
 
       if (historicData[i].processada_por_autoridade) {
         $(`#historic button[data-index="${i}"].history-refresh-button`).hide()
@@ -136,7 +144,7 @@ app.historic = (function (thisModule) {
         theme: 'dark_blue',
         class: 'ja_300px',
         closeBtn: false,
-        content: 'Deseja enviar um lembrete à autoridade respetiva a propósito desta ocurrência?',
+        content: 'Deseja enviar um lembrete à autoridade respetiva a propósito desta denúncia?',
         btns: [
           {
             text: 'Sim',
@@ -156,7 +164,7 @@ app.historic = (function (thisModule) {
     })
 
     // deals with button to set status as processed or not processed
-    $('#historic .history-check-button').click(function (event) {
+    $('#historic .history-check-button').on('click', function (event) {
       event.stopPropagation()
 
       const $thisButton = $(this)
@@ -212,29 +220,6 @@ app.historic = (function (thisModule) {
         })
       } else {
         console.error('Error dealing with button', $thisButton)
-      }
-    })
-
-    // shows or hides photos when the div historic entry is clicked
-    $('#historic .historic_element').on('click', function () {
-      const i = parseInt($(this).data('index'))
-
-      if ($(this).find('img').length === 0) { // no image found, adds images
-        const $photos = $('<div class="historic_photos"></div>')
-        $(this).append($photos)
-
-        // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
-        for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
-          if (historicData[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
-            const fullImgUrl = requestImageUrl + '/' + historicData[i]['foto' + photoIndex]
-            // check if the image really exists
-            $.get(fullImgUrl).done(() => {
-              $photos.append(`<img src="${fullImgUrl}">`)
-            })
-          }
-        }
-      } else { // has already images, remove them
-        $(this).find('.historic_photos').remove()
       }
     })
   }

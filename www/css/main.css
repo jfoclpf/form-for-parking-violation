@@ -78,6 +78,10 @@ input[type="number"] {
   display: block;
 }
 
+#historic .historic_element {
+  background: transparent;
+}
+
 #map_section, #map {
   height: 100%;
   width: 100%;
