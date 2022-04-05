@@ -103,7 +103,7 @@ app.main = (function (thisModule) {
     app.functions.addFunctionsToPlugins()
 
     // information stored in variable window.localStorage
-    app.personalInfo.loadsPersonalInfo()
+    app.personalInfo.init()
 
     // loads JSON penalties files and
     // populates HTML select according to the information on penalties.js file

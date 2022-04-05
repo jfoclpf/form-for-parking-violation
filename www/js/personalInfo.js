@@ -4,6 +4,19 @@
 /* global app, $, DEBUG */
 
 app.personalInfo = (function (thisModule) {
+  function init () {
+    const typeOfUser = window.localStorage.getItem('typeOfUser')
+    if (typeOfUser === 'citizen') {
+      $('#userIsCitizen').prop('checked', true).trigger('change')
+    } else if (typeOfUser === 'policeOfficer') {
+      $('#userIsPoliceOfficer').prop('checked', true).trigger('change')
+    } else {
+      console.error('Wrong type of user ' + typeOfUser)
+    }
+
+    loadsPersonalInfo()
+  }
+
   // populates personal in fields information if available in storage
   function loadsPersonalInfo () {
     $('.personal_info').each(function () {
@@ -27,7 +40,7 @@ app.personalInfo = (function (thisModule) {
 
   // save to storage for later usage on every "focus out" of text input fields
   $('input.personal_info').each(function () {
-    $(this).focusout(function () {
+    $(this).on('focusout', function () {
       var id = $(this).attr('id')
       console.log(id)
       var value = $(this).val()
@@ -149,7 +162,24 @@ app.personalInfo = (function (thisModule) {
     }
   }
 
-  thisModule.loadsPersonalInfo = loadsPersonalInfo
+  /* ********************************************************************** */
+  /* ******************** TYPE OF USER ************************************ */
+  $('input[type=radio][name="typeOfUser"]').on('change', function () {
+    const typeOfUser = this.value
+    if (typeOfUser === 'citizen') {
+      $('.citizenDiv').show()
+      $('.policeOfficer').hide()
+      window.localStorage.setItem('typeOfUser', 'citizen')
+    } else if (typeOfUser === 'policeOfficer') {
+      $('.policeOfficer').show()
+      $('.citizenDiv').hide()
+      window.localStorage.setItem('typeOfUser', 'policeOfficer')
+    } else {
+      console.error('Wrong type of user ' + typeOfUser)
+    }
+  })
+
+  thisModule.init = init
   thisModule.isFullNameOK = isFullNameOK
   thisModule.isPostalCodeOK = isPostalCodeOK
 
