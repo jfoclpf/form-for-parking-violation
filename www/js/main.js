@@ -273,8 +273,6 @@ app.main = (function (thisModule) {
 
   // Police Officer sends Email Without Chave Móvel Digital
   function sendMailMessageForPoliceOfficer () {
-    app.dbServerLink.submitNewEntryToDB()
-
     var imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
     const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
