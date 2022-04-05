@@ -133,7 +133,7 @@ app.authentication = (function (thisModule) {
       type: 'base64'
     }
 
-    var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body')
+    var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body', 'citizen')
 
     var imagesArray = app.photos.getPhotosAsBase64()
     for (var i = 0; i < imagesArray.length; i++) {

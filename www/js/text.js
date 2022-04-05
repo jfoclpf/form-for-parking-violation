@@ -2,8 +2,8 @@
 
 app.text = (function (thisModule) {
   // main message
-  function getMainMessage (option) {
-    if (option === 'body') {
+  function getMainMessage (messagePart, typeOfUser) {
+    if (messagePart === 'body') {
       // Penalties
       const penalties = app.penalties.getPenalties()
       // select is multiselect and $('#penalties').val() is an array of selected penalty codes
@@ -32,16 +32,27 @@ app.text = (function (thisModule) {
         carmakeModelText = ''
       }
 
-      const msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
+      let msg, msg1, msg2, msg3
 
-      const msg1 = `Eu, <b>${$('#name').val()}</b>, ` +
+      if (typeOfUser === 'citizen') {
+        msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
+
+        msg1 = `Eu, <b>${$('#name').val()}</b>, ` +
         `com o <b>${$('#id_type').val()}</b> com o número <b>${$('#id_number').val()}</b> ` +
         `e com residência em <b>${$('#address').val()}, ${$('#postal_code').val()}, ${$('#address_city').val()}</b>, ` +
         'venho por este meio, ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
         'fazer a seguinte denúncia de contraordenação para que V. Exas. ' +
         'levantem o auto respetivo e multem o infra-mencionado responsável.'
+      } else if (typeOfUser === 'policeOfficer') {
+        msg = 'A atividade policial tem como missão velar pelo cumprimento das leis e regulamentos relativos ' +
+          'à viação terrestre e aos transportes rodoviários e promover e garantir a segurança rodoviária, ' +
+          'designadamente através da fiscalização, do ordenamento e da disciplina do trânsito.'
+      } else {
+        console.error('Invalid type of user: ' + typeOfUser)
+        return ''
+      }
 
-      let msg2 = 'No passado dia <b>' +
+      msg2 = 'No passado dia <b>' +
         $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
         ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
         ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
@@ -72,28 +83,39 @@ app.text = (function (thisModule) {
         }
       }
 
-      const msg3 = 'Pode-se comprovar esta situação através ' +
-        `${((app.photos.getPhotosUriOnFileSystem().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas')} ` +
-        'à presente mensagem eletrónica. Juro pela minha honra que a informação supra citada é verídica. ' +
-        'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada, ' +
-        'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto, ' +
-        'não carecendo de presenciar tal contraordenação rodoviária, situação a que se aplica o n.º 1 do mesmo artigo. ' +
-        'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha ' +
-        'no processo que vier a ser instaurado com referência à presente missiva.'
+      if (typeOfUser === 'citizen') {
+        msg3 = 'Pode-se comprovar esta situação através ' +
+          `${((app.photos.getPhotosUriOnFileSystem().length === 1) ? 'da fotografia anexa' : 'das fotografias anexas')} ` +
+          'à presente mensagem eletrónica. Juro pela minha honra que a informação supra citada é verídica. ' +
+          'Recordo ainda, que ao abrigo do referido n.º 5 do artigo 170.º do Código da Estrada, ' +
+          'a autoridade que tiver notícia por denúncia de contraordenação, levanta auto, ' +
+          'não carecendo de presenciar tal contraordenação rodoviária, situação a que se aplica o n.º 1 do mesmo artigo. ' +
+          'Refiro ainda que me encontro plenamente disponível para participar na qualidade de testemunha ' +
+          'no processo que vier a ser instaurado com referência à presente missiva.'
+      }
 
-      const message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3 + '<br><br>' + getRegards() + '<br>'
+      let message
+      if (typeOfUser === 'citizen') {
+        message = msg + '<br><br>' + msg1 + '<br><br>' + msg2 + '<br><br>' + msg3 + '<br><br>' + getRegards() + '<br>'
+      } else if (typeOfUser === 'policeOfficer') {
+        message = msg + '<br><br>' + msg2 + '<br><br>' + $('#name').val()
+      }
 
       return message
-    } else if (option === 'subject') {
+    } else if (messagePart === 'subject') {
       const carPlateStr = app.form.getCarPlate()
       const address = app.form.getFullAddress()
 
-      const emailSubject = `${(app.functions.isThis_iOS() ? 'Veículo' : `[${carPlateStr}]`)} ` +
-        `na ${address} - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada`
+      let emailSubject = `${(app.functions.isThis_iOS() ? 'Veículo' : `[${carPlateStr}]`)} na ${address}`
+
+      if (typeOfUser === 'citizen') {
+        emailSubject += ' - Denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada'
+      }
+
       console.log(emailSubject)
       return emailSubject
     } else {
-      console.error('Error in getMainMessage(option) wth option=' + option)
+      console.error('Error in getMainMessage(messagePart) wth option=' + messagePart)
     }
   }
 

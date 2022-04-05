@@ -186,7 +186,16 @@ app.main = (function (thisModule) {
       return
     }
 
-    var mainMessage = app.text.getMainMessage('body')
+    var mainMessage
+    const typeOfUser = $('input[type=radio][name="typeOfUser"]:checked').val()
+    if (typeOfUser === 'citizen') {
+      mainMessage = app.text.getMainMessage('body', 'citizen')
+    } else if (typeOfUser === 'policeOfficer') {
+      mainMessage = app.text.getMainMessage('body', 'policeOfficer')
+    } else {
+      console.error('Wrong type of user ' + typeOfUser)
+    }
+
     $('#message').html(mainMessage)
     $('#mail_message').show()
 
@@ -203,40 +212,48 @@ app.main = (function (thisModule) {
       return
     }
 
-    var mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, ' +
-    'refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. ' +
-    'Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>' +
-    'Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. ' +
-    'Caso não tenha uma, veja no menu principal como pedi-la.'
+    const typeOfUser = $('input[type=radio][name="typeOfUser"]:checked').val()
 
-    $.jAlert({
-      title: 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
-      content: mensagem,
-      theme: 'dark_blue',
-      btns: [
-        {
-          text: '<b>Usar</b> Chave Móvel Digital',
-          theme: 'green',
-          class: 'jButtonAlert',
-          onClick: function () {
-            if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
-              app.authentication.startAuthenticationWithInAppBrowser()
-            } else {
-              app.authentication.startAuthenticationWithSystemBrowser()
+    if (typeOfUser === 'citizen') {
+      const mensagem = 'A Autoridade Nacional de Segurança Rodoviária (ANSR), num parecer enviado às polícias a propósito desta APP, ' +
+      'refere que as polícias devem de facto proceder à emissão efetiva da multa, perante as queixas dos cidadãos por esta via. ' +
+      'Todavia, refere a ANSR, que os denunciantes deverão posteriormente dirigir-se às instalações da polícia respetiva, para se identificarem presencialmente.<br><br>' +
+      'Caso não se queira dirigir à polícia, terá de se autenticar fazendo uso da <b>Chave  Móvel Digital</b> emitida pela Administração Pública. ' +
+      'Caso não tenha uma, veja no menu principal como pedi-la.'
+
+      $.jAlert({
+        title: 'Deseja autenticar a sua mensagem com Chave Móvel Digital?',
+        content: mensagem,
+        theme: 'dark_blue',
+        btns: [
+          {
+            text: '<b>Usar</b> Chave Móvel Digital',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: function () {
+              if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
+                app.authentication.startAuthenticationWithInAppBrowser()
+              } else {
+                app.authentication.startAuthenticationWithSystemBrowser()
+              }
             }
+          },
+          {
+            text: '<b>Não usar</b> Chave Móvel Digital',
+            theme: 'green',
+            class: 'jButtonAlert',
+            onClick: sendMailMessageWithoutCMD
           }
-        },
-        {
-          text: '<b>Não usar</b> Chave Móvel Digital',
-          theme: 'green',
-          class: 'jButtonAlert',
-          onClick: sendMailMessageWithoutCMD
-        }
-      ]
-    })
+        ]
+      })
+    } else if (typeOfUser === 'policeOfficer') {
+      sendMailMessageForPoliceOfficer()
+    } else {
+      console.error('Wrong type of user ' + typeOfUser)
+    }
   })
 
-  // Send Email Without Chave Móvel Digital
+  // Citizen sends Email Without Chave Móvel Digital
   function sendMailMessageWithoutCMD () {
     app.dbServerLink.submitNewEntryToDB()
 
@@ -248,8 +265,26 @@ app.main = (function (thisModule) {
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
       attachments: attachments,
-      subject: app.text.getMainMessage('subject'), // subject of the email
-      body: app.text.getMainMessage('body'), // email body (for HTML, set isHtml to true)
+      subject: app.text.getMainMessage('subject', 'citizen'), // subject of the email
+      body: app.text.getMainMessage('body', 'citizen'), // email body (for HTML, set isHtml to true)
+      isHtml: true // indicats if the body is HTML or plain text
+    })
+  }
+
+  // Police Officer sends Email Without Chave Móvel Digital
+  function sendMailMessageForPoliceOfficer () {
+    app.dbServerLink.submitNewEntryToDB()
+
+    var imagesArray = app.photos.getPhotosForEmailAttachment()
+    // console.log(JSON.stringify(imagesArray, 0, 3))
+    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
+    console.log(JSON.stringify(attachments, 0, 3))
+
+    cordova.plugins.email.open({
+      to: $('#email').val().toLowerCase(), // email addresses for TO field
+      attachments: attachments,
+      subject: app.text.getMainMessage('subject', 'policeOfficer'), // subject of the email
+      body: app.text.getMainMessage('body', 'policeOfficer'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
     })
   }
