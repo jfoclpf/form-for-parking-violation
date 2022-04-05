@@ -96,8 +96,17 @@ app.personalInfo = (function (thisModule) {
   }
 
   /* ********************************************************************** */
-  /* ******************** ID NUMBER OF THE USER *************************** */
+  /* ************************* EMAIL ************************************** */
+  $('#email').on('input', function () {
+    if (!validateEmail($(this).val()) && !DEBUG) {
+      $(this).css('border-color', 'red')
+    } else {
+      $(this).css('border-color', '')
+    }
+  })
 
+  /* ********************************************************************** */
+  /* ******************** ID NUMBER OF THE USER *************************** */
   $('#id_number').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
@@ -178,6 +187,14 @@ app.personalInfo = (function (thisModule) {
       console.error('Wrong type of user ' + typeOfUser)
     }
   })
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  }
 
   thisModule.init = init
   thisModule.isFullNameOK = isFullNameOK
