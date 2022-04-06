@@ -25,11 +25,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Installing Java 8
+      run: |
+        sudo apt update -y
+        sudo apt install openjdk-8-jdk -y
     - name: Changing to Java 8
       run: | 
-        javac -version
-        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1) || echo OK
-        javac -version
+        java -version
+        sudo update-java-alternatives -l || echo OK
+        sudo update-java-alternatives -l | grep '1\.8' | cut -d " " -f1 || echo OK
+        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep '1\.8' | cut -d " " -f1) || echo OK
+        java -version
     - name: Install Android SDK
       run: |
         sudo apt install android-sdk -y
