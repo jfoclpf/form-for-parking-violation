@@ -44,8 +44,16 @@ jobs:
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --version
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --uninstall 'build-tools;31.0.0'
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list
+    - name: List SDK dir and cp
+      run: |
+        ls -la /usr/local/lib/android/sdk/build-tools/
+        cd /usr/local/lib/android/sdk/build-tools/32.0.0/
+        cp d8 dx && cd lib && cp d8.jar dx.jar
+        ls -la /usr/local/lib/android/sdk/build-tools/32.0.0/
+    - name: Install Gradle
+      run: sudo apt install gradle -y
     - name: echo PATH
-      run: echo "${PATH//:/$'\n'}"
+      run: echo "${PATH//:/$'\n'}"    
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add Android Platform
