@@ -279,7 +279,7 @@ app.main = (function (thisModule) {
     console.log(JSON.stringify(attachments, 0, 3))
 
     cordova.plugins.email.open({
-      to: $('#email').val().toLowerCase(), // email addresses for TO field
+      to: $('#email').val().toLowerCase(), // fetch email address from personal info
       attachments: attachments,
       subject: app.text.getMainMessage('subject', 'policeOfficer'), // subject of the email
       body: app.text.getMainMessage('body', 'policeOfficer'), // email body (for HTML, set isHtml to true)
