@@ -79,7 +79,7 @@ app.post(submissionsUrl, function (req, res) {
               `WHERE PROD=${db1.escape(databaseObj.PROD)} AND uuid=${db1.escape(databaseObj.uuid)} ` +
               `AND foto1=${db1.escape(databaseObj.foto1)} AND carro_matricula=${db1.escape(databaseObj.carro_matricula)}`
       break
-    case 'setEntryAsDeletedInDatabase':
+    case 'setEntryInDbAsDeletedByAdmin':
       // (update) when field 'deleted_by_admin' is present in the request (client) it means just an update of a previous existing entry/line
       query = `UPDATE ${DBInfo.db_tables.denuncias} SET deleted_by_admin=${db1.escape(databaseObj.deleted_by_admin)} ` +
               `WHERE PROD=${db1.escape(databaseObj.PROD)} AND uuid=${db1.escape(databaseObj.uuid)} ` +

@@ -120,14 +120,15 @@ app.dbServerLink = (function (thisModule) {
     })
   }
 
-  function setEntryAsDeletedInDatabase (dbEntry, callback) {
+  // set as deleted by admin
+  function setEntryInDbAsDeletedByAdmin (dbEntry, callback) {
     var databaseObj = Object.assign({}, dbEntry) // cloning Object
     databaseObj.deleted_by_admin = 1
 
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify({ dbCommand: 'setEntryAsDeletedInDatabase', databaseObj: databaseObj }),
+      data: JSON.stringify({ dbCommand: 'setEntryInDbAsDeletedByAdmin', databaseObj: databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
@@ -161,7 +162,7 @@ app.dbServerLink = (function (thisModule) {
 
   thisModule.submitNewEntryToDB = submitNewEntryToDB
   thisModule.setProcessedByAuthorityStatus = setProcessedByAuthorityStatus
-  thisModule.setEntryAsDeletedInDatabase = setEntryAsDeletedInDatabase
+  thisModule.setEntryInDbAsDeletedByAdmin = setEntryInDbAsDeletedByAdmin
   thisModule.getAjaxHttpHeaderKeys = getAjaxHttpHeaderKeys
 
   return thisModule
