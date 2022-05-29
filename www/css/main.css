@@ -82,6 +82,7 @@ input[type="number"] {
   background: transparent;
 }
 
+/* Map section */
 #map_section, #map {
   height: 100%;
   width: 100%;
@@ -91,6 +92,10 @@ input[type="number"] {
 
 #map .gm-style-iw.gm-style-iw-c {
   max-width: none !important;
+}
+
+#map .leaflet-popup-scrolled {
+  border-top: none;
 }
 
 #cmd_how_it_works img{
