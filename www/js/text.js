@@ -189,14 +189,17 @@ app.text = (function (thisModule) {
   }
 
   function getRandomGreetings () {
+    const isGNR = app.contactsFunctions.getEmailOfCurrentSelectedAuthority()
+      .split('@').pop().toLowerCase().includes('gnr')
+
     var greetingsInitial = [
       'Excelentíssimos senhores',
-      'Excelentíssimos agentes',
+      'Excelentíssimos ' + (isGNR ? 'guardas' : 'agentes'),
       'Prezados senhores',
-      'Prezados agentes',
+      'Prezados ' + (isGNR ? 'guardas' : 'agentes'),
       'Caros senhores',
-      'Ex.mos Senhores',
-      'Ex.mos Senhores Agentes'
+      'Ex.mos senhores',
+      'Ex.mos senhores ' + (isGNR ? 'guardas' : 'agentes')
     ]
 
     return greetingsInitial[Math.floor(Math.random() * greetingsInitial.length)]
