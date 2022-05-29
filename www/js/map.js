@@ -180,7 +180,7 @@ app.map = (function (thisModule) {
     for (const key in markersGroups) {
       if (markersGroups.hasOwnProperty(key)) {
         markersGroups[key].markerClusterGroup = L.markerClusterGroup(
-          { disableClusteringAtZoom: 12, spiderfyOnMaxZoom: false }
+          { disableClusteringAtZoom: 16, spiderfyOnMaxZoom: false }
         )
       }
     }
