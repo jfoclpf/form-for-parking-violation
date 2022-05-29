@@ -168,7 +168,7 @@ app.get(requestHistoricUrl, function (req, res) {
       } else {
         // get all production entries for all users except admin (ex: to generate a map of all entries)
         query = `SELECT * FROM ${DBInfo.db_tables.denuncias} ` +
-          "WHERE PROD=1 AND uuid!='87332d2a0aa5e634' AND deleted_by_admin=0 AND fotos_sinc_GPS=1 " +
+          "WHERE PROD=1 AND uuid!='87332d2a0aa5e634' AND deleted_by_admin=0 AND deleted_by_user=0 AND fotos_sinc_GPS=1 " +
           `ORDER BY ${DBInfo.db_tables.denuncias}.uuid ASC, ${DBInfo.db_tables.denuncias}.data_data ASC`
       }
 
