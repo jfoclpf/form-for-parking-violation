@@ -250,7 +250,7 @@ app.map = (function (thisModule) {
     dbElement = JSON.parse(decodeURIComponent(dbElement))
 
     if (app.functions.isCurrentUserAnAdmin()) {
-      app.dbServerLink.setEntryInDbAsDeletedByAdmin(dbElement, (err) => {
+      app.dbServerLink.setEntryInDbAsDeleted(dbElement, 'admin', (err) => {
         if (!err) {
           window.alert('Entrada marcada como apagada')
         } else {
