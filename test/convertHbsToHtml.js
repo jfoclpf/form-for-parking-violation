@@ -59,7 +59,7 @@ function convertHbsToHtmlSync (wwwDistDir, mainIndexHtmlFile) {
 
   // source handlebars files should be deleted on dist dir
   fs.unlinkSync(fullPathMainIndexHbsFile)
-  fs.rmdirSync(partialsDir, { recursive: true })
+  fs.rmSync(partialsDir, { recursive: true })
   console.log('handlebars files deleted from dist dir')
 }
 
