@@ -14,8 +14,6 @@
 [js-standard-style_img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [js-standard-style_url]: https://standardjs.com/
 
-# Denúncia Estacionamento
-
 Aplicação móvel para submissão de queixa de estacionamento ilegal junto de autoridade policial, ao abrigo do n.º 5 do art.º 170.º do Código da Estrada.
 
 O código está desenhado em Javascript para ser corrido num smartphone. Para tal faz uso da plataforma [Apache Cordova](https://cordova.apache.org/).
