@@ -1,7 +1,13 @@
+<h1 align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation&hl=pt"><img src="https://github.com/jfoclpf/form-for-parking-violation/blob/master/res/icon/android/512.png?raw=true" alt="logo" width="200"/></a>
+  <br>
+  Denúncia de Estacionamento!
+  <br>
+</h1>
+
 [![Node.js CI](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/android.yml/badge.svg)](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/android.yml)
 [![Node.js CI](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/ios.yml/badge.svg)](https://github.com/jfoclpf/form-for-parking-violation/actions/workflows/ios.yml)
 [![js-standard-style][js-standard-style_img]][js-standard-style_url]
-<br>
 [![Donate with librepay](https://img.shields.io/liberapay/receives/joaopimentel1980.svg?logo=liberapay)](https://en.liberapay.com/joaopimentel1980)
 [![Donate with librepay](https://img.shields.io/badge/donate-Donate-yellow?logo=liberapay)](https://en.liberapay.com/joaopimentel1980/donate)
 
