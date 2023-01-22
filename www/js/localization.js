@@ -16,12 +16,14 @@ app.localization = (function (thisModule) {
 
   // botão get address by GPS (Atualizar)
   $('#getCurrentAddresBtn').on('click', function () {
-    getGeolocation()
     app.functions.updateDateAndTime()
+    getGeolocation()
   })
 
   /* Geo location functions */
   function getGeolocation () {
+    app.form.startSpinner()
+
     // detect if has Internet AND if the GoogleMaps API is loaded
     if (navigator.onLine) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
@@ -29,6 +31,7 @@ app.localization = (function (thisModule) {
       navigator.geolocation.getCurrentPosition(setCoordinates, PositionError, options)
     } else {
       console.error('Device Navigator not online')
+      app.form.stopSpinner()
       PositionError()
     }
   }
@@ -109,6 +112,8 @@ app.localization = (function (thisModule) {
         console.log('getLocale: ', addressFromOSM, addressFromGeoPtApi)
         getAuthoritiesFromAddress(addressFromOSM, addressFromGeoPtApi)
       }
+    }).finally(() => {
+      app.form.stopSpinner()
     })
   }
 

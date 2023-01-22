@@ -11,6 +11,8 @@ app.form = (function (thisModule) {
     } else {
       $('#plate').bind('input', plateOnInput)
     }
+
+    initPullToRefresh()
   }
 
   /* ********************************************************************** */
@@ -517,6 +519,79 @@ app.form = (function (thisModule) {
     }
   })
 
+  /* Pull to Refresh function */
+
+  function initPullToRefresh () {
+    const pStart = { x: 0, y: 0 }
+    const pStop = { x: 0, y: 0 }
+
+    function swipeStart (e) {
+      if (typeof e.targetTouches !== 'undefined') {
+        const touch = e.targetTouches[0]
+        pStart.x = touch.screenX
+        pStart.y = touch.screenY
+      } else {
+        pStart.x = e.screenX
+        pStart.y = e.screenY
+      }
+    }
+
+    function swipeEnd (e) {
+      if (typeof e.changedTouches !== 'undefined') {
+        const touch = e.changedTouches[0]
+        pStop.x = touch.screenX
+        pStop.y = touch.screenY
+      } else {
+        pStop.x = e.screenX
+        pStop.y = e.screenY
+      }
+
+      swipeCheck()
+    }
+
+    function swipeCheck () {
+      const changeY = pStart.y - pStop.y
+      const changeX = pStart.x - pStop.x
+      if (isPullDown(changeY, changeX)) {
+        // user has pulled to refresh
+        app.functions.updateDateAndTime()
+        app.localization.getGeolocation()
+      }
+    }
+
+    function isPullDown (dY, dX) {
+      // methods of checking slope, length, direction of line created by swipe action
+      return (
+        dY < 0 &&
+        ((Math.abs(dX) <= 100 && Math.abs(dY) >= 300) ||
+          (Math.abs(dX) / Math.abs(dY) <= 0.3 && dY >= 60))
+      )
+    }
+
+    document.addEventListener(
+      'touchstart',
+      function (e) {
+        swipeStart(e)
+      },
+      false
+    )
+    document.addEventListener(
+      'touchend',
+      function (e) {
+        swipeEnd(e)
+      },
+      false
+    )
+  }
+
+  /* spinner */
+  function startSpinner () {
+    $('#getCurrentAddresBtn').removeClass('btn btn-primary').addClass('spinner-border text-primary')
+  }
+  function stopSpinner () {
+    $('#getCurrentAddresBtn').removeClass('spinner-border text-primary').addClass('btn btn-primary')
+  }
+
   thisModule.init = init
   /* === Public methods to be returned === */
   /* === Form field fetching functions === */
@@ -534,6 +609,9 @@ app.form = (function (thisModule) {
   thisModule.isMessageReady = isMessageReady
   thisModule.setPortuguesePlateInput = setPortuguesePlateInput
   thisModule.isArrayAValidPlate = isArrayAValidPlate
+  /* ======================================== */
+  thisModule.startSpinner = startSpinner
+  thisModule.stopSpinner = stopSpinner
 
   return thisModule
 })(app.form || {})
