@@ -65,41 +65,37 @@ app.photos = (function (thisModule) {
 
     photosUriOnFileSystem[imgNmbr] = imageUri
 
-    app.file.getFileAsBase64(imageUri, (err, res) => {
-      if (err) {
-        console.error(err)
-      } else {
-        photosAsBase64[imgNmbr] = res
-      }
-    })
-
     if (app.functions.isThisAndroid()) {
       // this plugin is just working on android
       resizeImage(imageUri, function (resizedImgUri, err) {
-        var imgToShowUri = !err ? resizedImgUri : imageUri
-        displayImage(imgToShowUri, 'myImg_' + imgNmbr)
-        console.log('display image ' + imgNmbr + ' : ' + imgToShowUri)
-        photosForEmailAttachment[imgNmbr] = resizedImgUri
-        callback(imgNmbr)
+        const imgToShowUri = !err ? resizedImgUri : imageUri
+
+        app.file.getFileAsBase64(imgToShowUri, (err, res) => {
+          if (err) {
+            console.error(err)
+          } else {
+            displayImage(res, 'myImg_' + imgNmbr)
+            photosAsBase64[imgNmbr] = res
+            photosForEmailAttachment[imgNmbr] = res
+          }
+          callback(imgNmbr)
+        })
       })
     } else if (app.functions.isThis_iOS()) {
-      displayImage(imageUri, 'myImg_' + imgNmbr)
-      console.log('display image ' + imgNmbr + ' : ' + imageUri)
-
       // ios is a mess with file location, thus for email attachment convert photo to base64
       app.file.getFileAsBase64(imageUri, (err, res) => {
         if (err) {
           console.error(err)
         } else {
+          displayImage(res, 'myImg_' + imgNmbr)
+          photosAsBase64[imgNmbr] = res
           photosForEmailAttachment[imgNmbr] = res
         }
         callback(imgNmbr)
       })
     } else {
-      displayImage(imageUri, 'myImg_' + imgNmbr)
-      console.log('display image ' + imgNmbr + ' : ' + imageUri)
-      photosForEmailAttachment[imgNmbr] = imageUri
-      callback(imgNmbr)
+      console.error('APP just works for Android or iOS')
+      window.alert('APP just works for Android or iOS')
     }
 
     if (type === 'camera') {

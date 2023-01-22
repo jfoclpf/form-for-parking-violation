@@ -8,15 +8,7 @@ app.functions = (function (thisModule) {
   // add functions related with respective plugins
   function addFunctionsToPlugins () {
     cordova.plugins.email.adaptPhotoInfoForEmailAttachment = function (path, index) {
-      if (isThisAndroid()) {
-        // see: https://www.npmjs.com/package/cordova-plugin-email-composer#attach-files-from-the-internal-app-file-system
-        return path.replace(cordova.file.applicationStorageDirectory, 'app://')
-      } else if (isThis_iOS()) {
-        // in ios uses base64 string, remove header and add file name
-        return `base64:photo${index + 1}.jpg//` + path.split(',').pop()
-      } else {
-        return path
-      }
+      return `base64:photo${index + 1}.jpg//` + path.split(',').pop()
     }
   }
 
