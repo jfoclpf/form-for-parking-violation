@@ -35,7 +35,7 @@ app.main = (function (thisModule) {
     },
     geoApi: {
       nominatimReverse: 'https://nominatim.openstreetmap.org/reverse',
-      ptApi: 'https://geoptapi.org' // check https://www.geoptapi.org/
+      ptApi: 'https://geoapi.pt'
     }
   }
 
