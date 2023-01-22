@@ -10,7 +10,7 @@ app.personalInfo = (function (thisModule) {
     } else if (typeOfUser === 'policeOfficer') {
       $('#userIsPoliceOfficer').prop('checked', true).trigger('change')
     } else {
-      console.error('Wrong type of user ' + typeOfUser)
+      console.warn('No valid typeOfUser stored in device local storage:' + typeOfUser)
     }
 
     loadsPersonalInfo()
