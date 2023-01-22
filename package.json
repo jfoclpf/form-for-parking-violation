@@ -115,7 +115,7 @@
     "html-validate": "^4.1.0",
     "nedb": "^1.8.0",
     "npm-check-updates": "^7.1.1",
-    "standard": "^14.3.4",
+    "standard": "^17.0.0",
     "uglify-es": "^3.3.9",
     "uglifycss": "0.0.29",
     "walk": "^2.3.14",
