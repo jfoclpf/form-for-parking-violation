@@ -11,10 +11,10 @@ app.map = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
   const requestImageUrl = app.main.urls.databaseServer.requestImage
 
-  var map
-  var markersGroups // groups of markers, by type of occurence
-  var allDbEntries // all entries fetched from database
-  var isMapInitiated = false
+  let map
+  let markersGroups // groups of markers, by type of occurence
+  let allDbEntries // all entries fetched from database
+  let isMapInitiated = false
 
   function init () {
     // populate select box to select map view, i.e, filter ocurrences/drops in the map
@@ -34,7 +34,7 @@ app.map = (function (thisModule) {
 
     // to get all entries to show on the map, it does it in the init in the background
     // after opening the app for faster processing when user clicks on map section
-    var tLoadMapInit = performance.now() // to measure performance
+    const tLoadMapInit = performance.now() // to measure performance
     getAllEntries((err) => {
       if (!err) {
         processMapMarkers()
@@ -95,8 +95,8 @@ app.map = (function (thisModule) {
 
   function initializeMap (callback) {
     // get coordinates for the map center
-    var currentLocation = app.localization.getCoordinates() // current position of user
-    var latitude, longitude
+    const currentLocation = app.localization.getCoordinates() // current position of user
+    let latitude, longitude
     if (currentLocation.latitude && currentLocation.longitude && !DEBUG) {
       latitude = currentLocation.latitude
       longitude = currentLocation.longitude
@@ -138,7 +138,7 @@ app.map = (function (thisModule) {
     map.whenReady(function () {
       // adjust height of map_section div, the heigh of map should be the height of content
       // minus the height of header and minus height of a spacer (<hr>)
-      var height = window.innerHeight - // screen useful height
+      const height = window.innerHeight - // screen useful height
         $('#content hr').outerHeight(true) - // spacer between header and lower section
         $('#content .container-fluid.section-head.d-flex.flex-row').outerHeight(true) - // header
         ($('#content').innerWidth() - $('#content').width()) // pading of #content
@@ -209,7 +209,7 @@ app.map = (function (thisModule) {
           `<b>Infração</b>: ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>` +
           `<b>Autoridade</b>: ${el.autoridade}<br><br>`
 
-      for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
+      for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (el['foto' + photoIndex]) {
           const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
           htmlInfoContent += `<img class="photo-in-popup" width="200px" src="${photoUrl}">`

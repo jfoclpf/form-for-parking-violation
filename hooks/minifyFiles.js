@@ -23,10 +23,10 @@ module.exports = function (context) {
   }
 
   console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
-  var projectRoot = context.opts.projectRoot
+  const projectRoot = context.opts.projectRoot
 
-  var platforms = []
-  for (var i = 0; i < context.opts.platforms.length; i++) {
+  const platforms = []
+  for (let i = 0; i < context.opts.platforms.length; i++) {
     const platform = { name: context.opts.platforms[i], path: context.opts.paths[i] }
     platforms.push(platform)
   }
@@ -72,16 +72,16 @@ function processAllFilesForOnePlatform (platform, mainCallback) {
 
 function processJSfiles (platform, callback) {
   const wwwDistDir = platform.path
-  var walker = walk.walk(path.join(wwwDistDir, 'js'))
+  const walker = walk.walk(path.join(wwwDistDir, 'js'))
 
   walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+    const filename = path.join(root, fileStats.name)
 
     // gets file extension
     if (getFileExtension(filename) === 'js' && !filename.includes('.min.js')) {
-      var code = fs.readFileSync(filename, 'utf-8')
+      const code = fs.readFileSync(filename, 'utf-8')
 
-      var result = UglifyJS.minify(code)
+      const result = UglifyJS.minify(code)
 
       if (result.error) {
         callback(Error('Error minifying file: ' + path.relative(wwwDistDir, filename) + '.\n' + result.error))
@@ -108,14 +108,14 @@ function processJSfiles (platform, callback) {
 // i.e., these are CSS files that will be sent from the server to the client
 function processCSSFiles (platform, callback) {
   const wwwDistDir = platform.path
-  var walker = walk.walk(path.join(wwwDistDir, 'css')) // dir to walk into
+  const walker = walk.walk(path.join(wwwDistDir, 'css')) // dir to walk into
 
   walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+    const filename = path.join(root, fileStats.name)
 
     if (filename.includes('.css') && !filename.includes('.min.css')) {
-      var code = fs.readFileSync(filename, 'utf-8')
-      var result = uglifycss.processString(code)
+      const code = fs.readFileSync(filename, 'utf-8')
+      const result = uglifycss.processString(code)
 
       if (!result) {
         callback(Error('Error minifying file: ' + filename + '.\n'))
@@ -143,14 +143,14 @@ function processCSSFiles (platform, callback) {
 // and then sent from the server to the client/browser
 function processHTMLfiles (platform, callback) {
   const wwwDistDir = platform.path
-  var walker = walk.walk(wwwDistDir) // dir to walk into
+  const walker = walk.walk(wwwDistDir) // dir to walk into
   walker.on('file', function (root, fileStats, next) {
-    var filename = path.join(root, fileStats.name)
+    const filename = path.join(root, fileStats.name)
 
     if (getFileExtension(filename) === 'html') {
-      var code = fs.readFileSync(filename, 'utf-8')
+      const code = fs.readFileSync(filename, 'utf-8')
 
-      var result = minifyHTML(code, {
+      const result = minifyHTML(code, {
         ignoreCustomFragments: [
           /<%[\s\S]*?%>/, // ignore default fragments
           /<\?[\s\S]*?\?>/

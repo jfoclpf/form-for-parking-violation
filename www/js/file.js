@@ -8,10 +8,10 @@ app.file = (function (thisModule) {
   // on the file uri, such that files don't get messed with each other, since the plugin uses the cache
   function adaptFilenameFromUri (uri) {
     if (uri.includes('?')) {
-      var code = uri.split('?').slice(-1) // 123
-      var fileNoCode = uri.split('?').slice(0, -1).join('?') // file://photo.jpg
-      var extenstion = fileNoCode.split('.').slice(-1) // 'jpg'
-      var fileNoCodeNoExtension = fileNoCode.split('.').slice(0, -1).join('.') // file://photo
+      const code = uri.split('?').slice(-1) // 123
+      const fileNoCode = uri.split('?').slice(0, -1).join('?') // file://photo.jpg
+      const extenstion = fileNoCode.split('.').slice(-1) // 'jpg'
+      const fileNoCodeNoExtension = fileNoCode.split('.').slice(0, -1).join('.') // file://photo
       return fileNoCodeNoExtension + code + '.' + extenstion
     } else {
       return uri
@@ -25,7 +25,7 @@ app.file = (function (thisModule) {
     if (!url) {
       return false
     }
-    var output = []
+    const output = []
     output[1] = url.split('/').pop()
     output[0] = url.substring(0, url.length - output[1].length - 1)
     return output
@@ -53,7 +53,7 @@ app.file = (function (thisModule) {
         function (file) {
           window.requestFileSystem(fileSystem, 0,
             function (fileSystem) {
-              var documentsPath = fileSystem.root
+              const documentsPath = fileSystem.root
               console.log(documentsPath)
               file.copyTo(documentsPath, destPathName,
                 function (res) {
@@ -76,7 +76,7 @@ app.file = (function (thisModule) {
   function copyFile (baseFileURI, destPathDir) {
     console.log('Copying : ' + baseFileURI)
 
-    var destPathName = getFilenameFromURL(baseFileURI)[1]
+    const destPathName = getFilenameFromURL(baseFileURI)[1]
 
     if (!baseFileURI || !destPathName) {
       console.error('File to copy empty or invalid')
@@ -122,13 +122,13 @@ app.file = (function (thisModule) {
       if (!url) {
         return false
       }
-      var output = []
+      const output = []
       output[1] = url.split('/').pop()
       output[0] = url.substring(0, url.length - output[1].length - 1)
       return output
     }
 
-    var destPathName = getFilenameFromURL(baseFileURI)[1]
+    const destPathName = getFilenameFromURL(baseFileURI)[1]
 
     if (!baseFileURI || !destPathName) {
       console.error('File to move empty or invalid')
@@ -172,7 +172,7 @@ app.file = (function (thisModule) {
   function listDir (path) {
     window.resolveLocalFileSystemURL(path,
       function (fileSystem) {
-        var reader = fileSystem.createReader()
+        const reader = fileSystem.createReader()
         reader.readEntries(
           function (entries) {
             console.log(entries)
@@ -188,7 +188,7 @@ app.file = (function (thisModule) {
   }
 
   function getFileSize (fileUri, callback) {
-    var fileSize = null
+    let fileSize = null
     window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
       fileEntry.file(function (fileObj) {
         fileSize = fileObj.size
@@ -209,19 +209,19 @@ app.file = (function (thisModule) {
   // for different types of cordovaFileSystem check here: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#where-to-store-files
   // or simply in the console type `console.log(cordova.file)`
   function downloadFileToDevice (fileurl, filename, cordovaFileSystem, callback) {
-    var onerror = (err) => {
+    const onerror = (err) => {
       console.error(`Error downloading file from url ${fileurl} to cordovaFileSystem ${cordovaFileSystem}`,
         err, new Error(err))
       if (typeof callback === 'function') { callback(Error(err)) }
     }
 
-    var blob = null
-    var xhr = new XMLHttpRequest()
+    let blob = null
+    const xhr = new XMLHttpRequest()
     xhr.open('GET', fileurl)
     xhr.responseType = 'blob' // force the HTTP response, response-type header to be blob
     xhr.onload = () => {
       blob = xhr.response // xhr.response is now a blob object
-      var DataBlob = blob
+      const DataBlob = blob
       window.resolveLocalFileSystemURL(cordovaFileSystem, (dirEntry) => {
         const sanitizedFilename = filename.replace(/[^a-z0-9.]/gi, '_').toLowerCase() // sanitize filename
         dirEntry.getFile(sanitizedFilename, { create: true }, (file) => {
@@ -238,7 +238,7 @@ app.file = (function (thisModule) {
   }
 
   function uploadFileToServer (fileUri, fileName, remoteUrl, callback) {
-    var onerror = (err) => {
+    const onerror = (err) => {
       console.error(`Error uploading file ${fileUri} to ${remoteUrl}`,
         err, new Error(err))
       if (typeof callback === 'function') { callback(Error(err)) }
@@ -247,14 +247,14 @@ app.file = (function (thisModule) {
     window.resolveLocalFileSystemURL(fileUri, function (fileEntry) {
       fileEntry.file((file) => {
         if (!file.size) { onerror('File is empty (on fileEntry from resolveLocalFileSystemURL)'); return }
-        var reader = new FileReader()
+        const reader = new FileReader()
         reader.onloadend = () => {
-          var blob = new Blob([new Uint8Array(reader.result)], { type: 'application/octet-stream' })
+          const blob = new Blob([new Uint8Array(reader.result)], { type: 'application/octet-stream' })
           if (!blob.size) { onerror('File is empty (on blob)'); return }
-          var fd = new FormData()
+          const fd = new FormData()
           fd.append('file', blob, fileName)
 
-          var xhr = new XMLHttpRequest()
+          const xhr = new XMLHttpRequest()
           xhr.open('POST', remoteUrl, true)
           xhr.onload = function () {
             if (xhr.status === 200 || xhr.status === 201) {
@@ -275,14 +275,14 @@ app.file = (function (thisModule) {
 
   function resizeImage (imageUri, callback) {
     // generate filename for resized image
-    var uriAdapted = adaptFilenameFromUri(imageUri) // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
-    var fileName = getFilenameFromURL(uriAdapted)[1] // 'file://path/to/photo123.jpg' => 'photo123.jpg'
-    var fileNameWithoutExtension = fileName.split('.').slice(0, -1).join('.') // 'photo123'
-    var extension = getExtensionFromURL(fileName) // 'jpg'
-    var fileNameResized = fileNameWithoutExtension + '_resized' + '.' + extension // 'photo123_resized.jpg'
+    const uriAdapted = adaptFilenameFromUri(imageUri) // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
+    const fileName = getFilenameFromURL(uriAdapted)[1] // 'file://path/to/photo123.jpg' => 'photo123.jpg'
+    const fileNameWithoutExtension = fileName.split('.').slice(0, -1).join('.') // 'photo123'
+    const extension = getExtensionFromURL(fileName) // 'jpg'
+    const fileNameResized = fileNameWithoutExtension + '_resized' + '.' + extension // 'photo123_resized.jpg'
     console.log('fileNameResized:', fileNameResized)
 
-    var resizeOptions = {
+    const resizeOptions = {
       uri: imageUri,
       fileName: fileNameResized,
       folderName: cordova.file.cacheDirectory,
@@ -312,7 +312,7 @@ app.file = (function (thisModule) {
           callback(Error('File is empty (on fileEntry from resolveLocalFileSystemURL)'))
           return
         }
-        var reader = new FileReader()
+        const reader = new FileReader()
         reader.onloadend = () => {
           callback(null, reader.result)
         }

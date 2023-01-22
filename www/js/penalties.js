@@ -3,7 +3,7 @@
 /* global app, cordova, $ */
 
 app.penalties = (function (thisModule) {
-  var penalties // Object with the several penalties
+  let penalties // Object with the several penalties
 
   function init (callback) {
     $.getJSON(cordova.file.applicationDirectory + 'www/json/penalties.json', function (data) {

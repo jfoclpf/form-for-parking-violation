@@ -21,7 +21,7 @@ app.form = (function (thisModule) {
       return ''
     }
 
-    var plate_str = $('#plate').val()
+    let plate_str = $('#plate').val()
     plate_str = plate_str.toUpperCase() // force place upcase
     plate_str = plate_str.replace(/\u2013|\u2014/g, '-') // it replaces all &ndash; (–) and &mdash; (—) symbols with simple dashes (-)
 
@@ -78,13 +78,13 @@ app.form = (function (thisModule) {
       return true
     }
 
-    var to_break = false
-    var error_string = ''
-    var count = 0
+    let to_break = false
+    let error_string = ''
+    let count = 0
 
     // loops through mandatory fields
     $('.mandatory').each(function () {
-      var val = $(this).val()
+      const val = $(this).val()
       if (
         val == null ||
         val === undefined ||
@@ -135,7 +135,7 @@ app.form = (function (thisModule) {
     }
 
     // detects if the name is correctly filled in
-    var Name = $('#name').val()
+    const Name = $('#name').val()
     if (!app.personalInfo.isFullNameOK(Name)) {
       $.jAlert({
         title: 'Erro no nome!',
@@ -182,7 +182,7 @@ app.form = (function (thisModule) {
   // removes leading and trailing spaces on every text field "on focus out"
   $(':text').each(function (index) {
     $(this).focusout(function () {
-      var text = $(this).val()
+      let text = $(this).val()
       text = $.trim(text)
       text = text.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
       $(this).val(text)
@@ -197,12 +197,12 @@ app.form = (function (thisModule) {
   // buttons "Add Image"
   $('#addImg_1, #addImg_2, #addImg_3, #addImg_4').on('click', function () {
     // get id, for example #remImg_2
-    var id = $(this).attr('id')
+    const id = $(this).attr('id')
     console.log('photo id: ' + id)
     // gets the number of the element, by obtaining the last character of the id
-    var num = id[id.length - 1]
+    const num = id[id.length - 1]
 
-    var callback = function (imgNmbr) {
+    const callback = function (imgNmbr) {
       // hides "Adds image" button
       $('#' + 'addImg_' + imgNmbr).html('<i class="fa fa-edit"></i>')
       $('#' + 'remImg_' + imgNmbr).show()
@@ -233,9 +233,9 @@ app.form = (function (thisModule) {
   // buttons "Remove Image"
   $('#remImg_1, #remImg_2, #remImg_3, #remImg_4').on('click', function () {
     // get id, for example #remImg_2
-    var id = $(this).attr('id')
+    const id = $(this).attr('id')
     // gets the number of the element, by obtaining the last character of the id
-    var num = id[id.length - 1]
+    const num = id[id.length - 1]
 
     app.photos.removeImage('myImg_' + num, num)
     $(this).hide()
@@ -246,11 +246,11 @@ app.form = (function (thisModule) {
   })
 
   function updateImgContainers () {
-    var numberOfContainers = $('#image_selector .img-container').length
-    var hasShownButton = false
-    for (var i = 0; i < numberOfContainers; i++) {
+    const numberOfContainers = $('#image_selector .img-container').length
+    let hasShownButton = false
+    for (let i = 0; i < numberOfContainers; i++) {
       console.log(i)
-      var $this = $('#image_selector .img-container').eq(i)
+      const $this = $('#image_selector .img-container').eq(i)
       if (!$this.find('img').attr('src')) {
         if (!hasShownButton) {
           console.log('show')
@@ -313,22 +313,22 @@ app.form = (function (thisModule) {
 
   // detects if the car plate is correctly filled in
   function isCarPlateOK () {
-    var plateArray = $('#plate').val().split(/[-–—]/)
+    const plateArray = $('#plate').val().split(/[-–—]/)
     return isArrayAValidPlate(plateArray)
   }
 
   // check if array is valid, p.e. ['AA','99','DD']
   function isArrayAValidPlate (arrayPlate) {
-    var plateString = arrayPlate.join('-')
+    const plateString = arrayPlate.join('-')
     // four valid plate types: AA-00-00, 00-00-AA, 00-AA-00, AA-00-AA
     // see: https://pt.stackoverflow.com/a/431398/101186
-    var expr = RegExp(/(([A-Z]{2}-[0-9]{2}-[0-9]{2})|([0-9]{2}-[0-9]{2}-[A-Z]{2})|([0-9]{2}-[A-Z]{2}-[0-9]{2})|([A-Z]{2}-[0-9]{2}-[A-Z]{2}))$/)
+    const expr = RegExp(/(([A-Z]{2}-[0-9]{2}-[0-9]{2})|([0-9]{2}-[0-9]{2}-[A-Z]{2})|([0-9]{2}-[A-Z]{2}-[0-9]{2})|([A-Z]{2}-[0-9]{2}-[A-Z]{2}))$/)
 
     return expr.test(plateString)
   }
 
-  var storedRequestedCarInfo // to avoid doing many successive requests for the same plate
-  var requestGoingOn = false // to avoid parallel requests
+  let storedRequestedCarInfo // to avoid doing many successive requests for the same plate
+  let requestGoingOn = false // to avoid parallel requests
 
   function fillCarMakeAndModelFromPlate (_plate) {
     if (!CARROS_MATRICULAS_API) {
@@ -343,7 +343,7 @@ app.form = (function (thisModule) {
     }
 
     // replace all longdashes by normal dashes for the API
-    var plate = _plate.replace(/\u2013/g, '-')
+    const plate = _plate.replace(/\u2013/g, '-')
 
     if (plate === '00-XX-00') { // used in general debug
       return
@@ -355,7 +355,7 @@ app.form = (function (thisModule) {
       requestGoingOn = false
     } else {
       // request from server
-      var requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
+      const requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
 
       $.ajax({
         type: 'GET',
@@ -386,7 +386,7 @@ app.form = (function (thisModule) {
   // Car Make and Car Model dealing with input
   // Car List and Models are got from www/js/res/car-list.js
   (function () {
-    var prevValueCarmake = ''
+    let prevValueCarmake = ''
     $('#carmake').on('input', function () {
       $(this).val(function (index, value) {
         if (!prevValueCarmake) {
@@ -396,8 +396,8 @@ app.form = (function (thisModule) {
           return value
         }
 
-        var brand
-        for (var found = false, i = 0; i < CAR_LIST.length; i++) {
+        let brand
+        for (let found = false, i = 0; i < CAR_LIST.length; i++) {
           // if 'value' is on the begining of the 'brand'
           if (CAR_LIST[i].brand.indexOf(value) === 0) {
             if (found) {
@@ -409,12 +409,12 @@ app.form = (function (thisModule) {
           }
         }
         // just found one
-        var strToReturn = prevValueCarmake = brand || value
+        const strToReturn = prevValueCarmake = brand || value
         return strToReturn
       })
     })
 
-    var prevValueCarmodel = ''
+    let prevValueCarmodel = ''
     $('#carmodel').on('input', function () {
       $(this).val(function (index, value) {
         if (!prevValueCarmodel) {
@@ -424,8 +424,8 @@ app.form = (function (thisModule) {
           return value
         }
 
-        var i; var models = []
-        var found = false
+        let i; let models = []
+        let found = false
 
         // is the brand on #carmake valid?
         for (i = 0; i < CAR_LIST.length; i++) {
@@ -444,7 +444,7 @@ app.form = (function (thisModule) {
         // finding carmodel
         // user input may be "As" which matches "Astra", "Astra cabrio" or "Astra caravan"
         // therefore gets common string, it should return "Astra"
-        var foundModels = []
+        const foundModels = []
         for (i = 0; i < models.length; i++) {
           // if 'value' is on the begining of the 'model'
           if (models[i].indexOf(value) === 0) {
@@ -457,12 +457,12 @@ app.form = (function (thisModule) {
         } else {
           // longest common starting substring in the array models
           // with ["Astra", "Astra cabrio", "Astra caravan"] returns "Astra"
-          var A = foundModels.concat().sort()
+          const A = foundModels.concat().sort()
 
-          var a1 = A[0]; var a2 = A[A.length - 1]; var L = a1.length; i = 0
+          const a1 = A[0]; const a2 = A[A.length - 1]; const L = a1.length; i = 0
           while (i < L && a1.charAt(i) === a2.charAt(i)) i++
 
-          var strToReturn = prevValueCarmodel = a1.substring(0, i)
+          const strToReturn = prevValueCarmodel = a1.substring(0, i)
           return strToReturn
         }
       })

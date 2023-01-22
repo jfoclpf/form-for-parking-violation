@@ -51,20 +51,20 @@ app.contactsFunctions = (function (thisModule) {
   // try to get PM (Policia Municipal) contacts based on name of municipality
   // geoNames is an array with possible names for the area
   function getPMcontacts (geoNames) {
-    var PMrelevantContacts = []
-    var municipalityName
-    var toAddBool
+    const PMrelevantContacts = []
+    let municipalityName
+    let toAddBool
 
-    for (var key in app.contacts.PM_Contacts) {
+    for (const key in app.contacts.PM_Contacts) {
       municipalityName = app.contacts.PM_Contacts[key].nome
 
       toAddBool = false
-      for (var key2 in geoNames) {
+      for (const key2 in geoNames) {
         toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
       }
 
       if (toAddBool) {
-        var PMrelevantContact = {
+        const PMrelevantContact = {
           authority: 'Polícia Municipal',
           authorityShort: 'Polícia Municipal',
           nome: app.contacts.PM_Contacts[key].nome,
@@ -80,20 +80,20 @@ app.contactsFunctions = (function (thisModule) {
   // try to get GNR contacts based on name of municipality and locality
   // geoNames is an array with possible names for the area
   function getGNRcontacts (geoNames) {
-    var GNRrelevantContacts = []
-    var municipalityName
-    var toAddBool
+    const GNRrelevantContacts = []
+    let municipalityName
+    let toAddBool
 
-    for (var key in app.contacts.GNR_Contacts) {
+    for (const key in app.contacts.GNR_Contacts) {
       municipalityName = app.contacts.GNR_Contacts[key].nome
 
       toAddBool = false
-      for (var key2 in geoNames) {
+      for (const key2 in geoNames) {
         toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
       }
 
       if (toAddBool) {
-        var GNRrelevantContact = {
+        const GNRrelevantContact = {
           authority: 'Guarda Nacional Republicana',
           authorityShort: 'GNR',
           nome: app.contacts.GNR_Contacts[key].nome,
@@ -109,20 +109,20 @@ app.contactsFunctions = (function (thisModule) {
   // try to get PSP contacts based on name of municipality and locality
   // geoNames is an array with possible names for the area
   function getPSPcontacts (geoNames) {
-    var PSPrelevantContacts = []
-    var municipalityName
-    var toAddBool
+    const PSPrelevantContacts = []
+    let municipalityName
+    let toAddBool
 
-    for (var key in app.contacts.PSP_Contacts) {
+    for (const key in app.contacts.PSP_Contacts) {
       municipalityName = app.contacts.PSP_Contacts[key].nome
 
       toAddBool = false
-      for (var key2 in geoNames) {
+      for (const key2 in geoNames) {
         toAddBool = toAddBool || doStringsOverlap(geoNames[key2], municipalityName)
       }
 
       if (toAddBool) {
-        var PSPrelevantContact = {
+        const PSPrelevantContact = {
           authority: 'Polícia de Segurança Pública',
           authorityShort: 'PSP',
           nome: app.contacts.PSP_Contacts[key].nome,
@@ -157,7 +157,7 @@ app.contactsFunctions = (function (thisModule) {
   }
 
   function getEmailOfCurrentSelectedAuthority () {
-    var index = $('#authority').val()
+    const index = $('#authority').val()
     return app.localization.AUTHORITIES[index].contacto
   }
 

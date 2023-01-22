@@ -10,10 +10,10 @@ const twoSpaces = '  ' // for log indentation
 module.exports = function (context) {
   console.log(`${context.hook} : ${path.relative(context.opts.projectRoot, context.scriptLocation)}`)
 
-  var projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
+  const projectRoot = path.resolve(path.dirname(context.scriptLocation), '..')
 
-  var fileOriginFullPath = path.join(projectRoot, 'keys', 'credentials.js')
-  var fileDestFullPath = path.join(projectRoot, 'www', 'js', 'credentials.js')
+  const fileOriginFullPath = path.join(projectRoot, 'keys', 'credentials.js')
+  const fileDestFullPath = path.join(projectRoot, 'www', 'js', 'credentials.js')
 
   try {
     if (fs.existsSync(fileOriginFullPath)) { // file exists

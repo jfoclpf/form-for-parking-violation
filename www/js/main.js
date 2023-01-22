@@ -2,18 +2,18 @@
 
 /* global $, cordova, device */
 
-var DEBUG = true
+let DEBUG = true
 
 /* tries to use built-in browser plugin to authentication;
 when false uses OS default browser with a simple url link;
 option `true` is not working, check:
 https://github.com/apache/cordova-plugin-inappbrowser/issues/498 */
-var AUTHENTICATION_WITH_IN_APP_BROWSER = false
+const AUTHENTICATION_WITH_IN_APP_BROWSER = false
 
-var app = {}
+const app = {}
 
 app.main = (function (thisModule) {
-  var wasInit
+  let wasInit
 
   thisModule.urls = {
     Chave_Movel_Digital: {
@@ -156,7 +156,7 @@ app.main = (function (thisModule) {
     app.historic.requestNumberOfHistoricOccurrences(
       (err, result) => {
         if (!err && result > minimumOccurencesToRequestUserToEvaluteApp) {
-          var msg = 'Reparámos que tem usado esta APP, que é gratuita, de código aberto e sem publicidade. Fizemo-lo dentro do espírito de serviço público.<br><br>' +
+          const msg = 'Reparámos que tem usado esta APP, que é gratuita, de código aberto e sem publicidade. Fizemo-lo dentro do espírito de serviço público.<br><br>' +
             'Contudo vários utilizadores movidos por uma lógica vingativa, presumivelmente automobilistas cujas ações foram reportadas, têm dado nota negativa (nota 1) a esta APP na Play Store.<br><br>' +
             'Ajude-nos avaliando o nosso trabalho cívico. Muito obrigados'
 
@@ -185,7 +185,7 @@ app.main = (function (thisModule) {
       return
     }
 
-    var mainMessage
+    let mainMessage
     const typeOfUser = $('input[type=radio][name="typeOfUser"]:checked').val()
     if (typeOfUser === 'citizen') {
       mainMessage = app.text.getMainMessage('body', 'citizen')
@@ -256,14 +256,14 @@ app.main = (function (thisModule) {
   function sendMailMessageWithoutCMD () {
     app.dbServerLink.submitNewEntryToDB()
 
-    var imagesArray = app.photos.getPhotosForEmailAttachment()
+    const imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
     const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
     console.log(JSON.stringify(attachments, 0, 3))
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
-      attachments: attachments,
+      attachments,
       subject: app.text.getMainMessage('subject', 'citizen'), // subject of the email
       body: app.text.getMainMessage('body', 'citizen'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text
@@ -272,14 +272,14 @@ app.main = (function (thisModule) {
 
   // Police Officer sends Email Without Chave Móvel Digital
   function sendMailMessageForPoliceOfficer () {
-    var imagesArray = app.photos.getPhotosForEmailAttachment()
+    const imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
     const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
     console.log(JSON.stringify(attachments, 0, 3))
 
     cordova.plugins.email.open({
       to: $('#email').val().toLowerCase(), // fetch email address from personal info
-      attachments: attachments,
+      attachments,
       subject: app.text.getMainMessage('subject', 'policeOfficer'), // subject of the email
       body: app.text.getMainMessage('body', 'policeOfficer'), // email body (for HTML, set isHtml to true)
       isHtml: true // indicats if the body is HTML or plain text

@@ -7,17 +7,17 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
-  var photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
-  var photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
-  var photosAsBase64 = []
+  const photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
+  const photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
+  const photosAsBase64 = []
   // tells if each photo has GPS information or if GPS info from the device
   // coincides with the place the photo was taken
-  var photoWithGPS = [] // 'synced' or 'unsynced'
+  const photoWithGPS = [] // 'synced' or 'unsynced'
 
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
 
-    var options = setCameraOptions(type)
+    const options = setCameraOptions(type)
 
     console.log('starting navigator.camera.getPicture')
     navigator.camera.getPicture(function (result) {
@@ -32,7 +32,7 @@ app.photos = (function (thisModule) {
   function cameraSuccess (result, imgNmbr, type, callback) {
     // checks if plugin cordova-plugin-camera-with-exif is available
     // some times this plugin has bugs, but it allows to check GPS coordinates of photo
-    var isCameraWithExifInfoAvailable, thisResult, imageUri
+    let isCameraWithExifInfoAvailable, thisResult, imageUri
     try {
       // convert JSON string to JSON Object
       thisResult = JSON.parse(result)
@@ -111,13 +111,13 @@ app.photos = (function (thisModule) {
       // the date, time and GPS information, to fill in the form
 
       // convert json_metadata JSON string to JSON Object
-      var metadata = JSON.parse(thisResult.json_metadata)
+      const metadata = JSON.parse(thisResult.json_metadata)
 
       console.log('Metadata from photo obtained')
       console.log(metadata)
 
       // if the selected photo has EXIF date info, assigns photo date and time automatically to form
-      var dateToForm
+      let dateToForm
 
       // gets date and time from EXIF
       if (metadata.datetime) {
@@ -129,17 +129,17 @@ app.photos = (function (thisModule) {
 
       if (dateToForm) {
         $('#date').datepicker('setDate', dateToForm)
-        var currentTime = app.functions.pad(dateToForm.getHours(), 2) + ':' + app.functions.pad(dateToForm.getMinutes(), 2)
+        const currentTime = app.functions.pad(dateToForm.getHours(), 2) + ':' + app.functions.pad(dateToForm.getMinutes(), 2)
         $('#time').val(currentTime)
       }
 
       // if the photo EXIF info has GPS information
       if (metadata.gpsLatitude && metadata.gpsLatitudeRef &&
                metadata.gpsLongitude && metadata.gpsLongitudeRef) {
-        var Lat = app.localization.convertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef)
-        var Long = app.localization.convertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
+        const Lat = app.localization.convertDMSStringInfoToDD(metadata.gpsLatitude, metadata.gpsLatitudeRef)
+        const Long = app.localization.convertDMSStringInfoToDD(metadata.gpsLongitude, metadata.gpsLongitudeRef)
 
-        var position = {
+        const position = {
           coords: {
             latitude: Lat,
             longitude: Long
@@ -160,7 +160,7 @@ app.photos = (function (thisModule) {
 
   // camera plugin options
   function setCameraOptions (type) {
-    var srcType
+    let srcType
     if (type === 'camera') {
       srcType = Camera.PictureSourceType.CAMERA
     } else if (type === 'library') {
@@ -170,7 +170,7 @@ app.photos = (function (thisModule) {
       return
     }
 
-    var options = {
+    const options = {
       // Some common settings are 20, 50, and 100
       quality: 50, // do not increase, otherwise the email plugin cannot attach photo due to photo file size
       destinationType: Camera.DestinationType.FILE_URI,
@@ -194,16 +194,16 @@ app.photos = (function (thisModule) {
             return
           }
           // see https://www.npmjs.com/package/cordova-plugin-mobile-ocr#plugin-usage
-          var blockTextArray = recognizedTextObj.blocks.blocktext
-          var linesArray = recognizedTextObj.lines.linetext
+          const blockTextArray = recognizedTextObj.blocks.blocktext
+          const linesArray = recognizedTextObj.lines.linetext
 
           // four valid plate types: AA-00-00, 00-00-AA, 00-AA-00, AA-00-AA
           // between AA and 00 can be space \s or any type of hyphen (-) en dash (–) and em dash (—)
           // see: https://pt.stackoverflow.com/a/431398/101186
           // see: https://regex101.com/r/SuYjr4/3
-          var detectPlate = RegExp(/^\s{0,}.{0,1}(([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[0-9]{2})|([0-9]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})|([0-9]{2}[\s\-–—]{0,1}[A-Z]{2}[\s\-–—]{0,1}[0-9]{2})|([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})).{0,1}\s{0,}$/)
+          const detectPlate = RegExp(/^\s{0,}.{0,1}(([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[0-9]{2})|([0-9]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})|([0-9]{2}[\s\-–—]{0,1}[A-Z]{2}[\s\-–—]{0,1}[0-9]{2})|([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})).{0,1}\s{0,}$/)
 
-          var pattern, plateArray
+          let pattern, plateArray
           for (var i = 0; i < linesArray.length; i++) {
             pattern = detectPlate.exec(linesArray[i])
             if (pattern && pattern[0]) {
@@ -252,16 +252,16 @@ app.photos = (function (thisModule) {
     console.log('getDateFromFileName', fileURI)
 
     // date yearmonthday
-    var n = fileURI.search(/[2][0][0-9][0-9](1[0-2]|0[1-9])([0][1-9]|[1,2][0-9]|3[0,1])/)
-    var year = fileURI.substr(n, 4)
-    var month = fileURI.substr(n + 4, 2)
-    var day = fileURI.substr(n + 6, 2)
+    let n = fileURI.search(/[2][0][0-9][0-9](1[0-2]|0[1-9])([0][1-9]|[1,2][0-9]|3[0,1])/)
+    const year = fileURI.substr(n, 4)
+    const month = fileURI.substr(n + 4, 2)
+    const day = fileURI.substr(n + 6, 2)
 
     // hourminutes
-    var newstring = fileURI.substring(0, n) + fileURI.substring(n + 8)
+    const newstring = fileURI.substring(0, n) + fileURI.substring(n + 8)
     n = newstring.search(/[0,1,2][0-9][0-5][0-9]/)
-    var hour = newstring.substr(n, 2)
-    var minute = newstring.substr(n + 2, 2)
+    const hour = newstring.substr(n, 2)
+    const minute = newstring.substr(n + 2, 2)
 
     // checks if photo date (except hour and minutes) is valid
     if (!isValidDate(year, month, day)) {
@@ -269,14 +269,14 @@ app.photos = (function (thisModule) {
     }
 
     // if valid create date object
-    var photoDate = new Date(year, month - 1, day)
+    let photoDate = new Date(year, month - 1, day)
 
     // if hours and minutes are valid, get them also
     if (hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59) {
       photoDate = new Date(year, month - 1, day, hour, minute)
     }
 
-    var today = new Date()
+    const today = new Date()
     // compare if photo date is earlier than today
     if (photoDate.getTime() >= today.getTime()) {
       return false
@@ -291,18 +291,18 @@ app.photos = (function (thisModule) {
 
     console.log('getDateFromString', dateString)
 
-    var dateStr = dateString.split(' ')[0]
-    var timeStr = dateString.split(' ')[1]
+    const dateStr = dateString.split(' ')[0]
+    const timeStr = dateString.split(' ')[1]
 
-    var date = dateStr.split(':')
-    var time = timeStr.split(':')
+    const date = dateStr.split(':')
+    const time = timeStr.split(':')
 
     // checks if date (except hour and minutes) is valid
     if (!isValidDate(date[0], date[1], date[2])) {
       return false
     }
 
-    var dateForm = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
+    const dateForm = new Date(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
     console.log(dateForm)
 
     return dateForm
@@ -310,18 +310,18 @@ app.photos = (function (thisModule) {
 
   // checks if date is valid, ex: 30 of February is invalid
   function isValidDate (year, month, day) {
-    var date = new Date(year, month - 1, day)
+    const date = new Date(year, month - 1, day)
     return date && (date.getMonth() + 1) === month
   }
 
   function displayImage (imgUri, id) {
-    var elem = document.getElementById(id)
+    const elem = document.getElementById(id)
     elem.src = imgUri
     elem.style.display = 'block'
   }
 
   function removeImage (id, num) {
-    var elem = document.getElementById(id)
+    const elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
     photosForEmailAttachment[num] = null

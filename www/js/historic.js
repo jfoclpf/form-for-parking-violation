@@ -10,7 +10,7 @@ app.historic = (function (thisModule) {
   const requestHistoricUrl = app.main.urls.databaseServer.requestHistoric
   const requestImageUrl = app.main.urls.databaseServer.requestImage
 
-  var historicData
+  let historicData
 
   function updateHistoric () {
     const uuid = device.uuid
@@ -20,7 +20,7 @@ app.historic = (function (thisModule) {
     $.ajax({
       url: requestHistoricUrl,
       type: 'GET',
-      data: { uuid: uuid },
+      data: { uuid },
       crossDomain: true,
       headers: app.dbServerLink.getAjaxHttpHeaderKeys(),
       success: function (data) {
@@ -46,7 +46,7 @@ app.historic = (function (thisModule) {
     $.ajax({
       url: requestHistoricUrl,
       type: 'GET',
-      data: { uuid: uuid },
+      data: { uuid },
       crossDomain: true,
       headers: app.dbServerLink.getAjaxHttpHeaderKeys(),
       success: function (data) {
@@ -94,7 +94,7 @@ app.historic = (function (thisModule) {
 
     // since the results are stored as they are submitted, they are ordered by time
     // we want to show on top the most recent ones, i.e., the last on the array
-    for (var i = historicData.length - 1; i >= 0; i--) {
+    for (let i = historicData.length - 1; i >= 0; i--) {
       const el = historicData[i]
       let elHtmlToAppend =
        `<div class="list-group-item historic_element" data-index="${i}">
@@ -119,7 +119,7 @@ app.historic = (function (thisModule) {
           <div class="mt-2">`
 
       // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
-      for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
+      for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
         if (historicData[i]['foto' + photoIndex]) { // if that photo index exists in the DB entry
           const fullImgUrl = requestImageUrl + '/' + historicData[i]['foto' + photoIndex]
           elHtmlToAppend += `<img src="${fullImgUrl}">`
@@ -260,17 +260,17 @@ app.historic = (function (thisModule) {
   }
 
   function sendReminderEmail (occurrence) {
-    var progressAlert = $.jAlert({
+    const progressAlert = $.jAlert({
       class: 'ja_300px',
       closeBtn: false,
       content: `Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="${cordova.file.applicationDirectory + 'www/css/res/images/loading.gif'}" />`
     })
     // download images from server to cache to attach them in email
     // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
-    var photosDeferred = []
+    const photosDeferred = []
     console.log('start sendReminderEmail')
-    var downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
-      var destPathDir
+    const downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
+      let destPathDir
       if (app.functions.isThisAndroid()) {
         // https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#file-system-layouts
         destPathDir = cordova.file.cacheDirectory // normally: file:///data/data/<app-id>/cache
@@ -289,7 +289,7 @@ app.historic = (function (thisModule) {
         })
     }
 
-    for (var photoIndex = 1; photoIndex <= 4; photoIndex++) {
+    for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
       if (occurrence['foto' + photoIndex]) { // if that photo index exists in the DB entry
         const fileName = occurrence['foto' + photoIndex]
         const fullImgUrl = requestImageUrl + '/' + fileName
@@ -300,7 +300,7 @@ app.historic = (function (thisModule) {
     }
 
     $.when(...photosDeferred).done(function (/* arguments array */) {
-      var attachments = []
+      const attachments = []
       for (let i = 0; i < arguments.length; i++) {
         if (arguments[i]) {
           attachments.push(arguments[i])
@@ -308,13 +308,13 @@ app.historic = (function (thisModule) {
       }
       console.log(JSON.stringify(attachments, 0, 3))
 
-      var emailSubject = `[${occurrence.carro_matricula}] na ${occurrence.data_local}, ${occurrence.data_concelho} - Inquirição sobre estado processual da denúncia de estacionamento anteriormente efetuada`
+      const emailSubject = `[${occurrence.carro_matricula}] na ${occurrence.data_local}, ${occurrence.data_concelho} - Inquirição sobre estado processual da denúncia de estacionamento anteriormente efetuada`
 
       setTimeout(() => {
         progressAlert.closeAlert()
         cordova.plugins.email.open({
           to: app.contactsFunctions.getEmailByFullName(occurrence.autoridade),
-          attachments: attachments, // file paths or base64 data streams
+          attachments, // file paths or base64 data streams
           subject: emailSubject, // subject of the email
           body: app.text.getReminderMessage(occurrence), // email body (for HTML, set isHtml to true)
           isHtml: true // indicats if the body is HTML or plain text

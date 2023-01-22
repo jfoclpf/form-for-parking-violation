@@ -4,10 +4,10 @@
 /* global app, $, cordova, device, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
 
 app.authentication = (function (thisModule) {
-  var inAppBrowserRef
-  var isAuthenticationWindowClosed = true
-  var leftAppToSignPdf = false
-  var jAlertOnAppResume
+  let inAppBrowserRef
+  let isAuthenticationWindowClosed = true
+  let leftAppToSignPdf = false
+  let jAlertOnAppResume
 
   function startAuthenticationWithSystemBrowser () {
     leftAppToSignPdf = false
@@ -39,10 +39,10 @@ app.authentication = (function (thisModule) {
 
     console.log('loadAuthentication()')
 
-    var url = app.main.urls.Chave_Movel_Digital.assinar_pdf
+    const url = app.main.urls.Chave_Movel_Digital.assinar_pdf
 
-    var target = '_blank'
-    var options = 'hidden=yes,' +
+    const target = '_blank'
+    const options = 'hidden=yes,' +
       'footer=yes,' +
       'beforeload=yes' +
       'zoom=no,' +
@@ -88,7 +88,7 @@ app.authentication = (function (thisModule) {
       dataType: 'text',
       success: function (JScodeRes) {
         // altera o texto quando refere o Documento para assinar
-        var JScode = JScodeRes +
+        const JScode = JScodeRes +
           `(function(){
              var textEl = document.getElementById('MainContent_lblTitleChooseDoc');
              if(textEl){
@@ -127,15 +127,15 @@ app.authentication = (function (thisModule) {
   }
 
   function savePDF () {
-    var options = {
+    const options = {
       documentSize: 'A4',
       type: 'base64'
     }
 
-    var pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body', 'citizen')
+    let pdfhtml = '<html><body style="font-size:120%">' + app.text.getMainMessage('body', 'citizen')
 
-    var imagesArray = app.photos.getPhotosAsBase64()
-    for (var i = 0; i < imagesArray.length; i++) {
+    const imagesArray = app.photos.getPhotosAsBase64()
+    for (let i = 0; i < imagesArray.length; i++) {
       pdfhtml += `<br><br><img src="${imagesArray[i]}" width="320">`
     }
 
@@ -162,15 +162,15 @@ app.authentication = (function (thisModule) {
 
   function getPdfFilePath (callback) {
     // folderpath/fileName
-    var folderpath
-    var fileName
+    let folderpath
+    let fileName
 
     // get fileName
-    var carPlate = app.form.getCarPlate()
+    const carPlate = app.form.getCarPlate()
     if (carPlate && !app.functions.isThis_iOS()) {
       fileName = carPlate
     } else {
-      var rightNow = new Date()
+      const rightNow = new Date()
       fileName = rightNow.toISOString().slice(0, 10)
     }
 
@@ -206,23 +206,23 @@ app.authentication = (function (thisModule) {
     contentType = contentType || ''
     sliceSize = sliceSize || 512
 
-    var byteCharacters = atob(b64Data)
-    var byteArrays = []
+    const byteCharacters = atob(b64Data)
+    const byteArrays = []
 
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize)
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize)
 
-      var byteNumbers = new Array(slice.length)
-      for (var i = 0; i < slice.length; i++) {
+      const byteNumbers = new Array(slice.length)
+      for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i)
       }
 
-      var byteArray = new Uint8Array(byteNumbers)
+      const byteArray = new Uint8Array(byteNumbers)
 
       byteArrays.push(byteArray)
     }
 
-    var blob = new Blob(byteArrays, { type: contentType })
+    const blob = new Blob(byteArrays, { type: contentType })
     return blob
   }
 
@@ -234,13 +234,13 @@ app.authentication = (function (thisModule) {
    * @param content {Base64 String} Important : The content can't contain the following string (data:application/pdf;base64). Only the base64 string is expected.
    */
   function savebase64AsPDF (folderpath, filename, content, contentType) {
-    var onerror = function (err, message) {
+    const onerror = function (err, message) {
       leftAppToSignPdf = false
       console.error(err)
       window.alert(`Não foi possível salvar o ficheiro na pasta "${folderpath}". ${message}`)
     }
     // Convert the base64 string in a Blob
-    var DataBlob = b64toBlob(content, contentType)
+    const DataBlob = b64toBlob(content, contentType)
 
     console.log('Starting to write the file')
 
@@ -271,7 +271,7 @@ app.authentication = (function (thisModule) {
       inAppBrowserRef.hide()
     }
 
-    var deviceSpecificMessage
+    let deviceSpecificMessage
 
     // for Android 10 and above, we need to use social sharing plugin to save the pdf
     // see https://github.com/jfoclpf/form-for-parking-violation/issues/89
@@ -296,10 +296,10 @@ app.authentication = (function (thisModule) {
               console.log('Share completed', res)
               // tries to find the app name with which the pdf file was shared/downloaded
               $.getJSON(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', (data) => {
-                var msg = 'Recorde-se do local onde guardou o ficheiro PDF'
+                let msg = 'Recorde-se do local onde guardou o ficheiro PDF'
 
                 // res.app is on the form "ComponentInfo{com.synology.DSfile/com.synology.DSfile.MainActivity}"
-                var appId = res.app.match(/\{([^)]+)\}/)
+                let appId = res.app.match(/\{([^)]+)\}/)
                 if (appId) {
                   appId = appId[1]
                   if (appId.includes('/')) {
@@ -333,7 +333,7 @@ app.authentication = (function (thisModule) {
   }
 
   function showPDFInfoDialog (deviceSpecificMessage) {
-    var msg = deviceSpecificMessage + '<br><br>' +
+    const msg = deviceSpecificMessage + '<br><br>' +
       'Abrir-se-á de seguida uma janela para assinar o PDF fazendo uso da sua Chave Móvel Digital. No processo, garanta que coloca a assinatura visível no documento.<br><br>' +
       'Após assinar o PDF com a sua Chave Móvel Digital, guarde esse PDF digitalmente assinado e depois regresse novamente a esta APP.<br><br>' +
       '<span style="font-size:80%">Nota: Por vezes o envio de SMS da Chave Móvel Digital não funciona. A responsabilidade por tal falha <b>não é nossa</b>, é dos serviços do Cartão de Cidadão. ' +

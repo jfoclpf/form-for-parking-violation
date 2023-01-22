@@ -34,26 +34,26 @@ function createCleanWWWDirForTest () {
 }
 
 function convertHbsToHtmlSync (wwwDistDir, mainIndexHtmlFile) {
-  var fullPathMainIndexHbsFile = path.join(wwwDistDir, mainIndexHbsFile)
+  const fullPathMainIndexHbsFile = path.join(wwwDistDir, mainIndexHbsFile)
 
   // Register Partials
-  var partialsDir = path.join(wwwDistDir, 'html-partials')
-  var filenames = fs.readdirSync(partialsDir)
+  const partialsDir = path.join(wwwDistDir, 'html-partials')
+  const filenames = fs.readdirSync(partialsDir)
 
   filenames.forEach(function (filename) {
-    var matches = /^([^.]+).hbs$/.exec(filename)
+    const matches = /^([^.]+).hbs$/.exec(filename)
     if (!matches) {
       return
     }
-    var name = matches[1]
-    var template = fs.readFileSync(path.join(partialsDir, filename), 'utf8')
+    const name = matches[1]
+    const template = fs.readFileSync(path.join(partialsDir, filename), 'utf8')
     Handlebars.registerPartial(name, template)
     console.log(`Registered partial ${name}.hbs`)
   })
 
-  var source = fs.readFileSync(fullPathMainIndexHbsFile, 'utf8').toString()
-  var template = Handlebars.compile(source)
-  var output = template()
+  const source = fs.readFileSync(fullPathMainIndexHbsFile, 'utf8').toString()
+  const template = Handlebars.compile(source)
+  const output = template()
   fs.writeFileSync(path.join(wwwDistDir, mainIndexHtmlFile), output, 'utf8')
   console.log(`html file ${mainIndexHtmlFile} created`)
 
@@ -65,7 +65,7 @@ function convertHbsToHtmlSync (wwwDistDir, mainIndexHtmlFile) {
 
 // get main index file from config.xml: <content src="index.html"/>
 function getIndexHtmlFileFromConfigXML (configXmlFullPath, callback) {
-  var parser = new xml2js.Parser()
+  const parser = new xml2js.Parser()
   fs.readFile(configXmlFullPath, function (err, data) {
     if (err) {
       console.error(Error(err))

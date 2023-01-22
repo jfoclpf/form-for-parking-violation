@@ -120,7 +120,7 @@ app.text = (function (thisModule) {
   }
 
   function getExtraAuthenticationHTMLText () {
-    var text = 'Refira-se ainda que esta mensagem tem anexo o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presença nas instalações de V. Exas</b>.<br><br>' +
+    const text = 'Refira-se ainda que esta mensagem tem anexo o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presença nas instalações de V. Exas</b>.<br><br>' +
     'Tenho pleno conhecimento de que a Autoridade Nacional de Segurança Rodoviária (ANSR) consigna que os agentes de autoridade, mediante denúncia de um cidadão, deverão levantar auto de contraordenação, tornando-se necessário recolher os elementos ' +
     'probatórios que sustentem formalmente os documentos de denúncia, conforme o n.º 3 do artigo 170.º do Código Estrada (CE). Contudo, de acordo com o n. 1) do artigo 169.º-A do Código da Estrada, introduzido pelo Decreto-Lei n.º 102-B/2020, ' +
     'os atos processuais podem ser praticados em suporte informático com aposição de assinatura digital qualificada, nomeadamente através do Cartão de Cidadão e da Chave Móvel Digital, o que se verifica no presente caso. ' +
@@ -133,7 +133,7 @@ app.text = (function (thisModule) {
 
   // called by historic module
   function getReminderMessage (occurrence) {
-    var text = `${getRandomGreetings()} da ${occurrence.autoridade}<br><br>` +
+    const text = `${getRandomGreetings()} da ${occurrence.autoridade}<br><br>` +
     'No seguimento da denúncia já enviada anteriormente a V. Exas. ' +
     'a propósito da violação do Código da Estrada perpetrada pelo condutor do veículo ' +
     `${occurrence.carro_marca} ${occurrence.carro_modelo} com a matrícula ${occurrence.carro_matricula}, ` +
@@ -151,7 +151,7 @@ app.text = (function (thisModule) {
 
   function getMailMessageWithCMD (option) {
     if (option === 'body') {
-      var mainMessage = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';<br><br>' +
+      let mainMessage = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';<br><br>' +
         'Envio em anexo ficheiro PDF com uma denúncia de estacionamento ao abrigo do n.º 5 do art. 170.º do Código da Estrada.<br><br>'
 
       mainMessage += 'Refira-se ainda que o PDF em anexo tem o meu certificado digital emitido pela Agência para a Modernização Administrativa, <b>o que é equivalente, de acordo com a Lei, à minha presença nas instalações de V. Exas</b>.<br><br>' +
@@ -179,8 +179,8 @@ app.text = (function (thisModule) {
 
   function getNameOfCurrentSelectedAuthority () {
     // Authority
-    var authority, authorityName
-    var index = $('#authority').val()
+    let authority, authorityName
+    const index = $('#authority').val()
 
     authority = app.localization.AUTHORITIES[index].authority
     authorityName = app.localization.AUTHORITIES[index].nome
@@ -192,7 +192,7 @@ app.text = (function (thisModule) {
     const isGNR = app.contactsFunctions.getEmailOfCurrentSelectedAuthority()
       .split('@').pop().toLowerCase().includes('gnr')
 
-    var greetingsInitial = [
+    const greetingsInitial = [
       'Excelentíssimos senhores',
       'Excelentíssimos ' + (isGNR ? 'guardas' : 'agentes'),
       'Prezados senhores',
@@ -209,7 +209,7 @@ app.text = (function (thisModule) {
   // Andrey
   function getRegards () {
     // gets a random regard
-    var regards = [
+    const regards = [
       'Agradecendo antecipadamente a atenção de V. Ex.as, apresento os meus melhores cumprimentos',
       'Com os melhores cumprimentos',
       'Com os meus melhores cumprimentos',
@@ -220,14 +220,14 @@ app.text = (function (thisModule) {
       'Respeitosamente'
     ]
 
-    var regard = regards[Math.floor(Math.random() * regards.length)]
+    const regard = regards[Math.floor(Math.random() * regards.length)]
 
     // full name
-    var Name = $('#name').val()
+    const Name = $('#name').val()
     // gets first and last name
-    var ShortName = Name.split(' ')[0] + ' ' + Name.split(' ')[(Name.split(' ')).length - 1]
+    const ShortName = Name.split(' ')[0] + ' ' + Name.split(' ')[(Name.split(' ')).length - 1]
 
-    var msgEnd = regard + ',<br>' + ShortName
+    const msgEnd = regard + ',<br>' + ShortName
 
     return msgEnd
   }

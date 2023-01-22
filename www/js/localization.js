@@ -3,7 +3,7 @@
 /* global app, $ */
 
 app.localization = (function (thisModule) {
-  var Latitude, Longitude
+  let Latitude, Longitude
 
   function loadMapsApi () {
     if (!navigator.onLine) {
@@ -25,7 +25,7 @@ app.localization = (function (thisModule) {
     // detect if has Internet AND if the GoogleMaps API is loaded
     if (navigator.onLine) {
       GPSLoadingOnFields(true) // truns on loading icon on the fields
-      var options = { timeout: 30000, enableHighAccuracy: true }
+      const options = { timeout: 30000, enableHighAccuracy: true }
       navigator.geolocation.getCurrentPosition(setCoordinates, PositionError, options)
     } else {
       console.error('Device Navigator not online')
@@ -34,9 +34,9 @@ app.localization = (function (thisModule) {
   }
 
   function setCoordinates (position) {
-    var latitude = position.coords.latitude
+    const latitude = position.coords.latitude
     Latitude = latitude
-    var longitude = position.coords.longitude
+    const longitude = position.coords.longitude
     Longitude = longitude
     console.log('latitude, longitude: ', latitude, longitude)
     getAddressFromGPS(latitude, longitude) // Pass the latitude and longitude to get address.
@@ -44,7 +44,7 @@ app.localization = (function (thisModule) {
 
   // to be used from outside of this module
   function getCoordinates () {
-    var coordinates = {
+    const coordinates = {
       latitude: Latitude,
       longitude: Longitude
     }
@@ -121,7 +121,7 @@ app.localization = (function (thisModule) {
 
     // array of possible names for the locale, for example ["Lisboa", "Odivelas"]
     // to be used for searching possible corresponding authorities
-    var geoNames = []
+    let geoNames = []
 
     if (addressFromGeoPtApi) {
       if (addressFromGeoPtApi.freguesia) {
@@ -146,7 +146,7 @@ app.localization = (function (thisModule) {
 
       // get relevant address details to find police authority
       // see: https://nominatim.org/release-docs/latest/api/Output/#addressdetails
-      var relevantAddressDetails = [
+      const relevantAddressDetails = [
         'state_district', 'county',
         'municipality', 'city', 'town', 'village',
         'city_district', 'district', 'borough', 'suburb', 'subdivision'
@@ -160,7 +160,7 @@ app.localization = (function (thisModule) {
 
       // from the Postal Code got from OMS
       // tries to get locality using the offline Data Base (see file contacts.js)
-      var localityFromDB, municipalityFromDB
+      let localityFromDB, municipalityFromDB
       if (addressFromOSM.postcode) {
         const dataFromDB = getDataFromPostalCode(addressFromOSM.postcode)
 
@@ -196,13 +196,13 @@ app.localization = (function (thisModule) {
     thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, app.contactsFunctions.getGNRcontacts(geoNames))
     thisModule.AUTHORITIES.push.apply(thisModule.AUTHORITIES, app.contactsFunctions.getPSPcontacts(geoNames))
 
-    var PSPGeral = {
+    const PSPGeral = {
       authority: 'Polícia',
       authorityShort: 'Polícia de Segurança Pública',
       nome: 'Geral',
       contacto: 'contacto@psp.pt'
     }
-    var GNRGeral = {
+    const GNRGeral = {
       authority: 'Guarda Nacional Republicana',
       authorityShort: 'GNR',
       nome: 'Comando Geral',
@@ -233,7 +233,7 @@ app.localization = (function (thisModule) {
 
   // GPS/Google Postal Code -> Localities.postalCode -> Localities.municipality ->  Municipalities.code -> Municipalities.name -> PM_Contacts.nome
   function getDataFromPostalCode (postalCode) {
-    var toReturn
+    let toReturn
 
     postalCode = postalCode.substring(0, 4) // gets first 4 characters
     if (postalCode.length !== 4) {
@@ -246,7 +246,7 @@ app.localization = (function (thisModule) {
 
     console.log('getDataFromPostalCode: ' + postalCode, typeof postalCode)
 
-    var key, locality, municipality, municipalityCode
+    let key, locality, municipality, municipalityCode
 
     for (key in app.contacts.Localities) {
       if (app.contacts.Localities[key].postalCode === postalCode) {
@@ -289,10 +289,10 @@ app.localization = (function (thisModule) {
   // converts latitude, longitude coordinates from Degrees Minutes Second (DMS) to Decimal Degrees (DD)
   // the input string of the DMS is on the format "52/1,0/1,376693/10000"
   function convertDMSStringInfoToDD (gpsString, direction) {
-    var i, temp
-    var values = []
+    let i, temp
+    const values = []
 
-    var gpsArray = gpsString.split(',')
+    const gpsArray = gpsString.split(',')
 
     for (i = 0; i < gpsArray.length; i++) {
       // if the value is presented in ratio, example "376693/10000"
@@ -304,11 +304,11 @@ app.localization = (function (thisModule) {
       }
     }
 
-    var deg = values[0]
-    var min = values[1]
-    var sec = values[2]
+    const deg = values[0]
+    const min = values[1]
+    const sec = values[2]
 
-    var dd = deg + min / 60 + sec / (60 * 60)
+    let dd = deg + min / 60 + sec / (60 * 60)
 
     if (direction === 'S' || direction === 'W') {
       dd = dd * -1

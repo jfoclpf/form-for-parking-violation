@@ -13,9 +13,9 @@ app.dbServerLink = (function (thisModule) {
 
     // generates file names array for images
     const randomString = getRandomString(10) // serves to uniquely identify the filenames
-    var imgFileNames = []
-    var imagesArray = app.photos.getPhotosUriOnFileSystem()
-    var numberOfImages = imagesArray.length
+    const imgFileNames = []
+    const imagesArray = app.photos.getPhotosUriOnFileSystem()
+    const numberOfImages = imagesArray.length
     for (let i = 0; i < 4; i++) {
       if (i < numberOfImages) {
         const fileName = `${DEBUG ? 'debug_' : ''}${carPlate}_n${i + 1}_${dateYYYY_MM_DD}_${timeHH_MM}_${locality}_${randomString}.jpg`
@@ -29,7 +29,7 @@ app.dbServerLink = (function (thisModule) {
     // https://github.com/jfoclpf/form-for-parking-violation/issues/115
     const bArePhotosSyncedWithGPS = app.photos.getPhotoWithGPS().every(el => el === 'synced')
 
-    var databaseObj = {
+    const databaseObj = {
       PROD: !DEBUG ? 1 : 0,
       uuid: device.uuid,
       foto1: imgFileNames[0],
@@ -54,7 +54,7 @@ app.dbServerLink = (function (thisModule) {
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify({ dbCommand: 'submitNewEntryToDB', databaseObj: databaseObj }),
+      data: JSON.stringify({ dbCommand: 'submitNewEntryToDB', databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
@@ -83,10 +83,10 @@ app.dbServerLink = (function (thisModule) {
 
   // generate random string
   function getRandomString (length) {
-    var result = ''
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    var charactersLength = characters.length
-    for (var i = 0; i < length; i++) {
+    let result = ''
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const charactersLength = characters.length
+    for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
     return result
@@ -94,14 +94,14 @@ app.dbServerLink = (function (thisModule) {
 
   // for a certain occurence it sets that it was dealt, or not, by authority
   function setProcessedByAuthorityStatus (occurence, status, callback) {
-    var databaseObj = Object.assign({}, occurence) // cloning Object
+    const databaseObj = Object.assign({}, occurence) // cloning Object
 
     databaseObj.processada_por_autoridade = status ? 1 : 0
 
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify({ dbCommand: 'setProcessedByAuthorityStatus', databaseObj: databaseObj }),
+      data: JSON.stringify({ dbCommand: 'setProcessedByAuthorityStatus', databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
@@ -121,7 +121,7 @@ app.dbServerLink = (function (thisModule) {
 
   // set Entry in Database as deleted by admin
   function setEntryInDbAsDeleted (dbEntry, deleter, callback) {
-    var databaseObj = Object.assign({}, dbEntry) // cloning Object
+    const databaseObj = Object.assign({}, dbEntry) // cloning Object
 
     let dbCommand
     if (deleter === 'admin') {
@@ -136,7 +136,7 @@ app.dbServerLink = (function (thisModule) {
     $.ajax({
       url: uploadOccurenceUrl,
       type: 'POST',
-      data: JSON.stringify({ dbCommand: dbCommand, databaseObj: databaseObj }),
+      data: JSON.stringify({ dbCommand, databaseObj }),
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       crossDomain: true,
@@ -157,7 +157,7 @@ app.dbServerLink = (function (thisModule) {
   function getAjaxHttpHeaderKeys () {
     if (typeof CryptoComm === 'function') {
       const values = CryptoComm()
-      var ajaxHeaders = {
+      const ajaxHeaders = {
         'x-key-v1': values.v1,
         'x-key-v2': values.v2,
         'x-key-v3': values.v3
