@@ -204,7 +204,7 @@ app.photos = (function (thisModule) {
           const detectPlate = RegExp(/^\s{0,}.{0,1}(([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[0-9]{2})|([0-9]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})|([0-9]{2}[\s\-–—]{0,1}[A-Z]{2}[\s\-–—]{0,1}[0-9]{2})|([A-Z]{2}[\s-–—]{0,1}[0-9]{2}[\s-–—]{0,1}[A-Z]{2})).{0,1}\s{0,}$/)
 
           let pattern, plateArray
-          for (var i = 0; i < linesArray.length; i++) {
+          for (let i = 0; i < linesArray.length; i++) {
             pattern = detectPlate.exec(linesArray[i])
             if (pattern && pattern[0]) {
               // plate may be p00 00–AAk
@@ -220,7 +220,7 @@ app.photos = (function (thisModule) {
             }
           }
 
-          for (i = 0; i < blockTextArray.length; i++) {
+          for (let i = 0; i < blockTextArray.length; i++) {
             pattern = detectPlate.exec(blockTextArray[i])
             if (pattern && pattern[0]) {
               // plate may be p00 00–AAk

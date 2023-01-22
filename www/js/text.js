@@ -178,12 +178,10 @@ app.text = (function (thisModule) {
   }
 
   function getNameOfCurrentSelectedAuthority () {
-    // Authority
-    let authority, authorityName
     const index = $('#authority').val()
 
-    authority = app.localization.AUTHORITIES[index].authority
-    authorityName = app.localization.AUTHORITIES[index].nome
+    const authority = app.localization.AUTHORITIES[index].authority
+    const authorityName = app.localization.AUTHORITIES[index].nome
 
     return authority + ', ' + authorityName
   }
