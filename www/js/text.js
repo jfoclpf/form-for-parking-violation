@@ -44,8 +44,8 @@ app.text = (function (thisModule) {
         'fazer a seguinte denúncia de contraordenação para que V. Exas. ' +
         'levantem o auto respetivo e multem o infra-mencionado responsável.'
       } else if (typeOfUser === 'policeOfficer') {
-        msg = 'A atividade policial tem como missão velar pelo cumprimento das leis e regulamentos relativos ' +
-          'à viação terrestre e aos transportes rodoviários e promover e garantir a segurança rodoviária, ' +
+        msg = 'A atividade policial tem como missão zelar pelo cumprimento das leis e regulamentos relativos ' +
+          'à viação terrestre e aos transportes rodoviários, assim como promover e garantir a segurança rodoviária, ' +
           'designadamente através da fiscalização, do ordenamento e da disciplina do trânsito.'
       } else {
         console.error('Invalid type of user: ' + typeOfUser)
