@@ -1,6 +1,5 @@
 //  LOCALIZATION/GPS/Contacts
 
-/* eslint no-var: off */
 /* global app, $ */
 
 app.localization = (function (thisModule) {

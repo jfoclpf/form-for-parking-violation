@@ -1,4 +1,3 @@
-/* eslint no-var: off */
 /* eslint camelcase: off */
 /* eslint prefer-regex-literals: off */
 

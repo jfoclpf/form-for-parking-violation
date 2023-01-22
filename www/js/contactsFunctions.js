@@ -1,6 +1,5 @@
 /* Module that deals with the contacts stored in module contacts.js */
 
-/* eslint no-var: off */
 /* global app, $ */
 
 app.contactsFunctions = (function (thisModule) {

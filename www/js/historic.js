@@ -4,7 +4,6 @@
    These complaints are anonymously stored in the database        */
 
 /* eslint camelcase: off */
-/* eslint no-var: off */
 /* global app, $, device, cordova */
 
 app.historic = (function (thisModule) {

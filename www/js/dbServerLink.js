@@ -1,4 +1,3 @@
-/* eslint no-var: off */
 /* eslint camelcase: "off" */
 /* global app, device, $, CryptoComm, DEBUG */
 

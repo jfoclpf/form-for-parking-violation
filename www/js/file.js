@@ -1,4 +1,3 @@
-/* eslint no-var: off */
 /* eslint camelcase: off */
 
 /* global app, cordova, XMLHttpRequest, FileReader, Blob, FormData  */

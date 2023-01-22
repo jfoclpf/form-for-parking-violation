@@ -1,4 +1,3 @@
-/* eslint no-var: off */
 /* eslint camelcase: off */
 
 /* global app, cordova, $, device, ADMIN_DEVICE_UUIDs */
