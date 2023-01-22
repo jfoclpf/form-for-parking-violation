@@ -37,9 +37,14 @@ app.text = (function (thisModule) {
       if (typeOfUser === 'citizen') {
         msg = getRandomGreetings() + ' da ' + getNameOfCurrentSelectedAuthority() + ';'
 
+        const cityOfResidence = $('#address_city').val()
+
         msg1 = `Eu, <b>${$('#name').val()}</b>, ` +
         `com o <b>${$('#id_type').val()}</b> com o número <b>${$('#id_number').val()}</b> ` +
-        `e com residência em <b>${$('#address').val()}, ${$('#postal_code').val()}, ${$('#address_city').val()}</b>, ` +
+
+        // `e com residência em <b>${$('#address').val()}, ${$('#postal_code').val()}, ${$('#address_city').val()}</b>, ` +
+        `e com residência ${cityOfResidence[cityOfResidence.length - 1] === 'o' ? 'no' : 'em'} ${cityOfResidence}</b>, ` +
+
         'venho por este meio, ao abrigo do n.º 5 do artigo 170.º do Código da Estrada, ' +
         'fazer a seguinte denúncia de contraordenação para que V. Exas. ' +
         'levantem o auto respetivo e multem o infra-mencionado responsável.'

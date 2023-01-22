@@ -145,14 +145,14 @@ app.form = (function (thisModule) {
       return false
     }
 
-    if (!app.personalInfo.isPostalCodeOK()) {
+    /* if (!app.personalInfo.isPostalCodeOK()) {
       $.jAlert({
         title: 'Erro no Código Postal!',
         theme: 'red',
         content: 'Insira o Código Postal no formato XXXX-XXX'
       })
       return false
-    }
+    } */
 
     // detects if the Portuguese car plate is correctly filled
     if (!app.functions.isThis_iOS() && !$('#free_plate').is(':checked') && !isCarPlateOK() && !DEBUG) {
