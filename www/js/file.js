@@ -3,6 +3,44 @@
 /* global app, cordova, XMLHttpRequest, FileReader, Blob, FormData  */
 
 app.file = (function (thisModule) {
+  // format: text, dataURL, arrayBuffer, binaryString
+  function getFileContent (imageUri, format, callback) {
+    window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
+      fileEntry.file((file) => {
+        if (!file.size) {
+          callback(Error('File is empty (on fileEntry from resolveLocalFileSystemURL)'))
+          return
+        }
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          callback(null, reader.result)
+        }
+        reader.onerror = (err) => {
+          console.error('Error on FileReader', err)
+          callback(Error('Error on FileReader' + err.message))
+        }
+
+        switch (format) {
+          case 'arrayBuffer':
+            reader.readAsArrayBuffer(file)
+            break
+          case 'binaryString':
+            reader.readAsBinaryString(file)
+            break
+          case 'dataURL':
+            reader.readAsDataURL(file)
+            break
+          case 'text':
+            reader.readAsText(file)
+            break
+          default:
+            reader.readAsText(file)
+        }
+      }, (err) => { callback(Error('Error on fileEntry.file ' + JSON.stringify(err))) })
+    }, (err) => { callback(Error('Error on resolveLocalFileSystemURL ' + JSON.stringify(err))) })
+  }
+
   // 'file://path/to/photo.jpg?123' => 'file://path/to/photo123.jpg'
   // this function is very important cause the getpicture plugin returns a unique tag after ?
   // on the file uri, such that files don't get messed with each other, since the plugin uses the cache
@@ -305,23 +343,7 @@ app.file = (function (thisModule) {
       })
   }
 
-  function getFileAsBase64 (imageUri, callback) {
-    window.resolveLocalFileSystemURL(imageUri, function (fileEntry) {
-      fileEntry.file((file) => {
-        if (!file.size) {
-          callback(Error('File is empty (on fileEntry from resolveLocalFileSystemURL)'))
-          return
-        }
-        const reader = new FileReader()
-        reader.onloadend = () => {
-          callback(null, reader.result)
-        }
-        reader.onerror = (err) => { console.error('Error on FileReader', err) }
-        reader.readAsDataURL(file)
-      }, (err) => { callback(Error('Error on fileEntry.file ' + JSON.stringify(err))) })
-    }, (err) => { callback(Error('Error on resolveLocalFileSystemURL ' + JSON.stringify(err))) })
-  }
-
+  thisModule.getFileContent = getFileContent
   thisModule.listDir = listDir
   thisModule.getFilenameFromURL = getFilenameFromURL
   thisModule.copyFile = copyFile
@@ -333,7 +355,6 @@ app.file = (function (thisModule) {
   thisModule.downloadFileToDevice = downloadFileToDevice
   thisModule.uploadFileToServer = uploadFileToServer
   thisModule.resizeImage = resizeImage
-  thisModule.getFileAsBase64 = getFileAsBase64
 
   return thisModule
 })(app.file || {})
