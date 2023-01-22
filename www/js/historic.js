@@ -260,66 +260,71 @@ app.historic = (function (thisModule) {
   }
 
   function sendReminderEmail (occurrence) {
-    const progressAlert = $.jAlert({
-      class: 'ja_300px',
-      closeBtn: false,
-      content: `Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="${cordova.file.applicationDirectory + 'www/css/res/images/loading.gif'}" />`
-    })
-    // download images from server to cache to attach them in email
-    // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
-    const photosDeferred = []
-    console.log('start sendReminderEmail')
-    const downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
-      let destPathDir
-      if (app.functions.isThisAndroid()) {
-        // https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#file-system-layouts
-        destPathDir = cordova.file.cacheDirectory // normally: file:///data/data/<app-id>/cache
-      } else {
-        window.alert('Unknown device: ' + device.platform)
-        return
+    app.file.getFileContent(cordova.file.applicationDirectory + 'www/css/res/images/loading.gif', 'dataURL', (err, res) => {
+      if (err) {
+        console.error('Error fetching loading.gif icon', err)
       }
-      app.file.downloadFileToDevice(fullImgUrl, fileName, destPathDir,
-        (err, localFileName) => {
-          if (err) {
-            photosDeferred[photoIndex].resolve(null)
-          } else {
-            const filePathForEmailAttachment = cordova.plugins.email.adaptPhotoInfoForEmailAttachment(localFileName)
-            photosDeferred[photoIndex].resolve(filePathForEmailAttachment)
-          }
-        })
-    }
-
-    for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
-      if (occurrence['foto' + photoIndex]) { // if that photo index exists in the DB entry
-        const fileName = occurrence['foto' + photoIndex]
-        const fullImgUrl = requestImageUrl + '/' + fileName
-
-        photosDeferred[photoIndex] = $.Deferred()
-        downloadFileToDevice(photoIndex, fullImgUrl, fileName)
+      const progressAlert = $.jAlert({
+        class: 'ja_300px',
+        closeBtn: false,
+        content: `Carregando as imagens&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="${res}" />`
+      })
+      // download images from server to cache to attach them in email
+      // DB has 4 fields for images for the same DB entry: foto1, foto2, foto3 and foto4
+      const photosDeferred = []
+      console.log('start sendReminderEmail')
+      const downloadFileToDevice = function (photoIndex, fullImgUrl, fileName) {
+        let destPathDir
+        if (app.functions.isThisAndroid()) {
+          // https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/#file-system-layouts
+          destPathDir = cordova.file.cacheDirectory // normally: file:///data/data/<app-id>/cache
+        } else {
+          window.alert('Unknown device: ' + device.platform)
+          return
+        }
+        app.file.downloadFileToDevice(fullImgUrl, fileName, destPathDir,
+          (err, localFileName) => {
+            if (err) {
+              photosDeferred[photoIndex].resolve(null)
+            } else {
+              const filePathForEmailAttachment = cordova.plugins.email.adaptPhotoInfoForEmailAttachment(localFileName)
+              photosDeferred[photoIndex].resolve(filePathForEmailAttachment)
+            }
+          })
       }
-    }
 
-    $.when(...photosDeferred).done(function (/* arguments array */) {
-      const attachments = []
-      for (let i = 0; i < arguments.length; i++) {
-        if (arguments[i]) {
-          attachments.push(arguments[i])
+      for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
+        if (occurrence['foto' + photoIndex]) { // if that photo index exists in the DB entry
+          const fileName = occurrence['foto' + photoIndex]
+          const fullImgUrl = requestImageUrl + '/' + fileName
+
+          photosDeferred[photoIndex] = $.Deferred()
+          downloadFileToDevice(photoIndex, fullImgUrl, fileName)
         }
       }
-      console.log(JSON.stringify(attachments, 0, 3))
 
-      const emailSubject = `[${occurrence.carro_matricula}] na ${occurrence.data_local}, ${occurrence.data_concelho} - Inquirição sobre estado processual da denúncia de estacionamento anteriormente efetuada`
+      $.when(...photosDeferred).done(function (/* arguments array */) {
+        const attachments = []
+        for (let i = 0; i < arguments.length; i++) {
+          if (arguments[i]) {
+            attachments.push(arguments[i])
+          }
+        }
+        console.log(JSON.stringify(attachments, 0, 3))
 
-      setTimeout(() => {
-        progressAlert.closeAlert()
-        cordova.plugins.email.open({
-          to: app.contactsFunctions.getEmailByFullName(occurrence.autoridade),
-          attachments, // file paths or base64 data streams
-          subject: emailSubject, // subject of the email
-          body: app.text.getReminderMessage(occurrence), // email body (for HTML, set isHtml to true)
-          isHtml: true // indicats if the body is HTML or plain text
-        })
-      }, 3000)
+        const emailSubject = `[${occurrence.carro_matricula}] na ${occurrence.data_local}, ${occurrence.data_concelho} - Inquirição sobre estado processual da denúncia de estacionamento anteriormente efetuada`
+
+        setTimeout(() => {
+          progressAlert.closeAlert()
+          cordova.plugins.email.open({
+            to: app.contactsFunctions.getEmailByFullName(occurrence.autoridade),
+            attachments, // file paths or base64 data streams
+            subject: emailSubject, // subject of the email
+            body: app.text.getReminderMessage(occurrence), // email body (for HTML, set isHtml to true)
+            isHtml: true // indicats if the body is HTML or plain text
+          })
+        }, 3000)
+      })
     })
   }
 

@@ -295,7 +295,12 @@ app.authentication = (function (thisModule) {
             (res) => {
               console.log('Share completed', res)
               // tries to find the app name with which the pdf file was shared/downloaded
-              $.getJSON(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', (data) => {
+              app.file.getFileContent(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', 'text', (err, res) => {
+                if (err) {
+                  console.error('Error geting google-app-ids.json', err)
+                  return
+                }
+                const data = JSON.parse(res)
                 let msg = 'Recorde-se do local onde guardou o ficheiro PDF'
 
                 // res.app is on the form "ComponentInfo{com.synology.DSfile/com.synology.DSfile.MainActivity}"
