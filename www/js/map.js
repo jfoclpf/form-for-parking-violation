@@ -184,65 +184,71 @@ app.map = (function (thisModule) {
       }
     }
 
-    // Sort markers and infowindows to the map
-    const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
-    const dbEntriesLength = allDbEntries.length
-    const mapIcon = L.icon({
-      iconUrl: cordova.file.applicationDirectory + 'www/img/map_icon.png',
-      iconSize: [50, 50],
-      iconAnchor: [25, 50]
-    })
-
-    for (let i = 0; i < dbEntriesLength; i++) {
-      const el = allDbEntries[i]
-
-      const marker = L.marker(
-        [el.data_coord_latit, el.data_coord_long],
-        { icon: mapIcon }
-      )
-
-      let htmlInfoContent =
-        '<div style="width:200px">' +
-          `<b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>` +
-          `<b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>` +
-          `<b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>` +
-          `<b>Infração</b>: ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>` +
-          `<b>Autoridade</b>: ${el.autoridade}<br><br>`
-
-      for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
-        if (el['foto' + photoIndex]) {
-          const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
-          htmlInfoContent += `<img class="photo-in-popup" width="200px" src="${photoUrl}">`
-        }
+    app.file.getFileContent(cordova.file.applicationDirectory + 'www/img/map_icon.png', 'dataURL', (err, res) => {
+      if (err) {
+        console.error('Error fetching map_icon', err)
       }
 
-      htmlInfoContent += '</div>'
-
-      // an admin is able to mark an entry in the db as deleted
-      if (isCurrentUserAnAdmin) {
-        htmlInfoContent += '<hr><b>Opções de administrador</b><br><br>' +
-          `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryInDbAsDeletedByAdmin('${encodeURIComponent(JSON.stringify(el))}')"><i class="fa fa-trash"></i></button><br><br>`
-      }
-
-      const popup = L.popup({ closeOnClick: false, autoClose: false, autoPan: true, maxHeight: 400 })
-        .setContent(htmlInfoContent)
-
-      marker.bindPopup(popup)
-
-      // several legal violations, may be applicable for the same occurrence
-      // ex: "ciclovia;travessia_ciclovia"
-      const penalties = el.base_legal.split(';')
-      penalties.forEach(penalty => {
-        if (markersGroups[penalty]) {
-          markersGroups[penalty].markerClusterGroup.addLayer(marker)
-        }
+      // Sort markers and infowindows to the map
+      const isCurrentUserAnAdmin = app.functions.isCurrentUserAnAdmin()
+      const dbEntriesLength = allDbEntries.length
+      const mapIcon = L.icon({
+        iconUrl: res,
+        iconSize: [50, 50],
+        iconAnchor: [25, 50]
       })
 
-      if (el.uuid === device.uuid) {
-        markersGroups.mine.markerClusterGroup.addLayer(marker)
+      for (let i = 0; i < dbEntriesLength; i++) {
+        const el = allDbEntries[i]
+
+        const marker = L.marker(
+          [el.data_coord_latit, el.data_coord_long],
+          { icon: mapIcon }
+        )
+
+        let htmlInfoContent =
+          '<div style="width:200px">' +
+            `<b>Veículo</b>: ${el.carro_marca} ${el.carro_modelo} <span style="white-space: nowrap;">[${el.carro_matricula}]</span><br>` +
+            `<b>Local</b>: ${el.data_local} n. ${el.data_num_porta}, ${el.data_concelho}<br>` +
+            `<b>Data</b>: ${(new Date(el.data_data)).toLocaleDateString('pt-PT')} às ${el.data_hora.slice(0, 5)}<br>` +
+            `<b>Infração</b>: ${app.penalties.getData(el.base_legal, 'shortDescription')}<br>` +
+            `<b>Autoridade</b>: ${el.autoridade}<br><br>`
+
+        for (let photoIndex = 1; photoIndex <= 4; photoIndex++) {
+          if (el['foto' + photoIndex]) {
+            const photoUrl = requestImageUrl + '/' + el['foto' + photoIndex]
+            htmlInfoContent += `<img class="photo-in-popup" width="200px" src="${photoUrl}">`
+          }
+        }
+
+        htmlInfoContent += '</div>'
+
+        // an admin is able to mark an entry in the db as deleted
+        if (isCurrentUserAnAdmin) {
+          htmlInfoContent += '<hr><b>Opções de administrador</b><br><br>' +
+            `<button type="button" class="btn btn-primary btn-sm m-1" onclick="app.map.setEntryInDbAsDeletedByAdmin('${encodeURIComponent(JSON.stringify(el))}')"><i class="fa fa-trash"></i></button><br><br>`
+        }
+
+        const popup = L.popup({ closeOnClick: false, autoClose: false, autoPan: true, maxHeight: 400 })
+          .setContent(htmlInfoContent)
+
+        marker.bindPopup(popup)
+
+        // several legal violations, may be applicable for the same occurrence
+        // ex: "ciclovia;travessia_ciclovia"
+        const penalties = el.base_legal.split(';')
+        penalties.forEach(penalty => {
+          if (markersGroups[penalty]) {
+            markersGroups[penalty].markerClusterGroup.addLayer(marker)
+          }
+        })
+
+        if (el.uuid === device.uuid) {
+          markersGroups.mine.markerClusterGroup.addLayer(marker)
+        }
+        markersGroups.all.markerClusterGroup.addLayer(marker)
       }
-      markersGroups.all.markerClusterGroup.addLayer(marker)
-    }
+    })
   }
 
   function setEntryInDbAsDeletedByAdmin (dbElement) {

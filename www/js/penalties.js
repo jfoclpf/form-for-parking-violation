@@ -6,7 +6,13 @@ app.penalties = (function (thisModule) {
   let penalties // Object with the several penalties
 
   function init (callback) {
-    $.getJSON(cordova.file.applicationDirectory + 'www/json/penalties.json', function (data) {
+    app.file.getFileContent(cordova.file.applicationDirectory + 'www/json/penalties.json', 'text', function (err, res) {
+      if (err) {
+        console.error(err)
+        return
+      }
+
+      const data = JSON.parse(res)
       delete data.__comment
       penalties = Object.assign({}, data) // clone object
 

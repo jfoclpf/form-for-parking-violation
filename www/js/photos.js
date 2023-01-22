@@ -69,7 +69,7 @@ app.photos = (function (thisModule) {
       resizeImage(imageUri, function (resizedImgUri, err) {
         const imgToShowUri = !err ? resizedImgUri : imageUri
 
-        app.file.getFileAsBase64(imgToShowUri, (err, res) => {
+        app.file.getFileContent(imgToShowUri, 'dataURL', (err, res) => {
           if (err) {
             console.error(err)
           } else {
@@ -82,7 +82,7 @@ app.photos = (function (thisModule) {
       })
     } else if (app.functions.isThis_iOS()) {
       // ios is a mess with file location, thus for email attachment convert photo to base64
-      app.file.getFileAsBase64(imageUri, (err, res) => {
+      app.file.getFileContent(imageUri, 'dataURL', (err, res) => {
         if (err) {
           console.error(err)
         } else {
