@@ -68,6 +68,7 @@ a:focus {
     margin-left: -70vw;
     box-shadow: 10px 1px 0.5rem rgba(0,0,0,0.5);
     margin-left: 0;
+    touch-action: none;
 }
 
 #sidebarCollapse {
