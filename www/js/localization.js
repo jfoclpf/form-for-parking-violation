@@ -83,11 +83,7 @@ app.localization = (function (thisModule) {
         crossDomain: true
       }),
       $.ajax({
-        url: app.main.urls.geoApi.ptApi + '/gps',
-        data: {
-          lat: latitude,
-          lon: longitude
-        },
+        url: app.main.urls.geoApi.ptApi + `/gps/${latitude},${longitude}/base`,
         dataType: 'json',
         type: 'GET',
         async: true,
