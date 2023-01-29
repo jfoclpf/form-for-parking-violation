@@ -1,129 +1,15 @@
 /* eslint camelcase: off */
 
 /* eslint no-unused-vars: "off" */
-/* global app, $, cordova, device, pdf, Blob, atob, FileTransfer, AUTHENTICATION_WITH_IN_APP_BROWSER */
+/* global app, $, cordova, device, pdf, Blob, atob, FileTransfer */
 
 app.authentication = (function (thisModule) {
-  let inAppBrowserRef
-  let isAuthenticationWindowClosed = true
   let leftAppToSignPdf = false
   let jAlertOnAppResume
 
   function startAuthenticationWithSystemBrowser () {
     leftAppToSignPdf = false
     savePDF()
-  }
-
-  // this function is not yet fully funcional
-  function startAuthenticationWithInAppBrowser () {
-    if (!AUTHENTICATION_WITH_IN_APP_BROWSER) {
-      return
-    }
-
-    if (isAuthenticationWindowClosed) {
-      loadAuthentication()
-    }
-
-    console.log('inAppBrowserRef: ', inAppBrowserRef)
-    if (inAppBrowserRef) {
-      savePDF()
-    } else {
-      authenticationError()
-    }
-  }
-
-  function loadAuthentication () {
-    if (!AUTHENTICATION_WITH_IN_APP_BROWSER) {
-      return
-    }
-
-    console.log('loadAuthentication()')
-
-    const url = app.main.urls.Chave_Movel_Digital.assinar_pdf
-
-    const target = '_blank'
-    const options = 'hidden=yes,' +
-      'footer=yes,' +
-      'beforeload=yes' +
-      'zoom=no,' +
-      'toolbarcolor=#3C5DBC'
-
-    inAppBrowserRef = cordova.InAppBrowser.open(url, target, options)
-    inAppBrowserRef.addEventListener('beforeload', beforeLoadCallbackFunction)
-    inAppBrowserRef.addEventListener('loadstart', loadStartCallbackFunction)
-    inAppBrowserRef.addEventListener('loadstop', loadedCallbackFunction)
-    inAppBrowserRef.addEventListener('loaderror', authenticationError)
-    inAppBrowserRef.addEventListener('exit', authenticationExit)
-  }
-
-  function beforeLoadCallbackFunction (params, callback) {
-    if (params.url.match('DigitalSignConfirmTan.aspx')) {
-      cordova.InAppBrowser.open(params.url, '_system')
-    } else {
-      // Default handling:
-      callback(params.url)
-    }
-  }
-
-  function loadStartCallbackFunction (event) {
-    console.log('%c ========== loadstart ========== ', 'background: yellow; color: blue')
-    console.log(event.url)
-
-    if (event.url.split('/').pop() === 'DigitalSignConfirmTan.aspx') {
-      console.log(event)
-    }
-  }
-
-  function loadedCallbackFunction (event) {
-    console.log('%c ========== loadstop ========== ', 'background: yellow; color: blue')
-    // console.log(event.url)
-
-    isAuthenticationWindowClosed = false
-
-    inAppBrowserRef.insertCSS({ code: '.header,.logo,language-container,.footer{display: none !important}' })
-
-    $.ajax({
-      type: 'GET',
-      url: cordova.file.applicationDirectory + 'www/js/authBrowserJSCode.js',
-      dataType: 'text',
-      success: function (JScodeRes) {
-        // altera o texto quando refere o Documento para assinar
-        const JScode = JScodeRes +
-          `(function(){
-             var textEl = document.getElementById('MainContent_lblTitleChooseDoc');
-             if(textEl){
-               textEl.innerHTML = 'Escolha o documento PDF na pasta <i>Downloads</i> para assinar digitalmente';
-             }
-           })();`
-
-        inAppBrowserRef.executeScript(
-          { code: JScode },
-          function () {
-            console.log('authBrowserJSCode.js Inserted Succesfully into inApp Browser Window')
-          })
-      },
-      error: function () {
-        console.error('Ajax Error')
-      }
-    })
-  }
-
-  function downloadPdfFile (args) {
-    console.log('downloadPdfFile')
-    /* on construction */
-  }
-
-  function authenticationError () {
-    $.jAlert({
-      title: 'Erro na obtenção da autenticação!',
-      theme: 'red',
-      content: 'Confirme se tem acesso à Internet. Poderá sempre enviar a ocorrência às autoridades sem a autenticação da Chave Móvel Digital.'
-    })
-  }
-
-  function authenticationExit () {
-    console.log('Authentication Window closed')
-    isAuthenticationWindowClosed = true
   }
 
   function savePDF () {
@@ -267,10 +153,6 @@ app.authentication = (function (thisModule) {
   function showSavedPdfFileInfo (folderpath, filename) {
     console.log('PDF fullpath: ' + folderpath + filename)
 
-    if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
-      inAppBrowserRef.hide()
-    }
-
     let deviceSpecificMessage
 
     // for Android 10 and above, we need to use social sharing plugin to save the pdf
@@ -353,13 +235,8 @@ app.authentication = (function (thisModule) {
         theme: 'green',
         class: 'jButtonAlert',
         onClick: function () {
-          if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
-            // tries to use internal browser plugin to sign the pdf document
-            inAppBrowserRef.show()
-          } else {
-            cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
-            leftAppToSignPdf = true
-          }
+          cordova.InAppBrowser.open(app.main.urls.Chave_Movel_Digital.assinar_pdf, '_system')
+          leftAppToSignPdf = true
         }
       }]
     })
@@ -367,10 +244,6 @@ app.authentication = (function (thisModule) {
 
   // depois de sair da APP para assinar o PDF na página do Estado, regressa novamente à APP e corre esta função
   function onAppResume () {
-    if (AUTHENTICATION_WITH_IN_APP_BROWSER) {
-      return
-    }
-
     console.log('leftAppToSignPdf:', leftAppToSignPdf)
     // if the PDF file was not just recently created, leave
     if (!leftAppToSignPdf) {
@@ -450,7 +323,6 @@ app.authentication = (function (thisModule) {
   }
 
   /* === Public methods to be returned === */
-  thisModule.startAuthenticationWithInAppBrowser = startAuthenticationWithInAppBrowser
   thisModule.startAuthenticationWithSystemBrowser = startAuthenticationWithSystemBrowser
   thisModule.onAppResume = onAppResume
 
