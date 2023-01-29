@@ -343,6 +343,20 @@ app.file = (function (thisModule) {
       })
   }
 
+  function downloadFileAsDataURL (url) {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+          const reader = new FileReader()
+          reader.readAsDataURL(blob)
+          reader.onloadend = () => resolve(reader.result)
+          reader.onerror = err => reject(err)
+        })
+        .catch(err => reject(err))
+    })
+  }
+
   thisModule.getFileContent = getFileContent
   thisModule.listDir = listDir
   thisModule.getFilenameFromURL = getFilenameFromURL
@@ -355,6 +369,7 @@ app.file = (function (thisModule) {
   thisModule.downloadFileToDevice = downloadFileToDevice
   thisModule.uploadFileToServer = uploadFileToServer
   thisModule.resizeImage = resizeImage
+  thisModule.downloadFileAsDataURL = downloadFileAsDataURL
 
   return thisModule
 })(app.file || {})
