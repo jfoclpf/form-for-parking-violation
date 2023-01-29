@@ -9,7 +9,9 @@ and stores it in the dabatase */
 const submissionsUrl = /.*\/serverapp$/ // to upload anew or update the data of an occurence
 const requestHistoricUrl = /.*\/serverapp_get_historic$/
 const commonPort = 3035
+
 const imgUploadUrl = /.*\/serverapp_img_upload$/
+const imgGetUrl = /.*\/image_server$/
 const imgUploadUrlPort = 3036
 
 const fs = require('fs')
@@ -250,9 +252,15 @@ const app2 = express()
 // enable files upload
 app2.use(fileUpload({ createParentPath: true, debug: debugFileTransfer.enabled }))
 app2.use(cors())
-app2.use(bodyParser.json())
-app2.use(bodyParser.urlencoded({ extended: true }))
+app2.use(bodyParser.json({ limit: '50mb' }))
+app2.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
+const uploadedImagesDirectory = path.join(__dirname, 'uploadedImages')
+
+// endpoint to get photos as static content
+app2.use(imgGetUrl, express.static(uploadedImagesDirectory))
+
+// endpoint to upload photos
 app2.post(imgUploadUrl, async (req, res) => {
   debugFileTransfer('Getting files')
   try {
@@ -268,7 +276,7 @@ app2.post(imgUploadUrl, async (req, res) => {
       debugFileTransfer(req.files)
       const img = req.files.file
       // Use the mv() method to place the file in upload directory (i.e. "uploads")
-      img.mv('./uploadedImages/' + img.name)
+      img.mv(path.join(uploadedImagesDirectory, img.name))
 
       // send response
       res.status(200).send({
@@ -301,7 +309,13 @@ function generateUuid () {
 /* ############################################################################################## */
 /* ############################################################################################## */
 
-const server = app.listen(commonPort, () => console.log(`Request server listening on port ${commonPort}!`))
+const server = app.listen(commonPort, () => {
+  console.log(`Request server listening on port ${commonPort}!`)
+  if (process.send) {
+    process.send('ready') // trigger to PM2 that app is ready
+  }
+})
+
 const server2 = app2.listen(imgUploadUrlPort, () => console.log(`File upload server listening on port ${imgUploadUrlPort}!`))
 
 // gracefully exiting upon CTRL-C or when PM2 stops the process

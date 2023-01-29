@@ -2,6 +2,8 @@
   "apps" : [{
     "name"        : "form-for-parking-violation",
     "script"      : "main.js",
+    "wait_ready" : true,
+    "listen_timeout" : 10000,
     "watch"       : false,
     "instances"   : "2",
     "exec_mode"   : "cluster",
