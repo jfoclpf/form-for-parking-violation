@@ -11,7 +11,7 @@ const requestHistoricUrl = /.*\/serverapp_get_historic$/
 const commonPort = 3035
 
 const imgUploadUrl = /.*\/serverapp_img_upload$/
-const imgGetUrl = /.*\/image_server$/
+const imgGetUrl = '/image_server'
 const imgUploadUrlPort = 3036
 
 const fs = require('fs')
