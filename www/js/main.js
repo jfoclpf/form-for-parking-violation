@@ -258,8 +258,7 @@ app.main = (function (thisModule) {
 
     const imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
-    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
-    console.log(JSON.stringify(attachments, 0, 3))
+    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptDataUrlForAttachment(path, i))
 
     cordova.plugins.email.open({
       to: app.contactsFunctions.getEmailOfCurrentSelectedAuthority(), // email addresses for TO field
@@ -274,7 +273,7 @@ app.main = (function (thisModule) {
   function sendMailMessageForPoliceOfficer () {
     const imagesArray = app.photos.getPhotosForEmailAttachment()
     // console.log(JSON.stringify(imagesArray, 0, 3))
-    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptPhotoInfoForEmailAttachment(path, i))
+    const attachments = imagesArray.map((path, i) => cordova.plugins.email.adaptDataUrlForAttachment(path, i))
     console.log(JSON.stringify(attachments, 0, 3))
 
     cordova.plugins.email.open({

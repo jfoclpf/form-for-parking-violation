@@ -6,7 +6,7 @@ app.functions = (function (thisModule) {
   // to run on startup
   // add functions related with respective plugins
   function addFunctionsToPlugins () {
-    cordova.plugins.email.adaptPhotoInfoForEmailAttachment = function (path, index) {
+    cordova.plugins.email.adaptDataUrlForAttachment = function (path, index) {
       return `base64:photo${index + 1}.jpg//` + path.split(',').pop()
     }
   }
