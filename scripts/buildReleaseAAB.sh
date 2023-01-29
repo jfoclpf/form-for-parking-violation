@@ -1,7 +1,8 @@
 #!/bin/bash
 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-export ANDROID_SDK_ROOT=/home/joao/Android/Sdk/
+
+export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64/
+export ANDROID_SDK_ROOT=/usr/lib/android-sdk
 export PATH=${PATH}:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools
 
 cd "${0%/*}" # directory of the script
