@@ -158,7 +158,7 @@ app.authentication = (function (thisModule) {
     // for Android 10 and above, we need to use social sharing plugin to save the pdf
     // see https://github.com/jfoclpf/form-for-parking-violation/issues/89
     if (app.functions.isThisAndroid() && parseFloat(device.version) >= 10 && Boolean(window.plugins.socialsharing)) {
-      const message = 'Guarde o ficheiro PDF com a denúncia num local à sua escolha.<br><br>' +
+      const message = 'Gerar-se-á um ficheiro PDF com a denúncia, guarde-o de seguida num local à sua escolha.<br><br>' +
         '<span style="font-size:80%">Caso queira guardar no seu sistema de ficheiros Android e não consiga, use a "APP para guardar PDF" que encontra no menu principal.</span>'
 
       $.jAlert({
@@ -177,16 +177,18 @@ app.authentication = (function (thisModule) {
             (res) => {
               console.log('Share completed', res)
               // tries to find the app name with which the pdf file was shared/downloaded
-              app.file.getFileContent(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', 'text', (err, res) => {
+              app.file.getFileContent(cordova.file.applicationDirectory + 'www/js/res/google-app-ids.json', 'text', (err, googleAppIds) => {
                 if (err) {
                   console.error('Error geting google-app-ids.json', err)
                   return
                 }
-                const data = JSON.parse(res)
+                const googleAppIdsData = JSON.parse(googleAppIds)
+                console.log('google-app-ids.json:', googleAppIdsData)
+
                 let msg = 'Recorde-se do local onde guardou o ficheiro PDF'
 
                 // res.app is on the form "ComponentInfo{com.synology.DSfile/com.synology.DSfile.MainActivity}"
-                let appId = res.app.match(/\{([^)]+)\}/)
+                let appId = res.app ? res.app.match(/\{([^)]+)\}/) : null
                 if (appId) {
                   appId = appId[1]
                   if (appId.includes('/')) {
@@ -194,9 +196,9 @@ app.authentication = (function (thisModule) {
                   }
                 }
 
-                for (const key in data) {
-                  if (appId === data[key].package_name) {
-                    msg += ' usando a aplicação ' + data[key].name
+                for (const key in googleAppIdsData) {
+                  if (appId === googleAppIdsData[key].package_name) {
+                    msg += ' usando a aplicação ' + googleAppIdsData[key].name
                     break
                   }
                 }
