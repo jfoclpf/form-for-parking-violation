@@ -520,7 +520,6 @@ app.form = (function (thisModule) {
   })
 
   /* Pull to Refresh function */
-
   function initPullToRefresh () {
     const pStart = { x: 0, y: 0 }
     const pStop = { x: 0, y: 0 }
