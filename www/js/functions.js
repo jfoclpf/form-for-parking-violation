@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs */
+/* global app, cordova, $, device, FileReader, ADMIN_DEVICE_UUIDs */
 
 app.functions = (function (thisModule) {
   // to run on startup
@@ -92,6 +92,20 @@ app.functions = (function (thisModule) {
     $('#penalties').val('bicicletas')
   }
 
+  function downloadAsDataURL (url) {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+          const reader = new FileReader()
+          reader.readAsDataURL(blob)
+          reader.onloadend = () => resolve(reader.result)
+          reader.onerror = err => reject(err)
+        })
+        .catch(err => reject(err))
+    })
+  }
+
   /* === Public methods to be returned === */
   thisModule.addFunctionsToPlugins = addFunctionsToPlugins
   thisModule.isCurrentUserAnAdmin = isCurrentUserAnAdmin
@@ -104,6 +118,7 @@ app.functions = (function (thisModule) {
   thisModule.isThis_iOS = isThis_iOS
   thisModule.adaptURItoAndroid = adaptURItoAndroid
   thisModule.setDebugValues = setDebugValues
+  thisModule.downloadAsDataURL = downloadAsDataURL
 
   return thisModule
 })(app.functions || {})
