@@ -14,42 +14,43 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-18.04, ubuntu-20.04]
-        node-version: [lts/*]
+        node-version: [16]
         
     runs-on: ${{ matrix.platform }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Installing Java 8
+    - name: Installing Java 11
       run: |
         sudo apt update -y
-        sudo apt install openjdk-8-jdk -y
-    - name: Changing to Java 8
+        sudo apt install openjdk-11-jdk openjdk-11-jre -y
+    - name: Forcing the use of Java 11
       run: | 
         java -version
         sudo update-java-alternatives -l || echo OK
-        sudo update-java-alternatives -l | grep '1\.8' | cut -d " " -f1 || echo OK
-        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep '1\.8' | cut -d " " -f1) || echo OK
+        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep '1\.11' | cut -d " " -f1) || echo OK
         java -version
     - name: Install Android SDK
       run: |
         sudo apt install android-sdk -y
-    - name: Uninstall SDK v31.0.0 and list
+    - name: List installed SDKs
       run: |
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --version
-        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --uninstall 'build-tools;31.0.0'
-        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list
-    - name: List SDK dir and cp
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list_installed
+    - name: List SDK dir and cp D8s to DXs
       run: |
         ls -la /usr/local/lib/android/sdk/build-tools/
-        cd /usr/local/lib/android/sdk/build-tools/32.0.0/
-        cp d8 dx && cd lib && cp d8.jar dx.jar
-        ls -la /usr/local/lib/android/sdk/build-tools/32.0.0/
+        cd /usr/local/lib/android/sdk/build-tools/
+        for DIR in */; do 
+          if [ -f "${DIR}d8" ]; then echo "copying ${DIR}d8 to ${DIR}dx"; cp ${DIR}d8 ${DIR}dx; fi
+          if [ -f "${DIR}lib/d8.jar" ]; then echo "copying ${DIR}lib/d8.jar to ${DIR}lib/dx.jar"; cp ${DIR}lib/d8.jar ${DIR}lib/dx.jar; fi
+        done
+        for DIR in */; do ls -l ${DIR}d*; done
     - name: Install Gradle
       run: sudo apt install gradle -y
     - name: echo PATH
