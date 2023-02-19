@@ -11,6 +11,7 @@ app.personalInfo = (function (thisModule) {
       $('#userIsPoliceOfficer').prop('checked', true).trigger('change')
     } else {
       console.warn('No valid typeOfUser stored in device local storage:' + typeOfUser)
+      $('#userIsCitizen').prop('checked', true).trigger('change') // default
     }
 
     loadsPersonalInfo()
@@ -116,13 +117,13 @@ app.personalInfo = (function (thisModule) {
 
   /* ********************************************************************** */
   /* ******************** ADDRESS OF THE USER ***************************** */
-  /* $('#address').on('input', function () {
+  $('#address').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
     } else {
       $(this).css('border-color', '')
     }
-  }) */
+  })
 
   $('#address_city').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
@@ -133,7 +134,7 @@ app.personalInfo = (function (thisModule) {
   })
 
   // as the user writes Postal Code, detects if the name is ok
-  /* $('#postal_code').on('input', function () {
+  $('#postal_code').on('input', function () {
     if (!isPostalCodeOK()) {
       $(this).css('border-color', 'red')
     } else {
@@ -168,7 +169,7 @@ app.personalInfo = (function (thisModule) {
     } else {
       return false
     }
-  } */
+  }
 
   /* ********************************************************************** */
   /* ******************** TYPE OF USER ************************************ */
