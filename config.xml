@@ -34,6 +34,7 @@
   <platform name="android">
     <preference name="android-minSdkVersion" value="30"/>
     <preference name="android-targetSdkVersion" value="33"/>
+    <preference name="android-compileSdkVersion" value="33"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
     <allow-intent href="market:*"/>
     <icon height="512" src="res/icon/android/512.png" width="512"/>
