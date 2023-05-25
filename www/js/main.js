@@ -125,6 +125,20 @@ app.main = (function (thisModule) {
     if (!DEBUG) {
       requestUserAppEvaluation()
     }
+
+    // define Promise.allSettled when not available
+    Promise.allSettled = Promise.allSettled || ((promises) => Promise.all(
+      promises.map(p => p
+        .then(value => ({
+          status: 'fulfilled',
+          value
+        }))
+        .catch(reason => ({
+          status: 'rejected',
+          reason
+        }))
+      )
+    ))
   }
 
   // ##############################################################################################################
