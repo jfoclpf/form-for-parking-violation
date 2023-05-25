@@ -71,6 +71,39 @@ para listar os dispositivos Android detectados. Caso o dispositivo seja detetado
 
 Para fazer debug no Chrome aceda a `chrome://inspect/#devices`
 
+## Testar num emulador
+
+Instalar o emulador
+
+```
+[sudo] sdkmanager --install "emulator"
+```
+
+Instalar as plataformas de teste, exemplo:
+
+```
+[sudo] sdkmanager --install "system-images;android-32;google_apis;x86_64"
+[sudo] sdkmanager --install "system-images;android-33;google_apis;x86_64"
+```
+
+Criar o dispositivo virtual (AVD), exemplo:
+
+```
+avdmanager create avd -n emulator -k "system-images;android-32;google_apis;x86_64"
+```
+
+Confirmar que ficou instalado
+
+```
+avdmanager list avd
+```
+
+Correr o emulador
+
+```
+cordova emulate android --target=emulator
+```
+
 ## Plugins necessários
 
 * ver ficheiro `package.json`.
