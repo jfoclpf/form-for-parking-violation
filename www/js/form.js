@@ -357,6 +357,7 @@ app.form = (function (thisModule) {
       requestGoingOn = false
     } else {
       // request from server
+      console.log('Request car make/model from server to ' + plate)
       const requestUrl = CARROS_MATRICULAS_API.serverUrl + plate
 
       $.ajax({
