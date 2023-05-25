@@ -55,7 +55,8 @@ http://choosealicense.com/licenses/gpl-3.0/
 
 ## Na comunicação social
 
-* <a href="http://www.jornaleconomico.sapo.pt/noticias/estacionamentos-selvagens-ja-existe-uma-app-para-denuncia-los-189812">Jornal Económico</a>
+* [SIC Notícias](https://sicnoticias.pt/programas/poligrafo/2023-05-22-Ha-uma-app-para-denunciar-carros-mal-estacionados--03a2240d)
+* [Polígrafo](https://poligrafo.sapo.pt/fact-check/e-possivel-denunciar-o-estacionamento-indevido-de-carros-atraves-de-uma-aplicacao-para-telemovel)
 * <a href="https://www.jn.pt/motor-24/interior/carro-mal-estacionado-ja-pode-fazer-queixa-com-esta-app-8686603.html">Jornal de Notícias</a>
 * <a href="https://www.dn.pt/motor-24/interior/carro-mal-estacionado-ja-pode-fazer-queixa-com-esta-app-8686600.html">Diário de Notícias</a>
 * <a href="https://www.timeout.pt/lisboa/pt/blog/ha-uma-nova-app-para-fazer-queixinhas-de-estacionamento-ilegal-081417">Time Out</a>
@@ -63,3 +64,5 @@ http://choosealicense.com/licenses/gpl-3.0/
 * <a href="http://tek.sapo.pt/mobile/android/artigos/encontrou-um-carro-mal-estacionado-ha-uma-app-para-fazer-queixa">Tek Sapo</a>
 * <a href="https://nit.pt/out-of-town/back-in-town/ha-nova-app-queixinhas-quem-nao-sabe-estacionar">Nit</a>
 * <a href="http://www.turbo.pt/carro-mal-estacionado-ja-pode-queixa-esta-app/">Turbo</a>
+* [pplware](https://pplware.sapo.pt/motores/veiculo-mal-estacionado-use-esta-app-para-denunciar-a-policia/)
+* [Portugal News](https://www.theportugalnews.com/news/2023-05-24/new-app-to-report-illegally-parked-cars/77914)
