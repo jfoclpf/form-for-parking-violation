@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, cordova, XMLHttpRequest, FileReader, Blob, FormData  */
+/* global app, cordova, XMLHttpRequest, FileReader, Blob, FormData, fetch  */
 
 app.file = (function (thisModule) {
   // format: text, dataURL, arrayBuffer, binaryString

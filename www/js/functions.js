@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs */
+/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs, fetch */
 
 app.functions = (function (thisModule) {
   // to run on startup
