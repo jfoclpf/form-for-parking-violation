@@ -29,18 +29,6 @@ Em Debian/Ubuntu para escolher a versão correta, corra `sudo update-alternative
 
 Edite também a variável `JAVA_HOME` em conformidade com a versão pretendida.
 
-### Debian/Ubuntu
-Caso haja várias versões instaladas, para escolher a versão correta, corra:
-
-`sudo update-alternatives --config javac` 
-
-ou de uma forma mais automática para escolher a versão 8
-
-`sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep 8 | cut -d " " -f1)`
-
-### macos
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-
 ## Eventuais problemas com Gradle
 
 O [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html) é um executor de tarefas de compilação e é instalado aquando de `cordova build`. Pode dar problemas nesse comando (erro: `Could not determine java version from 'x.x.x'`). O gradle pode envolver diferentes versões:
