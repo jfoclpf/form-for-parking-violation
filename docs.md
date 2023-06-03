@@ -13,9 +13,9 @@ Alguns scripts do projeto também fazem uso do `nodejs`.
 
 O gradle é usado para fazer o `build` dos projetos Apache Cordova
 
-### Java 8
+### Java
 
-É uma exigência do Apache Cordova que seja a versão 8. Em Debian/Ubuntu `sudo apt install openjdk-8-jdk`
+É uma exigência do Apache Cordova a instalação do Java
 
 ### [ADB](https://www.xda-developers.com/install-adb-windows-macos-linux/)
 
@@ -23,14 +23,11 @@ O ADB é usado para testar a APP no seu telemóvel Android
 
 ## Eventuais problemas com versões do Java
 
-Um problema comum está relacionado com as versões do Java, considerando que o Apache Cordova exige Java 8.
+Um problema comum pode estar relacionado com as versões do Java. Para saber a versão corra `java -version` e `javac -version` (compilador).
 
-Para saber a versão corra `java -c` e `javac -version` (compilador). O compilador `javac` deverá retornar `1.8.x`
+Em Debian/Ubuntu para escolher a versão correta, corra `sudo update-alternatives --config javac`. Em macOS, por exemplo, `export JAVA_HOME=/usr/libexec/java_home -v 1.11`.
 
-```
-$ javac -version
-javac 1.8.0_292
-```
+Edite também a variável `JAVA_HOME` em conformidade com a versão pretendida.
 
 ### Debian/Ubuntu
 Caso haja várias versões instaladas, para escolher a versão correta, corra:
