@@ -14,7 +14,7 @@ app.localization = (function (thisModule) {
     }
   }
 
-  // botão get address by GPS (Atualizar)
+  // botão Atualizar
   $('#getCurrentAddresBtn').on('click', function () {
     app.functions.updateDateAndTime()
     getGeolocation()
