@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, $, DEBUG */
+/* global app, $, fetch, DEBUG */
 
 app.personalInfo = (function (thisModule) {
   function init () {
@@ -138,6 +138,15 @@ app.personalInfo = (function (thisModule) {
       $(this).css('border-color', 'red')
     } else {
       $(this).css('border-color', '')
+      // postal code is OK, get now locality/city from postal code
+      fetch(`${app.main.urls.geoApi.ptApi}/cp/${$('#postal_code').val()}?json=1`)
+        .then(r => r.json())
+        .then(res => {
+          if (res.Localidade) {
+            $('#address_city').val(res.Localidade)
+              .trigger('input').trigger('input')
+          }
+        })
     }
 
     $(this).val(function (index, value) {
