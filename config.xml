@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.form.parking.violation" version="2.9.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.form.parking.violation" version="2.9.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>Denúncia Estacionamento</name>
   <description>
     Envio de queixa de estacionamento ilegal a autoridade competente
@@ -51,6 +51,11 @@
     <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png"/>
     <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
+    <config-file target="AndroidManifest.xml" parent="/*" mode="merge">
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-feature android:name="android.hardware.camera" />
+      <uses-feature android:name="android.hardware.camera.autofocus" />
+    </config-file>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
