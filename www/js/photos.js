@@ -1,7 +1,7 @@
 /* eslint camelcase: off */
 /* eslint prefer-regex-literals: off */
 
-/* global app, $, Camera, textocr */
+/* global app, cordova, $, Camera, textocr */
 
 app.photos = (function (thisModule) {
   // get Photo function
@@ -17,6 +17,33 @@ app.photos = (function (thisModule) {
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
 
+    const permissions = cordova.plugins.permissions
+    permissions.checkPermission(permissions.CAMERA, function (status) {
+      if (!status.hasPermission) {
+        console.warn('No permission to access CAMERA. Requesting...')
+        permissions.requestPermission(permissions.CAMERA,
+          function (status) {
+            if (!status.hasPermission) {
+              errorGrantingCameraPermission()
+            } else {
+              cameraHasPermission(imgNmbr, type, callback)
+            }
+          }, function () {
+            errorGrantingCameraPermission()
+          })
+      } else {
+        cameraHasPermission(imgNmbr, type, callback)
+      }
+    })
+  }
+
+  function errorGrantingCameraPermission () {
+    console.warn('Erro na permissão para aceder à Câmera')
+    window.alert('Erro na permissão para aceder à Câmera')
+  }
+
+  function cameraHasPermission (imgNmbr, type, callback) {
+    console.log('Has permission to use CAMERA')
     const options = setCameraOptions(type)
 
     console.log('starting navigator.camera.getPicture')
