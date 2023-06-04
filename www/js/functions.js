@@ -1,6 +1,6 @@
 /* eslint camelcase: off */
 
-/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs, fetch */
+/* global app, cordova, $, device, ADMIN_DEVICE_UUIDs, DEBUG, fetch */
 
 app.functions = (function (thisModule) {
   // to run on startup
@@ -38,6 +38,13 @@ app.functions = (function (thisModule) {
           $('#time').val(currentTime)
         })
         .finally(() => {
+          $('#date,#time').each(function () {
+            if (!DEBUG && $(this).val() === '') {
+              $(this).css('border-color', 'red')
+            } else {
+              $(this).css('border-color', '')
+            }
+          })
           resolve()
         })
     })
