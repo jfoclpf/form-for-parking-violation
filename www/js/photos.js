@@ -17,32 +17,36 @@ app.photos = (function (thisModule) {
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
 
-    const permissions = cordova.plugins.permissions
-    permissions.checkPermission(permissions.CAMERA, function (status) {
-      if (!status.hasPermission) {
-        console.warn('No permission to access CAMERA. Requesting...')
-        permissions.requestPermission(permissions.CAMERA,
-          function (status) {
-            if (!status.hasPermission) {
+    if (app.functions.isThisAndroid()) {
+      const permissions = cordova.plugins.permissions
+      permissions.checkPermission(permissions.CAMERA, function (status) {
+        if (!status.hasPermission) {
+          console.log('No permission to access CAMERA. Requesting...')
+          permissions.requestPermission(permissions.CAMERA,
+            function (status) {
+              if (!status.hasPermission) {
+                errorGrantingCameraPermission()
+              } else {
+                startingCamera(imgNmbr, type, callback)
+              }
+            }, function () {
               errorGrantingCameraPermission()
-            } else {
-              cameraHasPermission(imgNmbr, type, callback)
-            }
-          }, function () {
-            errorGrantingCameraPermission()
-          })
-      } else {
-        cameraHasPermission(imgNmbr, type, callback)
-      }
-    })
+            })
+        } else {
+          startingCamera(imgNmbr, type, callback)
+        }
+      })
+    } else {
+      startingCamera(imgNmbr, type, callback)
+    }
   }
 
   function errorGrantingCameraPermission () {
-    console.warn('Erro na permissão para aceder à Câmera')
+    console.error('Erro na permissão para aceder à Câmera')
     window.alert('Erro na permissão para aceder à Câmera')
   }
 
-  function cameraHasPermission (imgNmbr, type, callback) {
+  function startingCamera (imgNmbr, type, callback) {
     console.log('Has permission to use CAMERA')
     const options = setCameraOptions(type)
 
