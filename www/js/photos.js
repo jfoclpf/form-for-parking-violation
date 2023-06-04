@@ -56,7 +56,7 @@ app.photos = (function (thisModule) {
       cameraSuccess(result, imgNmbr, type, callback)
     },
     function cameraError (error) {
-      console.debug('Não foi possível obter fotografia: ' + error, 'app')
+      console.error('Não foi possível obter fotografia:', error)
     }, options)
   }
 
@@ -97,13 +97,17 @@ app.photos = (function (thisModule) {
 
     if (app.functions.isThisAndroid()) {
       // this plugin is just working on android
+      console.log('Resizing photo...')
       resizeImage(imageUri, function (resizedImgUri, err) {
+        console.log('Photo resized')
         const imgToShowUri = !err ? resizedImgUri : imageUri
 
+        console.log('Getting file content of Photo...')
         app.file.getFileContent(imgToShowUri, 'dataURL', (err, res) => {
           if (err) {
             console.error(err)
           } else {
+            console.log('Got File content of Photo')
             displayImage(res, 'myImg_' + imgNmbr)
             photosAsBase64[imgNmbr] = res
             photosForEmailAttachment[imgNmbr] = res
@@ -203,8 +207,10 @@ app.photos = (function (thisModule) {
 
     const options = {
       // Some common settings are 20, 50, and 100
-      quality: 50, // do not increase, otherwise the email plugin cannot attach photo due to photo file size
+      quality: 40, // do not increase, otherwise the email plugin cannot attach photo due to photo file size
       destinationType: Camera.DestinationType.FILE_URI,
+      targetWidth: 1200,
+      targetHeight: 1600,
       // In this app, dynamically set the picture source, Camera or photo gallery
       sourceType: srcType,
       encodingType: Camera.EncodingType.JPEG,
