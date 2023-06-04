@@ -78,7 +78,7 @@ app.main = (function (thisModule) {
     cordova.getAppVersion.getVersionNumber(function (version) {
       console.log('APP version is ' + version)
       thisModule.APPversion = version
-      $('.version').text(`${device.platform}, v. ${version}${DEBUG ? 'd' : 'p'}`)
+      $('.version').text(`${device.platform} ${device.version}, v. ${version}${DEBUG ? 'd' : 'p'}`)
     })
 
     console.log('init() started')
