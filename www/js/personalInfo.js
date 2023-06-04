@@ -43,8 +43,7 @@ app.personalInfo = (function (thisModule) {
     $(this).on('focusout', function () {
       const id = $(this).attr('id')
       console.log(id)
-      let value = $(this).val()
-      value = $.trim(value)
+      let value = $(this).val().trim()
       value = value.replace(/\s\s+/g, ' ') // removes consecutive spaces in-between
       window.localStorage.setItem(id, value)
 
