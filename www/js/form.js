@@ -277,7 +277,7 @@ app.form = (function (thisModule) {
 
   // matrícula estrangeira, matrículas da GNR, etc.
   function setAnyPlateFormat () {
-    $('#plate').unbind('input', plateOnInput)
+    $('#plate').off('input', plateOnInput)
     $('#plate').attr('placeholder', '')
     $('#plate').removeClass('mandatory')
     $('#plate').attr('maxlength', '')
@@ -285,7 +285,7 @@ app.form = (function (thisModule) {
   }
 
   function setPortuguesePlateInput () {
-    $('#plate').bind('input', plateOnInput)
+    $('#plate').on('input', plateOnInput)
     $('#plate').attr('placeholder', 'XX\u2013XX\u2013XX')
     $('#plate').addClass('mandatory')
     $('#plate').attr('maxlength', '8')
