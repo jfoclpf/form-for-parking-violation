@@ -202,12 +202,12 @@ app.form = (function (thisModule) {
     const id = $(this).attr('id')
     console.log('photo id: ' + id)
     // gets the number of the element, by obtaining the last character of the id
-    const num = id[id.length - 1]
+    const num = parseInt(id[id.length - 1])
 
     const callback = function (imgNmbr) {
       // hides "Adds image" button
-      $('#' + 'addImg_' + imgNmbr).html('<i class="fa fa-edit"></i>')
-      $('#' + 'remImg_' + imgNmbr).show()
+      $('#' + 'addImg_' + imgNmbr.toString()).html('<i class="fa fa-edit"></i>')
+      $('#' + 'remImg_' + imgNmbr.toString()).show()
       updateImgContainers()
     }
 
