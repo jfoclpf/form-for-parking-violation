@@ -7,7 +7,6 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
-  const photosForEmailAttachment = [] // array with photos info for email attachment (fileUri in android and base64 in iOS)
   const photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
   const photosAsBase64 = []
   // tells if each photo has GPS information or if GPS info from the device
@@ -110,7 +109,6 @@ app.photos = (function (thisModule) {
             console.log('Got File content of Photo')
             displayImage(res, 'myImg_' + imgNmbr)
             photosAsBase64[imgNmbr] = res
-            photosForEmailAttachment[imgNmbr] = res
           }
           callback(imgNmbr)
         })
@@ -123,7 +121,6 @@ app.photos = (function (thisModule) {
         } else {
           displayImage(res, 'myImg_' + imgNmbr)
           photosAsBase64[imgNmbr] = res
-          photosForEmailAttachment[imgNmbr] = res
         }
         callback(imgNmbr)
       })
@@ -361,7 +358,6 @@ app.photos = (function (thisModule) {
     const elem = document.getElementById(id)
     elem.src = ''
     elem.style.display = 'none'
-    photosForEmailAttachment[num] = null
     photosUriOnFileSystem[num] = null
     photosAsBase64[num] = null
     photoWithGPS[num] = null
@@ -379,9 +375,9 @@ app.photos = (function (thisModule) {
   }
 
   function getPhotosForEmailAttachment () {
-    // removes empty values from photosForEmailAttachment,
+    // removes empty values from photosAsBase64,
     // concatenating valid indexes, ex: [1, null, 2, null] will be [1, 2]
-    return app.functions.cleanArray(photosForEmailAttachment)
+    return app.functions.cleanArray(photosAsBase64)
   }
 
   function getPhotosUriOnFileSystem () {
