@@ -148,9 +148,19 @@ app.main = (function (thisModule) {
     app.localization.loadMapsApi()
   }
 
-  function onResume () {
-    console.log('onResume')
-    app.authentication.onAppResume()
+  function onResume (res) {
+    const result = res.pendingResult
+    console.log('onResume', result)
+    if (
+      result &&
+      result.pluginServiceName.toLowerCase() === 'camera' &&
+      result.pluginStatus === 'OK'
+    ) {
+      // result.result has the image URI
+      app.photos.onAppResumeAfterReboot(result.result)
+    } else {
+      app.authentication.onAppResume()
+    }
   }
 
   // request user to evaluate this app on Play Store

@@ -7,14 +7,18 @@ app.photos = (function (thisModule) {
   // get Photo function
   // type depends if the photo is got from camera or the photo library
 
-  const photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
-  const photosAsBase64 = []
+  let photosUriOnFileSystem = [] // photos URI always on file system (file uri in android and iOS)
+  let photosAsBase64 = [] // for email attachement or PDF file
   // tells if each photo has GPS information or if GPS info from the device
   // coincides with the place the photo was taken
-  const photoWithGPS = [] // 'synced' or 'unsynced'
+  let photoWithGPS = [] // 'synced' or 'unsynced'
 
+  // imgNmbr may only be Number 1, 2, 3 or 4
   function getPhoto (imgNmbr, type, callback) {
     console.log('%c ========== GETTING PHOTO ========== ', 'background: yellow; color: blue')
+    if (![1, 2, 3, 4].includes(imgNmbr)) {
+      throw Error('imgNmbr must be Number 1, 2, 3 or 4')
+    }
 
     if (app.functions.isThisAndroid()) {
       const permissions = cordova.plugins.permissions
@@ -47,6 +51,11 @@ app.photos = (function (thisModule) {
 
   function startingCamera (imgNmbr, type, callback) {
     console.log('Has permission to use CAMERA')
+
+    // store for the case when the app reboots, see function onAppResumeAfterReboot
+    window.localStorage.setItem('userCapturingPhotoNumber', imgNmbr.toString())
+    window.localStorage.setItem('userCapturingPhotoType', type)
+
     const options = setCameraOptions(type)
 
     console.log('starting navigator.camera.getPicture')
@@ -92,7 +101,8 @@ app.photos = (function (thisModule) {
       console.log('erro no OCR: ' + err)
     })
 
-    photosUriOnFileSystem[imgNmbr] = imageUri
+    photosUriOnFileSystem[imgNmbr - 1] = imageUri
+    storePhotosArrays('photosUriOnFileSystem')
 
     if (app.functions.isThisAndroid()) {
       // this plugin is just working on android
@@ -107,8 +117,9 @@ app.photos = (function (thisModule) {
             console.error(err)
           } else {
             console.log('Got File content of Photo')
-            displayImage(res, 'myImg_' + imgNmbr)
-            photosAsBase64[imgNmbr] = res
+            app.form.displayImage(res, imgNmbr)
+            photosAsBase64[imgNmbr - 1] = res
+            storePhotosArrays('photosAsBase64')
           }
           callback(imgNmbr)
         })
@@ -119,8 +130,9 @@ app.photos = (function (thisModule) {
         if (err) {
           console.error(err)
         } else {
-          displayImage(res, 'myImg_' + imgNmbr)
-          photosAsBase64[imgNmbr] = res
+          app.form.displayImage(res, imgNmbr)
+          photosAsBase64[imgNmbr - 1] = res
+          storePhotosArrays('photosAsBase64')
         }
         callback(imgNmbr)
       })
@@ -131,7 +143,7 @@ app.photos = (function (thisModule) {
 
     if (type === 'camera') {
       // photo comes from the camera, thus the device GPS already coincides with the photo
-      photoWithGPS[imgNmbr] = 'synced'
+      photoWithGPS[imgNmbr - 1] = 'synced'
     } else if (
       isCameraWithExifInfoAvailable &&
       type === 'library' &&
@@ -180,14 +192,35 @@ app.photos = (function (thisModule) {
         console.log(position)
         app.localization.setCoordinates(position)
         // could extract GPS info from the photo
-        photoWithGPS[imgNmbr] = 'synced'
+        photoWithGPS[imgNmbr - 1] = 'synced'
       } else {
-        photoWithGPS[imgNmbr] = 'unsynced'
+        photoWithGPS[imgNmbr - 1] = 'unsynced'
       }
     } else {
       // photo was got from library and it has no GPS info
-      photoWithGPS[imgNmbr] = 'unsynced'
+      photoWithGPS[imgNmbr - 1] = 'unsynced'
     }
+    storePhotosArrays('photoWithGPS')
+  }
+
+  // this function is called after app reboots while the user is taking a photo,
+  // normally it happens on devices with low memory RAM
+  function onAppResumeAfterReboot (imageUri) {
+    // restore arrays with photo information
+    restorePhotosArrays()
+    console.log('photosAsBase64: ', photosAsBase64)
+
+    for (let i = 0; i < photosAsBase64.length; i++) {
+      app.form.displayImage(photosAsBase64[i], i + 1)
+    }
+
+    const imgNmbr = parseInt(window.localStorage.getItem('userCapturingPhotoNumber')) || 1
+    const type = window.localStorage.getItem('userCapturingPhotoType') || ''
+
+    // add photo that was pending
+    cameraSuccess(imageUri, imgNmbr, type, function (imgNmbr) {
+      console.log(`Photo ${imgNmbr} added`)
+    })
   }
 
   // camera plugin options
@@ -280,6 +313,34 @@ app.photos = (function (thisModule) {
     }
   }
 
+  // store arrays with Photo information
+  function storePhotosArrays (arrayName) {
+    switch (arrayName) {
+      case 'photosUriOnFileSystem':
+        window.localStorage.setItem(arrayName, JSON.stringify(photosUriOnFileSystem))
+        break
+      case 'photosAsBase64':
+        window.localStorage.setItem(arrayName, JSON.stringify(photosAsBase64))
+        break
+      case 'photoWithGPS':
+        window.localStorage.setItem(arrayName, JSON.stringify(photoWithGPS))
+        break
+      case 'ALL':
+        window.localStorage.setItem(arrayName, JSON.stringify(photosUriOnFileSystem))
+        window.localStorage.setItem(arrayName, JSON.stringify(photosAsBase64))
+        window.localStorage.setItem(arrayName, JSON.stringify(photoWithGPS))
+        break
+      default:
+        throw Error('Invalid option ' + arrayName)
+    }
+  }
+
+  function restorePhotosArrays () {
+    photosUriOnFileSystem = JSON.parse(window.localStorage.getItem('photosUriOnFileSystem'))
+    photosAsBase64 = JSON.parse(window.localStorage.getItem('photosAsBase64'))
+    photoWithGPS = JSON.parse(window.localStorage.getItem('photoWithGPS'))
+  }
+
   // tries to get date from file name
   // some smartphones set the name of the photo using the date and time
   function getDateFromFileName (fileURI) {
@@ -348,19 +409,11 @@ app.photos = (function (thisModule) {
     return date && (date.getMonth() + 1) === month
   }
 
-  function displayImage (imgUri, id) {
-    const elem = document.getElementById(id)
-    elem.src = imgUri
-    elem.style.display = 'block'
-  }
-
-  function removeImage (id, num) {
-    const elem = document.getElementById(id)
-    elem.src = ''
-    elem.style.display = 'none'
-    photosUriOnFileSystem[num] = null
-    photosAsBase64[num] = null
-    photoWithGPS[num] = null
+  function removeImage (num) {
+    photosUriOnFileSystem[num - 1] = null
+    photosAsBase64[num - 1] = null
+    photoWithGPS[num - 1] = null
+    storePhotosArrays('ALL')
   }
 
   function resizeImage (imageUri, callback) {
@@ -394,6 +447,7 @@ app.photos = (function (thisModule) {
 
   /* === Public methods to be returned === */
   thisModule.getPhoto = getPhoto
+  thisModule.onAppResumeAfterReboot = onAppResumeAfterReboot
   thisModule.removeImage = removeImage
   thisModule.getPhotosForEmailAttachment = getPhotosForEmailAttachment
   thisModule.getPhotosUriOnFileSystem = getPhotosUriOnFileSystem
