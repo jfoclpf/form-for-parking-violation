@@ -27,6 +27,8 @@
   <preference name="StatusBarBackgroundColor" value="#FFFFFF"/>
   <preference name="StatusBarStyle" value="blacktranslucent"/>
   <preference name="AndroidXEnabled" value="true"/>
+  <preference name="SplashMaintainAspectRatio" value="true" />
+  <preference name="SplashShowOnlyFirstTime" value="true" />
   <hook src="hooks/copyCredentials.js" type="before_prepare"/>
   <hook src="hooks/convertHbsToHtml.js" type="after_prepare"/>
   <hook src="hooks/minifyFiles.js" type="after_prepare"/>
