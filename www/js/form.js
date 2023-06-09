@@ -521,6 +521,14 @@ app.form = (function (thisModule) {
   })
   $('#date').datepicker()
 
+  $('#date, #time').on('input keyup keypress focusout', function () {
+    if ($(this).val() === '' && !DEBUG) {
+      $(this).css('border-color', 'red')
+    } else {
+      $(this).css('border-color', '')
+    }
+  })
+
   /* ********************************************************************** */
   /* ********************* LOCAL OF OCCURRENCE **************************** */
   $('#locality').on('input', function () {
