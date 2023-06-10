@@ -326,9 +326,9 @@ app.photos = (function (thisModule) {
         window.localStorage.setItem(arrayName, JSON.stringify(photoWithGPS))
         break
       case 'ALL':
-        window.localStorage.setItem(arrayName, JSON.stringify(photosUriOnFileSystem))
-        window.localStorage.setItem(arrayName, JSON.stringify(photosAsBase64))
-        window.localStorage.setItem(arrayName, JSON.stringify(photoWithGPS))
+        window.localStorage.setItem('photosUriOnFileSystem', JSON.stringify(photosUriOnFileSystem))
+        window.localStorage.setItem('photosAsBase64', JSON.stringify(photosAsBase64))
+        window.localStorage.setItem('photoWithGPS', JSON.stringify(photoWithGPS))
         break
       default:
         throw Error('Invalid option ' + arrayName)
