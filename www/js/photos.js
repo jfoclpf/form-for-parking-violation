@@ -53,6 +53,7 @@ app.photos = (function (thisModule) {
     console.log('Has permission to use CAMERA')
 
     // store for the case when the app reboots, see function onAppResumeAfterReboot
+    window.localStorage.setItem('isUserUsingCamera', JSON.stringify(true))
     window.localStorage.setItem('userCapturingPhotoNumber', imgNmbr.toString())
     window.localStorage.setItem('userCapturingPhotoType', type)
 
@@ -60,7 +61,8 @@ app.photos = (function (thisModule) {
 
     console.log('starting navigator.camera.getPicture')
     navigator.camera.getPicture(function (result) {
-      console.log('cameraSuccess init')
+      console.log('%c Camera Success', 'color: green; font-weight:bold')
+      window.localStorage.setItem('isUserUsingCamera', JSON.stringify(false))
       cameraSuccess(result, imgNmbr, type, callback)
     },
     function cameraError (error) {

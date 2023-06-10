@@ -165,7 +165,10 @@ app.main = (function (thisModule) {
 
   // request user to evaluate this app on Play Store
   function requestUserAppEvaluation () {
-    if (JSON.parse(window.localStorage.getItem('didUserAlreadyClickedToEvaluatedApp'))) {
+    if (
+      JSON.parse(window.localStorage.getItem('didUserAlreadyClickedToEvaluatedApp')) ||
+      JSON.parse(window.localStorage.getItem('isUserUsingCamera'))
+    ) {
       return
     }
 
