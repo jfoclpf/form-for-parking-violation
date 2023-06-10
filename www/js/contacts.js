@@ -106,7 +106,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Maia',
-    'contacto': 'pm@cm-maia.pt'
+    'contacto': 'spm@cm-maia.pt'
   },
   {
     'nome': 'Marco de Canaveses',
