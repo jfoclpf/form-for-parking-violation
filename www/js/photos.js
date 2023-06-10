@@ -211,7 +211,9 @@ app.photos = (function (thisModule) {
     console.log('photosAsBase64: ', photosAsBase64)
 
     for (let i = 0; i < photosAsBase64.length; i++) {
-      app.form.displayImage(photosAsBase64[i], i + 1)
+      if (photosAsBase64[i]) {
+        app.form.displayImage(photosAsBase64[i], i + 1)
+      }
     }
 
     const imgNmbr = parseInt(window.localStorage.getItem('userCapturingPhotoNumber')) || 1
@@ -410,9 +412,9 @@ app.photos = (function (thisModule) {
   }
 
   function removeImage (num) {
-    photosUriOnFileSystem[num - 1] = null
-    photosAsBase64[num - 1] = null
-    photoWithGPS[num - 1] = null
+    photosUriOnFileSystem[num - 1] = ''
+    photosAsBase64[num - 1] = ''
+    photoWithGPS[num - 1] = ''
     storePhotosArrays('ALL')
   }
 

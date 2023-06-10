@@ -2,7 +2,7 @@
 
 /* global $, cordova, device */
 
-let DEBUG = true
+let DEBUG = false
 
 const app = {}
 
