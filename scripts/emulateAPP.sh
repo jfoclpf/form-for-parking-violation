@@ -5,8 +5,8 @@ export PATH=$PATH:/usr/local/android-sdk/tools/bin
 export PATH=$PATH:/usr/local/android-sdk
 export PATH=$PATH:/usr/local/android-sdk/platform-tools
 export PATH=$PATH:/usr/local/android-sdk/build-tools
-export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_131/
-export ANDROID_HOME=/usr/local/android-sdk/
+export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64/
+export ANDROID_SDK_ROOT=/usr/lib/android-sdk
 
 cd "${0%/*}"
 
