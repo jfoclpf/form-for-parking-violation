@@ -5288,6 +5288,10 @@ app.contacts.PSP_Contacts = [
   {
     'nome': 'Évora - Esquadra de Intervenção e Fiscalização Policial',
     'contacto': 'cpevora@psp.pt'
+  },
+  {
+    'nome': 'Póvoa de Santa Iria - 93º Esquadra da PSP',
+    'contacto': '93esquadra.lisboa@psp.pt'
   }
 ]
 
