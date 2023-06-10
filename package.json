@@ -1,7 +1,7 @@
 {
   "name": "com.form.parking.violation",
   "displayName": "formParkingViolation",
-  "version": "2.9.2",
+  "version": "2.10.0",
   "description": "Submit a parking violation complain to authority",
   "main": "index.js",
   "scripts": {

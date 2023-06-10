@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.form.parking.violation" version="2.9.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="com.form.parking.violation" version="2.10.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>Denúncia Estacionamento</name>
   <description>
     Envio de queixa de estacionamento ilegal a autoridade competente
@@ -27,8 +27,8 @@
   <preference name="StatusBarBackgroundColor" value="#FFFFFF"/>
   <preference name="StatusBarStyle" value="blacktranslucent"/>
   <preference name="AndroidXEnabled" value="true"/>
-  <preference name="SplashMaintainAspectRatio" value="true" />
-  <preference name="SplashShowOnlyFirstTime" value="true" />
+  <preference name="SplashMaintainAspectRatio" value="true"/>
+  <preference name="SplashShowOnlyFirstTime" value="true"/>
   <hook src="hooks/copyCredentials.js" type="before_prepare"/>
   <hook src="hooks/convertHbsToHtml.js" type="after_prepare"/>
   <hook src="hooks/minifyFiles.js" type="after_prepare"/>
@@ -38,7 +38,7 @@
     <preference name="android-targetSdkVersion" value="33"/>
     <preference name="android-compileSdkVersion" value="33"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
-    <preference name="AndroidInsecureFileModeEnabled" value="true" />
+    <preference name="AndroidInsecureFileModeEnabled" value="true"/>
     <allow-intent href="market:*"/>
     <icon height="512" src="res/icon/android/512.png" width="512"/>
     <icon density="xhdpi" height="192" src="res/icon/android/192.png" width="192"/>
@@ -55,9 +55,9 @@
     <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
     <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png"/>
     <config-file target="AndroidManifest.xml" parent="/*" mode="merge">
-      <uses-permission android:name="android.permission.CAMERA" />
-      <uses-feature android:name="android.hardware.camera" />
-      <uses-feature android:name="android.hardware.camera.autofocus" />
+      <uses-permission android:name="android.permission.CAMERA"/>
+      <uses-feature android:name="android.hardware.camera"/>
+      <uses-feature android:name="android.hardware.camera.autofocus"/>
     </config-file>
   </platform>
   <platform name="ios">
