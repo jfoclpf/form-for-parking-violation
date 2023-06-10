@@ -12,14 +12,16 @@ source keys/keyPassword
 
 cordova clean
 
-cordova build --release android
+cordova build --release android -- --packageType=apk
 
 cp keys/autocosts.keystore platforms/android/app/build/outputs/apk/release/
 cd platforms/android/app/build/outputs/apk/release/
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass $PASS app-release-unsigned.apk autocosts
+# old method
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore autocosts.keystore -storepass $PASS app-release-unsigned.apk autocosts
 
 zipalign -v 4 app-release-unsigned.apk formParkingViolation.apk
+apksigner sign --ks autocosts.keystore --pass-encoding utf-8 --ks-key-alias autocosts --ks-pass pass:$PASS --key-pass pass:$PASS formParkingViolation.apk
 
 cd ../../../../../../..
 rm -f dist/formParkingViolation.apk
