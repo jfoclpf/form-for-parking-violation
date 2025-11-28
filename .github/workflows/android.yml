@@ -18,7 +18,7 @@ jobs:
   android:
     strategy:
       matrix:
-        platform: [ubuntu-20.04]
+        platform: [ubuntu-22.04]
         node-version: [16]
         
     runs-on: ${{ matrix.platform }}
