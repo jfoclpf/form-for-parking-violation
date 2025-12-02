@@ -29,3 +29,6 @@ keys/
 #server
 uploadToServer.sh
 server/cryptoV3.db
+
+## OS files
+.DS_Store
