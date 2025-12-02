@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 env:
-  JAVA_HOME: /usr/lib/jvm/java-1.11.0-openjdk-amd64
+  JAVA_HOME: /usr/lib/jvm/java-1.17.0-openjdk-amd64
   ANDROID_HOME: /usr/local/lib/android/sdk
   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
@@ -30,15 +30,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Installing Java 11
+    - name: Installing Java 17
       run: |
         sudo apt update -y
-        sudo apt install openjdk-11-jdk openjdk-11-jre -y
-    - name: Forcing the use of Java 11
+        sudo apt install openjdk-17-jdk openjdk-17-jre -y
+    - name: Forcing the use of Java 17
       run: | 
         java -version
         sudo update-java-alternatives -l || echo OK
-        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep '1\.11' | cut -d " " -f1) || echo OK
+        sudo update-java-alternatives -s $(sudo update-java-alternatives -l | grep '1\.17' | cut -d " " -f1) || echo OK
         java -version
     - name: Install Android SDK
       run: |
@@ -47,7 +47,7 @@ jobs:
       run: |
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --version
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list_installed
-        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;33.0.2"
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0"
     - name: List SDK dir and cp D8s to DXs
       run: |
         ls -la /usr/local/lib/android/sdk/build-tools/
