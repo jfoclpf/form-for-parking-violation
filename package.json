@@ -97,7 +97,7 @@
   "devDependencies": {
     "async": "^3.2.4",
     "bootstrap-select": "^1.13.18",
-    "cordova-android": "^13.0.0",
+    "cordova-android": "^14.0.1",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-androidx-adapter": "^1.1.3",
