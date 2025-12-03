@@ -5222,10 +5222,6 @@ app.contacts.PSP_Contacts = [
     'contacto': 'cpvcastelo@psp.pt'
   },
   {
-    'nome': 'Viana do Castelo - Esquadra',
-    'contacto': 'vctesqsede@psp.pt'
-  },
-  {
     'nome': 'Vila Franca de Xira - Divisão Policial',
     'contacto': 'vfxira.lisboa@psp.pt'
   },
