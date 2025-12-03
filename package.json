@@ -121,7 +121,7 @@
     "uglify-es": "^3.3.9",
     "uglifycss": "0.0.29",
     "walk": "^2.3.15",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.5.0"
   },
   "standard": {
     "ignore": [
