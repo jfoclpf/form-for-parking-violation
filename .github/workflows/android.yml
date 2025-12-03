@@ -18,8 +18,8 @@ jobs:
   android:
     strategy:
       matrix:
-        platform: [ubuntu-20.04]
-        node-version: [16]
+        platform: [ubuntu-24.04]
+        node-version: [20]
         
     runs-on: ${{ matrix.platform }}
 
@@ -47,6 +47,7 @@ jobs:
       run: |
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --version
         /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --list_installed
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;30.0.3"
     - name: List SDK dir and cp D8s to DXs
       run: |
         ls -la /usr/local/lib/android/sdk/build-tools/
