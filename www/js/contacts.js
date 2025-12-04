@@ -150,7 +150,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Sintra',
-    'contacto': 'policiamunicipal@cm-sintra.pt'
+    'contacto': 'dpmu.transito@cm-sintra.pt'
   },
   {
     'nome': 'Trofa',
