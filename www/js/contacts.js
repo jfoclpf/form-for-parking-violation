@@ -142,7 +142,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Porto',
-    'contacto': 'policiamunicipal@cm-porto.pt'
+    'contacto': 'dmt-pm@cm-porto.pt'
   },
   {
     'nome': 'Póvoa de Varzim',
