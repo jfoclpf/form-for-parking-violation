@@ -5123,7 +5123,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Santarém - Esquadra',
-    'contacto': 'stresqsede@psp.pt'
+    'contacto': 'esquadrasede.santarem@psp.pt'
   },
   {
     'nome': 'Santo Tirso - Esquadra',
@@ -5191,7 +5191,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Tomar - Divisão Policial',
-    'contacto': 'strsectmr@psp.pt'
+    'contacto': 'div.tomar.santarem@psp.pt'
   },
   {
     'nome': 'Torre da Marinha - Seixal - Posto de Atendimento',
