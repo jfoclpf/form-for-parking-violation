@@ -5087,7 +5087,7 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Ribeira Brava - Esquadra',
-    'contacto': 'madesqrbrava@psp.pt'
+    'contacto': 'rbrava.madeira@psp.pt'
   },
   {
     'nome': 'Rio Tinto - Gondomar - Esquadra',
