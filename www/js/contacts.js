@@ -4619,11 +4619,11 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Cascais - Divisão Policial',
-    'contacto': 'divcascais.lisboa@psp.pt'
+    'contacto': 'sag.cascais.lisboa@psp.pt'
   },
   {
     'nome': 'Cascais - Esquadra de Trânsito',
-    'contacto': 'div.cascais.lisboa@psp.pt'
+    'contacto': 'transito.cascais.lisboa@psp.pt'
   },
   {
     'nome': 'Cascais - Esquadra de Turismo',
