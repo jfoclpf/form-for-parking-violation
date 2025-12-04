@@ -4738,6 +4738,10 @@ app.contacts.PSP_Contacts = [
     'contacto': 'espinho.aveiro@psp.pt'
   },
   {
+    'nome': 'Esquadra de Trânsito do Aeroporto de Lisboa',
+    'contacto': 'dsaetr.lisboa@psp.pt'
+  },
+  {
     'nome': 'Estoril - Cascais - 51.ª Esquadra Lx',
     'contacto': 'esquadrasecxxi@psp.pt'
   },
