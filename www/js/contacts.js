@@ -81,6 +81,10 @@ app.contacts.PM_Contacts = [
     'contacto': 'pmfafe@sapo.pt'
   },
   {
+    'nome': 'Faro',
+    'contacto': 'geral@cm-faro.pt'
+  },
+  {
     'nome': 'Felgueiras',
     'contacto': 'policia.municipal@cm-felgueiras.pt'
   },
