@@ -114,7 +114,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Marco de Canaveses',
-    'contacto': 'policia.municipal@cm-marco-canavese.pt'
+    'contacto': 'policia.municipal@cm-marco-canaveses.pt'
   },
   {
     'nome': 'Matosinhos',
