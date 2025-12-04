@@ -5259,7 +5259,11 @@ app.contacts.PSP_Contacts = [
   },
   {
     'nome': 'Vila Real - Esquadra',
-    'contacto': 'vrlesqsede@psp.pt'
+    'contacto': 'esquadrasede.vilareal@psp.pt'
+  },
+  {
+    'nome': 'Vila Real - Esquadra de Transito',
+    'contacto': 'transito.vilareal@psp.pt'
   },
   {
     'nome': 'Vila Real de Santo Antonio - Esquadra',
