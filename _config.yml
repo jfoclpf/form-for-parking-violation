@@ -1,8 +1,8 @@
 # Informação do projeto
 title: "APP Denúncia de Estacionamento"
 description: "APP  que permite que os cidadãos possam reportar às autoridades veículos ilegalmente estacionados, ao abrigo do número 5 do artigo 170 do Código da Estrada"
-url: "https://jfoclpf.github.io"
-baseurl: "/form-for-parking-violation"   # importante para páginas de projeto
+url: "https://app-denuncia-estacionamento.joaopimentel.com"
+baseurl: ""
 
 # Tema utilizado
 remote_theme: just-the-docs/just-the-docs
