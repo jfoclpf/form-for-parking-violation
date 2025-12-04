@@ -26,7 +26,7 @@ plugins:
   - jekyll-feed
 
 # Visual
-color_scheme: dark
+color_scheme: light
 
 # Metadados
 author:
