@@ -162,7 +162,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Vila do Conde',
-    'contacto': 'geral@viladoconde.pt'
+    'contacto': 'geral@cm-viladoconde.pt'
   },
   {
     'nome': 'Vila Nova de Famalicão',
