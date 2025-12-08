@@ -32,8 +32,7 @@
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-is-debug": "^1.0.0",
-    "cordova-plugin-screen-orientation": "^3.0.2",
-    "cordova-plugin-simple-image-resizer": "0.2.0",
+    "cordova-plugin-screen-orientation": "3.0.4",
     "cordova-plugin-statusbar": "^3.0.0",
     "cordova-set-version": "^13.0.1",
     "cors": "^2.8.5",
@@ -63,7 +62,6 @@
         "GPS_REQUIRED": "true"
       },
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-screen-orientation": {},
       "cordova-plugin-device": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-inappbrowser": {},
@@ -79,13 +77,14 @@
       "cordova-plugin-file": {
         "ANDROIDX_WEBKIT_VERSION": "1.4.0"
       },
-      "cordova-plugin-simple-image-resizer": {
-        "ANDROID_EXIFINTERFACES_VERSION": "27.+"
-      },
       "cordova-plugin-email-composer": {},
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-simple-image-resizer": {
+        "ANDROID_EXIFINTERFACES_VERSION": "27.+"
       }
     },
     "platforms": [
@@ -106,6 +105,7 @@
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-mobile-ocr": "github:jfoclpf/cordova-plugin-mobile-ocr",
     "cordova-plugin-network-information": "github:apache/cordova-plugin-network-information",
+    "cordova-plugin-simple-image-resizer": "^0.2.0",
     "cordova-plugin-x-socialsharing": "^6.0.4",
     "fs-extra": "^11.1.0",
     "handlebars": "^4.7.7",
