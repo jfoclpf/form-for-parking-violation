@@ -64,12 +64,13 @@ Instalar o emulador
 [sudo] sdkmanager --install "emulator"
 ```
 
-Instalar as plataformas de teste, exemplo:
+Instalar as plataformas de teste, exemplo para Android 16 (API level 36):
 
 ```
-[sudo] sdkmanager --install "system-images;android-32;google_apis;x86_64"
-[sudo] sdkmanager --install "system-images;android-33;google_apis;x86_64"
+[sudo] sdkmanager --install "emulator;36.3.4" "platforms;android-36.1" "build-tools;36.1.0"
 ```
+
+Para ver todas as plataformas `sdkmanager --list`
 
 Criar o dispositivo virtual (AVD), exemplo:
 
