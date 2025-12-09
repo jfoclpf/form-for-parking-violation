@@ -39,7 +39,7 @@
     <preference name="android-compileSdkVersion" value="35"/>
     <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
     <preference name="AndroidInsecureFileModeEnabled" value="true"/>
-    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/icon/android/512.png"/>
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/icon/android/framed.png"/>
     <allow-intent href="market:*"/>
     <icon height="512" src="res/icon/android/512.png" width="512"/>
     <icon density="xhdpi" height="192" src="res/icon/android/192.png" width="192"/>
