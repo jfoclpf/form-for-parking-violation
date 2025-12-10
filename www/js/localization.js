@@ -183,14 +183,14 @@ app.localization = (function (thisModule) {
         if (addressFromGeoPtApi.freguesia) {
           $('#locality').val(addressFromGeoPtApi.freguesia)
         } else {
-            $('#locality').val(addressFromGeoPtApi.concelho)
+          $('#locality').val(addressFromGeoPtApi.concelho)
         }
         $('#municipality').val(addressFromGeoPtApi.concelho)
       } else if (addressFromOSM.municipality) {
         $('#locality').val(addressFromOSM.municipality)
         $('#municipality').val(addressFromOSM.municipality)
       } else if (municipalityFromDB) {
-        if (localityFromDB){
+        if (localityFromDB) {
           $('#locality').val(localityFromDB)
         } else {
           $('#locality').val(municipalityFromDB)
@@ -341,3 +341,4 @@ app.localization = (function (thisModule) {
 
   return thisModule
 })(app.localization || {})
+
