@@ -50,10 +50,14 @@ app.form = (function (thisModule) {
   function getFullAddress () {
     const streetNumber = getStreetNumber()
     if (streetNumber) {
-      return `${getStreetName()} n. ${streetNumber}, ${getLocality()}`
+      return `${getStreetName()} n. ${streetNumber}, ${getLocality()} (${getMunicipality()})`
     } else {
-      return `${getStreetName()}, ${getLocality()}`
+      return `${getStreetName()}, ${getLocality()} (${getMunicipality()})`
     }
+  }
+
+  function getMunicipality () {
+    return $('#municipality').val()
   }
 
   function getLocality () {

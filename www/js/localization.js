@@ -60,7 +60,7 @@ app.localization = (function (thisModule) {
     $.jAlert({
       title: 'Erro na obtenção do local da ocorrência!',
       theme: 'red',
-      content: 'Confirme se tem o GPS ligado e autorizado, e se tem acesso à Internet. Caso contrário pode introduzir manualmente o Concelho, Local (rua, travessa, etc.) e número de porta da ocorrência.'
+      content: 'Confirme se tem o GPS ligado e autorizado, e se tem acesso à Internet. Caso contrário pode introduzir manualmente a Localidade, Concelho, Local (rua, travessa, etc.) e número de porta da ocorrência.'
     })
     GPSLoadingOnFields(false)
   }
@@ -178,13 +178,24 @@ app.localization = (function (thisModule) {
         }
       }
 
-      // #locality makes reference to municipality (concelho)
+      // #municipality makes reference to municipality (concelho)
       if (addressFromGeoPtApi && addressFromGeoPtApi.concelho) {
-        $('#locality').val(addressFromGeoPtApi.concelho)
+        if (addressFromGeoPtApi.freguesia) {
+          $('#locality').val(addressFromGeoPtApi.freguesia)
+        } else {
+          $('#locality').val(addressFromGeoPtApi.concelho)
+        }
+        $('#municipality').val(addressFromGeoPtApi.concelho)
       } else if (addressFromOSM.municipality) {
         $('#locality').val(addressFromOSM.municipality)
+        $('#municipality').val(addressFromOSM.municipality)
       } else if (municipalityFromDB) {
-        $('#locality').val(municipalityFromDB)
+        if (localityFromDB) {
+          $('#locality').val(localityFromDB)
+        } else {
+          $('#locality').val(municipalityFromDB)
+        }
+        $('#municipality').val(municipalityFromDB)
       }
     } else {
       geoNames.push($('#locality').val())
@@ -274,6 +285,7 @@ app.localization = (function (thisModule) {
   // removes the loading gif from input fields
   function GPSLoadingOnFields (bool) {
     if (bool) {
+      $('#municipality').addClass('loading')
       $('#locality').addClass('loading')
       $('#street').addClass('loading')
       $('#street_number').addClass('loading')
@@ -284,6 +296,8 @@ app.localization = (function (thisModule) {
       $('#street_number').trigger('input')
       $('#locality').removeClass('loading')
       $('#locality').trigger('input')
+      $('#municipality').removeClass('loading')
+      $('#municipality').trigger('input')
     }
   }
 
