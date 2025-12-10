@@ -57,7 +57,7 @@ app.text = (function (thisModule) {
       msg2 = 'No passado dia <b>' +
         $.datepicker.formatDate("dd' de 'MM' de 'yy", $('#date').datepicker('getDate')) + '</b>' +
         ($('#time').val() ? ' pelas <b>' + $('#time').val() + '</b>' : '') + // optional
-        ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + '</b>, ' +
+        ', ' + 'na <b>' + $('#street').val() + ', ' + $('#locality').val() + ' (' + $('#municipality').val() + ') </b>, ' +
         ($('#street_number').val()
           ? 'aproximadamente junto à porta com o <b>número ' + $('#street_number').val() + '</b>, '
           : ''
