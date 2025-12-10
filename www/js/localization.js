@@ -341,4 +341,3 @@ app.localization = (function (thisModule) {
 
   return thisModule
 })(app.localization || {})
-
