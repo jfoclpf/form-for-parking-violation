@@ -1,9 +1,12 @@
 /* eslint camelcase: off */
 /* eslint prefer-regex-literals: off */
 
-/* global app, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
+/* global app, cordova, $, CAR_LIST, DEBUG, CARROS_MATRICULAS_API */
 
 app.form = (function (thisModule) {
+  // JSON data from file js/json/municipalities.json
+  let listOfMunicipalities = []
+
   function init () {
     if (app.functions.isThis_iOS()) {
       $('#plate').removeClass('mandatory')
@@ -11,6 +14,15 @@ app.form = (function (thisModule) {
     } else {
       $('#plate').bind('input', plateOnInput)
     }
+
+    // preload prepositions of municípios
+    app.file.getFileContent(cordova.file.applicationDirectory + 'www/json/municipalities.json', 'text', function (err, res) {
+      if (err) {
+        console.error(err)
+      } else {
+        listOfMunicipalities = JSON.parse(res)
+      }
+    })
 
     initPullToRefresh()
   }
@@ -47,12 +59,27 @@ app.form = (function (thisModule) {
     return $('#time').val()
   }
 
+  // returns [de, da, do] according to the municipality,
+  // ex: "do" Porto, "de" Lisboa, "da" Guarda
+  function getPrepositionOfMunicipality (municipality) {
+    if (!municipality || typeof municipality !== 'string') {
+      return ''
+    }
+    for (const i of listOfMunicipalities) {
+      if (i.municipio.toLowerCase().trim() === municipality.toLowerCase().trim()) {
+        return i.prep
+      }
+    }
+    return ''
+  }
+
   function getFullAddress () {
     const streetNumber = getStreetNumber()
+    const prepositionOfMunicipality = getPrepositionOfMunicipality(getMunicipality()) // "de", "da" or "do"
     if (streetNumber) {
-      return `${getStreetName()} n. ${streetNumber}, ${getLocality()} (${getMunicipality()})`
+      return `${getStreetName()} n. ${streetNumber}, ${getLocality()}, município ${prepositionOfMunicipality} ${getMunicipality()}`
     } else {
-      return `${getStreetName()}, ${getLocality()} (${getMunicipality()})`
+      return `${getStreetName()}, ${getLocality()}, município ${prepositionOfMunicipality} ${getMunicipality()}`
     }
   }
 
