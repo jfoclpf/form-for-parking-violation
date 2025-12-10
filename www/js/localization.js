@@ -1,4 +1,5 @@
-//  LOCALIZATION/GPS/Contacts
+// LOCALIZATION/GPS/Contacts
+// OSM stands for Open Street Maps
 
 /* global app, $ */
 
