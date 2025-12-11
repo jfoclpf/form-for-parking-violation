@@ -3071,7 +3071,7 @@ app.contacts.GNR_Contacts = [
     'contacto': 'ct.ctb.didn.pldr@gnr.pt'
   },
   {
-    'nome': 'Posto Territorial de Lagoa',
+    'nome': 'Posto Territorial de Lagoa (Algarve)',
     'contacto': 'ct.far.dslv.plag@gnr.pt'
   },
   {
