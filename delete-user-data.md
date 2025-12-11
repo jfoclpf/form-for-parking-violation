@@ -8,8 +8,7 @@ O valor do UUID é usado apenas para permitir que o utilizador da APP tenha aces
 
 **Nenhum dado pessoal é enviado para a base de dados, apenas o UUID. Todos os seus dados pessoais ficam armazenados apenas no seu dispositivo.**
 
-Contudo, caso queira apagar o UUID do seu dispositivo, faça por favor aqui um pedido, criando um novo "issue"
-https://github.com/jfoclpf/form-for-parking-violation/issues
+Contudo, caso queira apagar o UUID do seu dispositivo, faça por favor aqui um pedido, [criando um novo "issue"](https://github.com/jfoclpf/form-for-parking-violation/issues), ou enviado um email para android-developer@joaopimentel.com
 
 Após a remoção, as fotos que colocou continuarão na base de dados, de forma completamente anónima, e neste caso, sem referência a qualquer UUID.
 
