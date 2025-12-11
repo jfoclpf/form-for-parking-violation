@@ -5234,12 +5234,8 @@ app.contacts.PSP_Contacts = [
     'contacto': 'vfxira.lisboa@psp.pt'
   },
   {
-    'nome': 'Vila Franca de Xira - Esq.ª de Intervenção e Fiscalização Policial',
-    'contacto': 'vfxira.lisboa@psp.pt'
-  },
-  {
     'nome': 'Vila Franca de Xira - Esquadra de Trânsito',
-    'contacto': 'vfxira.lisboa@psp.pt'
+    'contacto': 'etrvfx.lisboa@psp.pt'
   },
   {
     'nome': 'Vila Nova de Famalicão - Esquadra',
