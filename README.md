@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation&hl=pt"><img src="https://github.com/jfoclpf/form-for-parking-violation/blob/master/res/icon/android/512.png?raw=true" alt="logo" width="200"/></a>
+  <a href="https://play.google.com/store/apps/details?id=com.form.parking.violation&hl=pt"><img src="https://raw.githubusercontent.com/jfoclpf/form-for-parking-violation/refs/heads/master/res/icon/android/512.png" alt="logo" width="200"/></a>
   <br>
   Denúncia de Estacionamento!
   <br>
