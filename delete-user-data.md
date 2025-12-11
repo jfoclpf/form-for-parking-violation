@@ -1,3 +1,5 @@
+## Pedido de remoção de Identificador único universal UUID da nossa Base de Dados
+
 O meu nome é João Pimentel Ferreira e sou o programador principal da APP Denúncia de Estacionamento, cujo código é livre e aberto e está disponível neste projeto do Github.
 
 Esta APP usa o Identificador único universal UUID (em Android `ANDROID_ID`) para identificar o utilizador. O valor de UUID em Android é atualmente definido com base em três fatores: a chave de assinatura da aplicação, o utilizador e o dispositivo.
