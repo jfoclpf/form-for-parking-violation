@@ -562,7 +562,7 @@ app.form = (function (thisModule) {
 
   /* ********************************************************************** */
   /* ********************* LOCAL OF OCCURRENCE **************************** */
-  $('#locality').on('input', function () {
+  $('#locality, #municipality').on('input', function () {
     if ($(this).val() === '' && !DEBUG) {
       $(this).css('border-color', 'red')
     } else {
@@ -570,7 +570,7 @@ app.form = (function (thisModule) {
     }
   })
 
-  $('#locality').focusout(function () {
+  $('#locality, #municipality').on('focusout', function () {
     app.localization.getAuthoritiesFromAddress()
   })
 

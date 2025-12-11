@@ -198,8 +198,13 @@ app.localization = (function (thisModule) {
         }
         $('#municipality').val(municipalityFromDB)
       }
-    } else {
+    }
+
+    if ($('#locality').val()) {
       geoNames.push($('#locality').val())
+    }
+    if ($('#municipality').val()) {
+      geoNames.push($('#municipality').val())
     }
 
     geoNames = app.functions.cleanArray(geoNames) // removes empty strings
