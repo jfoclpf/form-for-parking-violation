@@ -14,22 +14,21 @@ jobs:
     strategy:
       matrix:
         platform: [macos-latest]
-        node-version: [lts/*]
+        node-version: [20]
         
     runs-on: ${{ matrix.platform }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Changing to Java 8
-      run: | 
-        javac -version
-        export JAVA_HOME=`/usr/libexec/java_home -v 1.8` || echo OK
-        javac -version
+    - uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin' # See 'Supported distributions' for available options
+        java-version: '17'
     - name: Install Apache Cordova
       run: npm install -g cordova
     - name: Add iOS Platform
