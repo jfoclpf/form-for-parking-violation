@@ -10,7 +10,7 @@ Adicionalmente, os dados das denúncias são anonimamente, i.e., sem qualquer in
 
 Os seus dados pessoais que colocar na APP ficarão guardados apenas e somente no seu dispositivo, para futuras ocorrências.
 
-## Por que motivo fazemos esta recolha de dados?
+### Por que motivo fazemos esta recolha de dados?
 
 Os dados geográficos são usados para calcular com precisão o endereço postal da ocorrência, para assim o utilizador poder emitir a denúncia de forma automatizada.
 
