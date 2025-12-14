@@ -160,22 +160,22 @@ app.localization = (function (thisModule) {
         }
       }
 
-      // from the Postal Code got from OMS
-      // tries to get locality using the offline Data Base (see file contacts.js)
-      let localityFromDB, municipalityFromDB
+      // from the Postal Code got from Open Street Maps
+      // tries to get locality using the offline file (see file contacts.js)
+      let localityFromFile, municipalityFromFile
       if (addressFromOSM.postcode) {
-        const dataFromDB = getDataFromPostalCode(addressFromOSM.postcode)
+        const dataFromFile = getDataFromPostalCode(addressFromOSM.postcode)
 
-        localityFromDB = dataFromDB.locality
-        console.log('locality from DB is ' + localityFromDB)
-        if (localityFromDB) {
-          geoNames.push(localityFromDB)
+        localityFromFile = dataFromFile.locality
+        console.log('locality from File is ' + localityFromFile)
+        if (localityFromFile) {
+          geoNames.push(localityFromFile)
         }
 
-        municipalityFromDB = dataFromDB.municipality
-        console.log('municipality from DB is ' + municipalityFromDB)
-        if (municipalityFromDB) {
-          geoNames.push(municipalityFromDB)
+        municipalityFromFile = dataFromFile.municipality
+        console.log('municipality from File is ' + municipalityFromFile)
+        if (municipalityFromFile) {
+          geoNames.push(municipalityFromFile)
         }
       }
 
@@ -190,13 +190,13 @@ app.localization = (function (thisModule) {
       } else if (addressFromOSM.municipality) {
         $('#locality').val(addressFromOSM.municipality)
         $('#municipality').val(addressFromOSM.municipality)
-      } else if (municipalityFromDB) {
-        if (localityFromDB) {
-          $('#locality').val(localityFromDB)
+      } else if (municipalityFromFile) {
+        if (localityFromFile) {
+          $('#locality').val(localityFromFile)
         } else {
-          $('#locality').val(municipalityFromDB)
+          $('#locality').val(municipalityFromFile)
         }
-        $('#municipality').val(municipalityFromDB)
+        $('#municipality').val(municipalityFromFile)
       }
     }
 
