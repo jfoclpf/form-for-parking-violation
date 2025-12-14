@@ -59,14 +59,15 @@ app.form = (function (thisModule) {
     return $('#time').val()
   }
 
-  // returns [de, da, do] according to the municipality,
+  // returns one of ["de", "da", "do"] according to the municipality,
   // ex: "do" Porto, "de" Lisboa, "da" Guarda
   function getPrepositionOfMunicipality (municipality) {
     if (!municipality || typeof municipality !== 'string') {
       return ''
     }
+    const municipality_ = municipality.toLowerCase().trim()
     for (const i of listOfMunicipalities) {
-      if (i.municipio.toLowerCase().trim() === municipality.toLowerCase().trim()) {
+      if (i.municipio.toLowerCase().trim() === municipality_) {
         return i.prep
       }
     }
@@ -74,13 +75,17 @@ app.form = (function (thisModule) {
   }
 
   function getFullAddress () {
+    const local = getStreetName() // rua, praceta, largo, travessa, etc.
     const streetNumber = getStreetNumber()
-    const prepositionOfMunicipality = getPrepositionOfMunicipality(getMunicipality()) // "de", "da" or "do"
-    if (streetNumber) {
-      return `${getStreetName()} n. ${streetNumber}, ${getLocality()}, município ${prepositionOfMunicipality} ${getMunicipality()}`
-    } else {
-      return `${getStreetName()}, ${getLocality()}, município ${prepositionOfMunicipality} ${getMunicipality()}`
-    }
+    const locality = getLocality() // freguesia, bairro, etc.
+    const municipality = getMunicipality()
+    const prepositionOfMunicipality = getPrepositionOfMunicipality(municipality) // "de", "da" or "do"
+
+    const streetNumberString = streetNumber ? ` n. ${streetNumber}` : ''
+    const localityString = locality ? `${locality}, ` : ''
+    const municipalityString = prepositionOfMunicipality ? `município ${prepositionOfMunicipality} ` : ''
+
+    return `${local}${streetNumberString}, ${localityString}${municipalityString}${municipality}`
   }
 
   function getMunicipality () {
@@ -662,6 +667,7 @@ app.form = (function (thisModule) {
   thisModule.getCarModel = getCarModel
   thisModule.getDateYYYY_MM_DD = getDateYYYY_MM_DD
   thisModule.getTimeHH_MM = getTimeHH_MM
+  thisModule.getPrepositionOfMunicipality = getPrepositionOfMunicipality
   thisModule.getFullAddress = getFullAddress
   thisModule.getLocality = getLocality
   thisModule.getStreetName = getStreetName
