@@ -89,23 +89,23 @@ app.form = (function (thisModule) {
   }
 
   function getMunicipality () {
-    return $('#municipality').val()
+    return $('#municipality').val() || ''
   }
 
   function getLocality () {
-    return $('#locality').val()
+    return $('#locality').val() || ''
   }
 
   function getStreetName () {
-    return $('#street').val()
+    return $('#street').val() || ''
   }
 
   function getStreetNumber () {
-    return $('#street_number').val() ? $('#street_number').val() : ''
+    return $('#street_number').val() || ''
   }
 
   function getAuthority () {
-    return $('#authority option:selected').text()
+    return $('#authority option:selected').text() || ''
   }
 
   /* ********************************************************************** */
