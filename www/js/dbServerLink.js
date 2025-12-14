@@ -18,7 +18,7 @@ app.dbServerLink = (function (thisModule) {
     const numberOfImages = imagesArray.length
     for (let i = 0; i < 4; i++) {
       if (i < numberOfImages) {
-        const fileName = `${DEBUG ? 'debug_' : ''}${carPlate}_n${i + 1}_${dateYYYY_MM_DD}_${timeHH_MM}_${locality}_${randomString}.jpg`
+        const fileName = `${DEBUG ? 'debug_' : ''}${slugify(carPlate)}_n${i + 1}_${dateYYYY_MM_DD}_${timeHH_MM}_${slugify(locality)}_${randomString}.jpg`
         imgFileNames.push(fileName)
       } else {
         imgFileNames.push('')
@@ -182,6 +182,16 @@ app.dbServerLink = (function (thisModule) {
     const municipalityString = prepositionOfMunicipality ? `município ${prepositionOfMunicipality} ` : ''
 
     return `${local}${streetNumberString}, ${localityString}${municipalityString}${municipality}`
+  }
+
+  // "Paço de Arcos"  -->  "paco_de_arcos"
+  function slugify (str) {
+    return str
+      .normalize('NFD') // separate accents
+      .replace(/[\u0300-\u036f]/g, '') // remove accents
+      .replace(/\s+/g, '_') // spaces → _
+      .replace(/[^a-zA-Z0-9._-]/g, '') // remove unsafe chars
+      .toLowerCase()
   }
 
   thisModule.submitNewEntryToDB = submitNewEntryToDB
