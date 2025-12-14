@@ -22,7 +22,7 @@ O código está desenhado em Javascript para ser corrido num smartphone. Para ta
 ## Como instalar e testar
 ### Requisitos, _debug_ e eventuais problemas
 
-* ver [documentação](https://github.com/jfoclpf/form-for-parking-violation/blob/master/docs.md)
+* ver [documentação](/docs.md)
 
 ### Android
 
