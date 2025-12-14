@@ -135,7 +135,7 @@ app.text = (function (thisModule) {
     'No seguimento da denúncia já enviada anteriormente a V. Exas. ' +
     'a propósito da violação do Código da Estrada perpetrada pelo condutor do veículo ' +
     `${occurrence.carro_marca} ${occurrence.carro_modelo} com a matrícula ${occurrence.carro_matricula}, ` +
-    `na ${occurrence.data_local} n. ${occurrence.data_num_porta}, ${occurrence.data_concelho}, ` +
+    `na ${app.dbServerLink.getFullAddressFromDbElement(occurrence)}, ` +
     `no dia ${(new Date(occurrence.data_data)).toLocaleDateString('pt-PT')} às ${occurrence.data_hora.slice(0, 5)}, ` +
     `veículo esse que se encontrava ${app.penalties.getData(occurrence.base_legal, 'description')} em violação ` +
     `${app.penalties.getData(occurrence.base_legal, 'lawArticle')}, vinha por este meio inquirir V. Exas. ` +

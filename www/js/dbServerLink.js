@@ -42,7 +42,8 @@ app.dbServerLink = (function (thisModule) {
       carro_modelo: app.form.getCarModel(),
       data_data: app.form.getDateYYYY_MM_DD(),
       data_hora: app.form.getTimeHH_MM(),
-      data_concelho: app.form.getLocality(),
+      data_concelho: app.form.getMunicipality(),
+      data_localidade: app.form.getLocality(),
       data_local: app.form.getStreetName(),
       data_num_porta: app.form.getStreetNumber(),
       data_coord_latit: app.localization.getCoordinates().latitude,
@@ -168,10 +169,26 @@ app.dbServerLink = (function (thisModule) {
     }
   }
 
+  // el.data_local, el.data_num_porta, el.data_localidade, el.data_concelho
+  function getFullAddressFromDbElement (el) {
+    const local = el.data_local // rua, praceta, largo, travessa, etc.
+    const streetNumber = el.data_num_porta
+    const locality = el.data_localidade // freguesia, bairro, etc.
+    const municipality = el.data_concelho
+    const prepositionOfMunicipality = app.form.getPrepositionOfMunicipality(municipality) // "de", "da" or "do"
+
+    const streetNumberString = streetNumber ? ` n. ${streetNumber}` : ''
+    const localityString = locality ? `${locality}, ` : ''
+    const municipalityString = prepositionOfMunicipality ? `município ${prepositionOfMunicipality} ` : ''
+
+    return `${local}${streetNumberString}, ${localityString}${municipalityString}${municipality}`
+  }
+
   thisModule.submitNewEntryToDB = submitNewEntryToDB
   thisModule.setProcessedByAuthorityStatus = setProcessedByAuthorityStatus
   thisModule.setEntryInDbAsDeleted = setEntryInDbAsDeleted
   thisModule.getAjaxHttpHeaderKeys = getAjaxHttpHeaderKeys
+  thisModule.getFullAddressFromDbElement = getFullAddressFromDbElement
 
   return thisModule
 })(app.dbServerLink || {})
