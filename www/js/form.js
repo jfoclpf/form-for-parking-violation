@@ -669,6 +669,7 @@ app.form = (function (thisModule) {
   thisModule.getTimeHH_MM = getTimeHH_MM
   thisModule.getPrepositionOfMunicipality = getPrepositionOfMunicipality
   thisModule.getFullAddress = getFullAddress
+  thisModule.getMunicipality = getMunicipality
   thisModule.getLocality = getLocality
   thisModule.getStreetName = getStreetName
   thisModule.getStreetNumber = getStreetNumber
