@@ -18,10 +18,10 @@ app.main = (function (thisModule) {
       app_iOS: 'https://apps.apple.com/pt/app/id1291777170'
     },
     databaseServer: {
-      uploadImages: 'https://form-for-parking-violation.joaopimentel.com/serverapp_img_upload', // used to upload an image
-      requestImage: 'https://form-for-parking-violation.joaopimentel.com/image_server', // folder where all the images are stored
-      uploadOccurence: 'https://form-for-parking-violation.joaopimentel.com/serverapp', // to upload anew or update the data of an occurence
-      requestHistoric: 'https://form-for-parking-violation.joaopimentel.com/serverapp_get_historic' // to request all historic ocurrences of current user
+      uploadImages: 'https://servidor.denuncia-estacionamento.app/serverapp_img_upload', // used to upload an image
+      requestImage: 'https://servidor.denuncia-estacionamento.app/image_server', // folder where all the images are stored
+      uploadOccurence: 'https://servidor.denuncia-estacionamento.app/serverapp', // to upload anew or update the data of an occurence
+      requestHistoric: 'https://servidor.denuncia-estacionamento.app/serverapp_get_historic' // to request all historic ocurrences of current user
     },
     androidApps: {
       thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
