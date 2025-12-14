@@ -15,7 +15,7 @@ app.form = (function (thisModule) {
       $('#plate').bind('input', plateOnInput)
     }
 
-    // preload prepositions of municípios
+    // preload prepositions of municípios: "de", "do" or "da" for each municipality
     app.file.getFileContent(cordova.file.applicationDirectory + 'www/json/municipalities.json', 'text', function (err, res) {
       if (err) {
         console.error(err)
