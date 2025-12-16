@@ -1,9 +1,10 @@
 ---
-nome: Pedido de funcionalidade
-sobre: Sugira uma ideia nova para este projeto
-título: ''
-rótulos: ''
-responsáveis: ''
+name: Pedido de funcionalidade
+about: Sugira uma ideia para este projeto
+title: ''
+labels: ''
+assignees: ''
+
 
 ---
 
