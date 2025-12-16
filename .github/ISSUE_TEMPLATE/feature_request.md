@@ -5,7 +5,6 @@ title: ''
 labels: ''
 assignees: ''
 
-
 ---
 
 **O seu pedido de funcionalidade está relacionado com um problema? Descreva-o.**
