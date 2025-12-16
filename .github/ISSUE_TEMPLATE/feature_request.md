@@ -1,9 +1,9 @@
 ---
 nome: Pedido de funcionalidade
 sobre: Sugira uma ideia nova para este projeto
-título: ‘’
-rótulos: ‘’
-responsáveis: ‘’
+título: ''
+rótulos: ''
+responsáveis: ''
 
 ---
 
