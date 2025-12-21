@@ -1,6 +1,7 @@
 {
-  "apps" : [{
-    "name"        : "form-for-parking-violation",
+  "apps" : [
+    {
+    "name"        : "servidor.denuncia-estacionamento.app",
     "script"      : "main.js",
     "wait_ready" : true,
     "listen_timeout" : 10000,
@@ -8,5 +9,15 @@
     "instances"   : "2",
     "exec_mode"   : "cluster",
     "log_date_format": "DD-MM-YYYY"
-  }]
-}
+  },
+  {
+    "name"        : "api.denuncia-estacionamento.app",
+    "script"      : "api.js",
+    "wait_ready" : true,
+    "listen_timeout" : 10000,
+    "watch"       : false,
+    "instances"   : "2",
+    "exec_mode"   : "cluster",
+    "log_date_format": "DD-MM-YYYY"
+  }
+]}
