@@ -67,7 +67,7 @@ PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platfor
 
 Um problema comum pode estar relacionado com as versões do Java. Para saber a versão corra `java -version` e `javac -version` (compilador).
 
-Em Debian/Ubuntu para escolher a versão correta, corra `sudo update-alternatives --config javac`. Em macOS, por exemplo, `export JAVA_HOME=/usr/libexec/java_home -v 1.11`.
+Em Debian/Ubuntu para escolher a versão correta, corra `sudo update-alternatives --config javac`.
 
 Edite também a variável `JAVA_HOME` em conformidade com a versão pretendida.
 
