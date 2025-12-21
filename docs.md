@@ -16,9 +16,9 @@ Este projeto faz uso de <a href="https://cordova.apache.org/">Apache Cordova</a>
 [sudo] npm install -g cordova
 ```
 
-### [gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
+### Gradle
 
-O gradle é usado para fazer o `build` dos projetos Apache Cordova
+O gradle é usado para fazer o `build` dos projetos Apache Cordova. Instruções de instalação [aqui](https://docs.gradle.org/current/userguide/installation.html#ex-installing-manually).
 
 ### Java
 
