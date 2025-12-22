@@ -38,34 +38,67 @@ app.get('/', function (req, res) {
   res.status(200).send('API online')
 })
 
+// standard JSON:API v1.1 reply structure
+const meta = {
+  author: 'João Pimentel Ferreira',
+  url: 'https://api.denuncia-estacionamento.app',
+  standard: 'JSON:API v1.1',
+  path: ''
+}
+
 const reply = {
-  meta: {
-    author: 'João Pimentel Ferreira',
-    url: 'https://api.denuncia-estacionamento.app',
-    standard: 'JSON:API',
-    path: '/penalties/:penalty',
-    penalty: {
-      code: '',
-      description: '',
-      base_legal: ''
-    }
-  },
+  meta: { ...meta }, // create a copy of meta
   data: []
 }
 
+const errorReply = {
+  meta: { ...meta }, // create a copy of meta
+  errors: []
+}
+
+app.get('/penalties_list', function (req, res) {
+  res.type('application/vnd.api+json')
+
+  reply.meta.path = '/penalties_list'
+  reply.data = penaltiesIds.map(id => ({
+    id,
+    type: 'penalty',
+    attributes: {
+      code: id,
+      description: penalties[id].description
+        .replace(/^./, char => char.toUpperCase()), // capitalize first letter
+      base_legal: 'Violação ' + penalties[id].law_article
+    }
+  }))
+
+  res.send(reply)
+})
+
 // to get penalty data based on penalty id
 app.get('/penalties/:penalty', function (req, res) {
+  res.type('application/vnd.api+json')
+
   const penaltyId = req.params.penalty
   debug('Getting penalty with id ' + penaltyId)
 
   if (!penaltiesIds.includes(penaltyId)) {
     debug('Penalty id ' + penaltyId + ' not found in penalties list')
-    res.status(404).send('Penalty id ' + penaltyId + ' not found')
+
+    errorReply.errors = [
+      {
+        status: '404',
+        title: 'Penalty id ' + penaltyId + ' not found',
+        detail: 'The penalty id ' + penaltyId + ' does not exist in the penalties list'
+      }
+    ]
+
+    res.status(404).send(errorReply)
     return
   }
 
   reply.meta.path = '/penalties/' + penaltyId
 
+  reply.meta.penalty = {}
   reply.meta.penalty.code = penaltyId
   reply.meta.penalty.description = penalties[penaltyId].description
     .replace(/^./, char => char.toUpperCase()) // capitalize first letter
@@ -86,25 +119,64 @@ app.get('/penalties/:penalty', function (req, res) {
   dBpool.query(query, function (err, results, fields) {
     if (err) {
       debug('Error getting penalty data from database: ', err)
-      res.status(501).send(JSON.stringify(err))
+      errorReply.errors = [
+        {
+          status: '501',
+          title: 'DB error getting penalty id ' + penaltyId,
+          detail: 'Error getting penalty data from database table'
+        }
+      ]
+      res.status(501).send(errorReply)
     } else {
       debug('Penalty data successfully retrieved from ' +
             'database table ' + DdPoolSetings.database + '->' + DdPoolSetings.db_tables.denuncias + '\n\n')
       debug('Result from db query is : ', results)
 
-      reply.data = results.map(row => {
-        delete row.base_legal
-        row.id = row.table_row_uuid
-        delete row.table_row_uuid
-        row.type = 'penalty_record'
-        return row
-      })
+      const data = []
+      for (const result of results) {
+        const tmpData = {}
+        tmpData.id = result.table_row_uuid
+        tmpData.type = 'penalty_record'
 
-      res.type('application/vnd.api+json')
+        delete result.base_legal
+        delete result.table_row_uuid
+        tmpData.attributes = result
+
+        data.push(tmpData)
+      }
+      reply.data = data
+
       debug('Replying with: ', reply)
       res.send(reply)
     }
   })
+})
+
+// error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  errorReply.meta.path = req.originalUrl
+  errorReply.errors = [
+    {
+      status: '500',
+      title: 'Error with API server',
+      detail: 'Error processing request: ' + err.message
+    }
+  ]
+
+  res.status(500).send(errorReply)
+})
+
+app.use((req, res) => {
+  errorReply.meta.path = req.originalUrl
+  errorReply.errors = [
+    {
+      status: '404',
+      title: 'Path not found',
+      detail: 'Path not found: ' + req.originalUrl
+    }
+  ]
+  res.status(404).send(errorReply)
 })
 
 const server = app.listen(port, () => {
