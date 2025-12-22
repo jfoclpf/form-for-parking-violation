@@ -24,6 +24,12 @@ O [código](https://github.com/jfoclpf/form-for-parking-violation) é totalmente
 [Crie por favor um novo incidente (issue)](https://github.com/jfoclpf/form-for-parking-violation/issues).
 
 
+## API 
+
+A [pedido de um investigador](https://github.com/jfoclpf/form-for-parking-violation/issues/198), providenciamos uma API pública e gratuita para a Base de Dados das ocorrências, onde estas são disponibilizadas de forma completamente anónima, respeitando totalmente a proteção de dados.
+
+Vede [documentação API](/api.md).
+
 ## Como instalar e testar
 ### Requisitos, _debug_ e eventuais problemas
 
