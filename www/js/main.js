@@ -24,8 +24,7 @@ app.main = (function (thisModule) {
       requestHistoric: 'https://servidor.denuncia-estacionamento.app/serverapp_get_historic' // to request all historic ocurrences of current user
     },
     androidApps: {
-      thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
-      shareToFileSystem: 'https://play.google.com/store/apps/details?id=com.boxhead.android.sharetofilesystem&hl=pt'
+      thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation'
     },
     geoApi: {
       nominatimReverse: 'https://nominatim.openstreetmap.org/reverse',
