@@ -34,7 +34,6 @@
     "cordova-plugin-inappbrowser": "^7.0.0",
     "cordova-plugin-is-debug": "^1.0.0",
     "cordova-plugin-screen-orientation": "3.0.4",
-    "cordova-plugin-statusbar": "^3.0.0",
     "cordova-set-version": "^13.0.1",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
@@ -62,7 +61,6 @@
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
       },
-      "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-pdf-generator": {},
       "cordova-plugin-inappbrowser": {},
@@ -97,7 +95,7 @@
   "devDependencies": {
     "async": "^3.2.4",
     "bootstrap-select": "^1.13.18",
-    "cordova-android": "^14.0.1",
+    "cordova-android": "^15.0.0",
     "cordova-ios": "^8.1.1",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-androidx-adapter": "^1.1.3",
