@@ -25,7 +25,7 @@ app.main = (function (thisModule) {
     },
     androidApps: {
       thisApp: 'https://play.google.com/store/apps/details?id=com.form.parking.violation',
-      shareToFileSystem: 'https://play.google.com/store/apps/details?id=com.boxhead.android.sharetofilesystem&hl=pt'
+      shareToFileSystem: 'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.files'
     },
     geoApi: {
       nominatimReverse: 'https://nominatim.openstreetmap.org/reverse',
