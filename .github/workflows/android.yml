@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-24.04]
-        node-version: [20]
+        node-version: [22]
         
     runs-on: ${{ matrix.platform }}
 
