@@ -56,3 +56,8 @@ Vede [documentação API](/api.md).
 * <a href="http://www.turbo.pt/carro-mal-estacionado-ja-pode-queixa-esta-app/">Turbo</a>
 * [pplware](https://pplware.sapo.pt/motores/veiculo-mal-estacionado-use-esta-app-para-denunciar-a-policia/)
 * [Portugal News](https://www.theportugalnews.com/news/2023-05-24/new-app-to-report-illegally-parked-cars/77914)
+
+## Outras Aplicações
+
+ - [Aqui Não](https://apps.apple.com/pt/app/aqui-n%C3%A3o/id1335652238) - apenas iPhone
+ - [Imbecis](https://imbecis.app/) - apenas Web
