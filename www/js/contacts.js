@@ -50,7 +50,7 @@ app.contacts.PM_Contacts = [
   },
   {
     'nome': 'Almada',
-    'contacto': 'cidadao@ecalma.pt'
+    'contacto': 'geral@wemob.pt'
   },
   {
     'nome': 'Amadora',
