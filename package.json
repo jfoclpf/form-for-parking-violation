@@ -90,15 +90,15 @@
     },
     "platforms": [
       "browser",
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "devDependencies": {
     "async": "^3.2.4",
     "bootstrap-select": "^1.13.18",
     "cordova-android": "^14.0.1",
-    "cordova-ios": "^6.2.0",
+    "cordova-ios": "^8.1.1",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-camera": "github:jfoclpf/cordova-plugin-camera",
