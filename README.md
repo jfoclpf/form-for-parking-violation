@@ -61,3 +61,10 @@ Vede [documentação API](/api.md).
 
  - [Aqui Não](https://apps.apple.com/pt/app/aqui-n%C3%A3o/id1335652238) - apenas iPhone
  - [Imbecis](https://imbecis.app/) - apenas Web
+
+## Legislação 
+
+ * [Decreto-Lei n.º 114/94 Código Da Estrada](https://www.pgdlisboa.pt/leis/lei_mostra_articulado.php?nid=349&tabela=leis)
+ * [Decreto-Lei n.º 181/2012 Regime do acesso e exercício da atividade de aluguer de veículos de passageiros sem condutor, designada por rent-a-car](https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2012-34582975)
+ * [Decreto-Lei n.º 81/2006 Regime Relativo às Condições de Utilização dos Parques e Zonas de Estacionamento](https://www.pgdlisboa.pt/leis/lei_mostra_articulado.php?nid=1089&tabela=leis)
+ * [Decreto Regulamentar n.º 22-A/98 Regulamento de Sinalização do Trânsito](https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-regulamentar/1998-169035729)

@@ -237,5 +237,10 @@
         "select": "A menos de 50 m. de cruzamentos, entroncamentos, rotundas, curvas ou lombas (fora das localidades)",
         "description": "a menos de 50 metros de um cruzamento, entroncamento, rotunda, curva ou lomba de visibilidade reduzida",
         "law_article": "da alínea a) do n.º 2 do art.º 49.º do Código da Estrada"
+    },
+    "mais_de_um_lugar": {
+        "select": "Ocupando mais do que um lugar de estacionamento",
+        "description": "ocupando mais do que um lugar de estacionamento",
+        "law_article": "do n.º 2 do art.º 6.º do Decreto-Lei n.º 81/2006, de 20 de abril"
     }
 }
